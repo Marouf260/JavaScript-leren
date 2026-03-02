@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leer JavaScript - Complete Gids</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">JS</span>
+                <span class="logo-text">Leer JavaScript</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#basics">Basis</a></li>
+                <li><a href="#advanced">Geavanceerd</a></li>
+                <li><a href="#dom-section">DOM</a></li>
+                <li><a href="#examples">Voorbeelden</a></li>
+                <li><a href="#projects">Projecten</a></li>
+                <li><a href="#exercises">Oefeningen</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <!-- Floating particles -->
+        <div class="hero-particles" id="hero-particles"></div>
+        <!-- Glowing orbs -->
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    <span>Gratis &amp; Open Source</span>
+                </div>
+                <h1 class="hero-title">
+                    Leer Alles Over<br>
+                    <span class="hero-title-highlight" id="typewriter">JavaScript</span>
+                </h1>
+                <p class="hero-subtitle">Van <strong>beginner</strong> tot <strong>expert</strong> — Complete
+                    interactieve gids voor JavaScript programmeren</p>
+                <p class="hero-description">Ontdek de kracht van JavaScript met interactieve voorbeelden, duidelijke
+                    uitleg en 100+ praktische projecten.</p>
+                <div class="hero-buttons">
+                    <a href="#basics" class="btn btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <polygon points="5 3 19 12 5 21 5 3" />
+                        </svg>
+                        Start Leren
+                    </a>
+                    <a href="#examples" class="btn btn-secondary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                        </svg>
+                        Bekijk Voorbeelden
+                    </a>
+                    <a href="#projects" class="btn btn-ghost">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                        </svg>
+                        100+ Projecten
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" data-target="100">0</span>
+                        <span class="hero-stat-label">Projecten</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" data-target="8">0</span>
+                        <span class="hero-stat-label">Onderwerpen</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" data-target="50">0</span>
+                        <span class="hero-stat-label">Oefeningen</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-code-wrapper">
+                <!-- Window chrome -->
+                <div class="hero-code-window">
+                    <div class="hero-code-titlebar">
+                        <div class="hero-code-dots">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                        </div>
+                        <span class="hero-code-filename">welkom.js</span>
+                        <span class="hero-code-lang">JavaScript</span>
+                    </div>
+                    <div class="hero-code-body">
+                        <div class="hero-code-line-numbers">
+                            <span>1</span><span>2</span><span>3</span><span>4</span>
+                            <span>5</span><span>6</span><span>7</span><span>8</span>
+                            <span>9</span><span>10</span>
+                        </div>
+                        <pre class="hero-code-pre"><code><span class="code-comment">// 🚀 Welkom bij JavaScript!</span>
+<span class="code-keyword">const</span> <span class="code-var">naam</span> <span class="code-op">=</span> <span class="code-string">"Jij"</span>;
+<span class="code-keyword">const</span> <span class="code-var">niveau</span> <span class="code-op">=</span> <span class="code-string">"Beginner"</span>;
+
+<span class="code-keyword">function</span> <span class="code-fn">begroeting</span>(<span class="code-var">naam</span>) {
+  <span class="code-keyword">return</span> <span class="code-string">`Hallo, <span class="code-template">${<span class="code-var">naam</span>}</span>! 👋`</span>;
+}
+
+<span class="code-builtin">console</span>.<span class="code-fn">log</span>(<span class="code-fn">begroeting</span>(<span class="code-var">naam</span>));
+<span class="code-comment">// Output: Hallo, Jij! 👋</span></code></pre>
+                    </div>
+                    <div class="hero-code-footer">
+                        <span class="hero-code-status"><span class="hero-code-status-dot"></span>Ready</span>
+                        <span>Ln 10, Col 1</span>
+                    </div>
+                </div>
+                <!-- Floating badges -->
+                <div class="hero-float-badge hero-float-badge-1">
+                    <span>⚡</span> ES2024
+                </div>
+                <div class="hero-float-badge hero-float-badge-2">
+                    <span>🎯</span> Interactief
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Basics Section -->
+    <section id="basics" class="basics">
+        <div class="container">
+            <h2 class="section-title">JavaScript Basis</h2>
+            <div class="topics-grid">
+                <div class="topic-card">
+                    <div class="topic-icon">📝</div>
+                    <h3>Variabelen</h3>
+                    <p>Leer hoe je variabelen declareert met let, const en var</p>
+                    <button class="btn-topic" onclick="showExample('variables')">Bekijk Voorbeeld</button>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">🔢</div>
+                    <h3>Data Types</h3>
+                    <p>String, Number, Boolean, Object, Array en meer</p>
+                    <button class="btn-topic" onclick="showExample('datatypes')">Bekijk Voorbeeld</button>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">⚙️</div>
+                    <h3>Operators</h3>
+                    <p>Rekenkundige, vergelijkings- en logische operators</p>
+                    <button class="btn-topic" onclick="showExample('operators')">Bekijk Voorbeeld</button>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">🔄</div>
+                    <h3>Loops</h3>
+                    <p>For, while, do-while en forEach loops</p>
+                    <button class="btn-topic" onclick="showExample('loops')">Bekijk Voorbeeld</button>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">🔀</div>
+                    <h3>Conditionals</h3>
+                    <p>If/else, switch statements en ternaire operators</p>
+                    <button class="btn-topic" onclick="showExample('conditionals')">Bekijk Voorbeeld</button>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">📦</div>
+                    <h3>Functions</h3>
+                    <p>Function declarations, arrow functions en parameters</p>
+                    <button class="btn-topic" onclick="showExample('functions')">Bekijk Voorbeeld</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Section -->
+    <section id="advanced" class="advanced">
+        <div class="container">
+            <h2 class="section-title">Geavanceerde Onderwerpen</h2>
+            <div class="topics-grid">
+                <div class="topic-card">
+                    <div class="topic-icon">🎯</div>
+                    <h3>Objects & Classes</h3>
+                    <p>Object-oriented programming in JavaScript</p>
+                    <button class="btn-topic" onclick="showExample('objects')">Bekijk Voorbeeld</button>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">📋</div>
+                    <h3>Arrays & Methods</h3>
+                    <p>Array methods zoals map, filter, reduce</p>
+                    <button class="btn-topic" onclick="showExample('arrays')">Bekijk Voorbeeld</button>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">⏰</div>
+                    <h3>Async & Promises</h3>
+                    <p>Asynchrone code met Promises en async/await</p>
+                    <button class="btn-topic" onclick="showExample('async')">Bekijk Voorbeeld</button>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">🎨</div>
+                    <h3>DOM Manipulatie</h3>
+                    <p>Elementen selecteren en manipuleren</p>
+                    <button class="btn-topic" onclick="showExample('dom')">Bekijk Voorbeeld</button>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">🎭</div>
+                    <h3>Events</h3>
+                    <p>Event listeners en event handling</p>
+                    <button class="btn-topic" onclick="showExample('events')">Bekijk Voorbeeld</button>
+                </div>
+                <div class="topic-card">
+                    <div class="topic-icon">🔧</div>
+                    <h3>ES6+ Features</h3>
+                    <p>Destructuring, spread operator, template literals</p>
+                    <button class="btn-topic" onclick="showExample('es6')">Bekijk Voorbeeld</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DOM Section -->
+    <section id="dom-section" class="dom-section">
+        <div class="container">
+            <h2 class="section-title">DOM Manipulatie - Complete Gids</h2>
+
+            <div class="dom-intro">
+                <h3>Wat is de DOM?</h3>
+                <p>De Document Object Model (DOM) is een representatie van je HTML pagina. JavaScript kan de DOM
+                    gebruiken om elementen te selecteren, te wijzigen, toe te voegen of te verwijderen.</p>
+            </div>
+
+            <div class="dom-topics">
+                <div class="dom-topic-card">
+                    <h4>1. Elementen Selecteren</h4>
+                    <div class="code-block">
+                        <pre><code>// Selecteer één element
+let element = document.querySelector('#mijnId');
+let element2 = document.querySelector('.mijnClass');
+
+// Selecteer meerdere elementen
+let elementen = document.querySelectorAll('.mijnClass');
+let alleDivs = document.querySelectorAll('div');
+
+// Oude methodes (nog steeds bruikbaar)
+let byId = document.getElementById('mijnId');
+let byClass = document.getElementsByClassName('mijnClass');
+let byTag = document.getElementsByTagName('div');</code></pre>
+                    </div>
+                    <button class="btn-topic" onclick="runDOMExample('select')">▶ Test Voorbeeld</button>
+                </div>
+
+                <div class="dom-topic-card">
+                    <h4>2. Content Wijzigen</h4>
+                    <div class="code-block">
+                        <pre><code>// Tekst wijzigen
+element.textContent = "Nieuwe tekst";
+element.innerText = "Nieuwe tekst (met styling)";
+element.innerHTML = "<strong>Bold tekst</strong>";
+
+// Attributen wijzigen
+element.setAttribute('id', 'nieuweId');
+element.setAttribute('class', 'nieuweClass');
+let waarde = element.getAttribute('id');</code></pre>
+                    </div>
+                    <button class="btn-topic" onclick="runDOMExample('content')">▶ Test Voorbeeld</button>
+                </div>
+
+                <div class="dom-topic-card">
+                    <h4>3. Styling Wijzigen</h4>
+                    <div class="code-block">
+                        <pre><code>// Inline styles
+element.style.color = "red";
+element.style.backgroundColor = "blue";
+element.style.fontSize = "20px";
+element.style.display = "none"; // Verberg element
+element.style.display = "block"; // Toon element
+
+// CSS classes
+element.classList.add('nieuweClass');
+element.classList.remove('oudeClass');
+element.classList.toggle('toggleClass');
+element.classList.contains('mijnClass'); // true/false</code></pre>
+                    </div>
+                    <button class="btn-topic" onclick="runDOMExample('styling')">▶ Test Voorbeeld</button>
+                </div>
+
+                <div class="dom-topic-card">
+                    <h4>4. Elementen Maken & Toevoegen</h4>
+                    <div class="code-block">
+                        <pre><code>// Nieuw element maken
+let nieuwElement = document.createElement('div');
+nieuwElement.textContent = "Ik ben nieuw!";
+nieuwElement.className = "mijnClass";
+
+// Toevoegen aan DOM
+document.body.appendChild(nieuwElement);
+element.appendChild(nieuwElement);
+element.insertBefore(nieuwElement, anderElement);
+
+// Prependen (vooraan toevoegen)
+element.insertAdjacentHTML('beforebegin', '<p>Voor element</p>');
+element.insertAdjacentHTML('afterbegin', '<p>In element (begin)</p>');
+element.insertAdjacentHTML('beforeend', '<p>In element (eind)</p>');
+element.insertAdjacentHTML('afterend', '<p>Na element</p>');</code></pre>
+                    </div>
+                    <button class="btn-topic" onclick="runDOMExample('create')">▶ Test Voorbeeld</button>
+                </div>
+
+                <div class="dom-topic-card">
+                    <h4>5. Elementen Verwijderen</h4>
+                    <div class="code-block">
+                        <pre><code>// Element verwijderen
+element.remove(); // Moderne manier
+element.parentNode.removeChild(element); // Oude manier
+
+// Child verwijderen
+element.removeChild(childElement);
+
+// Alle children verwijderen
+while (element.firstChild) {
+    element.removeChild(element.firstChild);
+}
+
+// Of sneller:
+element.innerHTML = '';</code></pre>
+                    </div>
+                    <button class="btn-topic" onclick="runDOMExample('remove')">▶ Test Voorbeeld</button>
+                </div>
+
+                <div class="dom-topic-card">
+                    <h4>6. Traversing (Navigeren)</h4>
+                    <div class="code-block">
+                        <pre><code>// Parent element
+let parent = element.parentElement;
+let parentNode = element.parentNode;
+
+// Children
+let children = element.children; // Alleen elementen
+let childNodes = element.childNodes; // Inclusief tekst nodes
+
+// Siblings (broers/zussen)
+let nextSibling = element.nextElementSibling;
+let previousSibling = element.previousElementSibling;
+
+// Eerste/laatste child
+let firstChild = element.firstElementChild;
+let lastChild = element.lastElementChild;</code></pre>
+                    </div>
+                    <button class="btn-topic" onclick="runDOMExample('traverse')">▶ Test Voorbeeld</button>
+                </div>
+
+                <div class="dom-topic-card">
+                    <h4>7. Formulieren</h4>
+                    <div class="code-block">
+                        <pre><code>// Form element selecteren
+let form = document.querySelector('form');
+let input = document.querySelector('input[type="text"]');
+
+// Waarde krijgen/zetten
+let waarde = input.value;
+input.value = "Nieuwe waarde";
+
+// Checkbox/Radio
+let checkbox = document.querySelector('input[type="checkbox"]');
+checkbox.checked = true;
+let isChecked = checkbox.checked;
+
+// Select dropdown
+let select = document.querySelector('select');
+select.value = "optie2";
+let selectedValue = select.value;</code></pre>
+                    </div>
+                    <button class="btn-topic" onclick="runDOMExample('forms')">▶ Test Voorbeeld</button>
+                </div>
+
+                <div class="dom-topic-card">
+                    <h4>8. Event Delegation</h4>
+                    <div class="code-block">
+                        <pre><code>// Event listener op parent (efficiënter)
+let container = document.querySelector('.container');
+container.addEventListener('click', function(e) {
+    if (e.target.classList.contains('button')) {
+        console.log('Button geklikt!');
+    }
+});
+
+// Event object gebruiken
+element.addEventListener('click', function(event) {
+    event.preventDefault(); // Voorkom default gedrag
+    event.stopPropagation(); // Stop event bubbling
+    console.log(event.target); // Element dat geklikt is
+    console.log(event.type); // "click"
+});</code></pre>
+                    </div>
+                    <button class="btn-topic" onclick="runDOMExample('delegation')">▶ Test Voorbeeld</button>
+                </div>
+            </div>
+
+            <div class="dom-demo-area" id="dom-demo-area">
+                <h3>Live Demo Gebied</h3>
+                <div id="demo-container" class="demo-container">
+                    <p id="demo-text">Dit is een demo tekst. Klik op de voorbeelden hierboven!</p>
+                    <button id="demo-btn" class="demo-btn">Demo Button</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section id="examples" class="examples">
+        <div class="container">
+            <h2 class="section-title">Interactieve Voorbeelden</h2>
+            <div class="example-container">
+                <div class="example-tabs">
+                    <button class="tab-btn active" onclick="switchTab('variables')">Variabelen</button>
+                    <button class="tab-btn" onclick="switchTab('functions')">Functions</button>
+                    <button class="tab-btn" onclick="switchTab('arrays')">Arrays</button>
+                    <button class="tab-btn" onclick="switchTab('dom')">DOM</button>
+                </div>
+                <div class="example-content" id="example-content">
+                    <!-- Example content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exercises Section -->
+    <section id="exercises" class="exercises">
+        <div class="container">
+            <h2 class="section-title">Oefeningen</h2>
+            <div class="exercises-grid">
+                <div class="exercise-card">
+                    <h3>Oefening 1: Variabelen</h3>
+                    <p>Maak drie variabelen: naam (string), leeftijd (number), en isStudent (boolean).</p>
+                    <div class="code-editor">
+                        <textarea id="exercise1" placeholder="Schrijf je code hier...">// Je code hier
+let naam = 
+let leeftijd = 
+let isStudent = 
+
+console.log(naam, leeftijd, isStudent);</textarea>
+                    </div>
+                    <button class="btn-run" onclick="runExercise(1)">▶ Run Code</button>
+                    <div class="output" id="output1"></div>
+                </div>
+                <div class="exercise-card">
+                    <h3>Oefening 2: Functions</h3>
+                    <p>Maak een functie die twee getallen optelt en het resultaat teruggeeft.</p>
+                    <div class="code-editor">
+                        <textarea id="exercise2" placeholder="Schrijf je code hier...">// Maak een functie genaamd 'optellen'
+function optellen(a, b) {
+    // Je code hier
+}
+
+console.log(optellen(5, 3)); // Moet 8 uitprinten</textarea>
+                    </div>
+                    <button class="btn-run" onclick="runExercise(2)">▶ Run Code</button>
+                    <div class="output" id="output2"></div>
+                </div>
+                <div class="exercise-card">
+                    <h3>Oefening 3: Loops</h3>
+                    <p>Gebruik een for loop om de getallen 1 tot 10 uit te printen.</p>
+                    <div class="code-editor">
+                        <textarea id="exercise3" placeholder="Schrijf je code hier...">// Gebruik een for loop
+for (let i = 1; i <= 10; i++) {
+    // Je code hier
+}</textarea>
+                    </div>
+                    <button class="btn-run" onclick="runExercise(3)">▶ Run Code</button>
+                    <div class="output" id="output3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <h2 class="section-title">100 DOM Projecten - Van Makkelijk naar Moeilijk</h2>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 3rem; color: #666;">
+                Oefen je DOM vaardigheden met deze progressieve projecten. Begin bij project 1 en werk je weg omhoog! Nu
+                met extra geavanceerde en mooi ontworpen "Master" projecten.
+            </p>
+
+            <div class="projects-grid">
+                <!-- Project 1-5: Beginner -->
+                <div class="project-item" data-level="beginner">
+                    <div class="project-header">
+                        <span class="project-number">1</span>
+                        <span class="project-level beginner">Beginner</span>
+                    </div>
+                    <h3>Klik Teller</h3>
+                    <p>Maak een knop die een teller verhoogt bij elke klik.</p>
+                    <a href="projecten/project-1-klik-teller.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="beginner">
+                    <div class="project-header">
+                        <span class="project-number">2</span>
+                        <span class="project-level beginner">Beginner</span>
+                    </div>
+                    <h3>Tekst Wijzigen</h3>
+                    <p>Wijzig tekst in een element wanneer je op een knop klikt.</p>
+                    <a href="projecten/project-2-tekst-wijzigen.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="beginner">
+                    <div class="project-header">
+                        <span class="project-number">3</span>
+                        <span class="project-level beginner">Beginner</span>
+                    </div>
+                    <h3>Kleur Veranderen</h3>
+                    <p>Verander de achtergrondkleur van een element.</p>
+                    <a href="projecten/project-3-kleur-veranderen.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="beginner">
+                    <div class="project-header">
+                        <span class="project-number">4</span>
+                        <span class="project-level beginner">Beginner</span>
+                    </div>
+                    <h3>Show/Hide Element</h3>
+                    <p>Toon of verberg een element met een knop.</p>
+                    <a href="projecten/project-4-show-hide-element.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="beginner">
+                    <div class="project-header">
+                        <span class="project-number">5</span>
+                        <span class="project-level beginner">Beginner</span>
+                    </div>
+                    <h3>Lijst Toevoegen</h3>
+                    <p>Voeg items toe aan een lijst via een input veld.</p>
+                    <a href="projecten/project-5-lijst-toevoegen.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <!-- Project 6-10: Intermediate -->
+                <div class="project-item" data-level="intermediate">
+                    <div class="project-header">
+                        <span class="project-number">6</span>
+                        <span class="project-level intermediate">Intermediate</span>
+                    </div>
+                    <h3>To-Do Lijst</h3>
+                    <p>Maak een to-do lijst waar je items kunt toevoegen en verwijderen.</p>
+                    <a href="projecten/project-6-to-do-lijst.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="intermediate">
+                    <div class="project-header">
+                        <span class="project-number">7</span>
+                        <span class="project-level intermediate">Intermediate</span>
+                    </div>
+                    <h3>Kleuren Picker</h3>
+                    <p>Maak een color picker die de achtergrondkleur wijzigt.</p>
+                    <a href="projecten/project-7-kleuren-picker.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="intermediate">
+                    <div class="project-header">
+                        <span class="project-number">8</span>
+                        <span class="project-level intermediate">Intermediate</span>
+                    </div>
+                    <h3>Accordeon Menu</h3>
+                    <p>Maak een accordeon menu dat open en dicht klapt.</p>
+                    <a href="projecten/project-8-accordeon-menu.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="intermediate">
+                    <div class="project-header">
+                        <span class="project-number">9</span>
+                        <span class="project-level intermediate">Intermediate</span>
+                    </div>
+                    <h3>Tab Interface</h3>
+                    <p>Maak een tab interface waar je tussen verschillende secties kunt wisselen.</p>
+                    <a href="projecten/project-9-tab-interface.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="intermediate">
+                    <div class="project-header">
+                        <span class="project-number">10</span>
+                        <span class="project-level intermediate">Intermediate</span>
+                    </div>
+                    <h3>Modal Popup</h3>
+                    <p>Maak een modal popup die opent en sluit.</p>
+                    <a href="projecten/project-10-modal-popup.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <!-- Project 11-15: Advanced -->
+                <div class="project-item" data-level="advanced">
+                    <div class="project-header">
+                        <span class="project-number">11</span>
+                        <span class="project-level advanced">Advanced</span>
+                    </div>
+                    <h3>Image Slider</h3>
+                    <p>Maak een image slider met vorige/volgende knoppen.</p>
+                    <a href="projecten/project-11-image-slider.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="advanced">
+                    <div class="project-header">
+                        <span class="project-number">12</span>
+                        <span class="project-level advanced">Advanced</span>
+                    </div>
+                    <h3>Form Validatie</h3>
+                    <p>Valideer een formulier met real-time feedback.</p>
+                    <a href="projecten/project-12-form-validatie.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="advanced">
+                    <div class="project-header">
+                        <span class="project-number">13</span>
+                        <span class="project-level advanced">Advanced</span>
+                    </div>
+                    <h3>Search Filter</h3>
+                    <p>Filter een lijst op basis van zoekinput.</p>
+                    <a href="projecten/project-13-search-filter.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="advanced">
+                    <div class="project-header">
+                        <span class="project-number">14</span>
+                        <span class="project-level advanced">Advanced</span>
+                    </div>
+                    <h3>Drag & Drop</h3>
+                    <p>Maak elementen die je kunt slepen en neerzetten.</p>
+                    <a href="projecten/project-14-drag-drop.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="advanced">
+                    <div class="project-header">
+                        <span class="project-number">15</span>
+                        <span class="project-level advanced">Advanced</span>
+                    </div>
+                    <h3>Infinite Scroll</h3>
+                    <p>Laad meer content automatisch wanneer je scrollt.</p>
+                    <a href="projecten/project-15-infinite-scroll.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <!-- Project 16-20: Expert -->
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">16</span>
+                        <span class="project-level expert">Expert</span>
+                    </div>
+                    <h3>Dynamische Tabel</h3>
+                    <p>Maak een tabel met sorteren, filteren en paginatie.</p>
+                    <a href="projecten/project-16-dynamische-tabel.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">17</span>
+                        <span class="project-level expert">Expert</span>
+                    </div>
+                    <h3>WYSIWYG Editor</h3>
+                    <p>Maak een rich text editor met formatting opties.</p>
+                    <a href="projecten/project-17-wysiwyg-editor.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">18</span>
+                        <span class="project-level expert">Expert</span>
+                    </div>
+                    <h3>Kanban Board</h3>
+                    <p>Maak een Kanban board met drag & drop functionaliteit.</p>
+                    <a href="projecten/project-18-kanban-board.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">19</span>
+                        <span class="project-level expert">Expert</span>
+                    </div>
+                    <h3>Real-time Chat</h3>
+                    <p>Maak een chat interface met berichten die automatisch verschijnen.</p>
+                    <a href="projecten/project-19-real-time-chat.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">20</span>
+                        <span class="project-level expert">Expert</span>
+                    </div>
+                    <h3>Single Page App</h3>
+                    <p>Maak een complete SPA met routing en state management.</p>
+                    <a href="projecten/project-20-single-page-app.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center;">Start Project</a>
+                </div>
+
+                <!-- Project 21-30: Master -->
+                <div class="project-item" data-level="master">
+                    <div class="project-header">
+                        <span class="project-number">21</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                    </div>
+                    <h3>Weer Applicatie</h3>
+                    <p>Bouw een prachtige weer app met dynamische glassmorphism achtergronden en api ophalen.</p>
+                    <a href="projecten/project-21-weer-app.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        Project</a>
+                </div>
+
+                <div class="project-item" data-level="master">
+                    <div class="project-header">
+                        <span class="project-number">22</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                    </div>
+                    <h3>Neumorphic Rekenmachine</h3>
+                    <p>Maak een geavanceerde calculator met een indrukwekkend neumorphic design patroon.</p>
+                    <a href="projecten/project-22-rekenmachine.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        Project</a>
+                </div>
+
+                <div class="project-item" data-level="master">
+                    <div class="project-header">
+                        <span class="project-number">23</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                    </div>
+                    <h3>Quiz Applicatie</h3>
+                    <p>Een interactieve quiz met vloeiende animaties, timer en een mooi resultaten dashboard.</p>
+                    <a href="projecten/project-23-quiz-applicatie.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        Project</a>
+                </div>
+
+                <div class="project-item" data-level="master">
+                    <div class="project-header">
+                        <span class="project-number">24</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                    </div>
+                    <h3>Recepten Zoeker</h3>
+                    <p>Een uitgebreide receptenzoeker met mooie kaarten-UI, dynamisch filteren en animaties.</p>
+                    <a href="projecten/project-24-recepten-zoeker.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        Project</a>
+                </div>
+
+                <div class="project-item" data-level="master">
+                    <div class="project-header">
+                        <span class="project-number">25</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                    </div>
+                    <h3>Uitgaven Tracker</h3>
+                    <p>Beheer je budget met een gestroomlijnde UI, vloeiende updates en interactieve elementen.</p>
+                    <a href="projecten/project-25-uitgaven-tracker.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        Project</a>
+                </div>
+
+                <div class="project-item" data-level="master">
+                    <div class="project-header">
+                        <span class="project-number">26</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                    </div>
+                    <h3>Muziek Speler</h3>
+                    <p>Een adembenemende muziekspeler interface met levendige album art en vloeiende controls.</p>
+                    <a href="projecten/project-26-muziek-speler.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        Project</a>
+                </div>
+
+                <div class="project-item" data-level="master">
+                    <div class="project-header">
+                        <span class="project-number">27</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                    </div>
+                    <h3>Typ Snelheid Test</h3>
+                    <p>Test je WPM met realtime feedback via een high-end, cyber-geïnspireerde neon interface.</p>
+                    <a href="projecten/project-27-typ-snelheid-test.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        Project</a>
+                </div>
+
+                <div class="project-item" data-level="master">
+                    <div class="project-header">
+                        <span class="project-number">28</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                    </div>
+                    <h3>3D Geheugenspel</h3>
+                    <p>Een memory card game met verbluffende 3D flip-animaties en een responsief en kleurrijk design.
+                    </p>
+                    <a href="projecten/project-28-geheugenspel.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        Project</a>
+                </div>
+
+                <div class="project-item" data-level="master">
+                    <div class="project-header">
+                        <span class="project-number">29</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                    </div>
+                    <h3>E-commerce Cart</h3>
+                    <p>Bouw een prachtige webshop interface met een elegante side-cart en smooth overgangen.</p>
+                    <a href="projecten/project-29-ecommerce-winkelwagen.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        Project</a>
+                </div>
+
+                <div class="project-item" data-level="master">
+                    <div class="project-header">
+                        <span class="project-number">30</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                    </div>
+                    <h3>Data Dashboard</h3>
+                    <p>Een state-of-the-art dashboard met geanimeerde statistieken en donkere modus thema.</p>
+                    <a href="projecten/project-30-dashboard-grafieken.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        Project</a>
+                </div>
+
+                <!-- Project 31-100 -->
+
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">31</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
+                    </div>
+                    <h3>Project 31</h3>
+                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <a href="projecten/project-31.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">32</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
+                    </div>
+                    <h3>Project 32</h3>
+                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <a href="projecten/project-32.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">33</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
+                    </div>
+                    <h3>Project 33</h3>
+                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <a href="projecten/project-33.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">34</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
+                    </div>
+                    <h3>Project 34</h3>
+                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <a href="projecten/project-34.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">35</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
+                    </div>
+                    <h3>Project 35</h3>
+                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <a href="projecten/project-35.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">36</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
+                    </div>
+                    <h3>Project 36</h3>
+                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <a href="projecten/project-36.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">37</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
+                    </div>
+                    <h3>Project 37</h3>
+                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <a href="projecten/project-37.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">38</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
+                    </div>
+                    <h3>Project 38</h3>
+                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <a href="projecten/project-38.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">39</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
+                    </div>
+                    <h3>Project 39</h3>
+                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <a href="projecten/project-39.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">40</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
+                    </div>
+                    <h3>Project 40</h3>
+                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <a href="projecten/project-40.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">41</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
+                            Logic</span>
+                    </div>
+                    <h3>Project 41</h3>
+                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <a href="projecten/project-41.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">42</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
+                            Logic</span>
+                    </div>
+                    <h3>Project 42</h3>
+                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <a href="projecten/project-42.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">43</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
+                            Logic</span>
+                    </div>
+                    <h3>Project 43</h3>
+                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <a href="projecten/project-43.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">44</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
+                            Logic</span>
+                    </div>
+                    <h3>Project 44</h3>
+                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <a href="projecten/project-44.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">45</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
+                            Logic</span>
+                    </div>
+                    <h3>Project 45</h3>
+                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <a href="projecten/project-45.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">46</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
+                            Logic</span>
+                    </div>
+                    <h3>Project 46</h3>
+                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <a href="projecten/project-46.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">47</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
+                            Logic</span>
+                    </div>
+                    <h3>Project 47</h3>
+                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <a href="projecten/project-47.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">48</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
+                            Logic</span>
+                    </div>
+                    <h3>Project 48</h3>
+                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <a href="projecten/project-48.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">49</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
+                            Logic</span>
+                    </div>
+                    <h3>Project 49</h3>
+                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <a href="projecten/project-49.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">50</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
+                            Logic</span>
+                    </div>
+                    <h3>Project 50</h3>
+                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <a href="projecten/project-50.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">51</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
+                            Dev</span>
+                    </div>
+                    <h3>Project 51</h3>
+                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <a href="projecten/project-51.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">52</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
+                            Dev</span>
+                    </div>
+                    <h3>Project 52</h3>
+                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <a href="projecten/project-52.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">53</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
+                            Dev</span>
+                    </div>
+                    <h3>Project 53</h3>
+                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <a href="projecten/project-53.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">54</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
+                            Dev</span>
+                    </div>
+                    <h3>Project 54</h3>
+                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <a href="projecten/project-54.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">55</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
+                            Dev</span>
+                    </div>
+                    <h3>Project 55</h3>
+                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <a href="projecten/project-55.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">56</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
+                            Dev</span>
+                    </div>
+                    <h3>Project 56</h3>
+                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <a href="projecten/project-56.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">57</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
+                            Dev</span>
+                    </div>
+                    <h3>Project 57</h3>
+                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <a href="projecten/project-57.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">58</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
+                            Dev</span>
+                    </div>
+                    <h3>Project 58</h3>
+                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <a href="projecten/project-58.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">59</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
+                            Dev</span>
+                    </div>
+                    <h3>Project 59</h3>
+                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <a href="projecten/project-59.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">60</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
+                            Dev</span>
+                    </div>
+                    <h3>Project 60</h3>
+                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <a href="projecten/project-60.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">61</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
+                    </div>
+                    <h3>Project 61</h3>
+                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <a href="projecten/project-61.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">62</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
+                    </div>
+                    <h3>Project 62</h3>
+                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <a href="projecten/project-62.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">63</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
+                    </div>
+                    <h3>Project 63</h3>
+                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <a href="projecten/project-63.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">64</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
+                    </div>
+                    <h3>Project 64</h3>
+                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <a href="projecten/project-64.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">65</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
+                    </div>
+                    <h3>Project 65</h3>
+                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <a href="projecten/project-65.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">66</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
+                    </div>
+                    <h3>Project 66</h3>
+                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <a href="projecten/project-66.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">67</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
+                    </div>
+                    <h3>Project 67</h3>
+                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <a href="projecten/project-67.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">68</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
+                    </div>
+                    <h3>Project 68</h3>
+                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <a href="projecten/project-68.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">69</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
+                    </div>
+                    <h3>Project 69</h3>
+                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <a href="projecten/project-69.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">70</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
+                    </div>
+                    <h3>Project 70</h3>
+                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <a href="projecten/project-70.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">71</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 71</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-71.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">72</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 72</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-72.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">73</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 73</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-73.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">74</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 74</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-74.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">75</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 75</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-75.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">76</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 76</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-76.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">77</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 77</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-77.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">78</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 78</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-78.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">79</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 79</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-79.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">80</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 80</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-80.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">81</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 81</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-81.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">82</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 82</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-82.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">83</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 83</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-83.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">84</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 84</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-84.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">85</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 85</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-85.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">86</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 86</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-86.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">87</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 87</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-87.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">88</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 88</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-88.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">89</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 89</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-89.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">90</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
+                            Master</span>
+                    </div>
+                    <h3>Project 90</h3>
+                    <p>Fetch API, Promises en Async/Await.</p>
+                    <a href="projecten/project-90.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">91</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
+                    </div>
+                    <h3>Project 91</h3>
+                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <a href="projecten/project-91.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">92</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
+                    </div>
+                    <h3>Project 92</h3>
+                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <a href="projecten/project-92.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">93</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
+                    </div>
+                    <h3>Project 93</h3>
+                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <a href="projecten/project-93.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">94</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
+                    </div>
+                    <h3>Project 94</h3>
+                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <a href="projecten/project-94.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">95</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
+                    </div>
+                    <h3>Project 95</h3>
+                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <a href="projecten/project-95.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">96</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
+                    </div>
+                    <h3>Project 96</h3>
+                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <a href="projecten/project-96.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">97</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
+                    </div>
+                    <h3>Project 97</h3>
+                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <a href="projecten/project-97.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">98</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
+                    </div>
+                    <h3>Project 98</h3>
+                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <a href="projecten/project-98.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">99</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
+                    </div>
+                    <h3>Project 99</h3>
+                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <a href="projecten/project-99.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
+                        Project</a>
+                </div>
+                <div class="project-item" data-level="expert">
+                    <div class="project-header">
+                        <span class="project-number">100</span>
+                        <span class="project-level expert"
+                            style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
+                    </div>
+                    <h3>Project 100</h3>
+                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <a href="projecten/project-100.html" class="btn-project"
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
+                        Project</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content project-modal-content">
+            <span class="close" onclick="closeProjectModal()">&times;</span>
+            <div id="project-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Interactive Playground -->
+    <section class="playground">
+        <div class="container">
+            <h2 class="section-title">JavaScript Playground</h2>
+            <div class="playground-container">
+                <div class="playground-editor">
+                    <div class="editor-header">
+                        <span>JavaScript Code</span>
+                        <button class="btn-clear" onclick="clearPlayground()">Clear</button>
+                    </div>
+                    <textarea id="playground-code"
+                        placeholder="Schrijf je JavaScript code hier en klik op 'Run' om het uit te voeren...">// Welkom bij de JavaScript Playground!
+// Probeer bijvoorbeeld:
+
+let groet = "Hallo, wereld!";
+console.log(groet);
+
+function telOp(a, b) {
+    return a + b;
+}
+
+console.log("5 + 3 =", telOp(5, 3));</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-header">Output</div>
+                    <div id="playground-output" class="output-content"></div>
+                </div>
+            </div>
+            <button class="btn-playground" onclick="runPlayground()">▶ Run Code</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Leer JavaScript. Blijf oefenen en blijf leren!</p>
+        </div>
+    </footer>
+
+    <!-- Example Modal -->
+    <div id="example-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // === Hero Particles ===
+        (function createParticles() {
+            const container = document.getElementById('hero-particles');
+            if (!container) return;
+            const count = 28;
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'hero-particle';
+                const size = Math.random() * 6 + 3;
+                p.style.cssText = `
+                    width:${size}px; height:${size}px;
+                    left:${Math.random() * 100}%;
+                    bottom:${Math.random() * 20 - 10}%;
+                    animation-duration:${Math.random() * 18 + 10}s;
+                    animation-delay:${Math.random() * 12}s;
+                    opacity:0;
+                `;
+                container.appendChild(p);
+            }
+        })();
+
+        // === Animated Stat Counters ===
+        function animateCounters() {
+            document.querySelectorAll('.hero-stat-number').forEach(el => {
+                const target = parseInt(el.dataset.target, 10);
+                const duration = 1800;
+                const start = performance.now();
+                function update(now) {
+                    const t = Math.min((now - start) / duration, 1);
+                    const ease = 1 - Math.pow(1 - t, 3);
+                    el.textContent = Math.floor(ease * target) + (t < 1 ? '' : '+');
+                    if (t < 1) requestAnimationFrame(update);
+                    else el.textContent = target + '+';
+                }
+                requestAnimationFrame(update);
+            });
+        }
+
+        // Trigger when hero is visible
+        const heroObserver = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                animateCounters();
+                heroObserver.disconnect();
+            }
+        }, { threshold: 0.3 });
+        const heroSection = document.getElementById('home');
+        if (heroSection) heroObserver.observe(heroSection);
+    </script>
+</body>
+
+</html>
