@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 96: Code Editor - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #18181b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            color: #f4f4f5;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            color: #e4e4e7;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            background: #3f3f46;
+            color: #a1a1aa;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1400px;
+            height: calc(100vh - 200px);
+            background: #27272a;
+            border-radius: 12px;
+            border: 1px solid #3f3f46;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 1);
+        }
+
+        .panels {
+            display: flex;
+            height: 50%;
+            background: #18181b;
+        }
+
+        .panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #3f3f46;
+            border-bottom: 1px solid #3f3f46;
+        }
+
+        .panel:last-child {
+            border-right: none;
+        }
+
+        .panel-header {
+            background: #27272a;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #a1a1aa;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #3f3f46;
+        }
+
+        .html-icon {
+            color: #f97316;
+        }
+
+        .css-icon {
+            color: #3b82f6;
+        }
+
+        .js-icon {
+            color: #eab308;
+        }
+
+        textarea {
+            flex: 1;
+            background: #1e1e24;
+            /* Slightly different dark */
+            color: #d4d4d8;
+            border: none;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+        }
+
+        textarea:focus {
+            background: #111;
+        }
+
+        .preview-area {
+            height: 50%;
+            background: #fff;
+            /* Preview area should be white by default usually, or transparent so body color shows if no body color */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .preview-header {
+            background: #27272a;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #a1a1aa;
+            border-bottom: 1px solid #3f3f46;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding-top: 40px;
+            /* space for absolute header */
+        }
+
+        @media (max-width: 768px) {
+            .panels {
+                flex-direction: column;
+                height: 100%;
+            }
+
+            .preview-area {
+                height: 100%;
+                min-height: 400px;
+            }
+
+            .editor-container {
+                height: auto;
+            }
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #a1a1aa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #f4f4f5;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1><i class="fas fa-laptop-code"></i> Live Code Editor</h1>
+        <span class="level">Grandmaster Project</span>
+
+        <!-- Tutorial Section -->
+        <div class="step-by-step" style="text-align: left; margin: 0 auto 1.5rem auto; max-width: 900px; width: 100%;">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <div class="step">
+                <h4>Stap 1: De iFrame als Sandbox</h4>
+                <p>We gebruiken een <code>&lt;iframe&gt;</code> als zandbak (sandbox) voor de preview. We genereren
+                    dynamisch een volledige HTML-pagina als string en schrijven die met <code>document.write()</code>.
+                </p>
+                <div class="code-example" style="background: #1e1e24; color: #d4d4d8;">
+                    <pre><span style="color:#569cd6">const</span> fullDoc = `&lt;!DOCTYPE html&gt;
+&lt;html&gt;&lt;head&gt;&lt;style&gt;${css}&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;${html}&lt;script&gt;${js}&lt;/script&gt;&lt;/body&gt;
+&lt;/html&gt;`;
+
+<span style="color:#569cd6">const</span> doc = iframe.contentDocument;
+doc.<span style="color:#dcdcaa">open</span>();
+doc.<span style="color:#dcdcaa">write</span>(fullDoc);
+doc.<span style="color:#dcdcaa">close</span>();</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips" style="max-width: 900px; width: 100%; margin: 0 auto 1rem auto; text-align: left;">
+            <h3>✅ Jouw Opdracht</h3>
+            <ul>
+                <li>Typ HTML, CSS en JavaScript in de editors en zie de preview live updaten!</li>
+                <li>Maak een animatie met CSS <code>@keyframes</code> of een knop die een alert toont!</li>
+            </ul>
+        </div>
+
+        <div class="expandable" id="expansions" style="max-width: 900px; width: 100%; margin: 0 auto;">
+            <div class="tips" style="text-align: left;">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <ul>
+                    <li><strong>Syntax Highlighting:</strong> Integreer de <em>CodeMirror</em> bibliotheek voor syntax
+                        highlighting in de editors!</li>
+                    <li><strong>Opslaan:</strong> Sla de code op in localStorage zodat het bewaard blijft na een
+                        herlaad!</li>
+                </ul>
+            </div>
+        </div>
+        <button onclick="toggleExpansions()"
+            style="display: block; margin: 1rem auto; background: #3f3f46; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">📖
+            Toon Uitbreidingsmogelijkheden</button>
+    </div>
+
+    <div class="editor-container">
+        <!-- Code Panels -->
+        <div class="panels">
+            <div class="panel">
+                <div class="panel-header"><i class="fab fa-html5 html-icon"></i> HTML</div>
+                <textarea id="html-code" placeholder="Write HTML here..."><h1>Hallo Wereld!</h1>
+<p>Dit is een live preview.</p></textarea>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header"><i class="fab fa-css3-alt css-icon"></i> CSS</div>
+                <textarea id="css-code" placeholder="Write CSS here...">h1 {
+  color: #3b82f6;
+  text-align: center;
+  margin-top: 50px;
+}
+p {
+  text-align: center;
+  color: #666;
+  font-family: sans-serif;
+}</textarea>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header"><i class="fab fa-js js-icon"></i> JavaScript</div>
+                <textarea id="js-code" placeholder="Write JS here...">// Je javascript code</textarea>
+            </div>
+        </div>
+
+        <!-- Preview Panel -->
+        <div class="preview-area">
+            <div class="preview-header"><i class="fas fa-play"></i> Preview</div>
+            <iframe id="preview-frame"></iframe>
+        </div>
+    </div>
+
+    <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+
+    <script>
+        const htmlCode = document.getElementById('html-code');
+        const cssCode = document.getElementById('css-code');
+        const jsCode = document.getElementById('js-code');
+        const previewFrame = document.getElementById('preview-frame');
+
+        function updatePreview() {
+            // Get content from textareas
+            const html = htmlCode.value;
+            const css = cssCode.value;
+            const js = jsCode.value;
+
+            // Construct full HTML document
+            const fullDoc = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        ${css}
+                    </style>
+                </head>
+                <body>
+                    ${html}
+                    <script>
+                        try {
+                            ${js}
+                        } catch (err) {
+                            console.error("JavaScript Error in Live Editor: ", err);
+                        }
+                    <\/script>
+                </body>
+                </html>
+            `;
+
+            // Write to iframe document
+            const previewDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+            previewDoc.open();
+            previewDoc.write(fullDoc);
+            previewDoc.close();
+        }
+
+        // Add event listeners to update on input
+        htmlCode.addEventListener('input', updatePreview);
+        cssCode.addEventListener('input', updatePreview);
+        jsCode.addEventListener('input', updatePreview);
+
+        // Initial preview load
+        updatePreview();
+    </script>
+    <script>
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

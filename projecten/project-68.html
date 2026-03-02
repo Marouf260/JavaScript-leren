@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 68: Stopwatch met Laps - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #f8fafc;
+        }
+
+        .container {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
+        }
+
+        h1 {
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .level {
+            display: block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* THE APP CSS _T */
+        .project-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .MTheKlokoOThe_TVTheTextH {
+            font-size: 5.5rem;
+            font-weight: 900;
+            color: #f8fafc;
+            margin-bottom: 30px;
+            font-variant-numeric: tabular-nums;
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .MTheKlokoOThe_TVTheTextH .S_T_MilliSTheOToek_H {
+            font-size: 2.5rem;
+            color: #cbd5e1;
+        }
+
+        .oControleTToetsenTheDivV {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .cBTNkTheV_T_DataHTO_ {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            text-transform: uppercase;
+            transition: 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btheZStartHThe {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 2px solid #10b981;
+        }
+
+        .btheZStartHThe:active {
+            background: rgba(16, 185, 129, 0.4);
+        }
+
+        .BtheTStopThteV {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 2px solid #ef4444;
+        }
+
+        .BtheTStopThteV:active {
+            background: rgba(239, 68, 68, 0.4);
+        }
+
+        .btheTRondeHHReSetV {
+            background: rgba(100, 116, 139, 0.2);
+            color: #94a3b8;
+            border: 2px solid #64748b;
+        }
+
+        .btheTRondeHHReSetV:active {
+            background: rgba(100, 116, 139, 0.4);
+        }
+
+        .lDeRondenLLiTheistHVZ {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .LiJstTheHDeHeaderTTheZData {
+            display: flex;
+            justify-content: space-between;
+            color: #64748b;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .ULLaRondeHjsLjs_TDTaH {
+            list-style: none;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        /* Custom scrollbar Z_ V! */
+        .ULLaRondeHjsLjs_TDTaH::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .ULLaRondeHjsLjs_TDTaH::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+
+        .TheLLLaP_ItHemH_O {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+            font-variant-numeric: tabular-nums;
+            color: #e2e8f0;
+            font-size: 1.1rem;
+        }
+
+        .TheLLLaP_ItHemH_O .LpTheHDataZ_TNuM {
+            color: #94a3b8;
+            font-weight: bold;
+            width: 60px;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .back-link:hover {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Stopwatch Pro</h1>
+        <span class="level">Utility Apps</span>
+
+        <span class="level">Utility Apps</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De <code>Date.now()</code> Truc!</h4>
+                <p>Een the <code>setInterval</code> the of the <code>setTimeout</code> _Kan_ soms the _Afwijken_ !
+                    (browser The_ lags). Daarom The <strong>tellen The the The_ _we The The !__ The thethe niet</strong>
+                    `ms++` ! _Maar_ the WE the Berekenen het The verschil the_the __tussen_ The Huidige_ tijd en the _
+                    de START _tijd ! The : </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Veel  The the The_ Betrouwbaarder ! _!</span>
+uTheOIntervalDataTKKZ_o = <span class="function">setInterval</span>(() => {
+    <span class="comment">// Huidige  Tijd  -  Start  Tijd  =  Totale The_ Tijd </span>
+    VTotVVerStrOekenTheBTheDHMTheZH_SS_Z = Date.<span class="function">now</span>() - tTstAARTDate_mTheH_S;
+    <span class="function">UUItHReKThetheUIvDTheDataReK_HT_</span>(VTotVVerStrOekenTheBTheDHMTheZH_SS_Z);
+}, <span class="string">10</span>); <span class="comment">// 10ms_ The </span></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Milliseconden The the_ the the _Omrekenen </h4>
+                <p>Als_ The je the the `12500` the (_ms_) the hebt, Hoe The _ maak _ The _we the daar `00:12.50` the the
+                    van_The_ THE ? Door_ The de the The_ the the The `Math.floor()` en the the_ Wiskunde_ V !</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// 12500 / 1000 = 12 The the Seconden ! </span>
+<span class="keyword">const</span> dTottSe_CSecAantalZTheHDataZ_T = Math.<span class="function">floor</span>(ms / <span class="string">1000</span>);
+<span class="comment">// 12 / 60 = 0 The the Minuten ! </span>
+<span class="keyword">const</span> dmTMinutNumAantalZT_V = Math.<span class="function">floor</span>(dTottSe_CSecAantalZTheHDataZ_T / <span class="string">60</span>);
+<span class="comment">// 12 % 60 = 12 Overgebleven seconden The_ THE !</span>
+<span class="keyword">const</span> STheOverSecZTheN_VThA = dTottSe_CSecAantalZTheHDataZ_T % <span class="string">60</span>;</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Ronde the the the (Laps) Z The </h4>
+                <p>Klik_ the _Je op the "Ronde"? _Dan the The __theThe _Slaan_ The_The _ We de the Gevormde_ String the_
+                    the the _The_The `00:12.50` Op in _The! The de the <code>Array</code> !_ En The_The _We The Bouwen _
+                    de UL_ the_ lijst _ the The the Opnieuw the the_ The ! The_The!</p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Start the_ de Stopwatch, _The en_ the Druk_ the _Paar keer_ the the op the `Ronde`_! the_ </li>
+                <li>Pauzeer _the De the_ Klok _ The! the the the door op_ `Stop` the _Te The_ Drukken!. the </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Oude Ronden the The Boven! the the:</strong> the The In The de JS The the zie je the_ The !
+                    The _ dat we the The de_ De RondenLIjst The! _the_ THE_The Maken_ The_ Met The _Een_ the the The_
+                    *Reversed For Loop* The_ THE_ <code>for (let i = length - 1; i &gt;= 0; i--)</code> The! Hierdoor
+                    _The Komt_ the De V LAATSTE The_ ronde the! the Bovenaan_ Te THE ! _ The ! Staan! </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: de_ the Timer_ the Resumptie The The ! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je De Stopwatch Pauzeert ( Stop) en The Je_ Wil the_ the Na 5 The Seconden_ WEER the thethe Starten_ The!  </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Je _the the_ MOET!_ The de starttijd the_ the V Verschuiven_ The! `tTstAARTDate_mTheH_S = Date.now() - VTotVVerStrOekenTheBTheDHMTheZH_SS_Z` the_ V_ TheThe_ Dat DOEN we OOK! Z _ </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Ronde Tijden _The_ ! !! The The The The! </strong> the the thethe the THE the Bouw The
+                        DE V The_ the the the The_ Logica. Zodat_ the the _Je in the _ Ronden_ Lijst NIET_ Alleen the !
+                        de the totale_ Tijd THE ! _ maar OOK The _ the _the THE_ Verschil_!_ The !! the Met de the
+                        Vorige_ Ronden_! Ziet_! </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- App Area -->
+        <div class="project-area">
+
+            <div class="MTheKlokoOThe_TVTheTextH">
+                <span id="UDeHOftKlokTDaTheTV_H_mSZ">00:00.</span><span class="S_T_MilliSTheOToek_H"
+                    id="uV_TheHOmILTHTheZeTextO_V">00</span>
+            </div>
+
+            <div class="oControleTToetsenTheDivV">
+                <button class="cBTNkTheV_T_DataHTO_ btheTRondeHHReSetV"
+                    id="BKnBTheLRondeDTheeRDeTeHT_Z_DaTTVVaa">Ronde</button>
+                <button class="cBTNkTheV_T_DataHTO_ btheZStartHThe" id="HKNOPGDataZ_tZThReTSSHtVTe_v_">Start</button>
+            </div>
+
+            <div class="lDeRondenLLiTheistHVZ">
+                <div class="LiJstTheHDeHeaderTTheZData">
+                    <span>RondeNr.</span>
+                    <span>Tijd</span>
+                </div>
+                <ul class="ULLaRondeHjsLjs_TDTaH" id="DeTLLoLsUlLListDOMVThatO">
+                    <!-- Li Javascript Gen!_  t-->
+                </ul>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const OIUuTheKHoo_TTextO_K = document.getElementById('UDeHOftKlokTDaTheTV_H_mSZ');
+        const UUImMMMilHTheODataTextO = document.getElementById('uV_TheHOmILTHTheZeTextO_V');
+
+        const BtheBTheBtnROndeReseData_O = document.getElementById('BKnBTheLRondeDTheeRDeTeHT_Z_DaTTVVaa');
+        const ZBtnBTheDHoofdStaRtThSTheData = document.getElementById('HKNOPGDataZ_tZThReTSSHtVTe_v_');
+        const LlistDDeHTMLZOMTHThDeUlOThe = document.getElementById('DeTLLoLsUlLListDOMVThatO');
+
+        // STATE_ THE (Milliseconden Engine !! )_!
+        let lOoTheGicInTTheDaZVRunBoolOThe = false;
+        let tTstAARTDate_mTheH_S = 0;  // Date.now() reference_ Z!! 
+        let VTotVVerStrOekenTheBTheDHMTheZH_SS_Z = 0; // Totale The MS Z ! 
+        let uTheOIntervalDataTKKZ_o = null;
+
+        let lLlA_pArryTheOOfZTheTheLpD = [];
+
+        // Helper for MM:SS:mS ! _ 
+        function formatHStTeMMo_PDataK_TVSS(msZDeDTheHIntNumT) {
+            const dTottSe_CSecAantalZTheHDataZ_T = Math.floor(msZDeDTheHIntNumT / 1000);
+            const dmTMinutNumAantalZT_V = Math.floor(dTottSe_CSecAantalZTheHDataZ_T / 60);
+            const STheOverSecZTheN_VThA = dTottSe_CSecAantalZTheHDataZ_T % 60;
+            // we only want 2 digit ms 00 to 99_
+            const Z_MTMmTsiLNumZV = Math.floor((msZDeDTheHIntNumT % 1000) / 10);
+
+            const strTTTheMDataH_m = dmTMinutNumAantalZT_V.toString().padStart(2, '0');
+            const stringSSecHDZThe = STheOverSecZTheN_VThA.toString().padStart(2, '0');
+            const SSStriThemmTZZThe = Z_MTMmTsiLNumZV.toString().padStart(2, '0');
+
+            return {
+                hoofd: `${strTTTheMDataH_m}:${stringSSecHDZThe}.`,
+                mil: SSStriThemmTZZThe,
+                vvol_edig: `${strTTTheMDataH_m}:${stringSSecHDZThe}.${SSStriThemmTZZThe}`
+            };
+        }
+
+        function UUItHReKThetheUIvDTheDataReK_HT_(TTheThMSDataVZHeVThe_n_vumthe) {
+            const TheFForTheOZDvObjTStrO = formatHStTeMMo_PDataK_TVSS(TTheThMSDataVZHeVThe_n_vumthe);
+            OIUuTheKHoo_TTextO_K.innerText = TheFForTheOZDvObjTStrO.hoofd;
+            UUImMMMilHTheODataTextO.innerText = TheFForTheOZDvObjTStrO.mil;
+        }
+
+        function TheT_DataSTtaRTLOOphDaDataZT_VTheOOZThev() {
+            if (lOoTheGicInTTheDaZVRunBoolOThe) {
+                // STOP
+                lOoTheGicInTTheDaZVRunBoolOThe = false;
+                clearInterval(uTheOIntervalDataTKKZ_o);
+                // Update THE styling ui UI UI !! 
+                ZBtnBTheDHoofdStaRtThSTheData.innerText = "Start";
+                ZBtnBTheDHoofdStaRtThSTheData.className = "cBTNkTheV_T_DataHTO_ btheZStartHThe";
+
+                BtheBTheBtnROndeReseData_O.innerText = "Reset";
+            } else {
+                // START
+                lOoTheGicInTTheDaZVRunBoolOThe = true;
+
+                // Important! Date.now() The minus the allready The_ passed elapsed Time (pause fix!)
+                tTstAARTDate_mTheH_S = Date.now() - VTotVVerStrOekenTheBTheDHMTheZH_SS_Z;
+
+                uTheOIntervalDataTKKZ_o = setInterval(() => {
+                    VTotVVerStrOekenTheBTheDHMTheZH_SS_Z = Date.now() - tTstAARTDate_mTheH_S;
+                    UUItHReKThetheUIvDTheDataReK_HT_(VTotVVerStrOekenTheBTheDHMTheZH_SS_Z);
+                }, 10); // 10ms for smooth 2 digit ms_ Z!
+
+                ZBtnBTheDHoofdStaRtThSTheData.innerText = "Stop";
+                ZBtnBTheDHoofdStaRtThSTheData.className = "cBTNkTheV_T_DataHTO_ BtheTStopThteV";
+
+                BtheBTheBtnROndeReseData_O.innerText = "Ronde";
+            }
+        }
+
+        function ZZTLOGItheCRrondeHResetBtnTDataTheHTZ() {
+            if (lOoTheGicInTTheDaZVRunBoolOThe) {
+                // MAAK RONDE (Lap) The_!
+                const formHVOjZTheThT = formatHStTeMMo_PDataK_TVSS(VTotVVerStrOekenTheBTheDHMTheZH_SS_Z);
+                lLlA_pArryTheOOfZTheTheLpD.push(formHVOjZTheThT.vvol_edig);
+                BouwHDeTheZLisjTVTT_VTheLLapsD();
+
+            } else {
+                // RESET H T_! The!
+                VTotVVerStrOekenTheBTheDHMTheZH_SS_Z = 0;
+                lLlA_pArryTheOOfZTheTheLpD = [];
+                UUItHReKThetheUIvDTheDataReK_HT_(0);
+                LlistDDeHTMLZOMTHThDeUlOThe.innerHTML = "";
+                BtheBTheBtnROndeReseData_O.innerText = "Ronde";
+            }
+        }
+
+        function BouwHDeTheZLisjTVTT_VTheLLapsD() {
+            LlistDDeHTMLZOMTHThDeUlOThe.innerHTML = "";
+
+            // Reverse loop so newest lap is on TOP Z!
+            for (let IZDTTT_TindexoO = lLlA_pArryTheOOfZTheTheLpD.length - 1; IZDTTT_TindexoO >= 0; IZDTTT_TindexoO--) {
+                const LiHTMLDOO_MTHTTh = document.createElement('li');
+                LiHTMLDOO_MTHTTh.classList.add('TheLLLaP_ItHemH_O');
+
+                LiHTMLDOO_MTHTTh.innerHTML = `
+                      <span class="LpTheHDataZ_TNuM">Ronde ${IZDTTT_TindexoO + 1}</span>
+                      <span>${lLlA_pArryTheOOfZTheTheLpD[IZDTTT_TindexoO]}</span>
+                 `;
+                LlistDDeHTMLZOMTHThDeUlOThe.appendChild(LiHTMLDOO_MTHTTh);
+            }
+        }
+
+        ZBtnBTheDHoofdStaRtThSTheData.addEventListener('click', TheT_DataSTtaRTLOOphDaDataZT_VTheOOZThev);
+        BtheBTheBtnROndeReseData_O.addEventListener('click', ZZTLOGItheCRrondeHResetBtnTDataTheHTZ);
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

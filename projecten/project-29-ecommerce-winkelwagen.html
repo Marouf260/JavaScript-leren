@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 29: E-commerce Winkelwagen - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Store Area */
+        .project-area {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 20px;
+            border: 2px dashed #3f51b5;
+        }
+
+        @media(max-width: 768px) {
+            .project-area {
+                flex-direction: column;
+            }
+        }
+
+        .products-section {
+            flex: 2;
+        }
+
+        .cart-section {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 2px solid #e0e0e0;
+            border-style: dashed;
+        }
+
+        .cart-section.drag-over {
+            border-color: #3f51b5;
+            background: #ccd2f0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            cursor: grab;
+        }
+
+        .product-card:active {
+            cursor: grabbing;
+            opacity: 0.8;
+        }
+
+        .product-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .product-title {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: #3f51b5;
+            margin-bottom: 10px;
+        }
+
+        .add-to-cart-btn {
+            background: #3f51b5;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #283593;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .cart-header h3 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: #333;
+        }
+
+        .cart-count {
+            background: #3f51b5;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .cart-items {
+            min-height: 150px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border-left: 4px solid #3f51b5;
+        }
+
+        .cart-item-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-item-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .cart-item-price {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .del-btn {
+            background: #ff5252;
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .checkout-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .checkout-btn:hover {
+            background: #388e3c;
+        }
+
+        .empty-cart-msg {
+            text-align: center;
+            color: #999;
+            padding: 20px 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 29: E-commerce Winkelwagen</h1>
+        <span class="level">Master</span>
+        <p class="description">Bouw een volledig uitgeruste webshop karretje met Drag-and-Drop functionaliteit!</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: HTML Elementen Draggable maken</h4>
+                <p>Om een element versleepbaar te maken in HTML5, hoeven we gelukkig geen ingewikkelde muis-tracking
+                    scripts te schrijven. We voegen simpelweg het attribuut <code>draggable="true"</code> toe aan ons
+                    element!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Tijdens the het genereren van the De productkaart:the</span>
+<span class="keyword">const</span> card = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
+card.className = <span class="string">'product-card'</span>;
+card.draggable = <span class="keyword">true</span>; <span class="comment">// 👈 Magisch attribuut!</span></pre>
+                </div>
+                <p><strong>Uitleg:</strong> Vanaf nu herkent de hele browser dat dit specifieke DOM-element mag worden
+                    vastgepakt. Er verschijnt automatisch een "ghost" image onder je cursor als je klikt en sleept de
+                    the.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Data inpakken in the Drag (dataTransfer)the</h4>
+                <p>Als we the iets the verslepen, moeten De we onthouden <em>wat</em> the We the precies the vasthebben
+                    the. The we gebruiken Het <code>dragstart</code> the event The om een mini-The datablokje the (in
+                    the the dit The the The the the the the the the the thethethe the the the The the the the The the
+                    the the the thethethethethethethethethe theThethe The geval Het het \product ID) onzichtbaar The the
+                    thethe The mee the te sturen. thethe</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>card.addEventListener(<span class="string">'dragstart'</span>, (e) => {
+    <span class="comment">// Stop de The ID the van het The Product the the in het onzichtbare the The postpakketjethe the thethe</span>
+    e.dataTransfer.<span class="function">setData</span>(<span class="string">'text/plain'</span>, product.id);
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>e.dataTransfer.setData</code> is the the the the the The The
+                    equivalent The the THE van een post-it The briefje op the The het the the thetheTheTheThe drag-item
+                    theTheTheTheTheTheTheTheThe plakkenthothethetheThe thatthethe TheThe The later the the THE Thethe
+                    the de the the the the ontvanger the THE kan the The theTHE uitlezenthothe Thethe The Thethe THE
+                    Thethe The thethe the thethe theThe TheThe theThethe the THEthethe The the The The thethe Thethe the
+                    theTheThe the
+                <p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Een the dropping the The thethe the zone Maken & the The Data the The UitlezenTheThe</h4>
+                <p>Niet the The the the the the elke The the the thethe thethe thethe plek in de thethe the TheThe the
+                    The thetheTheThethe browser is the The The the thethe standaarda The theThe THE thethe acceptabel
+                    the The the om dropjes te THE THE the then. the the The you the The <strong>moet</strong> The
+                    <code>dragover</code> The Thethe event The intercepten! The The
+                </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// 1. Sta THE the the THE dropping toe The the op the de kar the the the The</span>
+cartSection.addEventListener(<span class="string">'dragover'</span>, (e) => {
+    e.<span class="function">preventDefault</span>(); <span class="comment">// Belangrijk! the THE The Zonder the ditThe the The the the the is the the The drop the The the the THE Thethe illegialthe! The The</span>
+});
+
+<span class="comment">// 2. The THE Lees de the The the The ID the The THE uit the The THE the theals the het The the the item the the valtThe the the</span>
+cartSection.addEventListener(<span class="string">'drop'</span>, (e) => {
+    e.<span class="function">preventDefault</span>();
+    
+    <span class="comment">// THE thethe the the the thePak the de the the The id The the the the THEthe TheThe uit de THEThe dataTransfer the the TheThe</span>
+    <span class="keyword">const</span> id = e.dataTransfer.<span class="function">getData</span>(<span class="string">'text/plain'</span>);
+    <span class="function">addToCart</span>(<span class="function">parseInt</span>(id));
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Door The <code>e.preventDefault()</code> in The de The theThe THE the the
+                    the the <code>dragover</code> thethe THE vertellen TheThe we The the de browser the : The Thethe the
+                    "theTheTheThe Ja the thethethe thethethe the, dit is een veilige The zone thetheThe to the drop!"
+                    Thethethe thatthe. BIj The the THE TheThethetheTheThe dropdown The TheThethe lezen we the thehet the
+                    the briefje The THE weer uitthe TheThe en voegen The we thehet thethetheTHE toe the aan de the the
+                    winkelmand!.thetheThetheThe</p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Totalen Berekenen met Reduce)</h3>
+            <pre><span class="keyword">function</span> <span class="function">updateCart</span>() {
+    <span class="comment">// ... UI Rendering Code ...</span>
+
+    <span class="comment">// Update totale getallen the the met the krachtige the the The array.reduce().The theThe the the</span>
+    cartCount.innerText = cart;
+
+    <span class="comment">// Tel de the prijs van ELK The individualthethethe thethe item in the de kar op by de the target 'acc' The (accumulator)thetheThethethe</span>
+    <span class="keyword">const</span> total = cart.<span class="function">reduce</span>((acc, item) => acc + item.price, <span class="string">0</span>);
+    
+    totalPrice.innerText = <span class="string">`€${total.toFixed(2)}`</span>;
+}</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Druk op the de knop THE the the the "the the ToevoegenThe", the <strong>the thethe óf thekliktheen
+                        The the the Thethesleep the(Drag ) The the the ThethetheThe eenthe item uit The the dede THE
+                        linker container the rechsThe naar thehet roze /blauwe The "Winkelwagen"thethe blok the the
+                        theThe The The!</strong></li>
+                <li>Druk in de the the Thethethe The THEthe winkelwagenthe thetheTheThethe bij een Thethe item thetheThe
+                    TheThe theThethe optheThe THE deerode THE X the The the The om Thethethethehet THEthe theThe
+                    individual item Theweerthe the the THEtheuit the Thethejethhe kar thethe THE theth te the
+                    theggooien. The TheThe</li>
+                <li>Bekijk hoe de Thethethe The <i>Totalen</i> (Prijs theThe&Aantalthe theThetheThe) automatishThetheThe
+                    TheThe the thetheThe verandernnthethebijTHEthe the The elke wijziging in Thethe theThe dearray
+                    THE!the The TheTh</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Waarom <code>Math.random()</code> als cartId?</strong> Als we tweemaal <i>dezelfde</i>
+                    koptelefoon in ons mandje leggen, hebben ze dezelfde <code>id</code> (= 1). Als we dan de eerste
+                    koptelefoon verwijderen, dan verwijdert <code>cart.filter()</code> BEIDE items uit onze kar! Door
+                    bij het toevoegen een random, unieke <code>cartId</code> toe te voegen, kunnen we exact die ene
+                    specifieke koptelefoon deleten!</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: <code>e.preventDefault()</code> vergeten in de <code>dragover</code>!</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Als je het <code>dragover</code> event niet opvangt en de default HTML prevent (tegenhoudt), dan zal de browser de <code>drop</code> functionaliteit NOOIT vuren! Dit is de meest gemaakte fout bij Drag & Drop.</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Hoeveelheden (Quantities):</strong> In plaats van hetzelfde item als losse elementen in
+                        de wagen te stoppen, check of het <code>id</code> al in de <code>cart</code> array staat. Zo ja?
+                        Verhoog dan een <code>item.quantity++</code> field in plaats van een <code>push</code> te doen!
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <div class="products-section">
+                <h3 style="margin-bottom: 15px; color: #333;">Producten</h3>
+                <div class="products-grid" id="products">
+                    <!-- Products injected -->
+                </div>
+            </div>
+
+            <div class="cart-section" id="cartSection">
+                <div class="cart-header">
+                    <h3>Winkelwagen</h3>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+
+                <div class="cart-items" id="cartItems">
+                    <!-- Items injected -->
+                </div>
+
+                <div class="cart-total">
+                    <span>Totaal:</span>
+                    <span id="totalPrice">€0.00</span>
+                </div>
+
+                <button class="checkout-btn" onclick="alert('Demo voltooid! (Geen echte aankoop)')">Afrekenen</button>
+            </div>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const products = [
+            { id: 1, name: 'Draadloze Koptelefoon', price: 89.99, img: '🎧' },
+            { id: 2, name: 'Slimme Horloge', price: 199.50, img: '⌚' },
+            { id: 3, name: 'Mechanisch Toetsenbord', price: 125.00, img: '⌨️' },
+            { id: 4, name: 'Gaming Muis', price: 59.90, img: '🖱️' }
+        ];
+
+        let cart = [];
+
+        const productsContainer = document.getElementById('products');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cartCount');
+        const totalPrice = document.getElementById('totalPrice');
+        const cartSection = document.getElementById('cartSection');
+
+        function renderProducts() {
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.draggable = true;
+
+                // Drag and Drop Events
+                card.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', product.id);
+                    card.style.opacity = '0.5';
+                });
+                card.addEventListener('dragend', () => {
+                    card.style.opacity = '1';
+                });
+
+                card.innerHTML = `
+                    <div style="font-size: 3rem; margin-bottom: 10px;">${product.img}</div>
+                    <div class="product-title">${product.name}</div>
+                    <div class="product-price">€${product.price.toFixed(2)}</div>
+                    <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Toevoegen</button>
+                `;
+                productsContainer.appendChild(card);
+            });
+        }
+
+        // Cart Drop Zone Events
+        cartSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            cartSection.classList.add('drag-over');
+        });
+
+        cartSection.addEventListener('dragleave', () => {
+            cartSection.classList.remove('drag-over');
+        });
+
+        cartSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            cartSection.classList.remove('drag-over');
+            const id = e.dataTransfer.getData('text/plain');
+            if (id) addToCart(parseInt(id));
+        });
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+
+            // Controleer of product al in cart zit, we gaan niet stacken in deze simpele demo, gewoon toevoegen per lijn
+            cart.push({
+                cartId: Math.random(), // Unieke ID voor item in wagen
+                ...product
+            });
+
+            updateCart();
+        }
+
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            updateCart();
+        }
+
+        function updateCart() {
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="empty-cart-msg">Sleep items hierheen of klik toevoegen.</div>';
+            } else {
+                cart.forEach(item => {
+                    const el = document.createElement('div');
+                    el.className = 'cart-item';
+                    el.innerHTML = `
+                        <div class="cart-item-info">
+                            <span class="cart-item-title">${item.img} ${item.name}</span>
+                            <span class="cart-item-price">€${item.price.toFixed(2)}</span>
+                        </div>
+                        <button class="del-btn" onclick="removeFromCart(${item.cartId})">X</button>
+                    `;
+                    cartItemsContainer.appendChild(el);
+                });
+            }
+
+            // Update totale getallen
+            cartCount.innerText = cart.length;
+            const total = cart.reduce((acc, item) => acc + item.price, 0);
+            totalPrice.innerText = `€${total.toFixed(2)}`;
+        }
+
+        // Initialize
+        renderProducts();
+        updateCart();
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

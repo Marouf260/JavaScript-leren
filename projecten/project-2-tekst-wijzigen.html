@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 2: Tekst Wijzigen - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #D4EDDA;
+            color: #155724;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 2: Tekst Wijzigen</h1>
+        <span class="level">Beginner</span>
+        <p class="description">Wijzig tekst in een element wanneer je op een knop klikt.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je hoe je tekst dynamisch kunt wijzigen in een HTML element. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>Elementen selecteren met getElementById</li>
+                <li>Event listeners toevoegen aan knoppen</li>
+                <li>De textContent eigenschap gebruiken om tekst te wijzigen</li>
+                <li>Het verschil tussen textContent en innerHTML begrijpen</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>textContent</strong> - Eigenschap om alleen tekst te wijzigen (veilig tegen XSS)</li>
+                <li><strong>innerHTML</strong> - Eigenschap om HTML code toe te voegen (kan gevaarlijk zijn)</li>
+                <li><strong>getElementById()</strong> - Selecteert een element op basis van zijn ID attribuut</li>
+                <li><strong>addEventListener('click')</strong> - Luistert naar klik events op een element</li>
+                <li><strong>Event-driven programming</strong> - Code die reageert op gebruikersacties</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: Elementen selecteren</h4>
+                <p>Eerst moeten we de elementen uit de HTML halen die we nodig hebben:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> tekst = document.<span class="function">getElementById</span>(<span class="string">'change-text'</span>);
+<span class="keyword">const</span> knop = document.<span class="function">getElementById</span>(<span class="string">'change-btn'</span>);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We gebruiken <code>getElementById</code> om beide elementen te vinden. De IDs moeten exact overeenkomen met de IDs in je HTML.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: Event Listener toevoegen</h4>
+                <p>We luisteren naar klik events op de knop:</p>
+                <div class="code-example">
+                    <pre>knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    <span class="comment">// Code die uitgevoerd wordt bij klik</span>
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Wanneer de gebruiker op de knop klikt, wordt de functie uitgevoerd die we als tweede parameter hebben gegeven.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Tekst wijzigen</h4>
+                <p>In de event listener functie wijzigen we de tekst:</p>
+                <div class="code-example">
+                    <pre>knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    tekst.textContent = <span class="string">'Tekst is gewijzigd!'</span>;
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>textContent</code> overschrijft alle tekst binnen het element. Dit is veiliger dan <code>innerHTML</code> omdat het geen HTML code uitvoert.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="comment">// Stap 1: Selecteer elementen</span>
+<span class="keyword">const</span> tekst = document.<span class="function">getElementById</span>(<span class="string">'change-text'</span>);
+<span class="keyword">const</span> knop = document.<span class="function">getElementById</span>(<span class="string">'change-btn'</span>);
+
+<span class="comment">// Stap 2 & 3: Event listener met tekst wijziging</span>
+knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    tekst.textContent = <span class="string">'Tekst is gewijzigd!'</span>;
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Selecteer het tekst element met getElementById</li>
+                <li>Selecteer de knop element</li>
+                <li>Voeg een click event listener toe aan de knop</li>
+                <li>Wijzig de textContent bij klik</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>textContent vs innerHTML:</strong> Gebruik <code>textContent</code> voor gewone tekst. Gebruik alleen <code>innerHTML</code> als je HTML tags nodig hebt, maar wees voorzichtig met gebruikersinput!</li>
+                <li><strong>Meerdere wijzigingen:</strong> Je kunt de tekst meerdere keren wijzigen door verschillende knoppen te maken of een toggle functie te gebruiken.</li>
+                <li><strong>Dynamische tekst:</strong> Je kunt variabelen gebruiken: <code>tekst.textContent = 'Hallo ' + naam;</code></li>
+                <li><strong>Conditional tekst:</strong> Gebruik if/else om verschillende teksten te tonen op basis van condities.</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Verkeerde ID naam</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - ID bestaat niet</span>
+<span class="keyword">const</span> tekst = document.<span class="function">getElementById</span>(<span class="string">'text'</span>); <span class="comment">// Moet 'change-text' zijn</span>
+
+<span class="comment">// ✅ GOED - Correcte ID</span>
+<span class="keyword">const</span> tekst = document.<span class="function">getElementById</span>(<span class="string">'change-text'</span>);</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Element selecteren voordat het bestaat</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Script staat boven HTML elementen</span>
+<span class="keyword">const</span> tekst = document.<span class="function">getElementById</span>(<span class="string">'change-text'</span>); <span class="comment">// null!</span>
+
+<span class="comment">// ✅ GOED - Script staat onderaan of gebruikt DOMContentLoaded</span>
+<span class="comment">// Script tag onderaan HTML of:</span>
+document.<span class="function">addEventListener</span>(<span class="string">'DOMContentLoaded'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">const</span> tekst = document.<span class="function">getElementById</span>(<span class="string">'change-text'</span>);
+});</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Vergeten event listener toe te voegen</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Geen event listener, tekst wijzigt niet</span>
+tekst.textContent = <span class="string">'Nieuwe tekst'</span>; <span class="comment">// Wordt direct uitgevoerd</span>
+
+<span class="comment">// ✅ GOED - Event listener zorgt voor reactie op klik</span>
+knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    tekst.textContent = <span class="string">'Nieuwe tekst'</span>;
+});</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Toggle functionaliteit:</strong> Wissel tussen twee teksten bij elke klik</li>
+                    <li><strong>Input veld:</strong> Laat gebruiker tekst invoeren en toon die in het element</li>
+                    <li><strong>Meerdere elementen:</strong> Wijzig meerdere elementen tegelijk met één klik</li>
+                    <li><strong>Animatie:</strong> Voeg een fade-in effect toe wanneer tekst wijzigt</li>
+                    <li><strong>Geschiedenis:</strong> Bewaar vorige teksten en voeg een "undo" knop toe</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: Toggle Functionaliteit</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">let</span> isGewijzigd = <span class="keyword">false</span>;
+
+knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (isGewijzigd) {
+        tekst.textContent = <span class="string">'Originele tekst'</span>;
+    } <span class="keyword">else</span> {
+        tekst.textContent = <span class="string">'Tekst is gewijzigd!'</span>;
+    }
+    isGewijzigd = !isGewijzigd;
+});</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <p id="change-text">Originele tekst</p>
+            <button id="change-btn" class="demo-btn">Wijzig Tekst</button>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const tekst = document.getElementById('change-text');
+        const knop = document.getElementById('change-btn');
+
+        knop.addEventListener('click', function() {
+            tekst.textContent = 'Tekst is gewijzigd!';
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 83: Speech Recognition API - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #faf5ff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #334155;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.15);
+            border: 2px solid #f3e8ff;
+            text-align: center;
+        }
+
+        h1 {
+            color: #581c87;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #e9d5ff;
+            color: #7e22ce;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* APP CSS H_T */
+        .project-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .OMmMtTicroVBTNTheHHdDeZ_H {
+            width: 100px;
+            height: 100px;
+            background: #a855f7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.4);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .OMmMtTicroVBTNTheHHdDeZ_H i {
+            font-size: 2.5rem;
+            color: white;
+            transition: 0.3s;
+        }
+
+        /* THE HOVER  The Z! H */
+        .OMmMtTicroVBTNTheHHdDeZ_H:hover {
+            transform: scale(1.05);
+            background: #9333ea;
+        }
+
+        /* THE_ The_ Recording  ACTIVE STATE! The V The */
+        .OMmMtTicroVBTNTheHHdDeZ_H.rRRcCOOrdInGGHThe_TTh {
+            background: #ef4444;
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.4);
+            animation: MmiIcCZOpPpulseH_Th 1.5s infinite;
+        }
+
+        @keyframes MmiIcCZOpPpulseH_Th {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(239, 68, 68, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        .mS_V_TMsstATUt_SsLbeA_DeTheH {
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* TEXT OUTPut H!The_ */
+        .UUITThhEeTrRranscRipitDoMB_BoxThe {
+            width: 100%;
+            min-height: 150px;
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #1e293b;
+            text-align: left;
+            position: relative;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        /* WThe V ! the als IE the actiev IS inThe the _ Box The! */
+        .UUITThhEeTrRranscRipitDoMB_BoxThe.AaActiiVETheTheBoxZ {
+            border-color: #a855f7;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);
+        }
+
+        /* De intermthe_ tekst_H _! The V The_(gray, live) */
+        .IIThIinteriImTTTextHTtheTT_V {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .bTBtnCWwWiiss_TheTheTxTTVH {
+            background: #cbd5e1;
+            color: #475569;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+            margin-left: auto;
+            display: block;
+        }
+
+        .bTBtnCWwWiiss_TheTheTxTTVH:hover {
+            background: #94a3b8;
+            color: white;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #9333ea;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+    <!-- FONT O !! Z ! -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎙️ Spraak Herkenning</h1>
+        <span class="level">Advanced APIs</span>
+        <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5;">Klik the the The op de
+            microfoon O_ The the en the the H_ The <strong>praat</strong> inThe het_The the_ V_ _Nederlands.
+            <br>(Ondersteund _ in Chrome/Edge, the The_ vraagt the om microfoon the H permissie!).
+        </p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De SpeechRecognition API</h4>
+                <p>De the_ the <strong>Web Speech API</strong>_ the is ingebouwd in_ Chrome/Edge! Op_ Other Browsers_
+                    the the Werkt the_ dit_ the possibly the_ <strong>Niet!</strong>. We_ the maken the _ een the
+                    <code>SpeechRecognition</code> Object. </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
+<span class="keyword">const</span> SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+<span class="keyword">const</span> herkenner = <span class="keyword">new</span> <span class="function">SR</span>();
+herkenner.lang = <span class="string">'nl-NL'</span>;
+herkenner.interimResults = <span class="keyword">true</span>; <span class="comment">// Live preview!</span>
+<span class="function">herkenner</span>.<span class="function">start</span>();</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: isFinal vs Interim Results</h4>
+                <p>De API the_ Stuurt Continu The! Results. The is_ een Result <code>isFinal</code> dan is_ the the de
+                    Zin the_ <strong>Definitief!</strong> The the _(100% Zeker). The the Anders the_ is het_ een_ the
+                    <strong>Interim</strong> the_ result ("gok,_ the nog bezig_"). </p>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik the_ OP de_ "Microfoon" the knop_The! the </li>
+                <li>Klik The! op the _ <strong>"Toestaan"</strong> the_ ! in the_ the DE the ! browser the _ popup!_
+                </li>
+                <li>Spreek The_ The the!_ Iets! the the Zin_ en_ Bekijk the the! hoe_ the Jouw the_! Woorden the
+                    Verschijnen_!_ </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong><code>continuous = true</code> :</strong> the The IN The de JS The zie je the_ The ! The _
+                    dat we this <code>true</code> Zetten! Dit The_ Zorg dat_ de the recognition the <strong>Niet
+                        Stopt</strong> The the Na één_ Zin! Zonder dit_ the stopp the_ de API The! na the the! de the_!
+                    eerste_ the Zin! </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: <code>Firefox</code> Errors! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - Firefox the the the ondersteunt the the de Web Speech the  API the NIET the_! This de is een Chrome/Edge API!</span>
+<span class="comment">// OPLOSSING: Gebruik Chrome the of Edge voor the! deze the demo_!</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Spraakcommando's! </strong> Luister the naar the specifieke the woorden! Als the de the
+                        gebruiker "Stop" the Zegt, the stop the dan the de the Herkenning the! Als the hij "Wis" the
+                        zegt, the wis dan de the tekst! </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- App Area -->
+        <div class="project-area">
+
+            <button class="OMmMtTicroVBTNTheHHdDeZ_H" id="uIiBttMn_H_MMMicHTheZZV">
+                <i class="fas fa-microphone"></i>
+            </button>
+
+            <div class="mS_V_TMsstATUt_SsLbeA_DeTheH" id="UISStTuatHMsTehZLxTtDTheV_G">Klik om the the The te the
+                starten</div>
+
+            <div class="UUITThhEeTrRranscRipitDoMB_BoxThe" id="UTThUiDoOMThBBxTxHDOv__Data_TheV">
+                <span id="ZtheFiinnDaaLTheDataHTxO"></span>
+                <span id="UDeTHvIIitneTHehRimmmThTxO_v" class="IIThIinteriImTTTextHTtheTT_V"></span>
+            </div>
+
+            <button class="bTBtnCWwWiiss_TheTheTxTTVH" id="KKNoOOPHThe_VWissHTheTTTTheT">Wis Tekst</button>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const BbBTnTheDMTheMOOHoMicVTheT = document.getElementById('uIiBttMn_H_MMMicHTheZZV');
+        const UTheISSSTaAutuTsHThe_O = document.getElementById('UISStTuatHMsTehZLxTtDTheV_G');
+        const BbTBoOXTRTaNScDOP_HOz = document.getElementById('UTThUiDoOMThBBxTxHDOv__Data_TheV');
+
+        const UUITHeFinfEHHxTxtDOMThO_O = document.getElementById('ZtheFiinnDaaLTheDataHTxO');
+        const iItneRmOHTxTeHTheV_ZZ_T = document.getElementById('UDeTHvIIitneTHehRimmmThTxO_v');
+        const BbVThHKNooOp_OWWISTh_T = document.getElementById('KKNoOOPHThe_VWissHTheTTTTheT');
+
+        // 1 INIT DE SPEECH_ THE _RECOGNITION THE  API !!
+        // WebSpeech API  is prefixed in the chrome: webkitSpeechRecognition THE !
+        const SSPTheeEc_CHReHCgniDtionO_v = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!SSPTheeEc_CHReHCgniDtionO_v) {
+            UTheISSSTaAutuTsHThe_O.innerText = "Browser ondersteunt The THE _ SpeechThe API the_The The_  NIET!";
+            UTheISSSTaAutuTsHThe_O.style.color = "#ef4444";
+            BbBTnTheDMTheMOOHoMicVTheT.style.display = "none";
+        } else {
+            const rREHCgg_ONiZzerThM__TheOThe = new SSPTheeEc_CHReHCgniDtionO_v();
+
+            // CONFIG THE THE !
+            rREHCgg_ONiZzerThM__TheOThe.continuous = true; // the_The the Blijf listeren_ Thetot we stoppen!_ THE The V
+            rREHCgg_ONiZzerThM__TheOThe.interimResults = true; // THE  Geef O!_The_ ook _The_ "live/gok" resultaten O! the terug THE 
+            rREHCgg_ONiZzerThM__TheOThe.lang = 'nl-NL'; // Taal The V_!
+
+            let iISTheAAn_THetLUIstSTterTenThVThe = false;
+
+            // STATE STRING (Bewaar The H ALLE The finished the sentences V!_)
+            let vVHHeTheLFInALeHTExstTT_SDtRriO = "";
+
+            // EVENT 1: START !H 
+            rREHCgg_ONiZzerThM__TheOThe.onstart = () => {
+                iISTheAAn_THetLUIstSTterTenThVThe = true;
+                BbBTnTheDMTheMOOHoMicVTheT.classList.add('rRRcCOOrdInGGHThe_TTh');
+                BbTBoOXTRTaNScDOP_HOz.classList.add('AaActiiVETheTheBoxZ');
+                UTheISSSTaAutuTsHThe_O.innerText = "Aan het the Luisteren... Spreek H The nu. The!";
+                UTheISSSTaAutuTsHThe_O.style.color = "#ef4444";
+            };
+
+            // EVENT 2: RESULT THE ! (Wordt ELKE The miliseconde getriggert O The als jepraat ! Z_D) !
+            rREHCgg_ONiZzerThM__TheOThe.onresult = (eeevNNttTDAatO) => {
+
+                let nNuuiVInhTHEtHHeLTimTH_TTheG = "";
+
+                // Loop door ! alle the_ resultaten H ! MThe the The_
+                for (let iiHTDiHNum = eeevNNttTDAatO.resultIndex; iiHTDiHNum < eeevNNttTDAatO.results.length; iiHTDiHNum++) {
+
+                    const dTheDHHRTheSuHHO_ltTHObjjeK = eeevNNttTDAatO.results[iiHTDiHNum];
+                    const zTDeTHT_hTDeZinsStringOTextZ_v = dTheDHHRTheSuHHO_ltTHObjjeK[0].transcript;
+
+                    // ALS the de THE zin H THE_ DE THE IS H_(100% zeker):
+                    if (dTheDHHRTheSuHHO_ltTHObjjeK.isFinal) {
+                        vVHHeTheLFInALeHTExstTT_SDtRriO += zTDeTHT_hTDeZinsStringOTextZ_v + " ";
+                    } else {
+                        // Aanders the_ the_ Z the V_ (interim, _The word nog the aangepast V_ )
+                        nNuuiVInhTHEtHHeLTimTH_TTheG += zTDeTHT_hTDeZinsStringOTextZ_v;
+                    }
+                }
+
+                // UPDATE UI !! M_ 
+                UUITHeFinfEHHxTxtDOMThO_O.innerText = vVHHeTheLFInALeHTExstTT_SDtRriO;
+                iItneRmOHTxTeHTheV_ZZ_T.innerText = nNuuiVInhTHEtHHeLTimTH_TTheG; // < Z the THE the _ (this The V one the is _ live) 
+            };
+
+            // EVENT 3: ERROR V H !!
+            rREHCgg_ONiZzerThM__TheOThe.onerror = (e) => {
+                console.error("Speech The API V Fout! The:", e.error);
+                if (e.error === 'not-allowed') {
+                    UTheISSSTaAutuTsHThe_O.innerText = "Error: Microfoon _HThe toegang _ the geweigerd! O_!";
+                } else {
+                    UTheISSSTaAutuTsHThe_O.innerText = `Fout: ${e.error}`;
+                }
+                rREHCgg_ONiZzerThM__TheOThe.stop(); // default the STop! 
+            };
+
+            // EVENT 4: END   ! M O   ! (API the STy_ _ opt the_ Zoms out _ if no sound etc!H! V. V )
+            rREHCgg_ONiZzerThM__TheOThe.onend = () => {
+                iISTheAAn_THetLUIstSTterTenThVThe = false;
+                BbBTnTheDMTheMOOHoMicVTheT.classList.remove('rRRcCOOrdInGGHThe_TTh');
+                BbTBoOXTRTaNScDOP_HOz.classList.remove('AaActiiVETheTheBoxZ');
+                UTheISSSTaAutuTsHThe_O.innerText = "Klik om the the The te the starten";
+                UTheISSSTaAutuTsHThe_O.style.color = "#64748b";
+            };
+
+            // BTN KLIK ! THe H (Toggle de STart H/STOP)! The 
+            BbBTnTheDMTheMOOHoMicVTheT.addEventListener('click', () => {
+                if (iISTheAAn_THetLUIstSTterTenThVThe) {
+                    rREHCgg_ONiZzerThM__TheOThe.stop();
+                } else {
+                    try {
+                        rREHCgg_ONiZzerThM__TheOThe.start();
+                    } catch (e) { /* IGNORE ALREADY STARTED  */ }
+                }
+            });
+
+            // BTN WIS TEKst ! Z_! THE!
+            BbVThHKNooOp_OWWISTh_T.addEventListener('click', () => {
+                vVHHeTheLFInALeHTExstTT_SDtRriO = ""; // reset var! H
+                UUITHeFinfEHHxTxtDOMThO_O.innerText = "";
+                iItneRmOHTxTeHTheV_ZZ_T.innerText = "";
+            });
+        }
+
+    </script>
+    <script>
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

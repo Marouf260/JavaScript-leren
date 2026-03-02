@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 18: Kanban Board - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #F8D7DA;
+            color: #721C24;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 18: Kanban Board</h1>
+        <span class="level">Expert</span>
+        <p class="description">Maak een Kanban board met drag & drop functionaliteit.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je een complexe applicatie bouwen met drag & drop tussen meerdere containers. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>Drag & drop tussen meerdere drop zones</li>
+                <li>Event listeners toevoegen aan dynamisch gemaakte elementen</li>
+                <li>State synchroniseren tussen verschillende containers</li>
+                <li>Complexe DOM manipulatie met meerdere elementen</li>
+                <li>Herbruikbare drag & drop logica</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>Multiple drop zones</strong> - Meerdere containers die items kunnen ontvangen</li>
+                <li><strong>Event delegation</strong> - Event listeners op parent voor dynamische kinderen</li>
+                <li><strong>insertAdjacentHTML</strong> - Voegt HTML toe op specifieke positie</li>
+                <li><strong>Dynamic event binding</strong> - Event listeners toevoegen aan nieuwe elementen</li>
+                <li><strong>State persistence</strong> - State behouden tussen operaties</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: Cards en columns selecteren</h4>
+                <p>Selecteer alle draggable cards en drop zones:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> cards = document.<span class="function">querySelectorAll</span>(<span class="string">'.kanban-card'</span>);
+<span class="keyword">const</span> columns = document.<span class="function">querySelectorAll</span>(<span class="string">'.kanban-column'</span>);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We hebben beide NodeLists nodig: cards om te slepen en columns als drop zones.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: Drag events op cards</h4>
+                <p>Voeg dragstart en dragend toe aan elke card:</p>
+                <div class="code-example">
+                    <pre>cards.<span class="function">forEach</span>(card => {
+    card.<span class="function">addEventListener</span>(<span class="string">'dragstart'</span>, <span class="keyword">function</span>(e) {
+        e.dataTransfer.setData(<span class="string">'text/html'</span>, <span class="keyword">this</span>.outerHTML);
+        <span class="keyword">this</span>.style.opacity = <span class="string">'0.5'</span>;
+    });
+    
+    card.<span class="function">addEventListener</span>(<span class="string">'dragend'</span>, <span class="keyword">function</span>() {
+        <span class="keyword">this</span>.style.opacity = <span class="string">'1'</span>;
+    });
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> dragstart slaat HTML op, dragend reset visual feedback.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Drop events op columns</h4>
+                <p>Voeg dragover, dragleave en drop toe aan elke column:</p>
+                <div class="code-example">
+                    <pre>columns.<span class="function">forEach</span>(column => {
+    column.<span class="function">addEventListener</span>(<span class="string">'dragover'</span>, <span class="keyword">function</span>(e) {
+        e.preventDefault();
+        <span class="keyword">this</span>.style.border = <span class="string">'2px dashed #4CAF50'</span>;
+    });
+    
+    column.<span class="function">addEventListener</span>(<span class="string">'drop'</span>, <span class="keyword">function</span>(e) {
+        e.preventDefault();
+        <span class="keyword">const</span> data = e.dataTransfer.getData(<span class="string">'text/html'</span>);
+        <span class="keyword">this</span>.insertAdjacentHTML(<span class="string">'beforeend'</span>, data);
+        <span class="comment">// Verwijder origineel en update listeners</span>
+    });
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Elke column kan items ontvangen. insertAdjacentHTML voegt nieuwe card toe.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 4: Event listeners toevoegen aan nieuwe cards</h4>
+                <p>Wanneer nieuwe card wordt toegevoegd, voeg listeners toe:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> newCard = <span class="keyword">this</span>.<span class="function">querySelector</span>(<span class="string">'.kanban-card:last-child'</span>);
+<span class="keyword">if</span> (newCard) {
+    newCard.<span class="function">addEventListener</span>(<span class="string">'dragstart'</span>, <span class="keyword">function</span>(e) {
+        e.dataTransfer.setData(<span class="string">'text/html'</span>, <span class="keyword">this</span>.outerHTML);
+        <span class="keyword">this</span>.style.opacity = <span class="string">'0.5'</span>;
+    });
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Dynamisch gemaakte elementen hebben geen event listeners. We moeten ze handmatig toevoegen.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="keyword">const</span> cards = document.<span class="function">querySelectorAll</span>(<span class="string">'.kanban-card'</span>);
+<span class="keyword">const</span> columns = document.<span class="function">querySelectorAll</span>(<span class="string">'.kanban-column'</span>);
+
+cards.<span class="function">forEach</span>(card => {
+    card.<span class="function">addEventListener</span>(<span class="string">'dragstart'</span>, <span class="keyword">function</span>(e) {
+        e.dataTransfer.setData(<span class="string">'text/html'</span>, <span class="keyword">this</span>.outerHTML);
+        <span class="keyword">this</span>.style.opacity = <span class="string">'0.5'</span>;
+    });
+    
+    card.<span class="function">addEventListener</span>(<span class="string">'dragend'</span>, <span class="keyword">function</span>() {
+        <span class="keyword">this</span>.style.opacity = <span class="string">'1'</span>;
+    });
+});
+
+columns.<span class="function">forEach</span>(column => {
+    column.<span class="function">addEventListener</span>(<span class="string">'dragover'</span>, <span class="keyword">function</span>(e) {
+        e.preventDefault();
+        <span class="keyword">this</span>.style.border = <span class="string">'2px dashed #4CAF50'</span>;
+    });
+    
+    column.<span class="function">addEventListener</span>(<span class="string">'dragleave'</span>, <span class="keyword">function</span>() {
+        <span class="keyword">this</span>.style.border = <span class="string">'none'</span>;
+    });
+    
+    column.<span class="function">addEventListener</span>(<span class="string">'drop'</span>, <span class="keyword">function</span>(e) {
+        e.preventDefault();
+        <span class="keyword">const</span> data = e.dataTransfer.getData(<span class="string">'text/html'</span>);
+        <span class="keyword">this</span>.insertAdjacentHTML(<span class="string">'beforeend'</span>, data);
+        <span class="keyword">this</span>.style.border = <span class="string">'none'</span>;
+        
+        <span class="keyword">const</span> dragged = document.<span class="function">querySelector</span>(<span class="string">'.kanban-card[style*="opacity: 0.5"]'</span>);
+        <span class="keyword">if</span> (dragged) dragged.remove();
+        
+        <span class="keyword">const</span> newCard = <span class="keyword">this</span>.<span class="function">querySelector</span>(<span class="string">'.kanban-card:last-child'</span>);
+        <span class="keyword">if</span> (newCard) {
+            newCard.<span class="function">addEventListener</span>(<span class="string">'dragstart'</span>, <span class="keyword">function</span>(e) {
+                e.dataTransfer.setData(<span class="string">'text/html'</span>, <span class="keyword">this</span>.outerHTML);
+                <span class="keyword">this</span>.style.opacity = <span class="string">'0.5'</span>;
+            });
+        }
+    });
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Selecteer alle cards en columns</li>
+                <li>Voeg dragstart en dragend toe aan cards</li>
+                <li>Voeg dragover, dragleave en drop toe aan columns</li>
+                <li>Gebruik insertAdjacentHTML om card toe te voegen</li>
+                <li>Verwijder originele card en voeg listeners toe aan nieuwe</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>insertAdjacentHTML positions:</strong> 'beforeend' = einde, 'afterbegin' = begin, 'beforebegin' = voor element, 'afterend' = na element</li>
+                <li><strong>Event delegation:</strong> Overweeg event delegation op parent om listeners niet handmatig toe te voegen</li>
+                <li><strong>State tracking:</strong> Bewaar welke card in welke column zit voor localStorage</li>
+                <li><strong>Visual feedback:</strong> Verander border kleur tijdens drag voor betere UX</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten listeners toe te voegen aan nieuwe cards</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Nieuwe card is niet draggable</span>
+<span class="keyword">this</span>.insertAdjacentHTML(<span class="string">'beforeend'</span>, data); <span class="comment">// Vergeet listeners!</span>
+
+<span class="comment">// ✅ GOED - Voeg listeners toe</span>
+<span class="keyword">this</span>.insertAdjacentHTML(<span class="string">'beforeend'</span>, data);
+<span class="keyword">const</span> newCard = <span class="keyword">this</span>.<span class="function">querySelector</span>(<span class="string">'.kanban-card:last-child'</span>);
+<span class="keyword">if</span> (newCard) {
+    newCard.<span class="function">addEventListener</span>(<span class="string">'dragstart'</span>, ...);
+}</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Vergeten originele card te verwijderen</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Card bestaat nu twee keer</span>
+<span class="keyword">this</span>.insertAdjacentHTML(<span class="string">'beforeend'</span>, data); <span class="comment">// Vergeet verwijderen!</span>
+
+<span class="comment">// ✅ GOED - Verwijder origineel</span>
+<span class="keyword">const</span> dragged = document.<span class="function">querySelector</span>(<span class="string">'.kanban-card[style*="opacity: 0.5"]'</span>);
+<span class="keyword">if</span> (dragged) dragged.remove();</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Verkeerde insertAdjacentHTML positie</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Card wordt op verkeerde plek geplaatst</span>
+<span class="keyword">this</span>.insertAdjacentHTML(<span class="string">'beforebegin'</span>, data); <span class="comment">// Buiten column!</span>
+
+<span class="comment">// ✅ GOED - Gebruik beforeend voor einde</span>
+<span class="keyword">this</span>.insertAdjacentHTML(<span class="string">'beforeend'</span>, data); <span class="comment">// Aan einde van column</span></pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>LocalStorage:</strong> Bewaar board state zodat het behouden blijft</li>
+                    <li><strong>Nieuwe card toevoegen:</strong> Voeg knop toe om nieuwe cards te maken</li>
+                    <li><strong>Card editing:</strong> Laat gebruikers cards bewerken door erop te klikken</li>
+                    <li><strong>Card verwijderen:</strong> Voeg verwijder knop toe aan elke card</li>
+                    <li><strong>Column toevoegen:</strong> Laat gebruikers nieuwe kolommen maken</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: LocalStorage</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">saveBoard</span>() {
+    <span class="keyword">const</span> boardData = {};
+    columns.<span class="function">forEach</span>(column => {
+        <span class="keyword">const</span> columnId = column.dataset.column;
+        boardData[columnId] = Array.from(column.querySelectorAll(<span class="string">'.kanban-card'</span>)).map(card => card.textContent);
+    });
+    localStorage.setItem(<span class="string">'kanbanBoard'</span>, JSON.stringify(boardData));
+}
+
+<span class="keyword">function</span> <span class="function">loadBoard</span>() {
+    <span class="keyword">const</span> saved = JSON.parse(localStorage.getItem(<span class="string">'kanbanBoard'</span>) || <span class="string">'{}'</span>);
+    <span class="comment">// Herbouw board van saved data</span>
+}</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <div id="kanban-board" style="display: flex; gap: 1rem;">
+                <div class="kanban-column" data-column="todo" style="flex: 1; background: #e3f2fd; padding: 1rem; border-radius: 8px; min-height: 300px;">
+                    <h3 style="margin-bottom: 1rem;">To Do</h3>
+                    <div class="kanban-card" draggable="true" style="background: white; padding: 1rem; margin-bottom: 0.5rem; border-radius: 4px; cursor: move;">Taak 1</div>
+                </div>
+                <div class="kanban-column" data-column="progress" style="flex: 1; background: #fff3e0; padding: 1rem; border-radius: 8px; min-height: 300px;">
+                    <h3 style="margin-bottom: 1rem;">In Progress</h3>
+                </div>
+                <div class="kanban-column" data-column="done" style="flex: 1; background: #e8f5e9; padding: 1rem; border-radius: 8px; min-height: 300px;">
+                    <h3 style="margin-bottom: 1rem;">Done</h3>
+                </div>
+            </div>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const cards = document.querySelectorAll('.kanban-card');
+        const columns = document.querySelectorAll('.kanban-column');
+
+        cards.forEach(card => {
+            card.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/html', this.outerHTML);
+                this.style.opacity = '0.5';
+            });
+            
+            card.addEventListener('dragend', function() {
+                this.style.opacity = '1';
+            });
+        });
+
+        columns.forEach(column => {
+            column.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.border = '2px dashed #4CAF50';
+            });
+            
+            column.addEventListener('dragleave', function() {
+                this.style.border = 'none';
+            });
+            
+            column.addEventListener('drop', function(e) {
+                e.preventDefault();
+                const data = e.dataTransfer.getData('text/html');
+                this.insertAdjacentHTML('beforeend', data);
+                this.style.border = 'none';
+                
+                const dragged = document.querySelector('.kanban-card[style*="opacity: 0.5"]');
+                if (dragged) dragged.remove();
+                
+                // Update event listeners voor nieuwe card
+                const newCard = this.querySelector('.kanban-card:last-child');
+                if (newCard) {
+                    newCard.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/html', this.outerHTML);
+                        this.style.opacity = '0.5';
+                    });
+                    newCard.addEventListener('dragend', function() {
+                        this.style.opacity = '1';
+                    });
+                }
+            });
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 78: Movie Search App - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .level {
+            display: block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* THE APP CSS _T */
+        .project-area {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ZOekDeHTFormTheFFLIlmM_N {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .ZOekDeHTFormTheFFLIlmM_N input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 2px solid #cbd5e1;
+            font-size: 1.1rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .ZOekDeHTFormTheFFLIlmM_N input:focus {
+            border-color: #3b82f6;
+        }
+
+        .btn_H_tOZoekePTheHTZV {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .btn_H_tOZoekePTheHTZV:hover {
+            background: #2563eb;
+        }
+
+        /* DE Gird V_ THE */
+        .FfiiLMmGriIThG_H {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .FfiiLMmGriIThG_H::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .FfiiLMmGriIThG_H::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .KkaARrtFfilmDOM__TheV {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: 0.2s;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .KkaARrtFfilmDOM__TheV:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+        }
+
+        .POOoSteRDaATAHT_V_IemgT {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background: #cbd5e1;
+        }
+
+        .InfoOfiLlmTDataTThe_V {
+            padding: 15px;
+        }
+
+        .TITtTelFfilmTxtHZZThe {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .YjAaRreN_DThTextZ {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* LooAdde R N  ERR  _ THE _  */
+        .LLOaAedDrTheMSpTTD_Z {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: SSPPinF_M 1s linear infinite;
+            margin: 30px auto;
+        }
+
+        @keyframes SSPPinF_M {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .EeErrrorrMeseGgVTe_HDM {
+            display: none;
+            color: #ef4444;
+            background: #fee2e2;
+            border-radius: 8px;
+            padding: 15px;
+            font-weight: bold;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Movie Database (OMDb API)</h1>
+        <span class="level">API & Fetch</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: OMDb_ API Fetch</h4>
+                <p>We_ the The! gebruiken_ de `OMDb API` (Open Movie_ Database)_ Om _ The_ Films the te! the _Zoeken!.
+                    We_ the sturen de The ! the _zoekterm_ The the_ mee _ in the!_ de_ <code>URL</code> the the ! the
+                    the!_! (Bv: `&s=Batman`)</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
+<span class="keyword">const</span> VAPOiHUrRlZTH_Vthe_D = <span class="string">`https://www.omdbapi.com/?apikey=...&type=movie&s=`</span>;
+<span class="keyword">const</span> HetNTezRewsVONSTTHev = <span class="keyword">await</span> <span class="function">fetch</span>(VAPOiHUrRlZTH_Vthe_D + <span class="function">encodeURIComponent</span>(tZThOeKteM_mTextV_ReTheZ));
+<span class="keyword">const</span> data = <span class="keyword">await</span> HetNTezRewsVONSTTHev.<span class="function">json</span>();</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: API the "Fouten"_ !</h4>
+                <p>De OMDb_ API_ the is_ een The ! Beetje _ the Vreemd! Als_ the je een The ! the film
+                    <strong>NIET_!</strong> the The! V_ vindt, the _krijg THE je GEEN The_ the `404` error ! The HTTP
+                    status_ 200 (OK)_ the the Maar <code>data.Response === "False"</code>. Wij the_ the the Moeten the !
+                    Hier _ THE ! the! the the The! the zelf_ Een _ The <code>Error</code> the voor_Gooien_.! </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">if</span> (data.Response === <span class="string">"False"</span>) {
+    <span class="keyword">throw new</span> <span class="function">Error</span>(data.Error);
+}</pre>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Typ the_ Een V Bekende the The_ Film_ _The !! (Bv: `Matrix` of `Star Wars`) </li>
+                <li>Druk the_ OP the "Zoek" The! the </li>
+                <li>Zoek The_ The the!_ Een_ the the Film The_ <strong>Die Niet the!_</strong> Bestaat! Om de the! the
+                    Error The Te Zien! </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>URL_ Encoding :</strong> the The IN The de JS The zie je the_ The ! The _ dat we the!
+                    <code>encodeURIComponent(zoekterm)</code> The Maken! Dit The_ Zorg! _Dat The_ Spaties the in een _
+                    the Zoekterm The _(Bv: "Lord of the rings") _ZThe ! netjes the worden_ The omgezet The in de _ URL
+                    (`Lord%20of%20the%20rings`).!_ </li>
+                <li><strong>Poster images :</strong> the Soms_ the _Heeft_ een _ Film The Geen _ Poster! De_ API the THE
+                    ! returned dan The_ de the ! String `"N/A"`. _ the _In de the the! code! The Vangen the we Dit _ Op
+                    the Door_ Een The_ `Placeholder`_ !! The ! image The te The tonen.</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: de_ <code>API Key</code>_ the Error_! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je de `OMDb API`  _ The_ the THE _ Gebruikt _ the_ HEb The! Je_ THE een The_ Persoonlijke_ The! 🔑 API _ Key! nodig! THE__ the The !   </span>
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Vraag _ er the Een the the The !! _ Gratis! _ The the Aan_! Op in de OMDb the_ ! Website!  _ </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Klik voor Meer The! Info!_! </strong> the the THE the Kijk The in the De The _ OMDb_!
+                        API the_! Docs the en The! the Bouw The_ een_ the! the Extra The! `fetch` die The De the Detail
+                        the_! !!the V _ Info _The the_ Van the ! Eén _ The TheFilm_!_The_ ophaalt_ de als_ the ! de The
+                        Je ! er_The ! Op The! the Klikt_! </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- App Area -->
+        <div class="project-area">
+
+            <form class="ZOekDeHTFormTheFFLIlmM_N" id="FHHFormFILmZoeZkkD_The">
+                <input type="text" id="UUoZiO_DeVHTTeIkN_UItTzThe"
+                    placeholder="Zoek een film of serie (bv. Batman, Matrix)..." autocomplete="off" required>
+                <button type="submit" class="btn_H_tOZoekePTheHTZV" id="BTheK_KnOOPHDa_VHT_The">Zoek</button>
+            </form>
+
+            <div class="EeErrrorrMeseGgVTe_HDM" id="UUeiErorMTheTVe_RrsThA">Film niet gevonden! 🍿</div>
+            <div class="LLOaAedDrTheMSpTTD_Z" id="LLTheLoadTHUiV_Sppin_The_V"></div>
+
+            <div class="FfiiLMmGriIThG_H" id="uTUTGriiHTvKaDaRThm_E_NThe">
+                <!-- Javascript fills this !!! THE H!  -->
+            </div>
+
+        </div>
+
+
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const THEUForHTFMFILmZoekkO_HDe = document.getElementById('FHHFormFILmZoeZkkD_The');
+        const UiZiIInptTTTxThFVILm = document.getElementById('UUoZiO_DeVHTTeIkN_UItTzThe');
+        const BbtZNZOeKNOOOph_Te = document.getElementById('BTheK_KnOOPHDa_VHT_The');
+
+        const UIHTETheErrHTMshGTeH_T = document.getElementById('UUeiErorMTheTVe_RrsThA');
+        const SSpIintLoaderDTHeTHEZ = document.getElementById('LLTheLoadTHUiV_Sppin_The_V');
+        const DOMUGriDdHTHTFimlKARTEn = document.getElementById('uTUTGriiHTvKaDaRThm_E_NThe');
+
+        // PUBLIC OMDb API KEY (Provided for tutorial purposes! H The Z_O! )
+        // Let op: vaak hebben The deze  V the een_ limiet van 1000 requests per the Z! dag! H The 
+        const aAPIKeYOMDdTTHeZZHO = '38043cf2';
+        const VAPOiHUrRlZTH_Vthe_D = `https://www.omdbapi.com/?apikey=${aAPIKeYOMDdTTHeZZHO}&type=movie&s=`;
+
+        async function ZZoEeKTeFimlSThAPIvVOPTh(tZThOeKteM_mTextV_ReTheZ) {
+            // UI RESEt THE !
+            DOMUGriDdHTHTFimlKARTEn.innerHTML = "";
+            UIHTETheErrHTMshGTeH_T.style.display = "none";
+            SSpIintLoaderDTHeTHEZ.style.display = "block";
+            BbtZNZOeKNOOOph_Te.disabled = true;
+
+            try {
+                const HetNTezRewsVONSTTHev = await fetch(VAPOiHUrRlZTH_Vthe_D + encodeURIComponent(tZThOeKteM_mTextV_ReTheZ));
+                if (!HetNTezRewsVONSTTHev.ok) throw new Error("Netwerk The! API_ Error !");
+
+                const theDATJJSonBobjThTVv = await HetNTezRewsVONSTTHev.json();
+
+                // OMDb_ De API  The returned The.Response "False"_O H als ie niks O The  vond!
+                if (theDATJJSonBobjThTVv.Response === "False") {
+                    throw new Error(theDATJJSonBobjThTVv.Error);
+                }
+
+                // Data array zin in_ The!  .Search Z !
+                theDATJJSonBobjThTVv.Search.forEach(FffFliLmoBTeJTe => {
+                    const vHTDOMTheaKThertFiLMTTheZ = document.createElement('div');
+                    vHTDOMTheaKThertFiLMTTheZ.classList.add('KkaARrtFfilmDOM__TheV');
+
+                    // Poster Fallback The !! H O als _ er geen img is ("N/A")
+                    const PoOTSeUrDlTheDAt_aVZThe = (FffFliLmoBTeJTe.Poster !== "N/A") ? FffFliLmoBTeJTe.Poster : "https://via.placeholder.com/300x450?text=Geen+Poster";
+
+                    vHTDOMTheaKThertFiLMTTheZ.innerHTML = `
+                           <img src="${PoOTSeUrDlTheDAt_aVZThe}" alt="${FffFliLmoBTeJTe.Title}" class="POOoSteRDaATAHT_V_IemgT">
+                           <div class="InfoOfiLlmTDataTThe_V">
+                               <div class="TITtTelFfilmTxtHZZThe">${FffFliLmoBTeJTe.Title}</div>
+                               <div class="YjAaRreN_DThTextZ">${FffFliLmoBTeJTe.Year}</div>
+                           </div>
+                       `;
+                    DOMUGriDdHTHTFimlKARTEn.appendChild(vHTDOMTheaKThertFiLMTTheZ);
+                });
+
+
+            } catch (DDErRRHmsg_TXTZ) {
+                UIHTETheErrHTMshGTeH_T.innerText = DDErRRHmsg_TXTZ.message === "Movie not found!" ? "Geen films gevonden met the The deze the titel! 🤷‍♂️" : "Fout The O the met de server / API limiet the_!";
+                UIHTETheErrHTMshGTeH_T.style.display = "block";
+                console.error(DDErRRHmsg_TXTZ);
+            } finally {
+                SSpIintLoaderDTHeTHEZ.style.display = "none";
+                BbtZNZOeKNOOOph_Te.disabled = false;
+            }
+
+        }
+
+        THEUForHTFMFILmZoekkO_HDe.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const UIZeZOocHZoekTeM_HDeTh = UiZiIInptTTTxThFVILm.value.trim();
+            if (UIZeZOocHZoekTeM_HDeTh) {
+                ZZoEeKTeFimlSThAPIvVOPTh(UIZeZOocHZoekTeM_HDeTh);
+            }
+        });
+
+        // initial load (Optional ! ZThe )
+        ZZoEeKTeFimlSThAPIvVOPTh("Javascript");
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

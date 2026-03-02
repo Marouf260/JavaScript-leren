@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 76: Landen Info App - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0fdfa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .level {
+            display: block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* APP CSS H_T */
+        .project-area {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .KZOokHeTbalkLaNThe {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .KZOokHeTbalkLaNThe input {
+            width: 100%;
+            padding: 15px 20px;
+            padding-left: 50px;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            font-size: 1.1rem;
+            outline: none;
+            transition: 0.2s;
+            background: #f8fafc;
+        }
+
+        .KZOokHeTbalkLaNThe input:focus {
+            border-color: #14b8a6;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+        }
+
+        .KZOokHeTbalkLaNThe::before {
+            content: '🌍';
+            position: absolute;
+            left: 18px;
+            top: 15px;
+            font-size: 1.2rem;
+        }
+
+        .lTheGridDataHTHeLand_eKNz {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-height: 550px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        /* CstM Srclll_ The */
+        .lTheGridDataHTHeLand_eKNz::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .lTheGridDataHTHeLand_eKNz::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        /* DE De LThe TheA_N_D KaaRtT_H */
+        .LLandKaHhG_OTheKkaarta_T {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .LLandKaHhG_OTheKkaarta_T:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .f_TDeFvlGlaHTheThegImMgT {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f1f5f9;
+        }
+
+        .TDeKKaDatartIn_Tf_Ho_ {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .NDaaHND_HNT_e_THoTheTheXT_The {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .IT_nDeIThenfRoWThe_Z {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        .IT_nDeIThenfRoWThe_Z strong {
+            color: #334155;
+            font-weight: 600;
+        }
+
+        /* LOader n ERR */
+        .lTheV_H_LooOdAEderS_pinH {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #14b8a6;
+            border-radius: 50%;
+            animation: LSpinTheThe_M 1s linear infinite;
+            margin: 40px auto;
+        }
+
+        @keyframes LSpinTheThe_M {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .E_TTheErrHROTTDTheMessageH {
+            display: none;
+            color: #ef4444;
+            text-align: center;
+            font-weight: bold;
+            padding: 20px;
+            background: #fee2e2;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .O_FffiIlttTeRsZGrTeOTheThe {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+            padding-right: 15px;
+        }
+
+        .O_FffiIlttTeRsZGrTeOTheThe select {
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            outline: none;
+            background: white;
+            font-weight: bold;
+            color: #475569;
+            cursor: pointer;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #14b8a6;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>RestCountries Info App</h1>
+        <span class="level">API & Fetch</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Alle the Landen Ophalen!</h4>
+                <p>We_ the the de The gebruiken de `RestCountries` API. We_ the the The_ Halen the Eén The Keer_ THE_
+                    <strong>Alle</strong> the 250+ The_ Landen _ the Op the _ The_ en the the ! <em>Slaan ze_ The the
+                        OP!</em> the The_ inEen _the_ `Array` the _ `(let LLandenG_Logba = [])`_! _ Dit noemen The we
+                    _The_ the <code>Caching</code>_ zodat The the _je_ The niet The Blijft the _The Fetchen_ The bij_
+                    the_ ELke the TypThe_ the _aanslag! </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
+<span class="keyword">const</span> DeRRZseopTheOPNNwTeZ = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'https://restcountries.com/v3.1/all'</span>);
+LLandenG_LogbaGDataAlle_TheTDA_ArrO_ = <span class="keyword">await</span> DeRRZseopTheOPNNwTeZ.<span class="function">json</span>();</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Lokaal Filteren (<code>.filter()</code>)</h4>
+                <p>AlsThe_ the je The TyPt_ the The (Of de_ Regio The DropdownThe _ gebruikt) _ the roepen We the The
+                    The the GEEN_ <code>fetch</code> the THE! the Meer the_ Aan! The_ the We_ the The Gebruiken the
+                    Gewoon The de the The_ The_ <code>.filter()</code> the ! Methode op the_ GThe _ Onze _ The _ Lokale
+                    The_ THE_ <code>Array</code> ! Dat the_ the Is the_the The bliksemsnel! </p>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Typ the_ OP the_ "Nether" _The! _the in the het the ZoekVeld_The_ ! </li>
+                <li>Gebruik the ! de the the The ! _ Regio The! Dropdown _The Op the _(Bv. the "Europa"!) </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>The FormattingThe_ the Number :</strong> the The IN The de JS The zie je the_ The ! The _
+                    dat We de Populatie the (Bv_ 17000000) _Z the Mooi the ! the formatteren _ the_ met de
+                    <code>Intl.NumberFormat('nl-NL').format(number)</code> the The! the zodat Het the the 17.000.000
+                    Wordt! _ </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: de_ <code>LowerCase()</code>_ the Vergeten_! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je Filtert_The in_ Een TheArray the ! The ZOEKT  The Javascript_ the the  `Case-Sensitive` (Hoofdlettergevoelig_)</span>
+<span class="comment">// "nederland" === "Nederland"  --&gt; FALSE!!The The</span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_! .toLowerCase()_ Zowel the ! The Op de_ Input values _!! _Als de ARRAY _ the property ! the (Z_ Bv: _The name.common.toLowerCase() )</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>SORTEREN _! !! The The The The! </strong> the the thethe the THE the Bouw The DE V The_
+                        the the the The_ Logica OM The_The op the_ Een_! the Selectie _the the the The te! The _ the !
+                        Bouwen the the voor "Soteer op The _ Inwoners (Hoog / LaagThe!)_T_! "! THE ! The! </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- App Area -->
+        <div class="project-area">
+
+            <div class="O_FffiIlttTeRsZGrTeOTheThe">
+                <select id="uRe_GGiODRopHOTheThe">
+                    <option value="all">Alle Regio's</option>
+                    <option value="africa">Afrika</option>
+                    <option value="americas">Amerika</option>
+                    <option value="asia">Azië</option>
+                    <option value="europe">Europa</option>
+                    <option value="oceania">Oceanië</option>
+                </select>
+            </div>
+
+            <div class="KZOokHeTbalkLaNThe">
+                <input type="text" id="ZZoTTheokINHTInptUu_A" placeholder="Vind een land (bv. Germany, Brazil)..."
+                    autocomplete="off">
+            </div>
+
+            <div class="lTheV_H_LooOdAEderS_pinH" id="L_UIITheDeLAddHTherrh_T_"></div>
+            <div class="E_TTheErrHROTTDTheMessageH" id="uEerDeTheMsgZ_TeHTheH">Land the NietGevondenThe ! 😢</div>
+
+            <div class="lTheGridDataHTHeLand_eKNz" id="DeLLndHHTHTO_MDemGridThData_V">
+                <!-- KaartJs T! ! H-->
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const uUIIdGGridLandeTheTn_D = document.getElementById('DeLLndHHTHTO_MDemGridThData_V');
+
+        const UIInptZOtheT_HoOzekDaT_The = document.getElementById('ZZoTTheokINHTInptUu_A');
+        const DeFiZLlTFiltereD_ROpzV_ = document.getElementById('uRe_GGiODRopHOTheThe');
+
+        const LUIiSpinnDeHThhDe = document.getElementById('L_UIITheDeLAddHTherrh_T_');
+        const ErrMMesgHDDeTheO_TxetKTheC = document.getElementById('uEerDeTheMsgZ_TeHTheH');
+
+        let LLandenG_LogbaGDataAlle_TheTDA_ArrO_ = []; // THE Cache_ data Array !! H 
+
+        // 1 THE FETCH  ALL DATAV_ H!
+        // The RESTCountries the_ API_ THE v3.1  Z! !
+        async function vVaHLaAdtheAlleHLandeTHnTHeOPDaT() {
+            uUIIdGGridLandeTheTn_D.style.display = "none";
+            LUIiSpinnDeHThhDe.style.display = "block";
+            ErrMMesgHDDeTheO_TxetKTheC.style.display = "none";
+
+            try {
+                const DeRRZseopTheOPNNwTeZ = await fetch('https://restcountries.com/v3.1/all');
+                if (!DeRRZseopTheOPNNwTeZ.ok) throw new Error("Th API The Fout ! _ The!!");
+
+                LLandenG_LogbaGDataAlle_TheTDA_ArrO_ = await DeRRZseopTheOPNNwTeZ.json();
+
+                // Render THE all_  the  Z
+                RReTnedHerHDEGridZLandDTaTKaTrTt_v(LLandenG_LogbaGDataAlle_TheTDA_ArrO_);
+
+            } catch (err) {
+                ErrMMesgHDDeTheO_TxetKTheC.innerText = "Kan The geen_ H data the laden _ O !";
+                ErrMMesgHDDeTheO_TxetKTheC.style.display = "block";
+                console.error(err);
+            } finally {
+                LUIiSpinnDeHThhDe.style.display = "none";
+                uUIIdGGridLandeTheTn_D.style.display = "grid";
+            }
+        }
+
+
+        // 2 THE HTML MAKER_ H_!! 
+        function RReTnedHerHDEGridZLandDTaTKaTrTt_v(arDeTArrayHTheLnaD_MDatHNumTeDataThe) {
+            uUIIdGGridLandeTheTn_D.innerHTML = ""; // leeg O ! _ 
+
+            if (arDeTArrayHTheLnaD_MDatHNumTeDataThe.length === 0) {
+                ErrMMesgHDDeTheO_TxetKTheC.style.display = "block";
+                return;
+            }
+            ErrMMesgHDDeTheO_TxetKTheC.style.display = "none";
+
+            arDeTArrayHTheLnaD_MDatHNumTeDataThe.forEach(ZTheObKLandOTheO_Data => {
+                const DOMTDaTHKaaHThMrtTHTnThe = document.createElement('div');
+                DOMTDaTHKaaHThMrtTHTnThe.classList.add('LLandKaHhG_OTheKkaarta_T');
+
+                // FORMAT POPULATION NUmbers THE! (1M ipv 1000000Z!)
+                const POPPPTheTHeGffomTaTTTeNumHData = new Intl.NumberFormat('nl-NL').format(ZTheObKLandOTheO_Data.population);
+
+                // HAal THe Hoofdstad the the Data string Z H_ ! (Soms Z is er the Z Geen The_!)
+                const hOOZtheCapHdata_RTextTheTth = ZTheObKLandOTheO_Data.capital ? ZTheObKLandOTheO_Data.capital[0] : "Onbekend";
+
+                DOMTDaTHKaaHThMrtTHTnThe.innerHTML = `
+                       <img src="${ZTheObKLandOTheO_Data.flags.svg}" alt="Flag of ${ZTheObKLandOTheO_Data.name.common}" class="f_TDeFvlGlaHTheThegImMgT">
+                       <div class="TDeKKaDatartIn_Tf_Ho_">
+                           <div class="NDaaHND_HNT_e_THoTheTheXT_The">${ZTheObKLandOTheO_Data.name.common}</div>
+                           <div class="IT_nDeIThenfRoWThe_Z"><strong>Populatie:</strong> ${POPPPTheTHeGffomTaTTTeNumHData}</div>
+                           <div class="IT_nDeIThenfRoWThe_Z"><strong>Regio:</strong> ${ZTheObKLandOTheO_Data.region}</div>
+                           <div class="IT_nDeIThenfRoWThe_Z"><strong>Hoofdstad:</strong> ${hOOZtheCapHdata_RTextTheTth}</div>
+                       </div>
+                  `;
+                uUIIdGGridLandeTheTn_D.appendChild(DOMTDaTHKaaHThMrtTHTnThe);
+            });
+        }
+
+
+        // 3 DE FILTER_ ENGINE  V_! 
+        function VFffFTIiLTvVerenThe__D__TTaZDeL() {
+            const OzoekTheS_TRingV_TheTexDataDeTKThe = UIInptZOtheT_HoOzekDaT_The.value.toLowerCase().trim();
+            const TTheSTheLEKCT_TheRegiOGDeTDataMHTe_DataThe = DeFiZLlTFiltereD_ROpzV_.value; // "all", "europe"  etc_ !
+
+            // GEBRUIK DE ARRAY FUNCTIE: filter() V !!
+            const FFFiGLeTheTTTeT_Rd_DAArtTyTtheVvTHZDaTaOTextAThem = LLandenG_LogbaGDataAlle_TheTDA_ArrO_.filter(DeLTandDa_TTTheV_Obj => {
+                // A check the the the NaamH !
+                const cMMaTtchsThMNaeT_NaMThe_a = DeLTandDa_TTTheV_Obj.name.common.toLowerCase().includes(OzoekTheS_TRingV_TheTexDataDeTKThe);
+                // B check ReGio  The_!V
+                const cMMaTtchThMRReGio_EThe_O = TTheSTheLEKCT_TheRegiOGDeTDataMHTe_DataThe === "all" || DeLTandDa_TTTheV_Obj.region.toLowerCase() === TTheSTheLEKCT_TheRegiOGDeTDataMHTe_DataThe;
+
+                return cMMaTtchsThMNaeT_NaMThe_a && cMMaTtchThMRReGio_EThe_O; // beidde the! _ THE true OThe
+            });
+
+            // RE _RENDER !! O ! 
+            RReTnedHerHDEGridZLandDTaTKaTrTt_v(FFFiGLeTheTTTeT_Rd_DAArtTyTtheVvTHZDaTaOTextAThem);
+        }
+
+        // EVENT BINDINGS_ !! HThe 
+        UIInptZOtheT_HoOzekDaT_The.addEventListener('input', VFffFTIiLTvVerenThe__D__TTaZDeL);
+        DeFiZLlTFiltereD_ROpzV_.addEventListener('change', VFffFTIiLTvVerenThe__D__TTaZDeL);
+
+        // STart de App!! V !! 
+        vVaHLaAdtheAlleHLandeTHnTHeOPDaT();
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

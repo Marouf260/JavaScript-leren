@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 24: Recepten Zoeker - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Recipe Finder Area */
+        .project-area {
+            background: #fdfbfb;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px dashed #ff7e5f;
+            overflow-y: auto;
+            max-height: 600px;
+        }
+
+        .header-search {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .search-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-area input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-area button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            width: 100%;
+        }
+
+        .recipe-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .recipe-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .recipe-info {
+            padding: 15px;
+        }
+
+        .recipe-title {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .recipe-tags {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .tag {
+            padding: 3px 8px;
+            background: #ffeae1;
+            color: #ff7e5f;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .recipe-time {
+            color: #888;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 24: Recepten Zoeker</h1>
+        <span class="level">Master</span>
+        <p class="description">Bouw een receptenzoekmachine met geavanceerde .filter() methoden in JavaScript.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: HTML Elementen aanmaken in Javascript met Template Literals</h4>
+                <p>We creëren HTML voor onze recepten niet in <code>index.html</code>, maar met zogenaamde "Template
+                    Literals" (backticks `` ` ``) in JavaScript, waardoor we waarden dynamisch kunnen inkleuren.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> card = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
+card.className = <span class="string">'recipe-card'</span>;
+card.innerHTML = <span class="string">`
+    &lt;img src="<span class="keyword">${r.img}</span>" alt="<span class="keyword">${r.title}</span>" class="recipe-img"&gt;
+    &lt;h3 class="recipe-title"&gt;<span class="keyword">${r.title}</span>&lt;/h3&gt;
+`</span>;</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Het gebruik van <code>${variabele}</code> binnen backticks laat je direct
+                    variabelen en methodes uitvoeren ín een string!</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: .map() & .join() voor Geneste data (Tags)</h4>
+                <p>Een recept kan meerdere tags hebben (bijv "Gezond", "Lunch"). We converteren de JavaScript array van
+                    strings naar een HTML string list.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">${</span>r.tags.<span class="function">map</span>(t => <span class="string">`&lt;span class="tag"&gt;<span class="keyword">${t}</span>&lt;/span&gt;`</span>).<span class="function">join</span>(<span class="string">''</span>)<span class="keyword">}</span></pre>
+                </div>
+                <p><strong>Uitleg:</strong> De <code>.map()</code> functie transformeert elke tag (bijv. "Lunch") in de
+                    gewenste HTML-tag. <code>.join('')</code> plakt al deze gemaakte HTML-tags naadloos zonder komma's
+                    aan elkaar.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Krachtig Zoeken met .filter()</h4>
+                <p>Tijdens het typen, pakken we alle recepten en filteren we alleen degene die we willen overhouden en
+                    weergaven.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> query = searchInput.value.<span class="function">toLowerCase</span>();
+<span class="keyword">const</span> filtered = mockRecipes.<span class="function">filter</span>(r => 
+    r.title.<span class="function">toLowerCase</span>().<span class="function">includes</span>(query) || 
+    r.tags.<span class="function">some</span>(t => t.<span class="function">toLowerCase</span>().<span class="function">includes</span>(query))
+);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>.includes()</code> kijkt of de in-getypte tekst ergens in de titel of
+                    tags zit. Het gebruik van <code>.some()</code> controleert of <strong>in ieder geval één</strong>
+                    tag voldoet.</p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Real-Time Zoeken via "input" event)</h3>
+            <pre><span class="keyword">function</span> <span class="function">handleSearch</span>() {
+    <span class="keyword">const</span> query = searchInput.value.<span class="function">toLowerCase</span>();
+    <span class="keyword">const</span> filtered = mockRecipes.<span class="function">filter</span>(r => 
+        r.title.<span class="function">toLowerCase</span>().<span class="function">includes</span>(query) || 
+        r.tags.<span class="function">some</span>(t => t.<span class="function">toLowerCase</span>().<span class="function">includes</span>(query))
+    );
+    <span class="function">renderRecipes</span>(filtered);
+}
+
+<span class="comment">// De magie: Activeert IEDERE keer als een karakter wordt ingetypt/gewist</span>
+searchInput.<span class="function">addEventListener</span>(<span class="string">'input'</span>, handleSearch);
+document.<span class="function">getElementById</span>(<span class="string">'searchBtn'</span>).<span class="function">addEventListener</span>(<span class="string">'click'</span>, handleSearch);</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Typ direct 'Oven' of 'Lunch' in de zoekbalk hieronder in de demo.</li>
+                <li>Verwijder karakters met backspace en zie hoe recepten direct weer terugspringen.</li>
+                <li>Breid (lokaal in je eigen editor) het `mockRecipes` object uit met jouw lievelingsgerecht.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Waarom <code>grid.innerHTML = ''</code>?</strong> Om te voorkomen dat de resultaten van een
+                    nieuwe zoekopdracht gewoon <em>onder</em> de resultaten van een eerdere zoekopdracht worden geplakt,
+                    maken we eerst in <code>renderRecipes()</code> razendsnel de Grid leeg voordat de forEach wordt
+                    gestart.</li>
+                <li><strong>Event <code>'input'</code> vs <code>'change'</code>:</strong> Gebruik <code>input</code> in
+                    de plaats van <code>change</code> op tekstvelden omdat <code>change</code> pas afvuurt wanneer de
+                    gebruiker buiten het invoerveld klikt (blur).</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: <code>.map()</code> en Komma's</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Als je .join('') vergeet print HTML een komma tussen elementen in de weergave!</span>
+${r.tags.map(t =&gt; `&lt;span class="tag"&gt;${t}&lt;/span&gt;`)}
+
+<span class="comment">// ✅ GOED - Plak de array elementen naadloos aan elkaar</span>
+${r.tags.map(t =&gt; `&lt;span class="tag"&gt;${t}&lt;/span&gt;`).join('')}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor meer? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>No Results feedback:</strong> We tonen al een tekst bij 0 results, voeg hier een icon
+                        (bijv. FontAwesome) of illustratie aan toe.</li>
+                    <li><strong>Debouncing:</strong> Voeg "debounce" logica toe zodat <code>handleSearch()</code> pas
+                        afvuurt als de gebruiker 300ms stopt met typen (handig bij zware applicaties of API requests).
+                    </li>
+                    <li><strong>Dropdown categorie filter:</strong> Voeg een <code>&lt;select&gt;</code> dropdown toe om
+                        snel te filteren op categorieën zoals "Diner", "Vis", "Lunch", of "Gezond".</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <div class="header-search">
+                <h2 style="color: #ff7e5f; margin-bottom: 5px;">Vind Jouw Recept</h2>
+                <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">Ontdek heerlijke maaltijden voor
+                    vandaag.</p>
+                <div class="search-area">
+                    <input type="text" id="searchInput" placeholder="Zoek op gerecht (bijv. Vis of Salade)...">
+                    <button id="searchBtn">Zoeken</button>
+                </div>
+            </div>
+
+            <div class="recipes-grid" id="recipesGrid">
+                <!-- Recipes injected here -->
+            </div>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const mockRecipes = [
+            { id: 1, title: 'Pasta Carbonara', time: '20 min', tags: ['Italiaans', 'Diner'], img: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=500&q=80' },
+            { id: 2, title: 'Gezonde Salade Bowl', time: '15 min', tags: ['Gezond', 'Lunch'], img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80' },
+            { id: 3, title: 'Spicy Tomatensoep', time: '30 min', tags: ['Soep', 'Voorgerecht'], img: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80' },
+            { id: 4, title: 'Zalm uit de Oven', time: '25 min', tags: ['Vis', 'Diner'], img: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500&q=80' },
+            { id: 5, title: 'Taco de Pollo', time: '35 min', tags: ['Mexicaans', 'Diner'], img: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=500&q=80' }
+        ];
+
+        const grid = document.getElementById('recipesGrid');
+        const searchInput = document.getElementById('searchInput');
+
+        function renderRecipes(recipes) {
+            grid.innerHTML = '';
+            if (recipes.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888; font-size: 1rem;">Geen recepten gevonden.</p>';
+                return;
+            }
+
+            recipes.forEach(r => {
+                const card = document.createElement('div');
+                card.className = 'recipe-card';
+                card.innerHTML = `
+                    <img src="${r.img}" alt="${r.title}" class="recipe-img">
+                    <div class="recipe-info">
+                        <div class="recipe-tags">
+                            ${r.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                        </div>
+                        <h3 class="recipe-title">${r.title}</h3>
+                        <div class="recipe-time">⏱️ ${r.time}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function handleSearch() {
+            const query = searchInput.value.toLowerCase();
+            const filtered = mockRecipes.filter(r =>
+                r.title.toLowerCase().includes(query) ||
+                r.tags.some(t => t.toLowerCase().includes(query))
+            );
+            renderRecipes(filtered);
+        }
+
+        document.getElementById('searchBtn').addEventListener('click', handleSearch);
+        searchInput.addEventListener('input', handleSearch);
+
+        // Initial render
+        renderRecipes(mockRecipes);
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

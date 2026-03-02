@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 61: Drag & Drop To-Do - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Project Area Trello Style! */
+        .project-area {
+            background: #f4f5f7;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #dfe1e6;
+        }
+
+        .kanban-board {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .kanban-column {
+            background: #ebecf0;
+            min-width: 250px;
+            flex: 1;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 300px;
+        }
+
+        .kolom-header {
+            font-weight: bold;
+            color: #172b4d;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dfe1e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* The Dropzone (Ul the_ ) */
+        .taak-lijst-M {
+            list-style: none;
+            flex: 1;
+            min-height: 150px;
+            /* Zorgt dat the lege kolom ook drop target the Heeft ! */
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .taak-lijst-M.drag-over {
+            background: rgba(9, 30, 66, 0.08);
+            /* Highlight v_Z The Hover Data! */
+            box-shadow: inset 0 0 0 2px #0079bf;
+        }
+
+        /* De Taak_ Cards */
+        .taak-cardThe {
+            background: white;
+            padding: 12px;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(9, 30, 66, 0.25);
+            margin-bottom: 10px;
+            cursor: grab;
+            font-size: 0.95rem;
+            color: #172b4d;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .taak-cardThe:active {
+            cursor: grabbing;
+        }
+
+        .taak-cardThe.is-dragging {
+            opacity: 0.5;
+            background: #e3f2fd;
+        }
+
+        .btn-theDel {
+            background: none;
+            border: none;
+            color: #97a0af;
+            cursor: pointer;
+        }
+
+        .btn-theDel:hover {
+            color: #ef4444;
+        }
+
+        .add-Thetaak-Vorm {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .add-Thetaak-Vorm input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #dfe1e6;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .add-Thetaak-Vorm input:focus {
+            border-color: #0079bf;
+        }
+
+        .add-Thetaak-Vorm button {
+            background: #0079bf;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .add-Thetaak-Vorm button:hover {
+            background: #026aa7;
+        }
+
+        .badgeVThe {
+            background: #dfe1e6;
+            color: #172b4d;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 61: Drag & Drop Kanban</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;">Utility
+            Apps</span>
+        <p class="description">Maak een Trello-achtige To-Do lijst waarbij je the the the taken the kunt the the the the
+            *Oppakken en the Verslepen* <code>(Drag &amp; Drop API)</code> the The ! .</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Draggable Elementen Maken</h4>
+                <p>De HTML5 theThe Drag and Drop The API the vereist een the <code>draggable="true"</code> attribuut_the
+                    the _The_ de the Muis Events !!. Hiermee Geef the je The de_ the the browser toestemming *dit
+                    element* the_ op te pakken.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: De Drag Events (Pakken)</h4>
+                <p>Wanneer we een `taak-cardThe` oppakken, Vuurt the af! the op de The Taak _! Kaart the! (Geef the em
+                    de class <code>.is-dragging</code>). De <code>dragstart</code> en <code>dragend</code> events_
+                    helpen met the css_ the styling the the</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Sleep Event !</span>
+TAAk_DOVm__HNODE.addEventListener(<span class="string">'dragstart'</span>, () => {
+    TAAk_DOVm__HNODE.classList.add(<span class="string">'is-dragging'</span>);
+    <span class="comment">// timeout is The nodig the_ the_ omdat The dragging CSS the anders niet mee the_ gaat O_ </span>
+    <span class="function">setTimeout</span>(() => TAAk_DOVm__HNODE.style.opacity = <span class="string">'0.5'</span>, <span class="string">0</span>);
+});</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: De Drop Zones (Loslaten)</h4>
+                <p>De lijsten waar we the_The_ in droppen The, hebben_ THE the the <code>dragover</code>,
+                    <code>dragleave</code> en <code>drop</code> THE_ nodig. the We *MOETEN*_ de the
+                    <code>e.preventDefault()</code>_the aanroepen_ H the theom _the toe The _te_ Z staan dat we hem *in
+                    deze the the The zone the the* the_ _The the the mogen Laten vallen_! the_ Het Loslaten _ ! Pak DOM
+                    The node the the _die the de the active The The_ class <code>.is-dragging</code> _the the heeftThe_
+                    en_ <code>appendChild()</code>The hem the the The aan _de_ Huidige _The Kolom! (De the The browser
+                    knipt The the the the DOM_ THE node automatically !)</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> kolommmentMDe_T_ = document.<span class="function">querySelectorAll</span>(<span class="string">'.taak-lijst-M'</span>);
+
+kolommmentMDe_T_.<span class="function">forEach</span>(kolomHTML => {
+    kolomHTML.<span class="function">addEventListener</span>(<span class="string">'dragover'</span>, e => {
+        <span class="comment">// DOM JS Default blockt DROPPEN, the dit zet het UitZ! !</span>
+        e.<span class="function">preventDefault</span>(); 
+        kolomHTML.classList.<span class="function">add</span>(<span class="string">'drag-over'</span>); <span class="comment">// css the_ highlight H</span>
+    });
+
+    kolomHTML.<span class="function">addEventListener</span>(<span class="string">'drop'</span>, e => {
+        <span class="comment">// Pak de active the draggende div The! Z</span>
+        <span class="keyword">const</span> deGevangeTheNTheKaart = document.<span class="function">querySelector</span>(<span class="string">'.is-dragging'</span>);
+        <span class="comment">// the the Boem_The Hij word verplaatst V Thenaar_ the The deze_ Kolom! Z_</span>
+        kolomHTML.<span class="function">appendChild</span>(deGevangeTheNTheKaart);
+        kolomHTML.classList.<span class="function">remove</span>(<span class="string">'drag-over'</span>);
+    });
+});</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Voeg nieuwe taken toe via the de input balk.</li>
+                <li>Houdt The The je Muis The the the the ingedrukt _Z_ op_ Thethe _The thethe een the the the the the
+                    Taak en _the Sleep hem _the ThetheThe The_!_naar the The_ The_ the "In M_Z_The_TheThe_TheUitvoering"
+                    ! </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Auto_ Count Badges the the:</strong> the The In The de HTML the zie the the je_ `&lt;span
+                    class=&quot;badgeVThe&quot; id=&quot;c-td&quot;&gt;3&lt;/span&gt;`. We the_ updaten *Na Iedere_
+                    Drag* the the_ de counter op the de `UI` The! Door <code>kolom.children.length</code> The_ te The
+                    meten! </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten de the Event Listeners! The aan de Nieuwe THE_ Kaartjes thte ! the The O </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ Je kan the the The in de the the The `submit` THE functie the  Niet the Zomaar! `innerHTML`_ doen the ! _ ! . thethe THE VERGETENN!!!! de  events te binden aan nieuwe cards THE Z  </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe  We the The _ Hebben The de_ Muis! the_ binding logic H THE in een ! losse the the _ `AtttachAlleDragTheEEvV(Node)` The! The  GeZet_ ! The_ The THE Zodat the _ The the The we deze specific the html de_ code kunnen afvuren bij the The New!  Card the ! The_ </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Opslaan !! The The The The! </strong> the the thethe the THE the Bouw The THE the the
+                        een the The! The the `localStorage` _ The data_ opslag VZ ! TheZ_ the Zodat the the The the als_
+                        We! _ de the app _ refreshen The de Taken in de _ De the Juiste ! The the the Kolommen _ !!
+                        OpeN! The _ . _The !. THE </li>
+                    <li><strong>Sortering! THE the TheThe _!</strong> The The the The the the Leer the THE The_ het the
+                        `insertBefore` DOM the the _ ! event_ the om!! _ The The_ the The The ! Kaartjes ! Boven of
+                        Onder the_ elkaar the te ! the Sorteren! IN de_ The Kolom!_ The !. _The ! </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <form class="add-Thetaak-Vorm" id="frm_HData_HThe_Add">
+                <input type="text" id="intDataZ_TitleZDeO_Z" placeholder="Bv: the TheBoodschappen H halen..." required
+                    autocomplete="off">
+                <button type="submit">+ Voeg Taak Toe</button>
+            </form>
+
+            <div class="kanban-board">
+
+                <div class="kanban-column">
+                    <div class="kolom-header">
+                        To Do <span class="badgeVThe" id="c-td">3</span>
+                    </div>
+                    <ul class="taak-lijst-M" id="kolom-the-todo">
+                        <li class="taak-cardThe" draggable="true">Lezen over JS API's <button
+                                class="btn-theDel">🗑️</button></li>
+                        <li class="taak-cardThe" draggable="true">Koffie zetten <button class="btn-theDel">🗑️</button>
+                        </li>
+                        <li class="taak-cardThe" draggable="true">Kat eten geven <button class="btn-theDel">🗑️</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="kanban-column">
+                    <div class="kolom-header">
+                        In Uitvoering <span class="badgeVThe" id="c-iu">1</span>
+                    </div>
+                    <ul class="taak-lijst-M" id="kolom-the-inprog">
+                        <li class="taak-cardThe" draggable="true">Drag en Drop leren 🚀 <button
+                                class="btn-theDel">🗑️</button></li>
+                    </ul>
+                </div>
+
+                <div class="kanban-column">
+                    <div class="kolom-header">
+                        Klaar (Done) <span class="badgeVThe" id="c-kl">0</span>
+                    </div>
+                    <ul class="taak-lijst-M" id="kolom-the-done">
+                        <!-- Empty The Z ! -->
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const THE_LIJSTEN_ALLDeM = document.querySelectorAll('.taak-lijst-M');
+        const FO_Z_FormDataZThe = document.getElementById('frm_HData_HThe_Add');
+        const InTHTheVHTxtDeInZ = document.getElementById('intDataZ_TitleZDeO_Z');
+
+        // Setup initial static HTML ones ! V 
+        const INIT_KAaRTENSDeTheTHTL = document.querySelectorAll('.taak-cardThe');
+        INIT_KAaRTENSDeTheTHTL.forEach(k => AtttachAlleDragTheEEvV(k));
+
+        function AtttachAlleDragTheEEvV(TAAk_DOVm__HNODE) {
+
+            // Drag Start_ 
+            TAAk_DOVm__HNODE.addEventListener('dragstart', () => {
+                TAAk_DOVm__HNODE.classList.add('is-dragging');
+                // timeout nodig the_ the_ omdat The dragging CSS The the the anders niet  mee the_ The! the gaat O_ 
+                setTimeout(() => TAAk_DOVm__HNODE.style.opacity = '0.5', 0);
+            });
+
+            // Drag END _ (Lostaat on the _The O the !Drop_)
+            TAAk_DOVm__HNODE.addEventListener('dragend', () => {
+                TAAk_DOVm__HNODE.classList.remove('is-dragging');
+                TAAk_DOVm__HNODE.style.opacity = '1';
+                UpdateAlleBadgteTheTheMColUI_CountersV();
+            });
+
+            // Del_ Btn_ (Verwijder )
+            const BTNOtheDel = TAAk_DOVm__HNODE.querySelector('.btn-theDel');
+            if (BTNOtheDel) {
+                BTNOtheDel.addEventListener('click', () => {
+                    TAAk_DOVm__HNODE.remove();
+                    UpdateAlleBadgteTheTheMColUI_CountersV(); // counts UI down !
+                });
+            }
+        }
+
+        // DE 3 LIJSTEN the!! (DROPZONES_ O_O !)
+        THE_LIJSTEN_ALLDeM.forEach(lijstDeDivDom_V_HUIH => {
+
+            lijstDeDivDom_V_HUIH.addEventListener('dragover', e => {
+                e.preventDefault(); // Must! anders kan the the je niet_ THE DROPPEN !
+                lijstDeDivDom_V_HUIH.classList.add('drag-over'); // CSS the Blue V
+            });
+
+            lijstDeDivDom_V_HUIH.addEventListener('dragleave', () => {
+                lijstDeDivDom_V_HUIH.classList.remove('drag-over');
+            });
+
+            // DROP THE BOEMThe!
+            lijstDeDivDom_V_HUIH.addEventListener('drop', e => {
+                lijstDeDivDom_V_HUIH.classList.remove('drag-over');
+
+                // Which_ The! the_ The_ element V was the_ the_ actively being dragged_ !? 
+                const DeSleepNodeTTheDraggTheInDOM_VHeThe_ = document.querySelector('.is-dragging');
+
+                // Verplaats Naar deze KolomThe ! DOM auto verplaatst em! the Z !
+                lijstDeDivDom_V_HUIH.appendChild(DeSleepNodeTTheDraggTheInDOM_VHeThe_);
+            });
+        });
+
+        // H ADD Nieuwe!_ T 
+        FO_Z_FormDataZThe.addEventListener('submit', e => {
+            e.preventDefault();
+            const deVal_H_TxtValueHThe = InTHTheVHTxtDeInZ.value.trim();
+            if (!deVal_H_TxtValueHThe) return;
+
+            const N_DOdomTKaartMDeZ = document.createElement('li');
+            N_DOdomTKaartMDeZ.classList.add('taak-cardThe');
+            N_DOdomTKaartMDeZ.setAttribute('draggable', 'true');
+            N_DOdomTKaartMDeZ.innerHTML = `${deVal_H_TxtValueHThe} <button class="btn-theDel">🗑️</button>`;
+
+            AtttachAlleDragTheEEvV(N_DOdomTKaartMDeZ);
+
+            document.getElementById('kolom-the-todo').appendChild(N_DOdomTKaartMDeZ);
+            InTHTheVHTxtDeInZ.value = "";
+
+            UpdateAlleBadgteTheTheMColUI_CountersV();
+        });
+
+
+        // Hulp The_ _The UI Update Counters !
+        function UpdateAlleBadgteTheTheMColUI_CountersV() {
+            document.getElementById('c-td').innerText = document.getElementById('kolom-the-todo').children.length;
+            document.getElementById('c-iu').innerText = document.getElementById('kolom-the-inprog').children.length;
+            document.getElementById('c-kl').innerText = document.getElementById('kolom-the-done').children.length;
+        }
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

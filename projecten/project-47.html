@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 47: Valuta Omrekenaar - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Project Area */
+        .project-area {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid #e2e8f0;
+        }
+
+        .converter-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            align-items: center;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            font-size: 1.2rem;
+            outline: none;
+            background: #fff;
+        }
+
+        .input-group select {
+            padding: 15px;
+            border: none;
+            background: #f1f5f9;
+            font-size: 1.1rem;
+            border-left: 2px solid #e2e8f0;
+            cursor: pointer;
+            outline: none;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .btn-swap {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            transform: rotate(90deg);
+        }
+
+        .btn-swap:hover {
+            background: #2563eb;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .rate-info {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 47: Valuta Omrekenaar (Mock API)</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">Data
+            Logic</span>
+        <p class="description">Maak een live currency calculator. In plaats van een peperdure API gebruiken we een
+            statische wisselkoers-opslag uit december 2026.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De "Base Rate" Wiskunde</h4>
+                <p>Het omrekenen van 2 willekeurige valuta's via een *tussen*-valuta (bijvoorbeeld USD is de base) is de
+                    makkelijkste techniek. Als USD -> EUR `0.92` is, en USD -> GBP `0.78` is, hoef je de directe
+                    kruiselingse koers niet op te slaan!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Deel the Bestemmings-koers door the Start-koers. </span>
+<span class="comment">// Van EUR (0.92) naar GBP (0.78) wordt the the: 0.78 / 0.92 = 0.847  </span>
+<span class="keyword">const</span> wisselKoers = exchangeRates[valutaTwee] / exchangeRates[valutaEen];
+
+<span class="comment">// Nu the the hoef je the het the resultaat the The the alleen the nog maar the The te vermenigvuldigen the the met The the het ingevoerde The bedrag!</span>
+<span class="keyword">const</span> nieuwBedrag = ingevoerdBedrag * wisselKoers;</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Live Events (Input)</h4>
+                <p>In plaats van te the theachten The The the the the op The the the the de the form-submit knop The The
+                    the the The "Bereken", vuurt de <code>input</code> event listener het script af the the bij THE THE
+                    THE the the THE elke the the aanslag op het the toetsenbord The The The The. The the The The The Dit
+                    voelt The The heel The The "app"-achtig data !</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Voer The the the `calculate` functie The The exact the the the the the the the uit the the telkens the als een box veranderat The !</span>
+amountOne.<span class="function">addEventListener</span>(<span class="string">'input'</span>, calculate);
+currOne.<span class="function">addEventListener</span>(<span class="string">'change'</span>, calculate);</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Swappen (Waardes the The Ombouwen!)</h4>
+                <p>Hoe the werkt the the the blauwe the the de ⇄ (Swap) the knop? door the de The de values te the the
+                    verwisselen The ! the The the Maar... The the let the op The the the de JavaScript geheugen the the
+                    overschrijving The The!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">swapCurrencies</span>() {
+    <span class="comment">// SLA the DE DATA eerst op The the in the the the een the tijdelijke the var The the the !! (anders the overschrijf the the je The hem The The The direct) </span>
+    <span class="keyword">const</span> tijdelijkGeheugen = currOne.value;
+    currOne.value = currTwo.value;
+    currTwo.value = tijdelijkGeheugen;
+    
+    <span class="function">calculate</span>(); <span class="comment">// Her-Start de the code the the na The actieThe THE</span>
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Typ getallen the the in The The the het The the bovenste the of The the onderste the the the veld.
+                    Het The the The getal The in The the the the the the het *andere* the veld The the The past The the
+                    zich The direct the the aan!</li>
+                <li>The Selecteer the The the andere The The the the valuta the the The The the in de the dropdown the
+                    list en The the the zie the the the de the nummers The The the springen.</li>
+                <li>The Klik the o^p de blauwe The "Wissel" The the knop The The the om both The The The valuta types
+                    the the um the to swappen.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Reverse Calculation:</strong> Om The the the zorgen the data The The the the bottom input
+                    box the The The OOK The de the the top box beïnvloedt The !, The the reverseThe The We The The the
+                    The the division in The de the The code The the the <code>uitkomst / factor</code> The !</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Hardcoded "Change" listeners the</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The Input event The text Vakken The the The the "change" the the the the is the The PAS af the als de gebruiker The The the THE The the op de de de The "Enter" The drukt, The the of buite The het The form input The the The The the klikt The the (Lost The focus).</span>
+amountOne.<span class="function">addEventListener</span>(<span class="string">'change'</span>, calculate);
+
+<span class="comment">// OPLOSSING: Gebruik the "input" The voor *live* The feedback The The de the typing the!</span>
+amountOne.<span class="function">addEventListener</span>(<span class="string">'input'</span>, calculate);</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Fetch The the API! </strong> Gebruik de the <code>fetch()</code> The the methode The om
+                        the <code>https://api.exchangerate-api.com/v4/latest/USD</code> THE The aan the roepen The in
+                        plaats van the <code>exchangeRates</code> the object in The code the ! the The the De The The
+                        rest the the the the The The van the logica the The is the The The Exact Hetzelfde The !</li>
+                    <li><strong>Voeg the the The Vlaggen the The The Iconen the the Toe!</strong> Gebruik the the CSS!
+                        The The the The The the of span the the elementen The om The de the vlag te tonen the naast de
+                        the The the dropdown the The! (bv 🇯🇵 The! 🇺🇸) </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="converter-box">
+                <div class="input-group">
+                    <input type="number" id="amount-one" value="1" min="0">
+                    <select id="currency-one">
+                        <option value="EUR" selected>EUR (€)</option>
+                        <option value="USD">USD ($)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="JPY">JPY (¥)</option>
+                        <option value="AUD">AUD (A$)</option>
+                        <option value="CAD">CAD (C$)</option>
+                        <option value="CHF">CHF (Fr)</option>
+                    </select>
+                </div>
+
+                <button class="btn-swap" id="swap-btn">⇄</button>
+
+                <div class="input-group">
+                    <input type="number" id="amount-two" min="0">
+                    <select id="currency-two">
+                        <option value="EUR">EUR (€)</option>
+                        <option value="USD" selected>USD ($)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="JPY">JPY (¥)</option>
+                        <option value="AUD">AUD (A$)</option>
+                        <option value="CAD">CAD (C$)</option>
+                        <option value="CHF">CHF (Fr)</option>
+                    </select>
+                </div>
+
+                <div class="rate-info" id="rate-info">
+                    1 EUR = 1.08 USD
+                </div>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const currOne = document.getElementById('currency-one');
+        const currTwo = document.getElementById('currency-two');
+        const amountOne = document.getElementById('amount-one');
+        const amountTwo = document.getElementById('amount-two');
+        const rateInfo = document.getElementById('rate-info');
+        const swapBtn = document.getElementById('swap-btn');
+
+        // Static exchange rates based on USD (Base 1.0)
+        const exchangeRates = {
+            "USD": 1.00,
+            "EUR": 0.92,
+            "GBP": 0.78,
+            "JPY": 150.40,
+            "AUD": 1.52,
+            "CAD": 1.35,
+            "CHF": 0.88
+        };
+
+        // Berekend the resultaat
+        function calculate() {
+            const valOne = currOne.value;
+            const valTwo = currTwo.value;
+
+            // the conversion logic: Base Rate
+            // Example: EUR (0.92) to GBP (0.78)
+            // (1 USD / 0.92) * 0.78 = rate
+
+            const theRate = exchangeRates[valTwo] / exchangeRates[valOne];
+
+            // print the rate string for UI info
+            rateInfo.innerText = `1 ${valOne} = ${theRate.toFixed(4)} ${valTwo}`;
+
+            // do the the the math and inject it!
+            amountTwo.value = (amountOne.value * theRate).toFixed(2);
+        }
+
+        // Berekend the resultaat The The ANDERE THE RAAI! THE WAY AROUND! The The The
+        function calculateReverse() {
+            const valOne = currOne.value;
+            const valTwo = currTwo.value;
+
+            // rate is the other way around now, so division flip!
+            const theRate = exchangeRates[valOne] / exchangeRates[valTwo];
+
+            // Set the upper UI input
+            amountOne.value = (amountTwo.value * theRate).toFixed(2);
+        }
+
+        function swapCurrencies() {
+            // Memory The var the the holding the temp string value
+            const theTemp = currOne.value;
+            currOne.value = currTwo.value;
+            currTwo.value = theTemp;
+
+            // Re-fire standard the calculatie!
+            calculate();
+        }
+
+        // Event listeners (The Magic!)
+        currOne.addEventListener('change', calculate);
+        currTwo.addEventListener('change', calculate);
+
+        // As you type in TOP box
+        amountOne.addEventListener('input', calculate);
+
+        // As you type in BOTTOM box
+        amountTwo.addEventListener('input', calculateReverse);
+
+        // Click swap btn
+        swapBtn.addEventListener('click', swapCurrencies);
+
+        // OnInit! the the the
+        calculate();
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

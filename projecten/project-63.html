@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 63: Pomodoro Timer - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            transition: background 0.5s;
+        }
+
+        /* The The Dynamic the Body background Thethe The !! Z */
+        body.modus-werk {
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+        }
+
+        body.modus-rust {
+            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .level {
+            display: block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* App Style POMO _ THE */
+        .project-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 0;
+        }
+
+        .TheTabsMode_D_DeHTmToggleZ {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: #e2e8f0;
+            padding: 5px;
+            border-radius: 30px;
+        }
+
+        .thePomoTaaBBTNHZ {
+            background: transparent;
+            border: none;
+            padding: 8px 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #64748b;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: 0.2s;
+        }
+
+        .thePomoTaaBBTNHZ.activeThe {
+            background: white;
+            color: #0f172a;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .Klok-DDeKReus-ZVTa {
+            font-size: 6rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 30px;
+            font-variant-numeric: tabular-nums;
+            /* Monospace The the numbers !! */
+        }
+
+        .controls-HZ {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btheKnopKlokV_H {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-hoofdZ_DeZStartO {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 0 #2563eb;
+        }
+
+        .btn-hoofdZ_DeZStartO:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 transparent;
+        }
+
+        .btn-stopDataPauz_Z {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-resetKlokBtnTheH {
+            background: transparent;
+            border: 2px solid #cbd5e1;
+            color: #64748b;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Pomodoro Productiviteit</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;">Utility
+            Apps</span>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="TheTabsMode_D_DeHTmToggleZ">
+                <button class="thePomoTaaBBTNHZ activeThe" id="Bthe_MTaZabDeG_oWThe" data-tijd="25">Focus (25m)</button>
+                <button class="thePomoTaaBBTNHZ" id="BTZTheaabG_RusTThe" data-tijd="5">Korte Rust (5m)</button>
+            </div>
+
+            <div class="Klok-DDeKReus-ZVTa" id="UI__DKloKHeVThe">25:00</div>
+
+            <div class="controls-HZ">
+                <button class="btheKnopKlokV_H btn-hoofdZ_DeZStartO" id="O_SBtnStart_VThe_">START</button>
+                <button class="btheKnopKlokV_H btn-stopDataPauz_Z" id="PZPauZeDataV_HBtn_V">PAUZE</button>
+                <button class="btheKnopKlokV_H btn-resetKlokBtnTheH" id="BtheRestartZDeHBtnKlok_TheOO">RESET</button>
+            </div>
+
+        </div>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Variabelen the the en Status </h4>
+                <p>Een the the Timer_ heeft the the the *State* _ nodig ! We the the houden_ bij The _Hoeveel_ V THE the
+                    the! seconden The The er_ nog the the over_ the zijn_ The_
+                    <code>(T_TotaleTDataTSecondeTheDieTimerZHe_NogTheTeGaan_TDataDeV_)</code>_ the En of the the timer
+                    the the _Al_ loopt the the The! <code>(R_TimerDeLooptDataHData_O)</code> _The !. </p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: De Javascript the <code>setInterval</code></h4>
+                <p>Als _The de_ gebruiker "Start"_ the the the klikt, The the the the The _ maken The *we _ The theThe
+                    the theThe een_ The IntervalThe_ !* Die _The the the IEDERE Seconde _The (1000ms)_ The The de the
+                    seconden _ -1 _ doet_. En _The_ De_ THE_ UI update theThe_ the_ aanroept! The </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">ZTheStart_DeTheH_KlokVTheDe_</span>() {
+    <span class="keyword">if</span> (R_TimerDeLooptDataHData_O) <span class="keyword">return</span>; <span class="comment">// double The voorkom_ ! </span>
+
+    R_TimerDeLooptDataHData_O = <span class="keyword">true</span>;
+    HetT_NeeDeIntervalHokKlokZTheTimer_OThe = <span class="function">setInterval</span>(() => {
+        T_TotaleTDataTSecondeTheDieTimerZHe_NogTheTeGaan_TDataDeV_--;
+        <span class="function">VVVUiUpdate_TTheKlokDataTWeerG_HT</span>();
+
+        <span class="keyword">if</span> (T_TotaleTDataTSecondeTheDieTimerZHe_NogTheTeGaan_TDataDeV_ <= <span class="string">0</span>) {
+            <span class="function">SpeltTimerIsOVerAfGeLopen_DataTheKlokZZT_</span>(); <span class="comment">// THE KLAAR !! Z</span>
+        }
+    }, <span class="string">1000</span>);
+}</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: <code>padStart()</code> voor_ the UI de The string_ </h4>
+                <p>Een the klok the_ ziet The er the dom uit the_ als the_ The hij_the `9:5`_ the The! the the the the
+                    the_ The Zegt_. We the The Thethe willen_ the `09:05`! The_ <code>padStart(2, '0')</code>_ Zorgt
+                    hier the_ voor The_!_ </p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik the the op the _The een_The_V the *Rust* The the the the the of the the *Werk*! The modus the !
+                    the.</li>
+                <li>Klik O start en ! wacht the ! The (of the the bekijk de the source code the the the _ The voor ZThe
+                    the JS_ The dataVthe!). </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Dynamic document.title ! The The the:</strong> the The In The de code The The the THE Zie
+                    the je The The the the theThe The `document.title = (mm:ss) Pomodoro Z_!` _the The. Hierdoor The Zie
+                    the The je the Klok the_ The thethe *Zelfs in the de the Browser_ Tab* lopen! </li>
+            </ul>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Custom Tijd_ !! The The The The! </strong> the the thethe the THE the Bouw The THE the
+                        the een the The! The the `input type="number"` _ The theZ ! TheZ_ Zodat_ the the The_ the the de
+                        thethe the the the Gebruiker_ the zelf _ ZDe_ thethethe minuten kan instellen the ! The _ . _The
+                        !. THE </li>
+                    <li><strong>Geluid Uitzetten! THE the TheThe _!</strong> The The the The the the Leer the THE The_
+                        the de Audio_! the the the _The_The HTMLThe Mute V_ Knop In the the The_ the te _!_ The bouwen
+                        !_.the !! _ The The_ the The The ! the The_ the The!_ The !. _The ! </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <!-- Alarm sound ! The -->
+    <!-- _ We use embedded simple base64 tiny data sound ! so no path issue data! H! -->
+    <audio id="AudioZ_AAHetAlarmZ_ODataV"
+        src="data:audio/mp3;base64,//OExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//OExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"></audio>
+
+
+    <script>
+        const THEOUI_D_KlokThe_ZTexTtDNode_HZ = document.getElementById('UI__DKloKHeVThe');
+        const THEUiBKnopS_ZDataStartZTheDataZ = document.getElementById('O_SBtnStart_VThe_');
+        const DeKnpThePZPPZauTheAHS_aZThOBtnT = document.getElementById('PZPauZeDataV_HBtn_V');
+        const BtnDReOTheset__H_HKKlokDataV = document.getElementById('BtheRestartZDeHBtnKlok_TheOO');
+
+        const TabsLTheK_OBtnListVThe_H_ = document.querySelectorAll('.thePomoTaaBBTNHZ');
+        let TheGaudioDom_Z_HTheAlT_De_OTheVarZ = document.getElementById('AudioZ_AAHetAlarmZ_ODataV'); // Dummy sound The_ !
+
+        // State_ Z The
+        let T_TotaleTDataTSecondeTheDieTimerZHe_NogTheTeGaan_TDataDeV_ = 25 * 60; // default 25m in secs _ Z !
+        let deStartDeGeKozeBeginOTheMinutenT_Var = 25;
+
+        let HetT_NeeDeIntervalHokKlokZTheTimer_OThe = null;
+        let R_TimerDeLooptDataHData_O = false;
+
+        function VVVUiUpdate_TTheKlokDataTWeerG_HT() {
+            // Calc MM and SS the !
+            const MMTheMinutenGeThData = Math.floor(T_TotaleTDataTSecondeTheDieTimerZHe_NogTheTeGaan_TDataDeV_ / 60);
+            const SSSSezcondeZTheOData_ = T_TotaleTDataTSecondeTheDieTimerZHe_NogTheTeGaan_TDataDeV_ % 60;
+
+            // padstart The the (1 -> 01) _!
+            const STringM_MDATTheZ = MMTheMinutenGeThData.toString().padStart(2, '0');
+            const TheZSSstZStringZDaThe = SSSSezcondeZTheOData_.toString().padStart(2, '0');
+
+            THEOUI_D_KlokThe_ZTexTtDNode_HZ.innerText = `${STringM_MDATTheZ}:${TheZSSstZStringZDaThe}`;
+
+            // Tab title T
+            document.title = `(${STringM_MDATTheZ}:${TheZSSstZStringZDaThe}) Pomodoro Z_!`;
+        }
+
+        // --- De Motor !! _ The T ! ---
+        function ZTheStart_DeTheH_KlokVTheDe_() {
+            if (R_TimerDeLooptDataHData_O) return; // double The
+
+            R_TimerDeLooptDataHData_O = true;
+            THEUiBKnopS_ZDataStartZTheDataZ.disabled = true; // no click V
+            THEUiBKnopS_ZDataStartZTheDataZ.innerText = "Bezig...";
+
+            HetT_NeeDeIntervalHokKlokZTheTimer_OThe = setInterval(() => {
+                T_TotaleTDataTSecondeTheDieTimerZHe_NogTheTeGaan_TDataDeV_--;
+                VVVUiUpdate_TTheKlokDataTWeerG_HT();
+
+                if (T_TotaleTDataTSecondeTheDieTimerZHe_NogTheTeGaan_TDataDeV_ <= 0) {
+                    SpeltTimerIsOVerAfGeLopen_DataTheKlokZZT_();
+                }
+            }, 1000);
+        }
+
+        function PPauzeeerDataDeKlokTheTData_V() {
+            R_TimerDeLooptDataHData_O = false;
+            clearInterval(HetT_NeeDeIntervalHokKlokZTheTimer_OThe);
+            THEUiBKnopS_ZDataStartZTheDataZ.disabled = false;
+            THEUiBKnopS_ZDataStartZTheDataZ.innerText = "HERVAT";
+        }
+
+        function DeKlokReset_ReDataSTheVolTheZZet_HTLtheLogic() {
+            PPauzeeerDataDeKlokTheTData_V(); // kills loop !
+            THEUiBKnopS_ZDataStartZTheDataZ.innerText = "START";
+
+            // reset back to the memory of picked Mins !
+            T_TotaleTDataTSecondeTheDieTimerZHe_NogTheTeGaan_TDataDeV_ = deStartDeGeKozeBeginOTheMinutenT_Var * 60;
+            VVVUiUpdate_TTheKlokDataTWeerG_HT();
+            document.title = "Pomodoro Timer Z!"; // clear T
+        }
+
+        function SpeltTimerIsOVerAfGeLopen_DataTheKlokZZT_() {
+            PPauzeeerDataDeKlokTheTData_V();
+            // Play default browser sound hack Z (Not perfect without mp3 but works DOMThe)!
+            alert("🚨 Tringgggg! De The Pomodoro Klok The_ Z Z is V_ The afgelopen The ! 🚨");
+            // The audio is dummy data V so it won't crash ! 
+            DeKlokReset_ReDataSTheVolTheZZet_HTLtheLogic();
+        }
+
+
+        // --- KNOPPEN BINDINGS ---
+        THEUiBKnopS_ZDataStartZTheDataZ.addEventListener('click', ZTheStart_DeTheH_KlokVTheDe_);
+        DeKnpThePZPPZauTheAHS_aZThOBtnT.addEventListener('click', PPauzeeerDataDeKlokTheTData_V);
+        BtnDReOTheset__H_HKKlokDataV.addEventListener('click', DeKlokReset_ReDataSTheVolTheZZet_HTLtheLogic);
+
+        // --- THE TAB UI H ---
+        TabsLTheK_OBtnListVThe_H_.forEach(ZDeTTheabKKnopO_DOMDataV => {
+            ZDeTTheabKKnopO_DOMDataV.addEventListener('click', () => {
+
+                // Clear UI Data H ! 
+                TabsLTheK_OBtnListVThe_H_.forEach(tk => tk.classList.remove('activeThe'));
+                // Make Z Active Z ! 
+                ZDeTTheabKKnopO_DOMDataV.classList.add('activeThe');
+
+                // Lees the The "data-tijd" HTML H attr !
+                const mGeKonzenTheHMinVDeTMinutenHVar_Data = parseInt(ZDeTTheabKKnopO_DOMDataV.getAttribute('data-tijd'));
+                deStartDeGeKozeBeginOTheMinutenT_Var = mGeKonzenTheHMinVDeTMinutenHVar_Data;
+
+                // BG Color CSS change H !!
+                if (deStartDeGeKozeBeginOTheMinutenT_Var === 25) {
+                    document.body.className = 'modus-werk';
+                } else {
+                    document.body.className = 'modus-rust';
+                }
+
+                DeKlokReset_ReDataSTheVolTheZZet_HTLtheLogic(); // Loads the new The variables  in_
+            });
+        });
+
+        // INIT !!
+        VVVUiUpdate_TTheKlokDataTWeerG_HT();
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

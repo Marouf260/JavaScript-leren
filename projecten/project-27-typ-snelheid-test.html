@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 27: Typ Snelheid Test - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Typing Test Area */
+        .project-area {
+            background: #0b0f19;
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            border: 2px solid #00ffff;
+            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .title-cyber {
+            color: #00ffff;
+            font-size: 2rem;
+            text-shadow: 0 0 10px #00ffff;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .subtitle-cyber {
+            color: #888;
+            font-family: sans-serif;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .stat-label {
+            color: #00ffff;
+            font-family: sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .quote-display {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-align: justify;
+            margin-bottom: 20px;
+            border-left: 3px solid #00ffff;
+        }
+
+        .quote-display span {
+            transition: 0.1s;
+        }
+
+        .quote-display span.correct {
+            color: #00ffff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+
+        .quote-display span.incorrect {
+            color: #ff0055;
+            text-shadow: 0 0 5px rgba(255, 0, 85, 0.5);
+            background: rgba(255, 0, 85, 0.2);
+            border-radius: 2px;
+        }
+
+        .quote-input {
+            width: 100%;
+            background: #0b0f19;
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            padding: 15px;
+            font-size: 1.1rem;
+            resize: none;
+            outline: none;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        .quote-input:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 27: Typ Snelheid Test</h1>
+        <span class="level">Master</span>
+        <p class="description">Test je reactievermogen met een real-time, letter-voor-letter type controller met een
+            hacking thema!</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Zinnen opsplitsen in losse HTML Elementen</h4>
+                <p>Om te weten of een gebruiker letter-voor-letter de tekst goed typt, moeten we de string omzetten naar
+                    individuele array-karakters met <code>.split('')</code>. Van elk karakter maken we een eigen
+                    <code>&lt;span&gt;</code>, waardoor we die apart rood of groen kunnen kleuren.
+                </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> RANDOM_QUOTE = <span class="string">"De code compilet niet..."</span>;
+
+RANDOM_QUOTE.<span class="function">split</span>(<span class="string">''</span>).<span class="function">forEach</span>(char => {
+    <span class="keyword">const</span> charSpan = document.<span class="function">createElement</span>(<span class="string">'span'</span>);
+    charSpan.innerText = char;
+    quoteDisplay.<span class="function">appendChild</span>(charSpan);
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We vullen de zwarte "terminal" box dynamisch letter-voor-letter met HTML
+                    Spans. Dit heet het prepareren / scaffolden van de UI (User Interface).</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Live Vergelijken (Array tegen Array)</h4>
+                <p>Elke keer als er getypt wordt (<code>event: 'input'</code>), splitsen we wat de gebruiker
+                    daadwerkelijk getypt heeft óók op in een nieuw array en vergelijken we de letter op index
+                    <code>[0]</code> met de doeltaal letter op index <code>[0]</code>.
+                </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> arrayQuote = quoteDisplay.<span class="function">querySelectorAll</span>(<span class="string">'span'</span>);
+<span class="keyword">const</span> arrayValue = quoteInput.value.<span class="function">split</span>(<span class="string">''</span>);
+
+arrayQuote.<span class="function">forEach</span>((charSpan, index) => {
+    <span class="keyword">const</span> character = arrayValue[index];
+    <span class="keyword">if</span> (character === charSpan.innerText) {
+        charSpan.classList.<span class="function">add</span>(<span class="string">'correct'</span>);
+    }
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Door parallel te lopen over the array van de <code>querySelectorAll</code>,
+                    kunnen we live CSS classes toevoegen (rood/groen) gebaseerd op een if-else match structuur.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: WPM Formule (Words per Minute)</h4>
+                <p>Om te berekenen hoe snel de gebruiker is in "Words Per Minute", hebben we het aantal letters,
+                    seconden en een wiskunde formule nodig.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">let</span> cpm = Math.<span class="function">round</span>((valLength / timeElapsed) * <span class="string">60</span>);
+<span class="keyword">let</span> wpm = Math.<span class="function">round</span>(((valLength / <span class="string">5</span>) / timeElapsed) * <span class="string">60</span>);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> In internationale typ-competities telt 1 woord gestandaardiseerd als 5
+                    karakters. Dus: <code>(aantal characters / 5)</code> gedeeld door het aantal seconden dat is
+                    verstreken KEER 60 (maal 60, voor 1 minuut).</p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Timer Starten bij de eerste slag)</h3>
+            <pre><span class="comment">// Dit start the timer wanneer we de eerste letter indrukken</span>
+quoteInput.<span class="function">addEventListener</span>(<span class="string">'input'</span>, () => {
+    <span class="comment">// Is er nog GEEN timer ID aanwezig (falsey value)? Start hem dan op!</span>
+    <span class="keyword">if</span> (!timer) {
+        <span class="function">startGame</span>();
+    }
+    
+    <span class="comment">// Ga verder met the UI verversen logica...</span>
+});
+
+<span class="keyword">function</span> <span class="function">startGame</span>() {
+    <span class="comment">// Voer 'updateTimer' functie ALTIJD the elke the 1000ms the (1 seconde) uit the</span>
+    timer = <span class="function">setInterval</span>(updateTimer, <span class="string">1000</span>);
+}</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik in het tekstveld in de donkere box. Zodra je de allereerste letter ("D") typt, begint de rode
+                    timer van 60 seconden direct te lopen!</li>
+                <li>Typ nauwkeurig mee in het kader. Foute toetsaanslagen kleuren bloedrood.</li>
+                <li>Tijdens het typen zie je in de HUD (Heads-Up-Display) je live "WPM" (Words Per Minute) en "CPM"
+                    updaten.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Waarom <code>Math.round</code>?</strong> Het aantal typ-letters (bijv 38) gedeeld door
+                    seconden (bijv. 7) geeft vervelende ongenuanceerde decimale breuken (<code>5.42857142857</code>).
+                    <code>Math.round</code> zorgt direct voor schone, leesbare integers (<code>5</code>).</li>
+                <li><strong>Waarom <code>split('')</code> met enkele quotes?</strong> De <code>split()</code> functie
+                    breekt een string op in stukjes. Als je niets meegeeft <code>split()</code>, houd je 1 massief blok
+                    over. Als je <code>split(' ')</code> - met spatie - gebruikt, dan breekt het de hele string in losse
+                    woorden op! Een lege string <code>''</code> (niks) breekt het op <strong>EXACT elke letter!</strong>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: <code>setInterval</code> chaos (meerdere timers tegelijk)</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Start je een interval bij elke toetsaanslag!? Dan tellen er straks 112 timers die elke seconde -112 van je Tijd aftrekken! Crashes ALOM!</span>
+quoteInput.addEventListener('input', () =&gt; {
+    timer = setInterval(updateTimer, 1000);
+});
+
+<span class="comment">// ✅ GOED - Zorg ervoor dat de timer State maar ÉÉN keer ingeschakeld MAG worden (if statement).</span>
+if (!timer) { timer = setInterval(updateTimer, 1000); }</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor meer? Probeer dit toe te voegen in je eigen IDE:</p>
+                <ul>
+                    <li><strong>Fetch APIs:</strong> In plaats van 1 hardcoded variable, haal met <code>fetch()</code>
+                        willekeurige zinnen op via de openbare API <code>https://api.quotable.io/random</code>!</li>
+                    <li><strong>Restart Knop 🔄:</strong> Maak een "Restart" knop die alle <code>timer</code> en
+                        <code>errors</code> variabelen reset, en de input weer leegmaakt, zodat de pagina nooit
+                        "ververst" hoeft te worden.</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <h2 class="title-cyber">Systeem Override</h2>
+            <p class="subtitle-cyber">Toets exact de string in om in te loggen...</p>
+
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="wpm">0</div>
+                    <div class="stat-label">WPM</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="cpm">0</div>
+                    <div class="stat-label">CPM</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="errors">0</div>
+                    <div class="stat-label">Errors</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="time">60s</div>
+                    <div class="stat-label">Tijd</div>
+                </div>
+            </div>
+
+            <div class="quote-display" id="quoteDisplay"></div>
+            <textarea id="quoteInput" class="quote-input" placeholder="Klik hier en start typen..." rows="3"
+                spellcheck="false"></textarea>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const RANDOM_QUOTE = "De code compilet niet, dat betekent dat ik leef. Verander het systeem, update je loop, want robots huilen niet.";
+        const quoteDisplay = document.getElementById('quoteDisplay');
+        const quoteInput = document.getElementById('quoteInput');
+
+        let timeLeft = 60;
+        let timeElapsed = 0;
+        let errors = 0;
+        let timer = null;
+
+        // Init
+        function setupQuote() {
+            quoteDisplay.innerHTML = '';
+            RANDOM_QUOTE.split('').forEach(char => {
+                const charSpan = document.createElement('span');
+                charSpan.innerText = char;
+                quoteDisplay.appendChild(charSpan);
+            });
+            quoteInput.value = '';
+            quoteInput.disabled = false;
+        }
+
+        setupQuote();
+
+        quoteInput.addEventListener('input', () => {
+            if (!timer) {
+                startGame();
+            }
+
+            const arrayQuote = quoteDisplay.querySelectorAll('span');
+            const arrayValue = quoteInput.value.split('');
+            errors = 0;
+
+            arrayQuote.forEach((charSpan, index) => {
+                const character = arrayValue[index];
+                if (character == null) {
+                    charSpan.classList.remove('correct');
+                    charSpan.classList.remove('incorrect');
+                } else if (character === charSpan.innerText) {
+                    charSpan.classList.add('correct');
+                    charSpan.classList.remove('incorrect');
+                } else {
+                    charSpan.classList.remove('correct');
+                    charSpan.classList.add('incorrect');
+                    errors++;
+                }
+            });
+
+            document.getElementById('errors').innerText = errors;
+
+            // Controle of de quote voorbij is
+            if (arrayValue.length >= arrayQuote.length) {
+                finishGame();
+            }
+        });
+
+        function startGame() {
+            timer = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                timeElapsed++;
+                document.getElementById('time').innerText = timeLeft + "s";
+
+                // Formule CPM/WPM
+                const valLength = quoteInput.value.length;
+                let cpm = Math.round((valLength / timeElapsed) * 60);
+                let wpm = Math.round(((valLength / 5) / timeElapsed) * 60);
+
+                document.getElementById('cpm').innerText = cpm;
+                document.getElementById('wpm').innerText = wpm;
+            } else {
+                finishGame();
+            }
+        }
+
+        function finishGame() {
+            clearInterval(timer);
+            timer = null;
+            quoteInput.disabled = true;
+            quoteInput.value = "Test voltooid! (Herlaad site voor nieuw potje)";
+        }
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

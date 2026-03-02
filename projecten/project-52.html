@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 52: Memory Card Game - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Game Area */
+        .project-area {
+            background: #202b38;
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 450px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 80px);
+            grid-gap: 15px;
+            perspective: 1000px;
+            /* Belangrijk the voor The CSS 3D Flipping_ */
+        }
+
+        /* The Card Container that holds Front + Back */
+        .card {
+            width: 80px;
+            height: 110px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card.matched {
+            transform: rotateY(180deg) scale(0.95);
+            opacity: 0.7;
+        }
+
+        .card-face {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* The the The back of the playing the the the card (What you see initially) */
+        .card-back {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border: 2px solid white;
+        }
+
+        /* The Front the that has the emoji ! */
+        .card-front {
+            background: white;
+            transform: rotateY(180deg);
+            border: 2px solid #ccc;
+        }
+
+        .btn-restart {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: 0.2s;
+        }
+
+        .btn-restart:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 52: Geheugenspel (Memory)</h1>
+        <span class="level" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">Games</span>
+        <p class="description">Test je JS state-management skills the The the. Met 3D CSS effecten! (Geavanceerder the
+            the dan het array the the level The 28 memoryspel).</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: HTML Elementen Genereren & Data Opslaan</h4>
+                <p>We the The bouwen the het the bord The The the <code>grid</code> the niet the in HTML The the , The
+                    maar the The the we genereren the de The 16 the The kaarten The the in the JS The The The The The
+                    The the (2 the the van The The the the The the elke The emoji The the!). The the Belangrijk the The
+                    is that The THE je The the de EMOJI the stiekem the The opslaat THE in The een
+                    <code>dataset.value</code> the The the! Zo the the WEET JS later the the welke the the objecten the
+                    The the the the the over the the identiek The The The The the The the the zijn The !!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// the the Maak The the the DOM the the Element the the The The the THE The the the The the the</span>
+<span class="keyword">const</span> kaart = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
+kaart.classList.<span class="function">add</span>(<span class="string">'card'</span>);
+
+<span class="comment">// SLA de info The in THE het the HTML The Element OP! (Verstopt the the voor the the The the the UI the The the The )</span>
+kaart.dataset.emojiId = HuidigeEmojiUitDeLoop; 
+
+<span class="comment">// the the the The The Later the in the The The click event: </span>
+<span class="keyword">if</span> (kaart1.dataset.emojiId === kaart2.dataset.emojiId) { <span class="comment">/* MATCH! */</span> }</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: The Lock-Board mechanism (Timeouts)</h4>
+                <p>Bij Memory is the the de *Timeout* the de baas! Als je 2 verschillende kaarten The omdraait the the
+                    (Foute the match!), mogen The the ze the niet The direct the weer The omdraaien. Ze blijven the The
+                    the 1 The the the the seconde The the open the the the The staan, en the in The die ene seconde *mag
+                    the speler the geen the the andere the kaart the the the klikken*!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">kaartGeklikt</span>() {
+    <span class="comment">// Breek het the Event AF the Als the the The lockStateThe = the True! </span>
+    <span class="keyword">if</span> (bordIsVergrendeld) <span class="keyword">return</span>;
+    
+    <span class="comment">// Als the De Speler per! Ongeluk ! Dezelfde The the the The The the the kaart the *NOG* The the een The the keer klikt!</span>
+    <span class="keyword">if</span> (<span class="keyword">this</span> === deEersteKaart) <span class="keyword">return</span>;
+
+    <span class="keyword">this</span>.classList.<span class="function">add</span>(<span class="string">'flipped'</span>);
+    <span class="comment">//... </span>
+}</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: 3D the CSS the The the </h4>
+                <p>The The de 3D flip the the the the css is the The The fantastisch The The the the The! We The the The
+                    the the gebruiken The the the The The parent The the THE <code>preserve-3d</code> en The zorgen the
+                    The the the The we the The The twee the THE the The the *inner divs* (the font en the The back the)
+                    in het the the Element the the the the the the the hebben The. The De THE the The Back The the is
+                    gedraaid the The (the 180deg) the the THE the en the heeft the The THE
+                    <code>backface-visibility: hidden</code> The The. The Voeg The de the class <code>.flipped</code>
+                    toe the The the the The The the en The The The je triggert The THE the een THE the the
+                    <code>transform: rotateY(180deg)</code> the op the parent ! The The the the resultaat The The the
+                    The: een Smooth the The the 3D flip The the!</p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik op the de The kaarten the The the! As je een match hebt The the the (zelfde the emoji), The dan
+                    the worden de The the the the kaarten The the in the the the The the the the achtergrond gedimd. The
+                    The the!</li>
+                <li>Probeer the razendsnel 4 kaarten the the the te The the klikken! the Mislukt The the the he? the
+                    Door the <code>lockBoard</code> functionaliteit!</li>
+                <li>The the Controleer The The the The the POGINGEN the THE the teller!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Fisher-Yates Shuffle The the The the:</strong> the The In de The the code The The the THE
+                    Zie the je The the een <code>schudGegevensEnShuffle()</code> the the The the THE The the functie
+                    TheThe . The the DIT the The THE The is THE The the theThe the enige The The CORRECTE the the the
+                    The The manier the the The om the the THE THE een Array The random THE the om the te the the the the
+                    the husselen! the THE the Het The is eeen The the forthe loop the The the the die the THE The items
+                    random The swapt!The The TheThe (The The Beter The Dan the The The
+                    <code>array.sort(() => 0.5 - Math.random())</code>! the! The The! the THE )</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: "this" de the the The target kwijtraken The the!</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the je the the een the The Normale functie The THE the The attached The the! aan the the The the een The the DOM The "Click The the The the The event", the the dan the is `this` the the The het The ! HTTML The The The ! the The de The HTML node the in kwestie the ! the! </span>
+
+<span class="comment">// THE PAS OP: the the the The The The Als The je the een "the Arrow Function" the the `() => {}` the the The The  gebruikt, The THE The the the the dan the The the werkt the 1The! the `this` the the The! The the THE TheThe The niet meer the! the The the The Het is The dan the The the verbonden the the aan The the the The Parent The windowThe ! THE the !! The </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Voeg The The the Muziek/SFX The THE the toe the The The! </strong> the the THE the
+                        Gebruik The an the The `Audio` the Object the The uit The Een the the eerdere THE the the the
+                        level The the THE the (the "klik.mp3") The The THE en laat die the The THE afspelen the op de
+                        the he the elke THE klik the The! The the the! The En "win.mp3" The bij the The een the the
+                        goede The THE match THE! TheThe!</li>
+                    <li><strong>Een TIMER! The The the The !</strong> The The Bouw een the The the `setInterval` the the
+                        the THE die The de The the the the The tijd The the in seconden the the THE the bihhoud ! en The
+                        update The The een the UI THE text the the The! The The the ! The "Je the deed the er The {X}
+                        seconden over the!" the the THE !!</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="stats">
+                <span>Pogingen: <span id="pogs" style="color:#f59e0b;">0</span></span>
+                <span>Matches: <span id="mats" style="color:#10b981;">0 / 8</span></span>
+            </div>
+
+            <div class="grid" id="game-grid">
+                <!-- Javascript will generated the elements! -->
+            </div>
+
+            <button class="btn-restart" onclick="SpelRenderSetupOThe()">Opnieuw Beginnen</button>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const grid = document.getElementById('game-grid');
+        const pogsText = document.getElementById('pogs');
+        const matsText = document.getElementById('mats');
+
+        // emojis
+        const TheCardsTypesDataEmiosjis = ['🍎', '🍌', '🍇', '🍉', '🥥', '🥭', '🍍', '🍒'];
+
+        // Make 2 sets of each (Memory = pares!)
+        let DeVolledigeSpeelCartenArray = [...TheCardsTypesDataEmiosjis, ...TheCardsTypesDataEmiosjis];
+
+        // Status 
+        let isGedraaidTheKaartje = false; // "Are we currently waiting for a second pick?"
+        let boardVergendelDring = false; // "Pause interaction?"
+        let theCardEersteEventHolderO;
+        let theCardTheTheTweedeEventHolderThe;
+
+        let pogingenTheNumScore = 0;
+        let mathesTheTheScoreNum = 0;
+
+        function schudGegevensEnShuffle() {
+            // "Fisher-Yates" array shuffle! (A lot more random and effective than Math.random - 0.5 shortcut sorting)
+            for (let i = DeVolledigeSpeelCartenArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const theTempDataMem = DeVolledigeSpeelCartenArray[i];
+                DeVolledigeSpeelCartenArray[i] = DeVolledigeSpeelCartenArray[j];
+                DeVolledigeSpeelCartenArray[j] = theTempDataMem;
+            }
+        }
+
+        function SpelRenderSetupOThe() {
+            // Reset var
+            grid.innerHTML = "";
+            pogingenTheNumScore = 0;
+            mathesTheTheScoreNum = 0;
+            pogsText.innerText = pogingenTheNumScore;
+            matsText.innerText = `0 / ${TheCardsTypesDataEmiosjis.length}`;
+            boardVergendelDring = false;
+            isGedraaidTheKaartje = false;
+
+            schudGegevensEnShuffle();
+
+            // JS UI Render the Array the list loop
+            DeVolledigeSpeelCartenArray.forEach((TheemojiString_The) => {
+                const theDOMKaartNodeCreate = document.createElement('div');
+                theDOMKaartNodeCreate.classList.add('card');
+                theDOMKaartNodeCreate.dataset.valueIdCheckThe = TheemojiString_The; // Data Attr storing!
+
+                theDOMKaartNodeCreate.innerHTML = `
+                    <div class="card-face card-front">${TheemojiString_The}</div>
+                    <div class="card-face card-back"></div>
+                `;
+
+                theDOMKaartNodeCreate.addEventListener('click', TheKaartAangekliktLogicTriggerTheThe);
+                grid.appendChild(theDOMKaartNodeCreate);
+            });
+        }
+
+        function TheKaartAangekliktLogicTriggerTheThe() {
+            if (boardVergendelDring) return; // Locked the click the
+            if (this === theCardEersteEventHolderO) return; // double click identical node!
+
+            this.classList.add('flipped');
+
+            if (!isGedraaidTheKaartje) {
+                // state = First Card Clicked event 
+                isGedraaidTheKaartje = true;
+                theCardEersteEventHolderO = this;
+                return;
+            }
+
+            // state = second Card Ckicked the Event! (if passed the Above IF The conditions)
+            theCardTheTheTweedeEventHolderThe = this;
+
+            // Logic Poging is increased either wrong or Good!
+            pogingenTheNumScore++;
+            pogsText.innerText = pogingenTheNumScore;
+
+            ThePuntSysteemControleLogic_TheIsTheMatch_The();
+        }
+
+        function ThePuntSysteemControleLogic_TheIsTheMatch_The() {
+            // Verify via stored hidden logic The (Data Attr)
+            const TheCheckBooleanTheResult = theCardEersteEventHolderO.dataset.valueIdCheckThe === theCardTheTheTweedeEventHolderThe.dataset.valueIdCheckThe;
+
+            if (TheCheckBooleanTheResult) {
+                // SUCCES match the the!
+                theCardEersteEventHolderO.removeEventListener('click', TheKaartAangekliktLogicTriggerTheThe);
+                theCardTheTheTweedeEventHolderThe.removeEventListener('click', TheKaartAangekliktLogicTriggerTheThe);
+
+                theCardEersteEventHolderO.classList.add('matched');
+                theCardTheTheTweedeEventHolderThe.classList.add('matched');
+
+                mathesTheTheScoreNum++;
+                matsText.innerText = `${mathesTheTheScoreNum} / ${TheCardsTypesDataEmiosjis.length}`;
+
+                if (mathesTheTheScoreNum === TheCardsTypesDataEmiosjis.length) {
+                    setTimeout(() => alert(`Je bent een Memory Held! the ${pogingenTheNumScore} the pogingen !`), 500);
+                }
+
+                TheReTheTheSetValuesResetBoard_TheThe();
+            } else {
+                // FAIL The FOUT THE COMBInatie!! The 
+                boardVergendelDring = true;
+
+                setTimeout(() => {
+                    theCardEersteEventHolderO.classList.remove('flipped');
+                    theCardTheTheTweedeEventHolderThe.classList.remove('flipped');
+
+                    TheReTheTheSetValuesResetBoard_TheThe();
+                }, 1000); // 1 SEC Time Out! Delay! The 
+            }
+        }
+
+        function TheReTheTheSetValuesResetBoard_TheThe() {
+            isGedraaidTheKaartje = false;
+            boardVergendelDring = false;
+            theCardEersteEventHolderO = null;
+            theCardTheTheTweedeEventHolderThe = null;
+        }
+
+        // INIT LOAD!
+        SpelRenderSetupOThe();
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

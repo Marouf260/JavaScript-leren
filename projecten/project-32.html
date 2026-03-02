@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 32: Custom Video Player - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Video Player */
+        .project-area {
+            background: #111;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-player {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+        }
+
+        .video-player video {
+            width: 100%;
+            display: block;
+            cursor: pointer;
+        }
+
+        .controls-container {
+            background: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .video-player:hover .controls-container,
+        .video-player.paused .controls-container {
+            transform: translateY(0);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 5px;
+            background: #444;
+            cursor: pointer;
+            border-radius: 2px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #ff0055;
+            width: 0%;
+            border-radius: 2px;
+        }
+
+        .controls-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-vid {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .btn-vid:hover {
+            color: #ff0055;
+        }
+
+        .time-display {
+            color: white;
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .volume-slider {
+            width: 80px;
+            accent-color: #ff0055;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 32: Custom Video Player</h1>
+        <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
+        <p class="description">Verberg de standaard browser videocontroles en bouw je eigen state-of-the-art UI.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De Standaard Controls Verbergen</h4>
+                <p>Browsers (Safari, Chrome, Firefox) tonen normaal hun eigen video player interface. Die interface
+                    verschilt per browser. We voorkomen dit door eenvoudigweg de HTML <code>controls</code> property weg
+                    te laten uit de <code>&lt;video&gt;</code> tag!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">&lt;!-- Geen 'controls' attribuut = we bouwen zelf de UI! --&gt;</span>
+&lt;video id="vid" src="movie.mp4"&gt;&lt;/video&gt;</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Vanaf nu doet de video he-le-maal niks meer als de gebruiker erop klikt,
+                    tenzij we JavaScript inzetten om de afspeel logica the kapen!</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Play & Pauze Logica bouwen</h4>
+                <p>De HTML5 video API geeft JS directe properties zoals <code>video.paused</code>, en commandos zoals
+                    <code>video.play()</code> en <code>video.pause()</code>.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="function">togglePlay</span>() {
+    <span class="keyword">if</span> (video.paused) {
+        video.<span class="function">play</span>();
+        playBtn.innerHTML = <span class="string">'⏸'</span>;
+    } <span class="keyword">else</span> {
+        video.<span class="function">pause</span>();
+        playBtn.innerHTML = <span class="string">'▶️'</span>;
+    }
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Deze functie binden we aan onze eigen HTML PLAY-knop én aan een klik op de
+                    video zelf. We <i>toggelen</i> tegelijkertijd het icoontje (Play vs Pauze)!</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Het <code>timeupdate</code> Event</h4>
+                <p>Hoe updatet de rode tijdbalk zich tijdens het afspelen van de video? De <code>&lt;video&gt;</code>
+                    HTML tag vuurt automatisch op de achtergrond het <code>timeupdate</code> event af. Tot wel meerdere
+                    keren per seconde!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>video.addEventListener(<span class="string">'timeupdate'</span>, updateProgress);
+
+<span class="keyword">function</span> <span class="function">updateProgress</span>() {
+    <span class="comment">// (huidige tijd / Totale tijd) * 100 === Percentage!</span>
+    <span class="keyword">const</span> percentage = (video.currentTime / video.duration) * <span class="string">100</span>;
+    progressBar.style.width = <span class="string">`${percentage}%`</span>;
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Door die wiskundige deling te maken in <code>updateProgress</code>, kunnen
+                    we exact de CSS <code>width</code> van de rode progressiebalk updaten.</p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Tijd Formatteren)</h3>
+            <pre><span class="comment">// Computers denken in PURE secondes (bijv. 135 secondes). </span>
+<span class="comment">// Wij mensen willen zien: 02:15. Dan heb je wiskunde nodig!</span>
+<span class="keyword">function</span> <span class="function">formatTime</span>(seconds) {
+    <span class="keyword">const</span> min = Math.<span class="function">floor</span>(seconds / <span class="string">60</span>); <span class="comment">// 135 / 60 = 2 minuten</span>
+    <span class="keyword">const</span> sec = Math.<span class="function">floor</span>(seconds % <span class="string">60</span>); <span class="comment">// Restwaarde = 15s</span>
+    
+    <span class="comment">// Voeg voorloopnullen ('0') toe als het getal onder de 10 is!</span>
+    <span class="keyword">return</span> <span class="string">`${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`</span>;
+}</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Beweeg je muis over de video (hover!) om de controls te onthullen.</li>
+                <li>Druk op de play/pauze knop of klik ergens op de video zelf.</li>
+                <li>Klik ergens op de RODE progressiebalk om door de video te spoelen (skippen)!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong><code>timeupdate</code> vs <code>progress</code>:</strong> In de code gebruiken we het
+                    <code>timeupdate</code> event om de balk in real-time te updaten. Het <code>progress</code> event
+                    wordt gevuurd door de browser als er nieuwe video data geladen/gebufferd wordt!</li>
+                <li><strong>Scrubbing (Slepen op de Balk)</strong>: Door een variabele <code>mousedown</code> op TRUE of
+                    FALSE te zetten in de muisevents, weten we of de gebruiker op de rode balk klikt óf aan het slepen
+                    is!</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: <code>NaN</code> in de Time Display</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - Als je de <code>video.duration</code> direct uileest vóórdat de video properties geladen zijn in de DOM, dan geeft de browser 'NaN' (Not a Number) terug. Gebruik daarom ALTIJD het event listener: <code>loadedmetadata</code>!</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Voeg een Fullscreen knop toe:</strong> Voeg een HTML knop toe, en koppel dit aan de
+                        <code>video.requestFullscreen()</code> API van de browser!</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <div class="video-player paused" id="player">
+                <video id="vid" src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+
+                <div class="controls-container">
+                    <div class="progress-bar-container" id="progress-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+
+                    <div class="controls-main">
+                        <button class="btn-vid" id="play-btn">▶️</button>
+                        <div class="time-display">
+                            <span id="curr-time">00:00</span> / <span id="dur-time">00:00</span>
+                        </div>
+                        <div class="volume-container">
+                            <span style="color:white; font-size:0.9rem;">🔊</span>
+                            <input type="range" class="volume-slider" id="volume" min="0" max="1" step="0.05" value="1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const video = document.getElementById('vid');
+        const player = document.getElementById('player');
+        const playBtn = document.getElementById('play-btn');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const currTimeLabel = document.getElementById('curr-time');
+        const durTimeLabel = document.getElementById('dur-time');
+        const volumeSlider = document.getElementById('volume');
+
+        function togglePlay() {
+            if (video.paused) {
+                video.play();
+                playBtn.innerHTML = '⏸';
+                player.classList.remove('paused');
+            } else {
+                video.pause();
+                playBtn.innerHTML = '▶️';
+                player.classList.add('paused');
+            }
+        }
+
+        function formatTime(seconds) {
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`;
+        }
+
+        function updateProgress() {
+            const percent = (video.currentTime / video.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+            currTimeLabel.innerText = formatTime(video.currentTime);
+        }
+
+        function setDuration() {
+            durTimeLabel.innerText = formatTime(video.duration);
+        }
+
+        function scrub(e) {
+            const scrubTime = (e.offsetX / progressContainer.offsetWidth) * video.duration;
+            video.currentTime = scrubTime;
+        }
+
+        function handleVolume() {
+            video.volume = volumeSlider.value;
+        }
+
+        // Event Listeners
+        playBtn.addEventListener('click', togglePlay);
+        video.addEventListener('click', togglePlay);
+        video.addEventListener('timeupdate', updateProgress);
+        video.addEventListener('loadedmetadata', setDuration);
+
+        let mousedown = false;
+        progressContainer.addEventListener('click', scrub);
+        progressContainer.addEventListener('mousemove', (e) => mousedown && scrub(e));
+        progressContainer.addEventListener('mousedown', () => mousedown = true);
+        progressContainer.addEventListener('mouseup', () => mousedown = false);
+
+        volumeSlider.addEventListener('input', handleVolume);
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

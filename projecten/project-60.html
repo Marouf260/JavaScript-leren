@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 60: 2048 Game - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Game Area CSS! */
+        .project-area {
+            background: #faf8ef;
+            /* Klassieke 2048 kleur */
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-gameZ {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header-gameZ h2 {
+            font-size: 3rem;
+            color: #776e65;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .score-boxH {
+            background: #bbada0;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .score-boxH span {
+            display: block;
+            font-size: 0.8rem;
+            color: #eee4da;
+            text-transform: uppercase;
+        }
+
+        .score-boxH div {
+            font-size: 1.5rem;
+        }
+
+        /* HET BORD Z 4x4 Grid */
+        .grid-tBordV {
+            background: #bbada0;
+            padding: 10px;
+            border-radius: 8px;
+            width: 400px;
+            height: 400px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            position: relative;
+        }
+
+        .bg-cel-ZLeeg {
+            background: rgba(238, 228, 218, 0.35);
+            border-radius: 4px;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Dynamische Tegels css */
+        .tegel-dataV {
+            position: absolute;
+            width: 87.5px;
+            height: 87.5px;
+            /* (400 - 10px pad - 3x10px gap) / 4 */
+            background: #eee4da;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #776e65;
+            transition: 0.1s transform ease-in-out, 0.1s top ease-in-out, 0.1s left ease-in-out;
+            /* Let op: We besturen position met TOP en LEFT props absolute Z */
+        }
+
+        .anim-nieuwThe-Z {
+            animation: plop-ZinV 0.2s;
+        }
+
+        .anim-mergeTThe-O {
+            animation: plop-MergedZ 0.2s;
+            z-index: 5;
+        }
+
+        /* Merge on top of disappearing */
+
+        @keyframes plop-ZinV {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes plop-MergedZ {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Tile Kleuren (Machtig the_) */
+        .val-2 {
+            background: #eee4da;
+            color: #776e65;
+        }
+
+        .val-4 {
+            background: #ede0c8;
+            color: #776e65;
+        }
+
+        .val-8 {
+            background: #f2b179;
+            color: #f9f6f2;
+        }
+
+        .val-16 {
+            background: #f59563;
+            color: #f9f6f2;
+        }
+
+        .val-32 {
+            background: #f67c5f;
+            color: #f9f6f2;
+        }
+
+        .val-64 {
+            background: #f65e3b;
+            color: #f9f6f2;
+        }
+
+        .val-128 {
+            background: #edcf72;
+            color: #f9f6f2;
+            font-size: 2rem;
+        }
+
+        .val-256 {
+            background: #edcc61;
+            color: #f9f6f2;
+            font-size: 2rem;
+        }
+
+        /* shadows / glans removed for purity_ ! */
+        .val-512 {
+            background: #edc850;
+            color: #f9f6f2;
+            font-size: 2rem;
+        }
+
+        .val-1024 {
+            background: #edc53f;
+            color: #f9f6f2;
+            font-size: 1.5rem;
+        }
+
+        .val-2048 {
+            background: #edc22e;
+            color: #f9f6f2;
+            font-size: 1.5rem;
+            box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.33);
+        }
+
+        .btn-restartH {
+            margin-top: 30px;
+            background: #8f7a66;
+            color: white;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-restartH:hover {
+            background: #776e65;
+        }
+
+        #DeadScreenGameOverT {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(238, 228, 218, 0.73);
+            z-index: 10;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 60: 2048 Game</h1>
+        <span class="level" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">Games</span>
+        <p class="description">Maak the logische the the Grid-Sliding the the math_ game! Schuif The the vakjes om the
+            zeThe opThe the tellen !.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Logische 2D Array</h4>
+                <p>De _Magie thetheThe Ovan _2048 The The_ _zit hem in The Math the Arrays_. We the the renderen The
+                    HTML niet The the hard the O in the de map ! We the The the houden een <code>[4][4]</code> array
+                    OThethe bij met the GetallenO the <code>(0, 2, 4, 8)</code> etc.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Verschuiven The= the Filteren !</h4>
+                <p>the SchuifThe The The je The the Naar Links_? Dan the filter() THEThe we <code>[2, 0, 2, 0]</code>
+                    the thethe naar <code>[2, 2]</code> the the ThetheThe en tellen we_The ze op <code>[4]</code> _the
+                    The Theen the __vullen the the WE de__rest weer_ aan the met Nullen_O <code>[4, 0, 0, 0]</code>.
+                    _(Zo GThe_thewerkt The the de The math logic The !!)</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// DE CORE_ ENGINE THE!! (verschuif math array magic Z!)</span>
+<span class="keyword">function</span> <span class="function">DataHSchuifMathEnThe_OptelTheV</span>(RijTheDe1DH_ArrayDataThe) {
+    <span class="comment">// 1. Verwijder nullen  [2, 0, 2, 4] -> [2, 2, 4]</span>
+    <span class="keyword">let</span> D_BewerktTeArrayO = RijTheDe1DH_ArrayDataThe.filter(valDataThe => valDataThe !== <span class="string">0</span>);
+
+    <span class="comment">// 2. The THE MERGE logic (Optellen in paren the !!)</span>
+    <span class="keyword">for</span> (<span class="keyword">let</span> i_ndxHThisTLoopZ = <span class="string">0</span>; i_ndxHThisTLoopZ &lt; D_BewerktTeArrayO.length - <span class="string">1</span>; i_ndxHThisTLoopZ++) {
+        <span class="keyword">if</span> (D_BewerktTeArrayO[i_ndxHThisTLoopZ] === D_BewerktTeArrayO[i_ndxHThisTLoopZ + <span class="string">1</span>]) {
+            <span class="comment">// Match!! </span>
+            D_BewerktTeArrayO[i_ndxHThisTLoopZ] *= <span class="string">2</span>; <span class="comment">// [2, 2] -> [4]</span>
+            D_BewerktTeArrayO.splice(i_ndxHThisTLoopZ + <span class="string">1</span>, <span class="string">1</span>); <span class="comment">// Delete de the_ 2nd _ getal The the_ the! -> [4] !! </span>
+        }
+    }
+    <span class="comment">// ... 3. adding The Z Zeros Back ! The</span>
+}</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: CSS Animatie en Absolute Positionering</h4>
+                <p>De tegels krijgen `.anim-nieuwThe-Z` en `.anim-mergeTThe-O` voor plop animaties. De absolute posities
+                    worden berekend met the the Math ! `(rij * 87.5px) + padding`.</p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Gebruik de <strong>Pijltjestoetsen</strong> the V om the tegels the the te the theThe the schuiven!
+                </li>
+                <li>Gelijke the theThe G_Thethe Getallen The worden The _bijThe TheThe The _ElkaarThe _opgeteld!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Rotatie truc ! The The the:</strong> the The In The de code The The the THE Zie the je The
+                    The the the theThe een `HDataZtheMatrix_XDraeTHeLogicaDataH(matrixArrayTV) `_ the The om _de the
+                    Matrix the the Te the the draaien ! . _Hierdoor The hoef je *Alleen Maar* Links schuiven the Thethe
+                    te programmeren! _(BovenV is_ draaien_ The_>Links>Draaien_Terug! The !)._ </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Meerdere the keren! op the 1the zelfde _ tegel the_ the mergen!_! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ In the original game the mag `[2, 2, 2, 2]` the the NAAR the `[4, 4]` The  en NIET The the IN the the  EEn beurt  Door naar the_ `[8]` . thethe THE THE Z  </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Door de `splice()` The_  !_ methodeThe! The De tweede 2 is Weg_ , the loop schuift the_ door, En ! the the De 1e the becomes mergedThe_ ! The_ The THE We The _ the_  the ! </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Swipe The Mobile! !! The The The The! </strong> the the thethe the THE the Voeg The THE
+                        the the een the The! The Touch The Listeners the The the the toe The ! . Zodat ! het _ Op the je
+                        the Tel The_ the Werkt! O !!The _ . _The !. THE </li>
+                    <li><strong>Kleuren the The aanpassen! THE the TheThe _!</strong> The The the The the the Maak THE
+                        The_ un the eigen thema_ the ! Met the Donkere Kleuren !the of The The_ the The The ! the The
+                        the Neon the!_ the The_ !!. _The ! </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="header-gameZ">
+                <h2>2048</h2>
+                <div class="score-boxH">
+                    <span>Score</span>
+                    <div id="uScoreH_Tekst">0</div>
+                </div>
+            </div>
+
+            <div class="grid-tBordV" id="uGridBord_AHTMLDe">
+                <!-- 16 Lege slots background Z! -->
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+                <div class="bg-cel-ZLeeg"></div>
+
+                <!-- TEGELS WORDEN HIER IN ABSOLUTE GEPLAATST DOOR JS ZThe ! -->
+                <div id="DeadScreenGameOverT">
+                    <h2 style="font-size: 3rem; color: #776e65;">Game Over !</h2>
+                </div>
+            </div>
+
+            <button class="btn-restartH" onclick="Z_InitGeHeelSpelResetV_The()">Nieuw Spel Starten</button>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const GRID_O_BordH_HtmlContainerZ = document.getElementById('uGridBord_AHTMLDe');
+        const HUD_ScoreZTekst_ = document.getElementById('uScoreH_Tekst');
+        const O_DeadS_CHermDataH = document.getElementById('DeadScreenGameOverT');
+
+        // Logic Vars
+        let GridMatrixTheLogica_4x4Z = [];
+        let ScoreCurrentZSpelerData_TheZ = 0;
+        let TEGELS_DOM_O_ArraysDataOTheV = []; // keeps track of html DOM objects (to delete old ones _the)
+
+        // INIT !!
+        function Z_InitGeHeelSpelResetV_The() {
+            // Delete Oude The html the tags (If ANY_  !)
+            TEGELS_DOM_O_ArraysDataOTheV.forEach(HTmTheTegelNode => HTmTheTegelNode.remove());
+            TEGELS_DOM_O_ArraysDataOTheV = [];
+
+            // Reset Matrix_
+            GridMatrixTheLogica_4x4Z = [
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]
+            ];
+            ScoreCurrentZSpelerData_TheZ = 0;
+            HUD_ScoreZTekst_.innerText = '0';
+            O_DeadS_CHermDataH.style.display = 'none';
+
+            // the The Start_With 2_ Random The Tegels_!!_
+            T_SpawnRandomONieuweHGetDataZCelThe_T();
+            T_SpawnRandomONieuweHGetDataZCelThe_T();
+            TheRenderAlleGeHtmlDataVHTL_DOMZ_(); // 1st draw
+        }
+
+        // --- MATH EN LOGICA DATA Z! ---
+
+        function T_SpawnRandomONieuweHGetDataZCelThe_T() {
+            const DeLegeVrijVThe_H_CellenZ = [];
+            // zoek the nullen O 
+            for (let rijZTheLoop = 0; rijZTheLoop < 4; rijZTheLoop++) {
+                for (let kolDeZLoop_T = 0; kolDeZLoop_T < 4; kolDeZLoop_T++) {
+                    if (GridMatrixTheLogica_4x4Z[rijZTheLoop][kolDeZLoop_T] === 0) {
+                        DeLegeVrijVThe_H_CellenZ.push({ r: rijZTheLoop, k: kolDeZLoop_T });
+                    }
+                }
+            }
+
+            if (DeLegeVrijVThe_H_CellenZ.length === 0) return; // bord is the full O !
+
+            const Rnd__IndexH_KiesDeLegeH = Math.floor(Math.random() * DeLegeVrijVThe_H_CellenZ.length);
+            const TheGeK_HozeC_O_TheDatCel = DeLegeVrijVThe_H_CellenZ[Rnd__IndexH_KiesDeLegeH];
+
+            // 90% is 2, 10% the_ is 4 ! _ The_ (standaard 2048 the math! )
+            GridMatrixTheLogica_4x4Z[TheGeK_HozeC_O_TheDatCel.r][TheGeK_HozeC_O_TheDatCel.k] = Math.random() < 0.9 ? 2 : 4;
+        }
+
+        // DE CORE_ ENGINE THE!! (verschuif math array magic Z!)
+        function DataHSchuifMathEnThe_OptelTheV(RijTheDe1DH_ArrayDataThe) {
+            // 1. Verwijder nullen  [2, 0, 2, 4] -> [2, 2, 4]
+            let D_BewerktTeArrayO = RijTheDe1DH_ArrayDataThe.filter(valDataThe => valDataThe !== 0);
+
+            // 2. The THE MERGE logic (Optellen in paren the !!)
+            // We loop over length Z. 
+            for (let i_ndxHThisTLoopZ = 0; i_ndxHThisTLoopZ < D_BewerktTeArrayO.length - 1; i_ndxHThisTLoopZ++) {
+                if (D_BewerktTeArrayO[i_ndxHThisTLoopZ] === D_BewerktTeArrayO[i_ndxHThisTLoopZ + 1]) {
+                    // Match!! 
+                    D_BewerktTeArrayO[i_ndxHThisTLoopZ] *= 2; // [2, 2, 4] -> [4, 2, 4]
+                    ScoreCurrentZSpelerData_TheZ += D_BewerktTeArrayO[i_ndxHThisTLoopZ];
+                    HUD_ScoreZTekst_.innerText = ScoreCurrentZSpelerData_TheZ;
+
+                    D_BewerktTeArrayO.splice(i_ndxHThisTLoopZ + 1, 1); // Delete de the_ 2nd _ getal The the_ the! -> [4, 4] !! 
+                }
+            }
+
+            // 3. adding The Z Zeros Back ! The 
+            while (D_BewerktTeArrayO.length < 4) {
+                D_BewerktTeArrayO.push(0); // [4, 4] -> [4, 4, 0, 0] Boem !! Klaar voor 2048 engine Z_
+            }
+            return D_BewerktTeArrayO;
+        }
+
+        // HOOFD CONTROLLER DIRECTIONS !! O
+        // LINKS -> the the default data array the . _
+        function GtheActie_KSchuifTheLinksH() {
+            const OUdethe_BMatrixO_DataStr_DeV = JSON.stringify(GridMatrixTheLogica_4x4Z); // save to the check diff !
+
+            for (let iTheZRijDatalR_Th = 0; iTheZRijDatalR_Th < 4; iTheZRijDatalR_Th++) {
+                GridMatrixTheLogica_4x4Z[iTheZRijDatalR_Th] = DataHSchuifMathEnThe_OptelTheV(GridMatrixTheLogica_4x4Z[iTheZRijDatalR_Th]);
+            }
+            return OUdethe_BMatrixO_DataStr_DeV !== JSON.stringify(GridMatrixTheLogica_4x4Z); // return true if the The The board changed O (need random Z) ! 
+        }
+
+        // RECHTS -> reverse -> slide -> reverse !
+        function GtheAactieKR_H_SchiTheRechtv() {
+            const OUdethe_BMatrixO_DataStr_DeV = JSON.stringify(GridMatrixTheLogica_4x4Z);
+
+            for (let i = 0; i < 4; i++) {
+                // reverse de _the list -> doe _the the the DE DEZELFDE ! _the left_math! The -> reverse _Terug!
+                let theThe_TOmgededraaideZArr = GridMatrixTheLogica_4x4Z[i].slice().reverse();
+                theThe_TOmgededraaideZArr = DataHSchuifMathEnThe_OptelTheV(theThe_TOmgededraaideZArr);
+                GridMatrixTheLogica_4x4Z[i] = theThe_TOmgededraaideZArr.reverse();
+            }
+            return OUdethe_BMatrixO_DataStr_DeV !== JSON.stringify(GridMatrixTheLogica_4x4Z);
+        }
+
+        // TOP/BODEM: We THE H_The Draaien (Rotate) de matrix the Z, dan The the Links/Rechts mathThe_ , En_ Dan_ the Draai The TheweH_ The HET TERUG!
+        // Roteren !! Matrix Mthethe Math!
+        function HDataZtheMatrix_XDraeTHeLogicaDataH(matrixArrayTV) {
+            const B_NNNieuweGerotODataZTV = [
+                [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]
+            ];
+            for (let rThe = 0; rThe < 4; rThe++) {
+                for (let kThe = 0; kThe < 4; kThe++) {
+                    B_NNNieuweGerotODataZTV[kThe][rThe] = matrixArrayTV[rThe][kThe];
+                }
+            }
+            return B_NNNieuweGerotODataZTV;
+        }
+
+        function actieBovenTheHSuiftH_() {
+            // rotate, links(upThe_ Z), unrotate T
+            GridMatrixTheLogica_4x4Z = HDataZtheMatrix_XDraeTHeLogicaDataH(GridMatrixTheLogica_4x4Z);
+            const THEB_WasChangedZ = GtheActie_KSchuifTheLinksH(); // Links in rotated = UP THE ! _ 
+            GridMatrixTheLogica_4x4Z = HDataZtheMatrix_XDraeTHeLogicaDataH(GridMatrixTheLogica_4x4Z);
+            return THEB_WasChangedZ;
+        }
+
+        function ActieOnderTSchiTheTV_() {
+            // rotate, rechts(downThe Z), unrotate_ T
+            GridMatrixTheLogica_4x4Z = HDataZtheMatrix_XDraeTHeLogicaDataH(GridMatrixTheLogica_4x4Z);
+            const THEB_WasChangedZ = GtheAactieKR_H_SchiTheRechtv(); // right_ in rotated =_ DOWN The_ Z !!
+            GridMatrixTheLogica_4x4Z = HDataZtheMatrix_XDraeTHeLogicaDataH(GridMatrixTheLogica_4x4Z);
+            return THEB_WasChangedZ;
+        }
+
+
+        // --- HTML RENDER THE THE (VISUELE ENGINE Z!) ---
+        function TheRenderAlleGeHtmlDataVHTL_DOMZ_() {
+            // Verwijder ALL in THE DOM! The
+            TEGELS_DOM_O_ArraysDataOTheV.forEach(HTmTheTegelNode => HTmTheTegelNode.remove());
+            TEGELS_DOM_O_ArraysDataOTheV = [];
+
+            // Iterate LOGIC Matrix and draw The !
+            for (let rijThe = 0; rijThe < 4; rijThe++) {
+                for (let kThe = 0; kThe < 4; kThe++) {
+                    let getalVDeValHTheCelH = GridMatrixTheLogica_4x4Z[rijThe][kThe];
+
+                    if (getalVDeValHTheCelH !== 0) {
+                        const G_DOOn_HNodeTileCel = document.createElement('div');
+                        G_DOOn_HNodeTileCel.classList.add('tegel-dataV');
+                        G_DOOn_HNodeTileCel.classList.add(`val-${getalVDeValHTheCelH}`);
+                        G_DOOn_HNodeTileCel.classList.add('anim-nieuwThe-Z'); // Pop The Anim !
+                        G_DOOn_HNodeTileCel.innerText = getalVDeValHTheCelH;
+
+                        // POSITION Calc The! ABSOLUTE MATH Z 
+                        // 10 padding, 87.5px width/height, 10 gap ! 
+                        // Top = leftPad_10 + (rij * box_87.5) + (rij * gap_10) // 
+                        G_DOOn_HNodeTileCel.style.top = `${10 + (rijThe * 87.5) + (rijThe * 10)}px`;
+                        G_DOOn_HNodeTileCel.style.left = `${10 + (kThe * 87.5) + (kThe * 10)}px`;
+
+                        GRID_O_BordH_HtmlContainerZ.appendChild(G_DOOn_HNodeTileCel);
+                        TEGELS_DOM_O_ArraysDataOTheV.push(G_DOOn_HNodeTileCel);
+                    }
+                }
+            }
+        }
+
+
+        // De Death Checker_!
+        function CCHekOIfBordKpotFullVerlorenisVO() {
+            // IF contains empty_ the !
+            for (let r = 0; r < 4; r++) {
+                for (let k = 0; k < 4; k++) {
+                    if (GridMatrixTheLogica_4x4Z[r][k] === 0) return false;
+                }
+            }
+
+            // If there is ANY_ neighbors H The that are equal The_ !
+            for (let r = 0; r < 4; r++) {
+                for (let k = 0; k < 4; k++) {
+                    // Check current with RTheight
+                    if (k < 3 && GridMatrixTheLogica_4x4Z[r][k] === GridMatrixTheLogica_4x4Z[r][k + 1]) return false;
+                    // Check current with OThe_ Onder
+                    if (r < 3 && GridMatrixTheLogica_4x4Z[r][k] === GridMatrixTheLogica_4x4Z[r + 1][k]) return false;
+                }
+            }
+            return true; // No the zero_ No identical_ neighbors ! DED! _
+        }
+
+
+        // --- INPUT EVENT CONTROLLER ---
+        document.addEventListener('keydown', (e) => {
+            if (O_DeadS_CHermDataH.style.display === 'flex') return; // blok the death ui input !!
+
+            let HdidSpelerSchuiftBoardHeV = false;
+
+            switch (e.key) {
+                case "ArrowLeft": HdidSpelerSchuiftBoardHeV = GtheActie_KSchuifTheLinksH(); e.preventDefault(); break;
+                case "ArrowRight": HdidSpelerSchuiftBoardHeV = GtheAactieKR_H_SchiTheRechtv(); e.preventDefault(); break;
+                case "ArrowUp": HdidSpelerSchuiftBoardHeV = actieBovenTheHSuiftH_(); e.preventDefault(); break;
+                case "ArrowDown": HdidSpelerSchuiftBoardHeV = ActieOnderTSchiTheTV_(); e.preventDefault(); break;
+            }
+
+            if (HdidSpelerSchuiftBoardHeV) {
+                // The was valid move_ The! Add Random New Tile! Z
+                T_SpawnRandomONieuweHGetDataZCelThe_T();
+                TheRenderAlleGeHtmlDataVHTL_DOMZ_();
+
+                // the The Check death _  _ Z ! 
+                if (CCHekOIfBordKpotFullVerlorenisVO()) {
+                    O_DeadS_CHermDataH.style.display = 'flex';
+                }
+            }
+        });
+
+        // INIT start_ Z 
+        Z_InitGeHeelSpelResetV_The();
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

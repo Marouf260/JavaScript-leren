@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 3: Kleur Veranderen - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #D4EDDA;
+            color: #155724;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 3: Kleur Veranderen</h1>
+        <span class="level">Beginner</span>
+        <p class="description">Verander de achtergrondkleur van een element.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je hoe je CSS styles dynamisch kunt wijzigen met JavaScript. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>De style eigenschap gebruiken om CSS te wijzigen</li>
+                <li>Arrays gebruiken om meerdere kleuren op te slaan</li>
+                <li>De modulo operator (%) gebruiken voor cyclische waarden</li>
+                <li>State bijhouden met variabelen</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>element.style</strong> - Object om inline CSS styles te wijzigen</li>
+                <li><strong>backgroundColor</strong> - CSS eigenschap voor achtergrondkleur (camelCase in JS)</li>
+                <li><strong>Arrays</strong> - Lijst van waarden tussen vierkante haken []</li>
+                <li><strong>Modulo operator (%)</strong> - Geeft rest bij deling, handig voor cyclische patronen</li>
+                <li><strong>Index tracking</strong> - Variabele bijhouden om positie in array te weten</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: Elementen selecteren</h4>
+                <p>Selecteer het element waarvan je de kleur wilt wijzigen:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> box = document.<span class="function">getElementById</span>(<span class="string">'color-box'</span>);
+<span class="keyword">const</span> knop = document.<span class="function">getElementById</span>(<span class="string">'color-btn'</span>);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We hebben beide elementen nodig: de box om de kleur te wijzigen en de knop om de actie te triggeren.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: Array met kleuren maken</h4>
+                <p>Maak een array met verschillende kleuren:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> kleuren = [<span class="string">'#3498db'</span>, <span class="string">'#e74c3c'</span>, <span class="string">'#2ecc71'</span>, <span class="string">'#f39c12'</span>, <span class="string">'#9b59b6'</span>];</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Een array is een lijst van waarden. We gebruiken hex kleurcodes (beginnen met #). Je kunt ook kleurnamen gebruiken zoals 'red' of 'blue'.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Index variabele maken</h4>
+                <p>Maak een variabele om bij te houden welke kleur we nu gebruiken:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">let</span> huidigeKleur = <span class="string">0</span>; <span class="comment">// Begin bij eerste kleur</span></pre>
+                </div>
+                <p><strong>Uitleg:</strong> We beginnen bij 0 omdat arrays beginnen bij index 0. De eerste kleur is op positie 0.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 4: Event listener met kleur logica</h4>
+                <p>Bij elke klik verhogen we de index en gebruiken we modulo om te cyclen:</p>
+                <div class="code-example">
+                    <pre>knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    huidigeKleur = (huidigeKleur + <span class="string">1</span>) % kleuren.length;
+    box.style.backgroundColor = kleuren[huidigeKleur];
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>% kleuren.length</code> zorgt ervoor dat wanneer we bij het einde van de array zijn, we teruggaan naar 0. Dit creëert een oneindige cyclus.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="comment">// Stap 1: Selecteer elementen</span>
+<span class="keyword">const</span> box = document.<span class="function">getElementById</span>(<span class="string">'color-box'</span>);
+<span class="keyword">const</span> knop = document.<span class="function">getElementById</span>(<span class="string">'color-btn'</span>);
+
+<span class="comment">// Stap 2: Maak array met kleuren</span>
+<span class="keyword">const</span> kleuren = [<span class="string">'#3498db'</span>, <span class="string">'#e74c3c'</span>, <span class="string">'#2ecc71'</span>, <span class="string">'#f39c12'</span>, <span class="string">'#9b59b6'</span>];
+
+<span class="comment">// Stap 3: Index variabele</span>
+<span class="keyword">let</span> huidigeKleur = <span class="string">0</span>;
+
+<span class="comment">// Stap 4: Event listener</span>
+knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    huidigeKleur = (huidigeKleur + <span class="string">1</span>) % kleuren.length;
+    box.style.backgroundColor = kleuren[huidigeKleur];
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Selecteer het element waarvan je de kleur wilt wijzigen</li>
+                <li>Selecteer de knop element</li>
+                <li>Maak een array met verschillende kleuren</li>
+                <li>Maak een variabele om de huidige kleur index bij te houden</li>
+                <li>Voeg event listener toe die de kleur wijzigt met modulo operator</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>CamelCase:</strong> CSS eigenschappen worden camelCase in JavaScript: <code>background-color</code> wordt <code>backgroundColor</code></li>
+                <li><strong>Kleur formaten:</strong> Je kunt hex (#ff0000), RGB (rgb(255,0,0)), of kleurnamen ('red') gebruiken</li>
+                <li><strong>Modulo uitleg:</strong> <code>5 % 3 = 2</code> (5 gedeeld door 3 is 1 rest 2). <code>3 % 3 = 0</code> (perfect deelbaar)</li>
+                <li><strong>Random kleuren:</strong> Gebruik <code>Math.random()</code> voor willekeurige kleuren: <code>kleuren[Math.floor(Math.random() * kleuren.length)]</code></li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Verkeerde CSS eigenschap naam</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Kebab-case werkt niet in JavaScript</span>
+box.style.background-color = <span class="string">'red'</span>; <span class="comment">// Syntax error!</span>
+
+<span class="comment">// ✅ GOED - Gebruik camelCase</span>
+box.style.backgroundColor = <span class="string">'red'</span>;</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Vergeten modulo operator</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Index wordt te groot, undefined error</span>
+huidigeKleur = huidigeKleur + <span class="string">1</span>;
+box.style.backgroundColor = kleuren[huidigeKleur]; <span class="comment">// Error bij index 5!</span>
+
+<span class="comment">// ✅ GOED - Modulo zorgt voor cyclus</span>
+huidigeKleur = (huidigeKleur + <span class="string">1</span>) % kleuren.length;</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Array index vergeten</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Probeert array zelf te gebruiken als kleur</span>
+box.style.backgroundColor = kleuren; <span class="comment">// Wordt "[object Array]"</span>
+
+<span class="comment">// ✅ GOED - Gebruik index om specifieke kleur te krijgen</span>
+box.style.backgroundColor = kleuren[huidigeKleur];</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Willekeurige kleuren:</strong> Genereer random kleuren in plaats van een vaste lijst</li>
+                    <li><strong>Gradient kleuren:</strong> Gebruik linear-gradient() voor smooth overgangen</li>
+                    <li><strong>Kleur picker input:</strong> Laat gebruiker zelf kleuren kiezen met &lt;input type="color"&gt;</li>
+                    <li><strong>Animatie:</strong> Voeg een fade effect toe bij kleur wijziging</li>
+                    <li><strong>Meerdere elementen:</strong> Wijzig kleuren van meerdere elementen tegelijk</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: Willekeurige Kleuren</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">randomKleur</span>() {
+    <span class="keyword">const</span> r = Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * <span class="string">256</span>);
+    <span class="keyword">const</span> g = Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * <span class="string">256</span>);
+    <span class="keyword">const</span> b = Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * <span class="string">256</span>);
+    <span class="keyword">return</span> <span class="string">`rgb(${r}, ${g}, ${b})`</span>;
+}
+
+knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    box.style.backgroundColor = <span class="function">randomKleur</span>();
+});</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <div id="color-box" style="width: 200px; height: 200px; background: #3498db; border-radius: 8px; margin: 1rem 0;"></div>
+            <button id="color-btn" class="demo-btn">Verander Kleur</button>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const box = document.getElementById('color-box');
+        const knop = document.getElementById('color-btn');
+        const kleuren = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6'];
+        let huidigeKleur = 0;
+
+        knop.addEventListener('click', function() {
+            huidigeKleur = (huidigeKleur + 1) % kleuren.length;
+            box.style.backgroundColor = kleuren[huidigeKleur];
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

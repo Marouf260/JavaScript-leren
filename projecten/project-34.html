@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 34: Multi-Step Formulier - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Form Area */
+        .project-area {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #eee;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .stepper::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #e0e0e0;
+            z-index: 1;
+        }
+
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 2;
+            transition: 0.3s;
+        }
+
+        .step-circle.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .form-step {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-form {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-prev {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-next {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-prev:hover {
+            background: #ccc;
+        }
+
+        .btn-next:hover {
+            background: #5a6cd6;
+        }
+
+        .btn-form:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 34: Multi-Step Formulier</h1>
+        <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
+        <p class="description">Maak een onboarding-style formulier dat input over meerdere "slides" of stappen verdeelt.
+        </p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: HTML Structuur Opzetten</h4>
+                <p>We maken één grote "form-container" en daarbinnen meerdere onafhankelijke
+                    <code>&lt;div class="form-step"&gt;</code> elementen. Standaard verbergen we al deze elementen in de
+                    CSS (<code>display: none</code>), BEHALVE degene die de <code>.active</code> CSS class heeft!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">&lt;!-- de CSS verbergt automatische alle form-steps die GEEN 'active' class HEBBEN! --&gt;</span>
+&lt;div class="form-step active"&gt; Stap 1 forms &lt;/div&gt;
+&lt;div class="form-step"&gt; Stap 2 forms &lt;/div&gt;</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Dit concept heet "conditional rendering". De JS bepaalt later welke
+                    <code>div</code> de <code>active</code> class krijgt! De rest blijft onzichtbaar.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: JS "Current Step" State bijhouden</h4>
+                <p>Om te weten welke stap in de DOM we moeten tonen, hebben we een variabele nodig om de status van ons
+                    formulier bij te houden!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// De state! 0 = Stap 1, 1 = Stap 2, 2 = Stap 3!</span>
+<span class="keyword">let</span> currentStep = <span class="string">0</span>;
+
+nextBtn.addEventListener(<span class="string">'click'</span>, () => {
+    <span class="comment">// Als we nog niet bij de laatste stap zijn:</span>
+    currentStep++; <span class="comment">// Verhoog de step!</span>
+    updateFormUI(); <span class="comment">// Voer de UI aanpassingen nu uit!</span>
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> JS is de 'beheerder' van de formuliere-applicatie. De code baseert altijd
+                    zijn weergaves en beslissingen op de waarde van deze ene "state" variabele.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: De UI Vernieuwen</h4>
+                <p>Als <code>currentStep</code> is geüpdatet, moeten we de DOM elementen met de CSS classes van de
+                    stappen up-to-date maken!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">updateFormUI</span>() {
+    <span class="comment">// 1. Maak alles onzichtbaar</span>
+    formSteps.<span class="function">forEach</span>(step => step.classList.<span class="function">remove</span>(<span class="string">'active'</span>));
+    
+    <span class="comment">// 2. Voeg de active class toe aan de nieuwe huidige step!</span>
+    formSteps[currentStep].classList.<span class="function">add</span>(<span class="string">'active'</span>);
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Dit is de kracht van de the Array `forEach` methode. We doen eerst een
+                    "reset" door de CSS active classes meedogenloos bij allemaal te verwijderen. Daarna geven we alleen
+                    de juiste huidige <code>active</code> class netjes terug op basis van the `currentStep` index!</p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Button the States)</h3>
+            <pre><span class="comment">// Om bugs te voorkomen kunnen we de 'terug' knop uitschakelen op de eerste stap! </span>
+<span class="keyword">if</span> (currentStep === <span class="string">0</span>) {
+    prevBtn.disabled = true; <span class="comment">// Vorige knop is onklikbaar!</span>
+} <span class="keyword">else</span> {
+    prevBtn.disabled = false;
+}</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Vul het formulier in en klik op de "Volgende" knop.</li>
+                <li>Zie hoe de bolletjes bovenin bijgewerkt worden met de juiste status!</li>
+                <li>Probeer ook terug te gaan met de "Vorige" knop!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong><code>formSteps.length</code>:</strong> In de controle om te bepalen of we bij de laatste
+                    stap zitten, maken we slim gebruik van `formSteps.length - 1` in plaats van hardcoded een the gets
+                    `2` erin the the thezetten. Dit maakt je code dynamischer, je kan nu makkelijk een 4e HTML sectie
+                    the the then toevoegen!</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Formulier submit conflicts</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - In een echte applicatie met een &lt;form&gt; the thethe tag zal een klik op je knop de pagina herladen. Gebruik daarom the ALTIJD e.preventDefault() om te voorkomen dat the thehet formulier the echt submitt in the the de front-end flow!</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Voeg Validatie toe:</strong> Check of alle input fields in de <code>currentStep</code>
+                        thethe the de thethe thegevuld zijn thethe theVOORDAT je de Next Button functie triggert! the
+                        the </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <div class="stepper">
+                <div class="step-circle active">1</div>
+                <div class="step-circle">2</div>
+                <div class="step-circle">3</div>
+            </div>
+
+            <div class="form-container">
+                <!-- Step 1 -->
+                <div class="form-step active">
+                    <h2>Persoonlijke Info</h2>
+                    <p style="margin-bottom: 15px; color:#666;">Vertel ons wie je bent.</p>
+                    <div class="input-group">
+                        <label>Voornaam</label>
+                        <input type="text" placeholder="Jan">
+                    </div>
+                    <div class="input-group">
+                        <label>Achternaam</label>
+                        <input type="text" placeholder="Jansen">
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="form-step">
+                    <h2>Contact Info</h2>
+                    <p style="margin-bottom: 15px; color:#666;">Hoe kunnen we je bereiken?</p>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="jan@example.com">
+                    </div>
+                    <div class="input-group">
+                        <label>Telefoonnummer</label>
+                        <input type="text" placeholder="06 12345678">
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="form-step">
+                    <h2>Account Info</h2>
+                    <p style="margin-bottom: 15px; color:#666;">Kies je gegevens voor deze website.</p>
+                    <div class="input-group">
+                        <label>Gebruikersnaam</label>
+                        <input type="text" placeholder="JanJ123">
+                    </div>
+                    <div class="input-group">
+                        <label>Wachtwoord</label>
+                        <input type="password" placeholder="••••••••">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-form btn-prev" id="prev-btn" disabled>Vorige</button>
+                    <button class="btn-form btn-next" id="next-btn">Volgende</button>
+                </div>
+            </div>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const formSteps = document.querySelectorAll('.form-step');
+        const stepCircles = document.querySelectorAll('.step-circle');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        let currentStep = 0; // The state! 0 = step 1, 1 = step 2, 2 = step 3
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < formSteps.length - 1) {
+                currentStep++;
+                updateFormUI();
+            } else {
+                alert("Formulier succesvol 'ingediend'!");
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateFormUI();
+            }
+        });
+
+        function updateFormUI() {
+            // Verwijder active class van alles
+            formSteps.forEach(fs => fs.classList.remove('active'));
+
+            // Highlight ALLE bolletjes tot de huidige stap (of alleen huidig, wat je mooier vindt)
+            stepCircles.forEach((circle, index) => {
+                if (index <= currentStep) {
+                    circle.classList.add('active');
+                } else {
+                    circle.classList.remove('active');
+                }
+            });
+
+            // Voeg class toe aan de huidige form section
+            formSteps[currentStep].classList.add('active');
+
+            // Button states
+            if (currentStep === 0) {
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.disabled = false;
+            }
+
+            if (currentStep === formSteps.length - 1) {
+                nextBtn.innerText = 'Verzenden';
+                nextBtn.style.background = '#10b981';
+            } else {
+                nextBtn.innerText = 'Volgende';
+                nextBtn.style.background = '#667eea';
+            }
+        }
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

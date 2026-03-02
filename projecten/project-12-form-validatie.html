@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 12: Form Validatie - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #FFE5B4;
+            color: #CC6600;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 12: Form Validatie</h1>
+        <span class="level">Advanced</span>
+        <p class="description">Valideer een formulier met real-time feedback.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je werken met form validatie, regular expressions en preventDefault. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>Regular expressions (regex) gebruiken voor email validatie</li>
+                <li>preventDefault() gebruiken om form submit te voorkomen</li>
+                <li>Real-time validatie met blur events</li>
+                <li>Error messages dynamisch tonen en verbergen</li>
+                <li>Visual feedback geven met CSS styling</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>Regular Expressions (regex)</strong> - Patronen om tekst te matchen (/pattern/)</li>
+                <li><strong>test()</strong> - Methode om te controleren of string matcht met regex</li>
+                <li><strong>preventDefault()</strong> - Voorkomt standaard browser gedrag (zoals form submit)</li>
+                <li><strong>blur event</strong> - Event dat afgaat wanneer element focus verliest</li>
+                <li><strong>nextElementSibling</strong> - Volgende element opzelfde niveau in DOM</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: Validatie functie maken</h4>
+                <p>Maak functie die input valideert en feedback geeft:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">validateNaam</span>() {
+    <span class="keyword">const</span> error = naamInput.nextElementSibling;
+    <span class="keyword">if</span> (naamInput.value.length < <span class="string">3</span>) {
+        error.textContent = <span class="string">'Naam moet minimaal 3 karakters zijn'</span>;
+        naamInput.style.borderColor = <span class="string">'red'</span>;
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    error.textContent = <span class="string">''</span>;
+    naamInput.style.borderColor = <span class="string">'green'</span>;
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Functie controleert lengte, toont error message, geeft visuele feedback en retourneert boolean.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: Email validatie met regex</h4>
+                <p>Gebruik regular expression voor email validatie:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">validateEmail</span>() {
+    <span class="keyword">const</span> error = emailInput.nextElementSibling;
+    <span class="keyword">const</span> emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    <span class="keyword">if</span> (!emailRegex.test(emailInput.value)) {
+        error.textContent = <span class="string">'Voer een geldig email adres in'</span>;
+        emailInput.style.borderColor = <span class="string">'red'</span>;
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    error.textContent = <span class="string">''</span>;
+    emailInput.style.borderColor = <span class="string">'green'</span>;
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Regex controleert of email formaat geldig is: tekst@tekst.tekst zonder spaties.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Blur event listeners</h4>
+                <p>Valideer wanneer gebruiker veld verlaat:</p>
+                <div class="code-example">
+                    <pre>naamInput.<span class="function">addEventListener</span>(<span class="string">'blur'</span>, validateNaam);
+emailInput.<span class="function">addEventListener</span>(<span class="string">'blur'</span>, validateEmail);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>blur</code> event gaat af wanneer gebruiker veld verlaat, ideaal voor validatie.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 4: Form submit voorkomen</h4>
+                <p>Voorkom submit als validatie faalt:</p>
+                <div class="code-example">
+                    <pre>form.<span class="function">addEventListener</span>(<span class="string">'submit'</span>, <span class="keyword">function</span>(e) {
+    e.preventDefault();
+    <span class="keyword">if</span> (<span class="function">validateNaam</span>() && <span class="function">validateEmail</span>()) {
+        alert(<span class="string">'Formulier is geldig!'</span>);
+    }
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>preventDefault()</code> voorkomt standaard form submit. Alleen bij geldige input wordt actie uitgevoerd.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="keyword">const</span> form = document.<span class="function">getElementById</span>(<span class="string">'validatie-form'</span>);
+<span class="keyword">const</span> naamInput = document.<span class="function">getElementById</span>(<span class="string">'naam-input'</span>);
+<span class="keyword">const</span> emailInput = document.<span class="function">getElementById</span>(<span class="string">'email-input'</span>);
+
+<span class="keyword">function</span> <span class="function">validateNaam</span>() {
+    <span class="keyword">const</span> error = naamInput.nextElementSibling;
+    <span class="keyword">if</span> (naamInput.value.length < <span class="string">3</span>) {
+        error.textContent = <span class="string">'Naam moet minimaal 3 karakters zijn'</span>;
+        naamInput.style.borderColor = <span class="string">'red'</span>;
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    error.textContent = <span class="string">''</span>;
+    naamInput.style.borderColor = <span class="string">'green'</span>;
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}
+
+<span class="keyword">function</span> <span class="function">validateEmail</span>() {
+    <span class="keyword">const</span> error = emailInput.nextElementSibling;
+    <span class="keyword">const</span> emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    <span class="keyword">if</span> (!emailRegex.test(emailInput.value)) {
+        error.textContent = <span class="string">'Voer een geldig email adres in'</span>;
+        emailInput.style.borderColor = <span class="string">'red'</span>;
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    error.textContent = <span class="string">''</span>;
+    emailInput.style.borderColor = <span class="string">'green'</span>;
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}
+
+naamInput.<span class="function">addEventListener</span>(<span class="string">'blur'</span>, validateNaam);
+emailInput.<span class="function">addEventListener</span>(<span class="string">'blur'</span>, validateEmail);
+
+form.<span class="function">addEventListener</span>(<span class="string">'submit'</span>, <span class="keyword">function</span>(e) {
+    e.preventDefault();
+    <span class="keyword">if</span> (<span class="function">validateNaam</span>() && <span class="function">validateEmail</span>()) {
+        alert(<span class="string">'Formulier is geldig!'</span>);
+    }
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Maak validatie functies die boolean retourneren</li>
+                <li>Gebruik nextElementSibling om error element te vinden</li>
+                <li>Gebruik regex voor email validatie</li>
+                <li>Voeg blur event listeners toe voor real-time validatie</li>
+                <li>Gebruik preventDefault() om submit te voorkomen</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Regex uitleg:</strong> <code>/^[^\s@]+@[^\s@]+\.[^\s@]+$/</code> betekent: tekst zonder @ of spatie, dan @, dan tekst, dan ., dan tekst</li>
+                <li><strong>blur vs input:</strong> blur valideert bij verlaten veld, input bij elke toetsaanslag</li>
+                <li><strong>HTML5 validatie:</strong> Gebruik ook HTML5 attributen zoals required, pattern, minlength</li>
+                <li><strong>Accessibility:</strong> Koppel error messages aan inputs met aria-describedby</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten preventDefault</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Form wordt altijd gesubmit</span>
+form.<span class="function">addEventListener</span>(<span class="string">'submit'</span>, <span class="keyword">function</span>(e) {
+    <span class="keyword">if</span> (<span class="function">validateNaam</span>()) { ... } <span class="comment">// Vergeet preventDefault!</span>
+});
+
+<span class="comment">// ✅ GOED - Voorkom standaard submit</span>
+form.<span class="function">addEventListener</span>(<span class="string">'submit'</span>, <span class="keyword">function</span>(e) {
+    e.preventDefault();
+    <span class="keyword">if</span> (<span class="function">validateNaam</span>()) { ... }
+});</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Verkeerde regex syntax</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - String in plaats van regex</span>
+<span class="keyword">const</span> emailRegex = <span class="string">'/^[^\s@]+@[^\s@]+\.[^\s@]+$/'</span>; <span class="comment">// String!</span>
+
+<span class="comment">// ✅ GOED - Gebruik /.../ voor regex</span>
+<span class="keyword">const</span> emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Vergeten error message te clearen</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Error blijft staan bij geldige input</span>
+<span class="keyword">if</span> (isValid) {
+    naamInput.style.borderColor = <span class="string">'green'</span>; <span class="comment">// Vergeet error.textContent!</span>
+}
+
+<span class="comment">// ✅ GOED - Clear error message</span>
+<span class="keyword">if</span> (isValid) {
+    error.textContent = <span class="string">''</span>;
+    naamInput.style.borderColor = <span class="string">'green'</span>;
+}</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Real-time validatie:</strong> Valideer tijdens typen (input event)</li>
+                    <li><strong>Meer validaties:</strong> Voeg telefoonnummer, wachtwoord sterkte toe</li>
+                    <li><strong>Custom error styling:</strong> Maak mooie error messages met icons</li>
+                    <li><strong>Server-side validatie:</strong> Valideer ook op server na submit</li>
+                    <li><strong>Form reset:</strong> Voeg reset functionaliteit toe</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: Real-time Validatie</h4>
+                <div class="code-example">
+                    <pre><span class="comment">// Valideer tijdens typen</span>
+naamInput.<span class="function">addEventListener</span>(<span class="string">'input'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (<span class="keyword">this</span>.value.length >= <span class="string">3</span>) {
+        <span class="function">validateNaam</span>();
+    }
+});</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <form id="validatie-form" style="max-width: 400px;">
+                <div style="margin-bottom: 1rem;">
+                    <label>Naam:</label>
+                    <input type="text" id="naam-input" style="width: 100%; padding: 0.5rem; margin-top: 0.25rem;">
+                    <span class="error-msg" style="color: red; font-size: 0.85rem;"></span>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label>Email:</label>
+                    <input type="email" id="email-input" style="width: 100%; padding: 0.5rem; margin-top: 0.25rem;">
+                    <span class="error-msg" style="color: red; font-size: 0.85rem;"></span>
+                </div>
+                <button type="submit" class="demo-btn" style="width: 100%;">Verzenden</button>
+            </form>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const form = document.getElementById('validatie-form');
+        const naamInput = document.getElementById('naam-input');
+        const emailInput = document.getElementById('email-input');
+
+        function validateNaam() {
+            const error = naamInput.nextElementSibling;
+            if (naamInput.value.length < 3) {
+                error.textContent = 'Naam moet minimaal 3 karakters zijn';
+                naamInput.style.borderColor = 'red';
+                return false;
+            }
+            error.textContent = '';
+            naamInput.style.borderColor = 'green';
+            return true;
+        }
+
+        function validateEmail() {
+            const error = emailInput.nextElementSibling;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                error.textContent = 'Voer een geldig email adres in';
+                emailInput.style.borderColor = 'red';
+                return false;
+            }
+            error.textContent = '';
+            emailInput.style.borderColor = 'green';
+            return true;
+        }
+
+        naamInput.addEventListener('blur', validateNaam);
+        emailInput.addEventListener('blur', validateEmail);
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateNaam() && validateEmail()) {
+                alert('Formulier is geldig!');
+            }
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 89: Clipboard API - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #334155;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e2e8f0;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #0f172a;
+        }
+
+        .level {
+            display: block;
+            padding: 0.35rem 1rem;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* APP CSS H_T */
+        .project-area {
+            width: 100%;
+        }
+
+        .KkoO_oOPIheTVeeRTheTextTheBGBox_H {
+            background: #f8fafc;
+            border: 2px dashed #94a3b8;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #1e293b;
+            transition: 0.3s;
+        }
+
+        .KkoO_oOPIheTVeeRTheTextTheBGBox_H.ssTUUcC_eeSSGekoOpieTheErdV {
+            border-color: #22c55e;
+            background: #f0fdf4;
+            color: #166534;
+        }
+
+        .BbBTTTheDNKNOoppPpeTnHDeGRooVThe__p_ {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+
+        .cK_noVopPTheTTheV_HAction {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+        }
+
+        .cK_noVopPTheTTheV_HAction:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .cK_noVopPTheTTheV_HAction:active {
+            transform: translateY(0);
+        }
+
+        .cK_noVopPTheTTheV_HAction.cTTTheOSeucCeTessKnnoPpH {
+            background: #22c55e;
+            box-shadow: 0 4px 6px rgba(34, 197, 94, 0.3);
+        }
+
+        /* THE  Plak Z THE V_ Gedeelte! THE_! */
+        .PppPpLLaTkKaaHTheRT_TDTheHT {
+            background: #fffbfa;
+            border: 1px solid #fed7aa;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: left;
+        }
+
+        .PppPpLLaTkKaaHTheRT_TDTheHT h3 {
+            color: #c2410c;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #uUIDTTExAt__PPV_PllaKV_DooThe {
+            width: 100%;
+            height: 100px;
+            border: 2px solid #fdba74;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 1rem;
+            background: #fff;
+            resize: none;
+            color: #7c2d12;
+            outline: none;
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+
+        #uUIDTTExAt__PPV_PllaKV_DooThe:focus {
+            border-color: #f97316;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+    <!-- FONT O !! Z ! -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1><i class="far fa-clipboard"></i> Clipboard API</h1>
+        <span class="level">Advanced APIs</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Schrijven naar het Klembord</h4>
+                <p>De <strong>Clipboard API</strong> laat ons programmatisch tekst kopiëren naar het klembord. Dit is de
+                    moderne manier in plaats van de oude <code>document.execCommand('copy')</code>!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">await</span> navigator.clipboard.<span class="function">writeText</span>(<span class="string">'Tekst om te kopiëren!'</span>);
+console.<span class="function">log</span>(<span class="string">'Gekopieerd!'</span>); <span class="comment">// Werkt alleen na await!</span></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Lezen van het Klembord</h4>
+                <p>Lezen van het klembord (<code>readText()</code>) vereist <strong>toestemming van de
+                        gebruiker</strong>! De browser zal een popup tonen. Dit is een veiligheidsmaatregel.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> tekst = <span class="keyword">await</span> navigator.clipboard.<span class="function">readText</span>();
+textarea.value = tekst; <span class="comment">// Zet geplakte tekst in textarea</span></pre>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik <strong>"Kopiëren"</strong> om de tekst naar je klembord te kopiëren!</li>
+                <li>Klik daarna <strong>"Plak Programmatisch"</strong> om het te plakken!</li>
+                <li>Probeer ook <kbd>Ctrl+V</kbd> in het tekstvak hieronder.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Altijd <code>await</code>:</strong> Beide clipboard-functies zijn asynchronous! Vergeet het
+                    <code>await</code> niet, anders heb je een Promise in plaats van de echte tekst.</li>
+                <li><strong>HTTPS Required:</strong> Net als de andere browser-APIs werkt de Clipboard API alleen op
+                    HTTPS of localhost.</li>
+            </ul>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Kopieer Afbeeldingen:</strong> Gebruik <code>navigator.clipboard.write()</code> met een
+                        <code>ClipboardItem</code> om afbeeldingen te kopiëren!</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- App Area -->
+        <div class="project-area">
+
+            <div class="KkoO_oOPIheTVeeRTheTextTheBGBox_H" id="TxTDBxoOOxTeHDKVoopiiHe_hTTv_The">
+                Dit is een hele GEHEIME EN The_ H The BELANGRIJKE tekst the _The the! the die_ VThe The_The je The_ NU
+                The THE H! MOET the kopiëren_ THE O _ !!! 🚀
+            </div>
+
+            <div class="BbBTTTheDNKNOoppPpeTnHDeGRooVThe__p_">
+                <button class="cK_noVopPTheTTheV_HAction" id="bBBThHTTheVknopOoH_HTheCKopHpiTVeT_Hev_">
+                    <i class="far fa-copy"></i> Kopiëren
+                </button>
+            </div>
+
+
+            <!-- PLak V_ Deel_ THE -->
+            <div class="PppPpLLaTkKaaHTheRT_TDTheHT">
+                <h3><i class="fas fa-paste"></i> Plak vanuit Klembord (Clipboard)</h3>
+                <textarea id="uUIDTTExAt__PPV_PllaKV_DooThe"
+                    placeholder="Plak hier je tekst met de the knop hieronder The_ the of the ctrl+v The H THE ..."></textarea>
+
+                <button class="cK_noVopPTheTTheV_HAction" id="PppLaATThekK_KHNNoPOTheThe_HTh__TheZ"
+                    style="background:#f97316; width:100%;">
+                    <i class="fas fa-arrow-down"></i> Plak Programmatisch
+                </button>
+                <small style="display:block; text-align:center; color:#94a3b8; margin-top:10px;">(Browser_ the The_The
+                    the _ the_ _ Z! the kan the om The _ the toestemming H theThe !_ !_ vragen_ the the bij The THE the
+                    _ H lezen_)! </small>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const VVVtxTtBBoxThTheOOKT_TheZDe = document.getElementById('TxTDBxoOOxTeHDKVoopiiHe_hTTv_The');
+        const KBKBnOOPHDeKToPiHHHeeTVeheH_H = document.getElementById('bBBThHTTheVknopOoH_HTheCKopHpiTVeT_Hev_');
+
+        const PppLlakTKTTTexTTATheArea = document.getElementById('uUIDTTExAt__PPV_PllaKV_DooThe');
+        const BbtNPLlkakTHEeKNHHoPpTheH = document.getElementById('PppLaATThekK_KHNNoPOTheThe_HTh__TheZ');
+
+        // 1 THE SCHRIJFThe NAAR _ KLEmBoOrdThe API_ H THE  ! THE (the _ KOPIEREN _! V_ H_ ) THE 
+        KBKBnOOPHDeKToPiHHHeeTVeheH_H.addEventListener('click', async () => {
+            // DE tekSt _ THE the
+            const tTzTeeKKSt_TtvDe_HDatTTheThevThe = VVVtxTtBBoxThTheOOKT_TheZDe.innerText;
+
+            try {
+                // THE Moderne  the ! API Async H H The 
+                await navigator.clipboard.writeText(tTzTeeKKSt_TtvDe_HDatTTheThevThe);
+
+                // UI SUcceses _! H The
+                const OOrIgI_theTheGINEEleEInTHHTMLTh = KBKBnOOPHDeKToPiHHHeeTVeheH_H.innerHTML; //_H THE! 
+                KBKBnOOPHDeKToPiHHHeeTVeheH_H.innerHTML = '<i class="fas fa-check"></i>Gekopieerd!';
+                KBKBnOOPHDeKToPiHHHeeTVeheH_H.classList.add('cTTTheOSeucCeTessKnnoPpH');
+                VVVtxTtBBoxThTheOOKT_TheZDe.classList.add('ssTUUcC_eeSSGekoOpieTheErdV');
+
+                // Reset_ na THE _ 2 secH H_ !!_ The !
+                setTimeout(() => {
+                    KBKBnOOPHDeKToPiHHHeeTVeheH_H.innerHTML = OOrIgI_theTheGINEEleEInTHHTMLTh;
+                    KBKBnOOPHDeKToPiHHHeeTVeheH_H.classList.remove('cTTTheOSeucCeTessKnnoPpH');
+                    VVVtxTtBBoxThTheOOKT_TheZDe.classList.remove('ssTUUcC_eeSSGekoOpieTheErdV');
+                }, 2000);
+
+            } catch (err) {
+                console.error("The H_ klembord FfFOuTThe_ THE!! _ ", err);
+                alert("Kon the de tekst niet  the _ kopiëren_! De_ browser The blocked the ! H_? !");
+            }
+        });
+
+
+        // 2 THE THE LEES VAN _ KLEmBoOrdThe API THE _! (the _ PLAKKEN _! V H !) THE
+        BbtNPLlkakTHEeKNHHoPpTheH.addEventListener('click', async () => {
+            try {
+                // The Moderne the API H THE Z! Async The_ V
+                // LEt Op _THE HThe ! THE BrowserThe  theThe the The  _ the (especially Firefox/Safari O__ The) The !_ !! The V H zal_ V the THE HThe O! the The V Z! THE user promt the laten THE the VThe zien The THE "Mag DEZE webSTie The je_ the !_ klembroed THE The  lezen?"
+                const TheDGelHTheezZeEnnTXTDataThe = await navigator.clipboard.readText();
+
+                // ZEt The in de_ textarea! The 
+                PppLlakTKTTTexTTATheArea.value = TheDGelHTheezZeEnnTXTDataThe;
+
+                // SUCCcCess UI UIUI!
+                BbtNPLlkakTHEeKNHHoPpTheH.innerHTML = '<i class="fas fa-check"></i> Geplakt!';
+                BbtNPLlkakTHEeKNHHoPpTheH.style.background = "#22c55e"; // grROen
+
+                setTimeout(() => {
+                    BbtNPLlkakTHEeKNHHoPpTheH.innerHTML = '<i class="fas fa-arrow-down"></i> Plak Programmatisch';
+                    BbtNPLlkakTHEeKNHHoPpTheH.style.background = "#f97316"; // Oranje_ TUG The The _ 
+                }, 2000);
+
+
+            } catch (DeEFfEeOoutTeThTMesThe_gTDeZTheDataO) {
+                console.error("plak The FoutThe! O:", DeEFfEeOoutTeThTMesThe_gTDeZTheDataO);
+                alert("TheBrowser the V _the The 1 weigert H The_ Toegang the ! _ (Of_ H _ geen Tekts the ! in de the The V KlembordV_ The).");
+            }
+        });
+
+    </script>
+    <script>
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

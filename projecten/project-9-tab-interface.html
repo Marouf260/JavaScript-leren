@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 9: Tab Interface - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #FFF3CD;
+            color: #856404;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 9: Tab Interface</h1>
+        <span class="level">Intermediate</span>
+        <p class="description">Maak een tab interface waar je tussen verschillende secties kunt wisselen.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je werken met data attributen en complexe state management. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>data-* attributen gebruiken om elementen te koppelen</li>
+                <li>classList gebruiken om classes toe te voegen/verwijderen</li>
+                <li>Template literals gebruiken voor dynamische selectors</li>
+                <li>State synchroniseren tussen meerdere elementen</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>data-* attributen</strong> - HTML attributen om custom data op te slaan</li>
+                <li><strong>dataset</strong> - Eigenschap om data-* attributen te lezen (dataset.tab)</li>
+                <li><strong>classList</strong> - Object met methodes om classes te beheren (add, remove, toggle)</li>
+                <li><strong>Template literals</strong> - Strings met ${variabele} voor dynamische waarden</li>
+                <li><strong>Attribute selectors</strong> - CSS selectors zoals [data-content="1"]</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: Elementen selecteren</h4>
+                <p>Selecteer alle tab knoppen en content secties:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> tabBtns = document.<span class="function">querySelectorAll</span>(<span class="string">'.tab-btn'</span>);
+<span class="keyword">const</span> tabContents = document.<span class="function">querySelectorAll</span>(<span class="string">'.tab-content'</span>);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We hebben beide NodeLists nodig om state te synchroniseren tussen knoppen en content.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: Event listener met data attribuut lezen</h4>
+                <p>Lees het data-tab attribuut om te weten welke tab geklikt is:</p>
+                <div class="code-example">
+                    <pre>tabBtns.<span class="function">forEach</span>(btn => {
+    btn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+        <span class="keyword">const</span> tabId = <span class="keyword">this</span>.dataset.tab;
+        <span class="comment">// tabId bevat de waarde van data-tab</span>
+    });
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>dataset.tab</code> leest het <code>data-tab</code> attribuut. Dit koppelt knoppen aan content.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Verwijder active van alle elementen</h4>
+                <p>Reset alle tabs en content naar inactive state:</p>
+                <div class="code-example">
+                    <pre>tabBtns.<span class="function">forEach</span>(b => {
+    b.classList.<span class="function">remove</span>(<span class="string">'active'</span>);
+    b.style.background = <span class="string">'#ccc'</span>;
+});
+tabContents.<span class="function">forEach</span>(c => {
+    c.classList.<span class="function">remove</span>(<span class="string">'active'</span>);
+    c.style.display = <span class="string">'none'</span>;
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We resetten eerst alles, dan activeren we alleen de geselecteerde tab. Dit voorkomt meerdere actieve tabs.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 4: Active state toevoegen aan geklikte tab</h4>
+                <p>Gebruik template literal om juiste content te vinden:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">this</span>.classList.<span class="function">add</span>(<span class="string">'active'</span>);
+<span class="keyword">this</span>.style.background = <span class="string">'#667eea'</span>;
+<span class="keyword">const</span> content = document.<span class="function">querySelector</span>(<span class="string">`[data-content="${tabId}"]`</span>);
+content.classList.<span class="function">add</span>(<span class="string">'active'</span>);
+content.style.display = <span class="string">'block'</span>;</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Template literal (<code>`...`</code>) laat variabelen toe in strings. <code>[data-content="${tabId}"]</code> zoekt element met matching data-content.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="keyword">const</span> tabBtns = document.<span class="function">querySelectorAll</span>(<span class="string">'.tab-btn'</span>);
+<span class="keyword">const</span> tabContents = document.<span class="function">querySelectorAll</span>(<span class="string">'.tab-content'</span>);
+
+tabBtns.<span class="function">forEach</span>(btn => {
+    btn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+        <span class="keyword">const</span> tabId = <span class="keyword">this</span>.dataset.tab;
+        
+        <span class="comment">// Verwijder active van alle tabs</span>
+        tabBtns.<span class="function">forEach</span>(b => {
+            b.classList.<span class="function">remove</span>(<span class="string">'active'</span>);
+            b.style.background = <span class="string">'#ccc'</span>;
+            b.style.color = <span class="string">'#333'</span>;
+        });
+        tabContents.<span class="function">forEach</span>(c => {
+            c.classList.<span class="function">remove</span>(<span class="string">'active'</span>);
+            c.style.display = <span class="string">'none'</span>;
+        });
+        
+        <span class="comment">// Voeg active toe aan geklikte tab</span>
+        <span class="keyword">this</span>.classList.<span class="function">add</span>(<span class="string">'active'</span>);
+        <span class="keyword">this</span>.style.background = <span class="string">'#667eea'</span>;
+        <span class="keyword">this</span>.style.color = <span class="string">'white'</span>;
+        <span class="keyword">const</span> content = document.<span class="function">querySelector</span>(<span class="string">`[data-content="${tabId}"]`</span>);
+        content.classList.<span class="function">add</span>(<span class="string">'active'</span>);
+        content.style.display = <span class="string">'block'</span>;
+    });
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Selecteer alle tab knoppen en content secties</li>
+                <li>Gebruik data-tab en data-content attributen voor koppeling</li>
+                <li>Lees tabId met dataset.tab</li>
+                <li>Reset eerst alle active states</li>
+                <li>Activeer geklikte tab en bijbehorende content</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>data-* attributen:</strong> Gebruik data-* voor custom data, niet voor styling</li>
+                <li><strong>classList vs className:</strong> classList is beter voor meerdere classes, className overschrijft alles</li>
+                <li><strong>Template literals:</strong> Gebruik backticks (`) voor strings met variabelen</li>
+                <li><strong>Attribute selectors:</strong> [data-content="1"] selecteert elementen met specifieke data waarde</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Verkeerde data attribuut naam</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - dataset.tabId bestaat niet</span>
+<span class="keyword">const</span> tabId = <span class="keyword">this</span>.dataset.tabId; <span class="comment">// data-tab-id wordt tabId</span>
+
+<span class="comment">// ✅ GOED - data-tab wordt dataset.tab</span>
+<span class="keyword">const</span> tabId = <span class="keyword">this</span>.dataset.tab;</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Vergeten alle andere te resetten</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Meerdere tabs kunnen actief zijn</span>
+<span class="keyword">this</span>.classList.<span class="function">add</span>(<span class="string">'active'</span>); <span class="comment">// Vergeet andere te verwijderen</span>
+
+<span class="comment">// ✅ GOED - Reset eerst alles</span>
+tabBtns.<span class="function">forEach</span>(b => b.classList.<span class="function">remove</span>(<span class="string">'active'</span>));
+<span class="keyword">this</span>.classList.<span class="function">add</span>(<span class="string">'active'</span>);</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Verkeerde template literal syntax</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Gewone string, variabele wordt niet geïnterpreteerd</span>
+<span class="keyword">const</span> content = document.<span class="function">querySelector</span>(<span class="string">'[data-content="tabId"]'</span>);
+
+<span class="comment">// ✅ GOED - Template literal met backticks</span>
+<span class="keyword">const</span> content = document.<span class="function">querySelector</span>(<span class="string">`[data-content="${tabId}"]`</span>);</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Keyboard navigatie:</strong> Gebruik pijltjestoetsen om tussen tabs te navigeren</li>
+                    <li><strong>Animatie:</strong> Voeg fade of slide animaties toe bij tab switch</li>
+                    <li><strong>URL hash:</strong> Update URL hash (#tab1) en laad juiste tab bij page load</li>
+                    <li><strong>Lazy loading:</strong> Laad tab content alleen wanneer tab wordt geopend</li>
+                    <li><strong>Close functionaliteit:</strong> Voeg X knop toe om tabs te sluiten</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: Keyboard Navigatie</h4>
+                <div class="code-example">
+                    <pre>document.<span class="function">addEventListener</span>(<span class="string">'keydown'</span>, <span class="keyword">function</span>(e) {
+    <span class="keyword">const</span> activeTab = document.<span class="function">querySelector</span>(<span class="string">'.tab-btn.active'</span>);
+    <span class="keyword">const</span> currentIndex = Array.from(tabBtns).indexOf(activeTab);
+    
+    <span class="keyword">if</span> (e.key === <span class="string">'ArrowRight'</span> && currentIndex < tabBtns.length - <span class="string">1</span>) {
+        tabBtns[currentIndex + <span class="string">1</span>].click();
+    } <span class="keyword">else if</span> (e.key === <span class="string">'ArrowLeft'</span> && currentIndex > <span class="string">0</span>) {
+        tabBtns[currentIndex - <span class="string">1</span>].click();
+    }
+});</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="1" style="padding: 0.5rem 1rem; margin-right: 0.5rem; border: none; background: #667eea; color: white; border-radius: 4px; cursor: pointer;">Tab 1</button>
+                <button class="tab-btn" data-tab="2" style="padding: 0.5rem 1rem; margin-right: 0.5rem; border: none; background: #ccc; color: #333; border-radius: 4px; cursor: pointer;">Tab 2</button>
+                <button class="tab-btn" data-tab="3" style="padding: 0.5rem 1rem; margin-right: 0.5rem; border: none; background: #ccc; color: #333; border-radius: 4px; cursor: pointer;">Tab 3</button>
+            </div>
+            <div class="tab-content active" data-content="1" style="padding: 1rem; border: 1px solid #ddd; margin-top: 0.5rem;">Inhoud van Tab 1</div>
+            <div class="tab-content" data-content="2" style="padding: 1rem; border: 1px solid #ddd; margin-top: 0.5rem; display: none;">Inhoud van Tab 2</div>
+            <div class="tab-content" data-content="3" style="padding: 1rem; border: 1px solid #ddd; margin-top: 0.5rem; display: none;">Inhoud van Tab 3</div>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabId = this.dataset.tab;
+                
+                // Verwijder active van alle tabs
+                tabBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.style.background = '#ccc';
+                    b.style.color = '#333';
+                });
+                tabContents.forEach(c => {
+                    c.classList.remove('active');
+                    c.style.display = 'none';
+                });
+                
+                // Voeg active toe aan geklikte tab
+                this.classList.add('active');
+                this.style.background = '#667eea';
+                this.style.color = 'white';
+                const content = document.querySelector(`[data-content="${tabId}"]`);
+                content.classList.add('active');
+                content.style.display = 'block';
+            });
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 62: Markdown Previewer - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* App Area ! */
+        .project-area {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 500px;
+        }
+
+        .panel-ZHTVThe_H {
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .pane-header-HHThe {
+            background: #e2e8f0;
+            padding: 10px 15px;
+            font-weight: bold;
+            color: #334155;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #cbd5e1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .editor-textVInPH_D {
+            flex: 1;
+            border: none;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            resize: none;
+            outline: none;
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 0 0 8px 8px;
+            line-height: 1.5;
+        }
+
+        .preview-htmlG_H_R_V {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 0 0 8px 8px;
+            font-family: inherit;
+            line-height: 1.6;
+            color: #1e293b;
+        }
+
+        /* G_ The ! Markdown CSS Stylings for the Gen ! */
+        .preview-htmlG_H_R_V h1,
+        .preview-htmlG_H_R_V h2,
+        .preview-htmlG_H_R_V h3 {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+
+        .preview-htmlG_H_R_V p {
+            margin-bottom: 15px;
+        }
+
+        .preview-htmlG_H_R_V pre {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+
+        .preview-htmlG_H_R_V code {
+            background: #fee2e2;
+            color: #ef4444;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .preview-htmlG_H_R_V pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .preview-htmlG_H_R_V blockquote {
+            border-left: 4px solid #cbd5e1;
+            padding-left: 15px;
+            color: #64748b;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .preview-htmlG_H_R_V ul,
+        .preview-htmlG_H_R_V ol {
+            margin-bottom: 15px;
+            margin-left: 20px;
+        }
+
+        .preview-htmlG_H_R_V a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .preview-htmlG_H_R_V a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-copy-TTheH {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+    </style>
+    <!-- Markd_T Library_Z via CDN The  _ _!! -->
+    <!-- _ We use Marked.js for robust logic as writing full regex markdown parser manually is The Z NOT good practice in real life_ !! -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- _ The DOMPurify for security cross site script data Z !! -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 62: Live Markdown Previewer</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;">Utility
+            Apps</span>
+        <p class="description">Maak the the een_ Github-achtige The markdown_ schrijver The, the Z met the Live the UI
+            rendering Z_ (_incl security XSS checkThe !).</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Externe Libraries (CDN)</h4>
+                <p>We the The integreren the in the the dit The_ Project the externe <strong>Libraries</strong> via een
+                    CDN (Content_ The _Delivery The Network ).</p>
+                <ul>
+                    <li><strong><code>Marked.js</code>:</strong> Een The V Krachtige library_ the die_ The the _complexe
+                        _Markdown the the the StringData (<code># Titel</code>, <code>[Link](url)</code>)_ omzet _naar
+                        _HTML The Strings <code>&lt;h1&gt;</code> _etc! . </li>
+                    <li><strong><code>DOMPurify</code> (Security!):</strong> the Omdat The the the we
+                        <code>innerHTML</code> The_ the The gebruiken OThe Z met the the _ data the the the the the the
+                        theThe van_ the the de The the the the_the gebruiker, _MOETEN de de z _The stringS the the
+                        eerst_ the "SchoonThe gemaakt" ! worden _! _the Anders_ Kan The! the een the the Hacker the
+                        _<code>&lt;script&gt;alert('Gehackt!')&lt;/script&gt;</code> typen. DOMPurify The The _the
+                        Haalt_ Gevaarlijke The_the _ The tags Z! er _automaitsch The! the Uit The_! </li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Live HTML Injectie</h4>
+                <p>Bij elke toetsaanslag (<code>input</code> event) lezen we de textarea, parsen de markdown string door
+                    Marked.js, maken de output onschadelijk via DOMPurify, en the the we in_ jectenhet The the The the
+                    in_ de The the the `innerHTML` the van de preview div_! </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">P_Rthe_TheGeParseHT_MDataAanO_Weer</span>() {
+    <span class="keyword">const</span> de_GTheDeMakdownStrInputZVar = THEU__TxtA_R_TheInput_TheData.value;
+    <span class="keyword">const</span> THEO_OnveiligeHT_STheTrinGV = marked.<span class="function">parse</span>(de_GTheDeMakdownStrInputZVar);
+    <span class="keyword">const</span> V_SSTheSchoone_HtmlH_TheDe_theThe_HTmlStr_The = DOMPurify.<span class="function">sanitize</span>(THEO_OnveiligeHT_STheTrinGV);
+    UIUI_PREVDTheDataMDeZ_T.innerHTML = V_SSTheSchoone_HtmlH_TheDe_theThe_HTmlStr_The;
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Typ the the wat_ the_ the the Markdown the_ the the The code the in de _ Linker the the_ the_ the
+                    Textarea the .</li>
+                <li>the Bekijk hoe_ The _het _The the the Live The rendered! </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Clipboard API_the thethe:</strong> the The In The de HTML the zie the the je_ de *Copy HTML*
+                    knop! The De JS the Thethe gebruikt <code>navigator.clipboard.writeText(html)</code> the the Omg the
+                    ! the the string the Te Kopieren_! </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: InnerHTML the! zonder_ the Sanitization The Data The! ! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je DOMPurify The weg_ the the the  laat the the ! Dan the kThe kThe an thethe de_ The_ User (of the the the hacker)! `&lt;img src="fout" onerror="STUUR_WACHTWOORDEN_NAAR_HACKER()"&gt;` the the the inThe the theThe Typen!! !  </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Gebruik ALTIJD_ the! een Sanitizer! Als The The the  The the the je_ <code>innerHTML</code> The ! vult met dataThe_ van the The ! _ the 3rd_ partythe the !!! The The The ! The_ </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Highlight.js ! !! The The The The! </strong> the the thethe the THE the the Voeg The!
+                        the een the The 3e the_ library_the Toe the_ The the om ook the _ The the The code_ the !_
+                        snippets their color The the ! VZ_ TheZ_ the _ !! OpeN! The _ . _The !. THE </li>
+                    <li><strong>Thema Switcher! THE the TheThe _!</strong> The The the The the the Leer the THE The_ the
+                        dark/light_ mode_ the toe! te the the The voegen aan de Editor_ !_ the !! _ The The_ the The The
+                        ! the The_ the The!_ The !. _The ! </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="panel-ZHTVThe_H">
+                <div class="pane-header-HHThe">
+                    Markdown Input
+                    <span style="font-size: 0.7rem; color:#94a3b8;">(Typ hier_)</span>
+                </div>
+                <textarea class="editor-textVInPH_D" id="TInt_MDEd_TextThe_H">
+# Welkom in mijn Markdown Editor! 🚀
+
+Dit the is _The_ _super makkelijk_ the om the te the bewerken!
+
+## The Lijstje the The 
+- Punt The The  1
+- Punt the The_  2
+- **Dit the is The The Vdik_! ** 
+
+> Markdown is cool. The ! - Een Wijze The Programmeur_
+
+Hier the H the is wat `code data O` in H in de T string V :
+```javascript
+function groet() {
+    console.log("Hallo Wereld !");
+}
+```
+
+[Klikthe Hier the voor TheThe_ ROC ](https://roc-alfa-college.nl)
+                </textarea>
+            </div>
+
+            <div class="panel-ZHTVThe_H">
+                <div class="pane-header-HHThe">
+                    Live Preview
+                    <button class="btn-copy-TTheH" id="BtnHTK_CopYHtml_O" onclick="CCopyHtmDataThe_HCodeH()">Copy
+                        HTML</button>
+                </div>
+                <!-- We inject HTML the Z H_ !! !! -->
+                <div class="preview-htmlG_H_R_V" id="V_PDe_ReviewH_RenderDivVThe_"></div>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const THEU__TxtA_R_TheInput_TheData = document.getElementById('TInt_MDEd_TextThe_H');
+        const UIUI_PREVDTheDataMDeZ_T = document.getElementById('V_PDe_ReviewH_RenderDivVThe_');
+
+        // Configuratie voor marked library (behuwd the <br> op the_ the the returns ! )
+        marked.setOptions({
+            breaks: true, // line break op de _ enter the! (_Github style)
+            gfm: true     // Github flavored mkdown Z ! 
+        });
+
+        // The De  Main_ Logic The ! Z 
+        function P_Rthe_TheGeParseHT_MDataAanO_Weer() {
+            // 1. Get string
+            const de_GTheDeMakdownStrInputZVar = THEU__TxtA_R_TheInput_TheData.value;
+
+            // 2. the the Use_ the_ Marked O Z !! _ To the parse_ to HTML _String
+            const THEO_OnveiligeHT_STheTrinGV = marked.parse(de_GTheDeMakdownStrInputZVar);
+
+            // 3. SECURE_ The string from XSS injections  (DOMPURIFY the the !!)
+            const V_SSTheSchoone_HtmlH_TheDe_theThe_HTmlStr_The = DOMPurify.sanitize(THEO_OnveiligeHT_STheTrinGV);
+
+            // 4 Render HTML
+            UIUI_PREVDTheDataMDeZ_T.innerHTML = V_SSTheSchoone_HtmlH_TheDe_theThe_HTmlStr_The;
+        }
+
+        // Event trigger
+        THEU__TxtA_R_TheInput_TheData.addEventListener('input', P_Rthe_TheGeParseHT_MDataAanO_Weer);
+
+        // initial buildThe! 
+        P_Rthe_TheGeParseHT_MDataAanO_Weer();
+
+        function CCopyHtmDataThe_HCodeH() {
+            const THEOWeHtmlGeStringCopYTzThe__V = UIUI_PREVDTheDataMDeZ_T.innerHTML;
+
+            navigator.clipboard.writeText(THEOWeHtmlGeStringCopYTzThe__V).then(() => {
+                const TTKKnopHDeVarCopie = document.getElementById('BtnHTK_CopYHtml_O');
+                TTKKnopHDeVarCopie.innerText = "Gekopieerd!";
+                TTKKnopHDeVarCopie.style.background = "#10b981"; // green !
+
+                setTimeout(() => {
+                    TTKKnopHDeVarCopie.innerText = "Copy HTML";
+                    TTKKnopHDeVarCopie.style.background = "#3b82f6";
+                }, 2000);
+            });
+        }
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 4: Show/Hide Element - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #D4EDDA;
+            color: #155724;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 4: Show/Hide Element</h1>
+        <span class="level">Beginner</span>
+        <p class="description">Toon of verberg een element met een knop.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je hoe je elementen dynamisch kunt tonen en verbergen. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>De display CSS eigenschap gebruiken om zichtbaarheid te controleren</li>
+                <li>Boolean variabelen gebruiken om state bij te houden</li>
+                <li>Conditional logic (if/else) toepassen</li>
+                <li>Toggle functionaliteit implementeren</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>element.style.display</strong> - CSS eigenschap om element te tonen ('block') of verbergen ('none')</li>
+                <li><strong>Boolean variabelen</strong> - Variabelen die true of false zijn (waar of onwaar)</li>
+                <li><strong>if/else statements</strong> - Conditionele logica om verschillende acties uit te voeren</li>
+                <li><strong>Toggle pattern</strong> - Wisselen tussen twee states (zichtbaar/onzichtbaar)</li>
+                <li><strong>! operator</strong> - Logische NOT operator die true naar false maakt en vice versa</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: Elementen selecteren</h4>
+                <p>Selecteer het element dat je wilt tonen/verbergen en de knop:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> box = document.<span class="function">getElementById</span>(<span class="string">'toggle-box'</span>);
+<span class="keyword">const</span> knop = document.<span class="function">getElementById</span>(<span class="string">'toggle-btn'</span>);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We hebben beide elementen nodig: de box om te tonen/verbergen en de knop om de actie te triggeren.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: State variabele maken</h4>
+                <p>Maak een boolean variabele om bij te houden of het element zichtbaar is:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">let</span> isZichtbaar = <span class="keyword">true</span>; <span class="comment">// Begin zichtbaar</span></pre>
+                </div>
+                <p><strong>Uitleg:</strong> Deze variabele houdt bij of het element momenteel zichtbaar is. We beginnen met <code>true</code> omdat het element standaard zichtbaar is.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Event listener met conditional logic</h4>
+                <p>Voeg een event listener toe die controleert of het element zichtbaar is:</p>
+                <div class="code-example">
+                    <pre>knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (isZichtbaar) {
+        box.style.display = <span class="string">'none'</span>;
+        knop.textContent = <span class="string">'Toon'</span>;
+    } <span class="keyword">else</span> {
+        box.style.display = <span class="string">'block'</span>;
+        knop.textContent = <span class="string">'Verberg/Toon'</span>;
+    }
+    isZichtbaar = !isZichtbaar;
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Als <code>isZichtbaar</code> true is, verbergen we het element en updaten we de knop tekst. Anders tonen we het en updaten we de tekst. De <code>!</code> operator wisselt de waarde.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="comment">// Stap 1: Selecteer elementen</span>
+<span class="keyword">const</span> box = document.<span class="function">getElementById</span>(<span class="string">'toggle-box'</span>);
+<span class="keyword">const</span> knop = document.<span class="function">getElementById</span>(<span class="string">'toggle-btn'</span>);
+
+<span class="comment">// Stap 2: State variabele</span>
+<span class="keyword">let</span> isZichtbaar = <span class="keyword">true</span>;
+
+<span class="comment">// Stap 3: Event listener met toggle logica</span>
+knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (isZichtbaar) {
+        box.style.display = <span class="string">'none'</span>;
+        knop.textContent = <span class="string">'Toon'</span>;
+    } <span class="keyword">else</span> {
+        box.style.display = <span class="string">'block'</span>;
+        knop.textContent = <span class="string">'Verberg/Toon'</span>;
+    }
+    isZichtbaar = !isZichtbaar;
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Selecteer het element dat je wilt tonen/verbergen</li>
+                <li>Selecteer de toggle knop</li>
+                <li>Maak een boolean variabele om state bij te houden</li>
+                <li>Voeg event listener toe met if/else logica</li>
+                <li>Wijzig display eigenschap en update knop tekst</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Alternatief met classList:</strong> Je kunt ook CSS classes gebruiken: <code>box.classList.toggle('hidden')</code> met CSS <code>.hidden { display: none; }</code></li>
+                <li><strong>display vs visibility:</strong> <code>display: none</code> verwijdert het element volledig, <code>visibility: hidden</code> verbergt het maar behoudt ruimte</li>
+                <li><strong>Kortere toggle:</strong> Je kunt ook direct togglen: <code>box.style.display = box.style.display === 'none' ? 'block' : 'none'</code></li>
+                <li><strong>Opacity animatie:</strong> Gebruik <code>opacity</code> en <code>transition</code> voor smooth fade effecten</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten state bij te werken</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - State wordt niet geüpdatet, werkt maar één keer</span>
+<span class="keyword">if</span> (isZichtbaar) {
+    box.style.display = <span class="string">'none'</span>;
+} <span class="comment">// Vergeet isZichtbaar = !isZichtbaar</span>
+
+<span class="comment">// ✅ GOED - Update state na wijziging</span>
+<span class="keyword">if</span> (isZichtbaar) {
+    box.style.display = <span class="string">'none'</span>;
+}
+isZichtbaar = !isZichtbaar;</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Verkeerde display waarde</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - 'hidden' is geen geldige display waarde</span>
+box.style.display = <span class="string">'hidden'</span>; <span class="comment">// Werkt niet!</span>
+
+<span class="comment">// ✅ GOED - Gebruik 'none' om te verbergen</span>
+box.style.display = <span class="string">'none'</span>; <span class="comment">// Verbergt element</span>
+box.style.display = <span class="string">'block'</span>; <span class="comment">// Toont element</span></pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Vergeten display type te specificeren</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Element wordt niet getoond als het inline was</span>
+box.style.display = <span class="string">''</span>; <span class="comment">// Lege string werkt niet</span>
+
+<span class="comment">// ✅ GOED - Specificeer display type</span>
+box.style.display = <span class="string">'block'</span>; <span class="comment">// Of 'flex', 'inline-block', etc.</span></pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Fade animatie:</strong> Gebruik opacity en transition voor smooth fade in/out</li>
+                    <li><strong>Slide animatie:</strong> Animeer height of transform voor slide effect</li>
+                    <li><strong>Meerdere elementen:</strong> Toggle meerdere elementen tegelijk met één knop</li>
+                    <li><strong>Accordeon:</strong> Sluit andere elementen wanneer je een nieuwe opent</li>
+                    <li><strong>Keyboard shortcut:</strong> Voeg Escape toets toe om te verbergen</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: Fade Animatie</h4>
+                <div class="code-example">
+                    <pre><span class="comment">// CSS toevoegen:</span>
+<span class="comment">// .fade { transition: opacity 0.3s; }</span>
+<span class="comment">// .hidden { opacity: 0; pointer-events: none; }</span>
+
+box.classList.<span class="function">add</span>(<span class="string">'fade'</span>);
+knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    box.classList.<span class="function">toggle</span>(<span class="string">'hidden'</span>);
+});</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <!-- Demo Area -->
+        <div class="project-area">
+            <h3 style="margin-bottom: 1rem; color: #333;">🎮 Probeer het zelf:</h3>
+            <div id="toggle-box" style="width: 200px; height: 100px; background: #3498db; border-radius: 8px; margin: 1rem 0;">Ik ben zichtbaar!</div>
+            <button id="toggle-btn" class="demo-btn">Verberg/Toon</button>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const box = document.getElementById('toggle-box');
+        const knop = document.getElementById('toggle-btn');
+        let isZichtbaar = true;
+
+        knop.addEventListener('click', function() {
+            if (isZichtbaar) {
+                box.style.display = 'none';
+                knop.textContent = 'Toon';
+            } else {
+                box.style.display = 'block';
+                knop.textContent = 'Verberg/Toon';
+            }
+            isZichtbaar = !isZichtbaar;
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

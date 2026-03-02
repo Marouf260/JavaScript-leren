@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 43: Sorteer Visualizer - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Setup Area */
+        .project-area {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .btn-grp {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-ui {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            color: white;
+        }
+
+        .btn-generate {
+            background: #3b82f6;
+        }
+
+        .btn-generate:hover {
+            background: #2563eb;
+        }
+
+        .btn-sort {
+            background: #10b981;
+        }
+
+        .btn-sort:hover {
+            background: #059669;
+        }
+
+        .slider-grp {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        input[type="range"] {
+            accent-color: #3b82f6;
+        }
+
+        /* Histogram Bars Container */
+        .bars-container {
+            height: 300px;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 2px;
+        }
+
+        .bar {
+            background: #0ea5e9;
+            width: 20px;
+            border-top-left-radius: 2px;
+            border-top-right-radius: 2px;
+            transition: height 0.1s ease;
+        }
+
+        /* Color States for comparison! */
+        .bar.comparing {
+            background: #f59e0b !important;
+        }
+
+        /* Geel = we vergelijken nu */
+        .bar.swapping {
+            background: #ef4444 !important;
+        }
+
+        /* Rood = We swappen */
+        .bar.sorted {
+            background: #10b981 !important;
+        }
+
+        /* Groen = Hij staat op z'n plek */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 43: Sorteer Algoritme Visualizer</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">Data
+            Logic</span>
+        <p class="description">Genereer Array elementen, teken ze als staafdiagram, en zie live via JavaScript hoe het
+            Bubble Sort algoritme werkt!</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Balken (Bars) Genereren</h4>
+                <p>We maken een Array van willekeurige getallen en tekenen voor elk getal een HTML
+                    <code>&lt;div&gt;</code> element. De in-line CSS <code>height</code> geven we de waarde van het
+                    getal in een percentage, zodat grotere getallen langere balken worden.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Genereer random hoogte in procenten (5 tot 100)</span>
+<span class="keyword">const</span> waarde = Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * <span class="string">95</span>) + <span class="string">5</span>;
+array.<span class="function">push</span>(waarde);
+
+<span class="comment">// Maak de HTML div!</span>
+<span class="keyword">const</span> balk = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
+balk.classList.<span class="function">add</span>(<span class="string">'bar'</span>);
+
+<span class="comment">// CSS Styling direct updaten met Template Literals</span>
+balk.style.height = <span class="string">`\${waarde}%`</span>;
+container.<span class="function">appendChild</span>(balk);</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Het "Bubble Sort" Algoritme</h4>
+                <p>Bubble Sort is één van de makkelijkste manieren om the sorteren. Het Algoritme vergelijkt element 0
+                    altijd met element 1. Is 0 groter? Wissel (Swap) ze dan van plek! Ga daarna door naar element 1 en
+                    2. Het effect heet <em>Bubbeling</em>, omdat de grootste waarde telkens opschuift naar rechts (boven
+                    drijft).</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">if</span> (array[j] > array[j + <span class="string">1</span>]) {
+    <span class="comment">// Wissel de waarden in the Data Array</span>
+    <span class="keyword">let</span> tijdelijk = array[j];
+    array[j] = array[j + <span class="string">1</span>];
+    array[j + <span class="string">1</span>] = tijdelijk;
+
+    <span class="comment">// Wissel the Hoogtes ook VISUEEL aan The DOM in the UI!</span>
+    balken[j].style.height = <span class="string">`\${array[j]}%`</span>;
+    balken[j + <span class="string">1</span>].style.height = <span class="string">`\${array[j + 1]}%`</span>;
+}</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Asynchrone Pauzes (Promise Sleep)</h4>
+                <p>Een computerrekensnelheid is miljoenen the bewerkingen per seconde. Als we geen "pauze" inbouwen, is
+                    The Javascript binnen 1 milliseconde klaar met sorteren. Met <code>async/await</code> kunnen we het
+                    algoritme de illusie van animatie geven.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Zelfgebouwde "Sleep" functie in JavaScript met Promises</span>
+<span class="keyword">function</span> <span class="function">sleep</span>(ms) {
+    <span class="keyword">return new</span> <span class="function">Promise</span>(resolve => <span class="function">setTimeout</span>(resolve, ms));
+}
+
+<span class="comment">// Binnen the sorteer Loop... wacht voor 15 milliseconden!</span>
+<span class="keyword">await</span> <span class="function">sleep</span>(PAUSE_DURATION); </pre>
+                </div>
+                <p><strong>Uitleg:</strong> We veranderen tijdelijk de CSS klasse van the indexen die we "vergelijken"
+                    naar Geel. We wachten 15 ms, en als we écht the swappen, maken we ze Rood. En wachten nogmaals 15
+                    ms!</p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Gebruik de slider om the Array omvang in the stellen (kies voor ongeveer 20 balken voor beste
+                    zicht).</li>
+                <li>Druk na de wijziging op "Nieuwe Lijst".</li>
+                <li>Klik op <strong>Start Bubble Sort</strong> en let goed op de kleuren. Geel = Vergelijken (A met B),
+                    Rood = Swappen (Wisselen). Zodra een item op zijn definitieve "gesorteerde" eindplek is beland,
+                    wordt deze groen!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Flexbox Flex-End:</strong> Waarom staan de balken netjes naar the onderkant van het the
+                    scherm the 'groeien' in the grafiek? Door de <code>.bars-container</code> de css list properties
+                    <code>display: flex</code> en <code>align-items: flex-end</code> te geven! Daardoor duwt flexbox
+                    alle items naar beneden, en groeien the <code>height</code> percentages als het ware "omhoog".</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Spam-Click the Sorteer Knop</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - Omdat we "async/await" gebruiken in the Sorteer Loop, stopt the functie met draaien zolang de UI loopt. Echter The "Button" zit er nog gewoon. Als een gebruiker hier NOG EENS the klikt... start er nog een BubbleSort functie die door the Array loopt heen weven thegelijkertijd! Crashes gegarandeerd.</span>
+<span class="comment">// OPLOSSING: Deactiveer knoppen als je async processen draait!</span>
+<span class="keyword">async function</span> <span class="function">bubbleSort</span>() {
+    sortBtn.disabled = <span class="keyword">true</span>;
+    <span class="comment">// Jouw sorteer logica</span>
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Snelheid Slider:</strong> Voeg the zelfde manier van styling
+                        <code>&lt;input type="range"&gt;</code> the toe the de UI om de snelheid van the
+                        <code>PAUSE_DURATION</code> dynamisch te kunnen vergroten of verkleinen gedurende the sortering!
+                    </li>
+                    <li><strong>Insertion Sort:</strong> Google the logica achter <code>Insertion Sort</code> en
+                        vergelijk het resultaat in de GUI met een nieuwe knop op the the UI the.</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <div class="controls">
+                <div class="btn-grp">
+                    <button class="btn-ui btn-generate" onclick="generateArray()">Nieuwe Lijst</button>
+                    <button class="btn-ui btn-sort" onclick="bubbleSort()" id="btn-sort">Start Bubble Sort</button>
+                </div>
+
+                <div class="slider-grp">
+                    <label>Aantal Balken: <span id="num-bars">30</span></label>
+                    <input type="range" id="arr-sz" min="10" max="60" value="30">
+                </div>
+            </div>
+
+            <div class="bars-container" id="bars-container">
+                <!-- Dynamically filled with DIV bars -->
+            </div>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const container = document.getElementById('bars-container');
+        const slider = document.getElementById('arr-sz');
+        const labelSz = document.getElementById('num-bars');
+        const sortBtn = document.getElementById('btn-sort');
+
+        let array = [];
+        const PAUSE_DURATION = 15; // ms per frame
+
+        // 1. Array Genereatie en Element creatie (Hoogte in %)
+        function generateArray() {
+            sortBtn.disabled = false;
+            sortBtn.style.opacity = '1';
+
+            container.innerHTML = '';
+            array = [];
+            const size = slider.value;
+
+            for (let i = 0; i < size; i++) {
+                // Return height from 5 to 100
+                const value = Math.floor(Math.random() * 95) + 5;
+                array.push(value);
+
+                const bar = document.createElement('div');
+                bar.classList.add('bar');
+                // Hoogte direct aan style koppelen obv value procent:
+                bar.style.height = `${value}%`;
+                container.appendChild(bar);
+            }
+        }
+
+        // Custom promise resolving Timeout to halt operations inside loops for Visuality
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function bubbleSort() {
+            sortBtn.disabled = true;
+            sortBtn.style.opacity = '0.5';
+            const bars = document.querySelectorAll('.bar');
+
+            for (let i = 0; i < array.length - 1; i++) {
+                for (let j = 0; j < array.length - i - 1; j++) {
+
+                    // Verf the Twee blokken "comparing"
+                    bars[j].classList.add('comparing');
+                    bars[j + 1].classList.add('comparing');
+
+                    await sleep(PAUSE_DURATION); // Wacht
+
+                    // The Logic! 
+                    if (array[j] > array[j + 1]) {
+                        // Verf Rood
+                        bars[j].classList.add('swapping');
+                        bars[j + 1].classList.add('swapping');
+
+                        // Wissel de Values inter-array
+                        let temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+
+                        // Wissel VISUEEL de hoogtes! Dit wekt the illusie van DOM verschuiving.
+                        bars[j].style.height = `${array[j]}%`;
+                        bars[j + 1].style.height = `${array[j + 1]}%`;
+
+                        await sleep(PAUSE_DURATION); // Wacht nog the zien
+                    }
+
+                    // Reset Kleuren
+                    bars[j].classList.remove('comparing', 'swapping');
+                    bars[j + 1].classList.remove('comparing', 'swapping');
+                }
+
+                // Elke loop bubbelt de allergrootste naar t einde. Kleur the einde "Done".
+                bars[array.length - 1 - i].classList.add('sorted');
+            }
+            // De eerste (index 0) is dan the only 1 left, kleurt hem mee
+            bars[0].classList.add('sorted');
+        }
+
+        // Event listener op slider
+        slider.addEventListener('input', () => {
+            labelSz.innerText = slider.value;
+            generateArray();
+        });
+
+        // Run On load
+        generateArray();
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

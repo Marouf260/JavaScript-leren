@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 64: Weer App (Fetch Sim) - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            transition: background 0.5s;
+        }
+
+        /* The The Dynamic Backgrounds !  */
+        body.weer-zonnig {
+            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+        }
+
+        body.weer-regen {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+        }
+
+        body.weer-bewolkt {
+            background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);
+        }
+
+        body.weer-sneeuw {
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .level {
+            display: block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* App Style WEER _ THE */
+        .project-area {
+            background: rgba(255, 255, 255, 0.5);
+            /* Glass_The  */
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .TheZoekTheVorm_D_DeZkr {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .TheZoekTheVorm_D_DeZkr input {
+            flex: 1;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 30px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .TheZoekTheVorm_D_DeZkr input:focus {
+            border-color: #3b82f6;
+        }
+
+        .TheZoekTheVorm_D_DeZkr button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .TheZoekTheVorm_D_DeZkr button:hover {
+            background: #2563eb;
+        }
+
+        .weer-TheKaart_TheOData_Z {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            display: none;
+            /* starts hidden Z ! */
+            animation: fadeInZ 0.5s ease;
+            width: 100%;
+        }
+
+        @keyframes fadeInZ {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .S_DDeStadNamHTitH {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 5px;
+            text-transform: capitalize;
+        }
+
+        .DdataDDeTmpH_VHTekstZ {
+            font-size: 5rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin: 10px 0;
+            line-height: 1;
+        }
+
+        .D_HetWeerIcoonEmojiHT {
+            font-size: 6rem;
+            line-height: 1;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .Z_DeStatusT_xtDes_CHZ {
+            font-size: 1.2rem;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .DetailsZWeerDataR_The {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .DEtailPTheItemO {
+            text-align: center;
+            color: #334155;
+        }
+
+        .DEtailPTheItemO span {
+            display: block;
+            font-size: 0.8rem;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .DEtailPTheItemO div {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .error-HmsgTheZ {
+            color: #ef4444;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+            background: #fee2e2;
+            padding: 10px;
+            border-radius: 6px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .loadingHTheTheDSpinZ {
+            display: none;
+            margin: 20px 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 64: Weer App (Fetch API Simulatie)</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;">Utility
+            Apps</span>
+
+        <p class="description" style="margin-bottom: 10px; text-align: center;">Zoek O the _The naar een the _stad en
+            The the krijg LIVE (The Gesimuleerde) weers_informatie data T_!.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De (Gesimuleerde) Fetch API</h4>
+                <div
+                    style="background: #e0f2fe; padding: 15px; border-radius: 6px; border-left: 4px solid #0ea5e9; font-size: 0.9rem; color: #0369a1; margin-bottom: 15px;">
+                    <strong>LET OP:</strong> the The Omdat V_ een echte weer V_API _the vaak keys The en The tokens The
+                    the the the the the_ The _vereist, the \_The <strong>Simuleren O</strong>_ Thewe hier_the _een_
+                    REST_the_ the <code>fetch()</code> API! the_ the the _callT _met <code>setTimeout</code> The en the
+                    The _The the_ een _Z Promise H ! The (Dit the __werkt the precies The HetZelfde als een Echte The
+                    Server The Database_ ! )
+                </div>
+                <p>We maken een the the <code>Promise</code>. Dit the Thethe is_ een the the belofte dat the je in de
+                    toekomst the eet Data_ of_ Error! The_ the terug krijgt. </p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Async en Await ! </h4>
+                <p>Een the_ submit _ event_ kan *Async* the_ the gemaakt_ the worden_. Je the z_TheZegt
+                    <code>await fetchSomething()</code> the The. The de code _pauzeert_ op de! the _regel_ Thethe TOT
+                    The er_ responseThe__is! the </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// MAIN Async the _The handler Z </span>
+VZ_DeTheVoHrmZoekO.addEventListener(<span class="string">'submit'</span>, <span class="keyword">async</span> (e_) => {
+    e_.<span class="function">preventDefault</span>();
+    
+    <span class="keyword">try</span> {
+        <span class="comment">// WACHT_ OP_ DE DATA_ (The _await)! The The </span>
+        <span class="keyword">const</span> THE_WeerO_ZDataGThisHDeData_S = <span class="keyword">await</span> <span class="function">TheG_esimuleerdeAFetchPZ_I_D</span>(deGet_TypTe_DTheTexZO__tTheDataZThe);
+
+        <span class="comment">// DATA_The_ IS_ BINNEN!! _  (Update THE UI !)</span>
+        KAartH_WeerODataVTheHTML.style.display = <span class="string">"flex"</span>;
+        
+    } <span class="keyword">catch</span> (err) {
+        ERRUIMess_VDeHT.style.display = <span class="string">"block"</span>; <span class="comment">// vANG ERROR !</span>
+    }
+});</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Zoek O the _The naar een the _stad (Bv. the `amsterdamThe` the_ of the `tokio` O! )en The the krijg
+                    LIVE (The Gesimuleerde) weers_informatie data T_!.</li>
+                <li>the Bekijk hoe_ The _het _The de _Laden ! _ spinner_ UI Eerst! in_ Beeld is ! </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>try / catch _the the:</strong> the The In The de HTML the zie the the je_ de `catch`. Bij
+                    Asynchrone the the logica _KUNNEN dingen the Fout ! the the _gaan. `Try/Catch` is the THE _ the the_
+                    standaard_ Manier THE THE _The. the </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten <code>await</code>_ the The the In The V The the the ! Te zetten ! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je de_ the the the  `await` the_ _laat the the ! Dan the kThe kThe The the `const TheWeer` = &lt;Promise (pending..)&gt; The the En niet THE het Object data_ met de graden_ !  </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Kijk_ ALTIJD! the Of de  Functie een PROMise_The The is ! !! The The The ! The_ </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Echte the API! !! The The The The! </strong> the the thethe the THE the Bouw The het !
+                        the The de The API the_ the the The code_ the_ _OM_ the Naar de Echte_ The OpenWeather API The !
+                        VZ_ TheZ_ the _ !! OpeN! The _ . _The !. THE </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <form class="TheZoekTheVorm_D_DeZkr" id="ZZoekVormWeerDeApp_H">
+                <input type="text" id="ZZDeInvoerSThTa_d_The" placeholder="Bv. Amsterdam, Parijs, Tokio..." required
+                    autocomplete="off">
+                <button type="submit">Zoek Weer</button>
+            </form>
+
+            <div class="error-HmsgTheZ" id="UErr_MessaGeTheZ">Stad niet gevonden! Probeer een andere.</div>
+            <div class="loadingHTheTheDSpinZ" id="DeLLoadingSpinn_the_TheH">📡 Verbinden met Weer-Satelliet... </div>
+
+            <div class="weer-TheKaart_TheOData_Z" id="HDE_ReSultaatKaartOTheZDataWeer">
+                <div class="S_DDeStadNamHTitH" id="SStad_Textnaam_TheHData">Amsterdam</div>
+                <div class="D_HetWeerIcoonEmojiHT" id="HHetUIEmojiTDeIcoonTV">⛅</div>
+                <div class="DdataDDeTmpH_VHTekstZ" id="THetTempTekstVFieldHThe_V"><span style="font-size:4rem;"></span>
+                </div> <!-- Z JS Vult the the The innerThe txt The -->
+                <div class="Z_DeStatusT_xtDes_CHZ" id="TThEStatusTextDescVThe">Licht Bewolkt</div>
+
+                <div class="DetailsZWeerDataR_The">
+                    <div class="DEtailPTheItemO">
+                        <span>Luchtvochtigheid</span>
+                        <div id="uLuchtvochtheVNumDeH_">__%</div>
+                    </div>
+                    <div class="DEtailPTheItemO">
+                        <span>Wind</span>
+                        <div id="uWindDDataSZTheNumH_">__ km/u</div>
+                    </div>
+                    <div class="DEtailPTheItemO">
+                        <span>Min/Max</span>
+                        <div id="uThe_MinMaxDeTmpTTheDNumH_">__° / __°</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const VZ_DeTheVoHrmZoekO = document.getElementById('ZZoekVormWeerDeApp_H');
+        const TIInpu_tGStadTVeldH = document.getElementById('ZZDeInvoerSThTa_d_The');
+
+        const ERRUIMess_VDeHT = document.getElementById('UErr_MessaGeTheZ');
+        const LLTheLoaderUI__SpH = document.getElementById('DeLLoadingSpinn_the_TheH');
+        const KAartH_WeerODataVTheHTML = document.getElementById('HDE_ReSultaatKaartOTheZDataWeer');
+
+        // The The UI the NodeThe Refs _Z
+        const nNStaZdaHTextDO_MT = document.getElementById('SStad_Textnaam_TheHData');
+        const nETheEmojiWeerOTheDO_MT = document.getElementById('HHetUIEmojiTDeIcoonTV');
+        const TheTemptDeTextHTMLVFieldDe_the = document.getElementById('THetTempTekstVFieldHThe_V');
+        const DDeStatus_VThe_HTmslGTheTextDO_M = document.getElementById('TThEStatusTextDescVThe');
+
+        const LVocDDataH_HText = document.getElementById('uLuchtvochtheVNumDeH_');
+        const WZ_WiDntDeHDataOText = document.getElementById('uWindDDataSZTheNumH_');
+        const MMaMinMZzGTheTexVText = document.getElementById('uThe_MinMaxDeTmpTTheDNumH_');
+
+        // Gesimuleerde API Database_ (Mocked Backend Data)! !  Z_ 
+        // Normaal the HThe roep _the THE_The je _hiervoor https://api.openweathermap.org aan the_The 
+        const DDDAatabaseSDeSTheMock_A_Pi_ZDB = {
+            'amsterdam': { temp: 14, status: 'Bewolkt', icon: '⛅', bgCode: 'weer-bewolkt', lucht: 76, wind: 18, min: 10, max: 15 },
+            'parijs': { temp: 22, status: 'Zonnig', icon: '☀️', bgCode: 'weer-zonnig', lucht: 45, wind: 10, min: 18, max: 24 },
+            'tokio': { temp: 28, status: 'Regen', icon: '🌧️', bgCode: 'weer-regen', lucht: 85, wind: 25, min: 24, max: 30 },
+            'oslo': { temp: -2, status: 'Sneeuw', icon: '❄️', bgCode: 'weer-sneeuw', lucht: 60, wind: 5, min: -8, max: 0 },
+            'new york': { temp: 18, status: 'Licht Bewolkt', icon: '🌤️', bgCode: 'weer-zonnig', lucht: 55, wind: 12, min: 15, max: 20 },
+            'Londen': { temp: 12, status: 'Regen', icon: '🌧️', bgCode: 'weer-regen', lucht: 80, wind: 22, min: 8, max: 13 }
+        };
+
+        // De Fake Fetch ! Async Promise The 
+        function TheG_esimuleerdeAFetchPZ_I_D(deK_StadThe_ZO) {
+            return new Promise((The_H_Resolve, TTheH_Z_R_Reject) => {
+                // Fake netwerk delay! _ The 
+                setTimeout(() => {
+                    const deSZTheK_GezochteZTheStadNTextStringO = deK_StadThe_ZO.toLowerCase();
+                    const theWeerTObjDataTheVanDTheDB_V = DDDAatabaseSDeSTheMock_A_Pi_ZDB[deSZTheK_GezochteZTheStadNTextStringO];
+
+                    if (theWeerTObjDataTheVanDTheDB_V) {
+                        The_H_Resolve(theWeerTObjDataTheVanDTheDB_V);
+                    } else {
+                        // Generate Fake O Data the voor the de ! "the Rest _" _ ! ! 
+                        const vRndRTheTempHTempThe = Math.floor(Math.random() * 35) - 5; // -5 to 30 C! 
+                        const iO_sOTheRegenZV = Math.random() > 0.6;
+
+                        The_H_Resolve({
+                            temp: vRndRTheTempHTempThe,
+                            status: iO_sOTheRegenZV ? 'Regen' : (vRndRTheTempHTempThe > 20 ? 'Zonnig' : 'Bewolkt'),
+                            icon: iO_sOTheRegenZV ? '🌧️' : (vRndRTheTempHTempThe > 20 ? '☀️' : '⛅'),
+                            bgCode: iO_sOTheRegenZV ? 'weer-regen' : (vRndRTheTempHTempThe > 20 ? 'weer-zonnig' : 'weer-bewolkt'),
+                            lucht: Math.floor(Math.random() * 50) + 40,
+                            wind: Math.floor(Math.random() * 30),
+                            min: vRndRTheTempHTempThe - 5,
+                            max: vRndRTheTempHTempThe + 5
+                        });
+                    }
+                }, 1200); // 1.2 sec laden H The 
+            });
+        }
+
+
+        // MAIN Async the _The handler Z 
+        VZ_DeTheVoHrmZoekO.addEventListener('submit', async (e_) => {
+            e_.preventDefault();
+            const deGet_TypTe_DTheTexZO__tTheDataZThe = TIInpu_tGStadTVeldH.value.trim();
+            if (!deGet_TypTe_DTheTexZO__tTheDataZThe) return;
+
+            // UI The_  Load The 
+            ERRUIMess_VDeHT.style.display = "none";
+            KAartH_WeerODataVTheHTML.style.display = "none";
+            LLTheLoaderUI__SpH.style.display = "block"; // Z Tonen V 
+
+            try {
+                // WACHT_ OP_ DE DATA_ (The _await)! The The 
+                const THE_WeerO_ZDataGThisHDeData_S = await TheG_esimuleerdeAFetchPZ_I_D(deGet_TypTe_DTheTexZO__tTheDataZThe);
+
+                // DATA_The_ IS_ BINNEN!! _ 
+                LLTheLoaderUI__SpH.style.display = "none"; // Hide Load !
+
+                // VUl de! Html in The H _The! _! 
+                nNStaZdaHTextDO_MT.innerText = deGet_TypTe_DTheTexZO__tTheDataZThe;
+                nETheEmojiWeerOTheDO_MT.innerText = THE_WeerO_ZDataGThisHDeData_S.icon;
+                TheTemptDeTextHTMLVFieldDe_the.innerHTML = `${THE_WeerO_ZDataGThisHDeData_S.temp}<span style="font-size:3rem; position:relative; top:-20px;">°C</span>`;
+                DDeStatus_VThe_HTmslGTheTextDO_M.innerText = THE_WeerO_ZDataGThisHDeData_S.status;
+
+                LVocDDataH_HText.innerText = THE_WeerO_ZDataGThisHDeData_S.lucht + '%';
+                WZ_WiDntDeHDataOText.innerText = THE_WeerO_ZDataGThisHDeData_S.wind + ' km/u';
+                MMaMinMZzGTheTexVText.innerText = `${THE_WeerO_ZDataGThisHDeData_S.min}° / ${THE_WeerO_ZDataGThisHDeData_S.max}°`;
+
+                // Update Background The ! Z DataThe !
+                document.body.className = THE_WeerO_ZDataGThisHDeData_S.bgCode;
+
+                // BOEM SHOW !The! The 
+                KAartH_WeerODataVTheHTML.style.display = "flex";
+
+            } catch (err) {
+                LLTheLoaderUI__SpH.style.display = "none";
+                ERRUIMess_VDeHT.style.display = "block";
+                console.error(err);
+            }
+        });
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

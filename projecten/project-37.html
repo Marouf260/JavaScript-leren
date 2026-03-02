@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 37: Kanban Board - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Kanban Area */
+        .project-area {
+            background: #f4f5f7;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            min-height: 400px;
+        }
+
+        .kanban-column {
+            background: #ebecf0;
+            border-radius: 8px;
+            width: 250px;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .column-header {
+            font-weight: bold;
+            color: #172b4d;
+            margin-bottom: 15px;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .task-count {
+            background: #dfe1e6;
+            color: #42526e;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .task-list {
+            flex: 1;
+            min-height: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Drag UI styling */
+        .task-list.drag-over {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 6px;
+        }
+
+        .task-card {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            cursor: grab;
+            font-size: 0.9rem;
+            color: #172b4d;
+        }
+
+        .task-card:active {
+            cursor: grabbing;
+            opacity: 0.8;
+            transform: scale(0.98);
+        }
+
+        .task-card.dragging {
+            opacity: 0.5;
+        }
+
+        .add-task-btn {
+            background: none;
+            border: none;
+            color: #5e6c84;
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .add-task-btn:hover {
+            background: rgba(9, 30, 66, 0.08);
+            color: #172b4d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 37: Kanban Board (Trello-stijl)</h1>
+        <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
+        <p class="description">Bouw een agile taakbeheer bord met pure HTML5 Drag & Drop API's.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De HTML5 Drag & Drop API</h4>
+                <p>Om een kaartje sleepbaar te maken, hoef je in HTML alleen maar <code>draggable="true"</code> toe te
+                    voegen aan het element. Vervolgens luisteren we in Javascript naar het moment dat de muis het
+                    element oppakt.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>card.addEventListener(<span class="string">'dragstart'</span>, (event) => {
+    <span class="comment">// 1. Geef het gesleepte element een doorzichtige CSS class</span>
+    card.classList.<span class="function">add</span>(<span class="string">'dragging'</span>);
+    
+    <span class="comment">// 2. SLA HET ID OP in het "dataTransfer" geheugen van de browser!</span>
+    event.dataTransfer.<span class="function">setData</span>(<span class="string">'text/plain'</span>, card.id);
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Het event <code>dragstart</code> triggert de seconde dat je klikt en
+                    beweegt. We moeten in dat event direct in de "DataTransfer" kluis van den browser opslaan *welk*
+                    specifieke kaartje (ID) verplaatst wordt!</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: De Kolom (Dropzone) Voorbereiden</h4>
+                <p>De kolommen ("Te Doen", "Bezig") accepteren normaal gesproken geen dragged elementen. We moeten de
+                    browser expliciet vertellen dat er wél dropped mag worden d.m.v <code>dragover</code>.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>kolom.addEventListener(<span class="string">'dragover'</span>, (event) => {
+    <span class="comment">// ❌ CRUCIAAL: Voorkom het standaardgedrag van de browser (wat droppen verbiedt)</span>
+    event.<span class="function">preventDefault</span>();
+    
+    <span class="comment">// Visuele feedback dat het hier past</span>
+    kolom.classList.<span class="function">add</span>(<span class="string">'drag-over'</span>);
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Zonder de magische <code>e.preventDefault()</code> in de
+                    <code>dragover</code> listener, zal de browser niet toelaten dat je hier iets laat vallen.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Het Taakje Laten Vallen (Drop)</h4>
+                <p>Het moment dat je muisklikt loslaat, triggert het <code>drop</code> event op de kolom. Hier gaan we
+                    het ID uitlezen uit de kluis en het element appenden.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>kolom.addEventListener(<span class="string">'drop'</span>, (event) => {
+    event.<span class="function">preventDefault</span>();
+    
+    <span class="comment">// 1. Lees het ID uit de dataTransfer kluis</span>
+    <span class="keyword">const</span> gesleeptId = event.dataTransfer.<span class="function">getData</span>(<span class="string">'text/plain'</span>);
+    
+    <span class="comment">// 2. Zoek het originele HTML element op </span>
+    <span class="keyword">const</span> kaartje = document.<span class="function">getElementById</span>(gesleeptId);
+    
+    <span class="comment">// 3. Plaats het in de nieuwe kolom!</span>
+    kolom.<span class="function">appendChild</span>(kaartje);
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Javascript <code>appendChild()</code> is zo slim dat het niet een kopie
+                    maakt, maar het element verplaatst. Het verwijdert de taak direct uit de oude kolom.</p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (SetTimeout hack in Dragstart)</h3>
+            <pre>card.addEventListener(<span class="string">'dragstart'</span>, () => {
+    <span class="comment">// Zonder deze setTimeout verdwijnt niet ALLEEN de kaart op de oude plek, maar OOK het drag-icoontje onder je muis! </span>
+    <span class="function">setTimeout</span>(() => card.style.display = <span class="string">'none'</span>, <span class="string">0</span>);
+});</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Pak een bestaande taak op met je muis (houd muisknop ingedrukt).</li>
+                <li>Sleep de taak naar een andere kolom en laat los.</li>
+                <li>Klik op "+ Voeg taak toe" om een nieuwe taak toe te voegen.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Visuele Feedback:</strong> Het is belangrijk dat de gebruiker visuele feedback krijgt dat
+                    hij iets oppakt. Daarom maken we in de CSS de class <code>dragging</code> iets doorzichtig. Zo weet
+                    de gebruiker dat het element is opgepakt!</li>
+                <li><strong>Vergeet dragleave niet:</strong> Zorg dat je ook een <code>dragleave</code> event toevoegt
+                    om de <code>drag-over</code> class te verwijderen als de gebruiker met de muis de kolom verlaat
+                    zonder te droppen.</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: De "Ik kan niet droppen!" frustratie</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - Als je de `e.preventDefault()` vergeet op het `dragover` event, zal je NOOIT kunnen droppen, ongeacht hoe goed je Javascript verder in elkaar zit. Dit is de meest gemaakte fout!</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Voeg LocalStorage toe:</strong> Houd de huidige status van de kolommen bij in
+                        <code>localStorage</code>, zodat als je de pagina herlaadt, je de taakjes nog netjes opgeslagen
+                        hebt als een echte applicatie!</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="kanban-column">
+                <div class="column-header">
+                    <span>Te Doen</span>
+                </div>
+                <div class="task-list" id="todo">
+                    <div class="task-card" draggable="true" id="t1">Leer CSS Grid</div>
+                    <div class="task-card" draggable="true" id="t2">Maak portfolio site</div>
+                </div>
+                <button class="add-task-btn" onclick="addNewTask('todo')">+ Voeg taak toe</button>
+            </div>
+
+            <div class="kanban-column">
+                <div class="column-header">
+                    <span>Bezig</span>
+                </div>
+                <div class="task-list" id="doing">
+                    <div class="task-card" draggable="true" id="t3">JavaScript Projecten bouwen</div>
+                </div>
+                <button class="add-task-btn" onclick="addNewTask('doing')">+ Voeg taak toe</button>
+            </div>
+
+            <div class="kanban-column">
+                <div class="column-header">
+                    <span>Klaar</span>
+                </div>
+                <div class="task-list" id="done">
+                    <div class="task-card" draggable="true" id="t4">Basis HTML geleerd</div>
+                </div>
+                <button class="add-task-btn" onclick="addNewTask('done')">+ Voeg taak toe</button>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const taskLists = document.querySelectorAll('.task-list');
+        let cardIdCounter = 5; // Starting from 5 since we already have t1-t4
+
+        // Setup existing cards
+        document.querySelectorAll('.task-card').forEach(setupCard);
+
+        function setupCard(card) {
+            card.addEventListener('dragstart', (e) => {
+                card.classList.add('dragging');
+                // Store the ID of the dragged element
+                e.dataTransfer.setData('text/plain', card.id);
+                // Opaque effect
+                setTimeout(() => card.style.display = 'none', 0);
+            });
+
+            card.addEventListener('dragend', () => {
+                card.classList.remove('dragging');
+                card.style.display = 'block';
+            });
+        }
+
+        taskLists.forEach(list => {
+            // Needed to allow dropping
+            list.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                list.classList.add('drag-over');
+            });
+
+            list.addEventListener('dragleave', () => {
+                list.classList.remove('drag-over');
+            });
+
+            list.addEventListener('drop', (e) => {
+                e.preventDefault();
+                list.classList.remove('drag-over');
+
+                // Get the dragged element ID
+                const draggedId = e.dataTransfer.getData('text/plain');
+                const draggedElement = document.getElementById(draggedId);
+
+                // Append it!
+                if (draggedElement) list.appendChild(draggedElement);
+            });
+        });
+
+        function addNewTask(columnId) {
+            const taskText = prompt("Wat is de nieuwe taak?");
+            if (!taskText) return;
+
+            const newCard = document.createElement('div');
+            newCard.classList.add('task-card');
+            newCard.draggable = true;
+            newCard.id = `t${cardIdCounter++}`;
+            newCard.innerText = taskText;
+
+            setupCard(newCard);
+
+            document.getElementById(columnId).appendChild(newCard);
+        }
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

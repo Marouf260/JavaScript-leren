@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 92: Memory Game - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #f8fafc;
+        }
+
+        .container {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            border: 2px solid #334155;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            color: #38bdf8;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .level {
+            display: block;
+            padding: 0.4rem 1.2rem;
+            background: rgba(56, 189, 248, 0.2);
+            color: #7dd3fc;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* THE_ APP CSS Z _V ! */
+        .SSTatsSTThehBDarH {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0f172a;
+            padding: 15px 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #334155;
+        }
+
+        .ITtemMSttatThe_H {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ITtemMSttatThe_H span {
+            font-size: 1rem;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .ITtemMSttatThe_H div {
+            font-size: 1.8rem;
+            color: #f1f5f9;
+            font-weight: 900;
+            font-family: monospace;
+        }
+
+        /* DE GAME GRID THE V!!! */
+        .GgGAmDeGrid_BOx_Z___Th_e {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            perspective: 1000px;
+            margin-bottom: 30px;
+        }
+
+        /* Responsive voor The ! the mobiel Z: 4x4 -> grid The the _ met kleine the the H cards Z ! */
+        @media (max-width: 500px) {
+            .GgGAmDeGrid_BOx_Z___Th_e {
+                gap: 8px;
+            }
+        }
+
+        .KKkKaATheRrtMHeMmoRyO {
+            background-color: transparent;
+            width: 100%;
+            aspect-ratio: 1/1;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .KkaT_arTIHnNeAr__hV {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Bouncy FLIP! H */
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+        }
+
+        /* 3D THE THE_!The ! FLIP LOGIC THE!_ */
+        /* De Kaart ! ! _ 1.isTheGeflipHTThe V The  wordt _ The de in The_ _ de HTML_ the door _ The Js_ _ H _ Toegegevoegd Z_*/
+        .KKkKaATheRrtMHeMmoRyO.isTheGeflipHTThe .KkaT_arTIHnNeAr__hV {
+            transform: rotateY(180deg);
+        }
+
+        .FfromTheTKaHTThDaartt_,
+        .BbacTheKTHKa_arrTtH_DTttTv_ {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        /* Achterkant van DE De _ the card_ the!  H(wat je _ als _ The   eerst_ the  T Z!- The _the_The V_ ! ziet Z )!_ The! */
+        .FfromTheTKaHTThDaartt_ {
+            background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%);
+            color: rgba(255, 255, 255, 0.2);
+            border: 2px solid #6366f1;
+        }
+
+        .FfromTheTKaHTThDaartt_::after {
+            content: '?';
+        }
+
+        /* Fallback The ! */
+
+        /* De the Voorkant! THE (Met het The THE the _ Emoji ! Icoon!) ! Z */
+        .BbacTheKTHKa_arrTtH_DTttTv_ {
+            background: #fff;
+            color: #0f172a;
+            transform: rotateY(180deg);
+            border: 4px solid #38bdf8;
+        }
+
+        /* KAART MATCHED the _the_! (groene glow!)!_ _! The V The */
+        .KKkKaATheRrtMHeMmoRyO.isMaAtTheTcHchHD_vT .BbacTheKTHKa_arrTtH_DTttTv_ {
+            border-color: #22c55e;
+            background: #f0fdf4;
+            animation: pPppUlseMGReTeN 1s infinite alternate;
+            pointer-events: none;
+            /* cnat  be _ THE clicked_ The Z_ anymore !*/
+        }
+
+        @keyframes pPppUlseMGReTeN {
+            from {
+                box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+            }
+
+            to {
+                box-shadow: 0 0 20px rgba(34, 197, 94, 0.8);
+            }
+        }
+
+
+        .bBNReHTheStart_GGaTMe_VThO {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .bBNReHTheStart_GGaTMe_VThO:hover {
+            background: #0ea5e9;
+            transform: translateY(-3px);
+        }
+
+        .bBNReHTheStart_GGaTMe_VThO:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+    <!-- FONT O !! Z ! -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1><i class="fas fa-brain"></i> Emoji Memory</h1>
+        <span class="level">Grandmaster Project</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: CSS 3D Kaart Flip</h4>
+                <p>De vloeiende kaartomkeer werkt puur via CSS! We gebruiken <code>transform-style: preserve-3d</code>
+                    en <code>rotateY(180deg)</code>. JavaScript voegt alleen de class toe.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">/* CSS */</span>
+.kaart-inner { transform-style: preserve-3d; transition: 0.6s; }
+.kaart.geflippt .kaart-inner { transform: rotateY(180deg); }
+.voorkant { backface-visibility: hidden; transform: rotateY(180deg); }
+.achterkant { backface-visibility: hidden; }</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Match Logica</h4>
+                <p>We slaan de eerste kaart op als referentie. Bij de 2e klik vergelijken we de <code>data-emoji</code>
+                    attributen. Een match = groene glow + <code>pointer-events: none</code>. Geen match = na 1 seconde
+                    terugdraaien.</p>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik op een kaart om hem om te draaien!</li>
+                <li>Vind alle 8 matching emoji-paren!</li>
+                <li>Probeer het te doen met zo min mogelijk missers!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong><code>dataset</code>:</strong> Via <code>element.dataset.emoji</code> lees je het
+                    <code>data-emoji="..."</code> HTML-attribuut uit. Dit is de standaard manier om data bij
+                    DOM-elementen op te slaan!</li>
+                <li><strong>Block Guard:</strong> De <code>isBlokkeerd</code> variabele voorkomt dat je een 3e kaart
+                    kunt klikken terwijl de animatie nog loopt!</li>
+            </ul>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Timer:</strong> Voeg een stopwatch toe! Sla de beste tijd op in localStorage als
+                        Highscore!</li>
+                    <li><strong>Meer Emojis:</strong> Maak een 6x6 grid met meer kaarten voor een grotere uitdaging!
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- App Area -->
+        <div class="project-area">
+
+            <div class="SSTatsSTThehBDarH">
+                <div class="ITtemMSttatThe_H">
+                    <span>Missers:</span>
+                    <div id="uUiZFFoOUtTTHn__AannZ">0</div>
+                </div>
+                <div class="ITtemMSttatThe_H">
+                    <span>Matches:</span>
+                    <div id="UuuUIMmAThtChthesDa_tThe" style="color: #22c55e;">0/8</div>
+                </div>
+            </div>
+
+            <!-- DOM THE THE H GRID Z ! -->
+            <!-- We will append the the 16_ the cards THE the _ H _ here_!_O  via JS !!-->
+            <div class="GgGAmDeGrid_BOx_Z___Th_e" id="DDDomGGi_H_RDDBoxTTheV">
+
+            </div>
+
+            <button class="bBNReHTheStart_GGaTMe_VThO" id="BBTHtNTThehe_RSttaTH_aRrtH">
+                <i class="fas fa-redo"></i> Speel Opnieuw
+            </button>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <!-- AUDIO EFFECTS H The!_ (optioneel H Voor the game feel!) ! -->
+    <audio id="aAuDdiooTFlHi_HThep_DO" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+    <!-- card the_ flip ! _-->
+    <audio id="AAudd_DTMmaDathHT_ChtO__O"
+        src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"></audio> <!-- success V! The _ -->
+
+    <script>
+        const uIDOOOoOGGGrRiiddT = document.getElementById('DDDomGGi_H_RDDBoxTTheV');
+        const UTheIDD_mMiTHisSERrZTeH_xtV = document.getElementById('uUiZFFoOUtTTHn__AannZ');
+        const UUuiMaHTTcHheSTTxDt_HThe_V = document.getElementById('UuuUIMmAThtChthesDa_tThe');
+        const bBTnHKNo_OpReseetttH_DeV_The = document.getElementById('BBTHtNTThehe_RSttaTH_aRrtH');
+
+        const AuuiiDfiFLILippThD = document.getElementById('aAuDdiooTFlHi_HThep_DO');
+        const aaUdio_D_SSSuccTHHTceshMthTTvThe_ = document.getElementById('AAudd_DTMmaDathHT_ChtO__O');
+
+        // De The! EMOJIS! H _ 8 the uniuque! Zthe _ ! 
+        const BbaAZIsisZ_EeMoJis___ARRRAYYd = ['🚀', '👽', '💀', '👻', '💩', '🍔', '🍕', '🎮'];
+        let CCaArRrThDSHArarayOObjj = []; // full arraray the 16_! with DOM_ 
+
+        // STATE_ V THE THE_ !
+        let EEeeNTheKKaartjGefliipThe_DOM_Reff = null; // Unhold_1 card THE !!
+        let iIiSsBLloOOCKktDDTedH_oOBoLo = false; // "Wait The" _ O_ staat THE Z The (VoOr O_ animatie the ! Z the The) 
+
+        let aA__AaNNttaLTFfFFuOuUTenZThe = 0;
+        let AaAnNtTaALLvMaThe_t_chtessHThe = 0;
+
+        // INIT GAME _ V _H ! 
+        function SSttartTHHG_aAmmeDMeOMMoryZThe() {
+            // THE RESET_ THE _STATE THE!!_H V! O!_
+            uIDOOOoOGGGrRiiddT.innerHTML = "";
+            EEeeNTheKKaartjGefliipThe_DOM_Reff = null;
+            iIiSsBLloOOCKktDDTedH_oOBoLo = false;
+            aA__AaNNttaLTFfFFuOuUTenZThe = 0;
+            AaAnNtTaALLvMaThe_t_chtessHThe = 0;
+            UTheIDD_mMiTHisSERrZTeH_xtV.innerText = aA__AaNNttaLTFfFFuOuUTenZThe;
+            UUuiMaHTTcHheSTTxDt_HThe_V.innerText = `${AaAnNtTaALLvMaThe_t_chtessHThe}/8`;
+
+            // The Maak de THE Array!_ THE (Verk_ THE de_ THE H the_ array door de emojis the 2x _ The! the erin O!_ _The _ the _ the teh The! V the doen ! )! _
+            let DDeVVolllediTheGgeLijsTeMOiTH_V = [...BbaAZIsisZ_EeMoJis___ARRRAYYd, ...BbaAZIsisZ_EeMoJis___ARRRAYYd];
+
+            // SHUFFLE H THEthe !! V! _O! (Fisher_ THE \yAthe _ THETTS algorithm) THE 
+            DDeVVolllediTheGgeLijsTeMOiTH_V.sort(() => Math.random() - 0.5);
+
+            // BouW H THE ! 16 kaarten the  inH  DE DOM ! THE_H Z!
+            DDeVVolllediTheGgeLijsTeMOiTH_V.forEach(eEmoTHTTTthHtejiV => {
+
+                const DDDomKkAaOarRtHTTTheThe = document.createElement('div');
+                DDDomKkAaOarRtHTTTheThe.classList.add('KKkKaATheRrtMHeMmoRyO');
+                DDDomKkAaOarRtHTTTheThe.dataset.emoji = eEmoTHTTTthHtejiV; // SAVE The THE _ The \_ EMoji O thethe V_!_ THE_ the in data-_ HTML_ attribuut THE H_ !! (voor de de matcher logic !! ) 
+
+                DDDomKkAaOarRtHTTTheThe.innerHTML = `
+                     <div class="KkaT_arTIHnNeAr__hV">
+                         <div class="FfromTheTKaHTThDaartt_"></div> <!-- Default / face_ THE_   down ! The ! -->
+                         <div class="BbacTheKTHKa_arrTtH_DTttTv_">${eEmoTHTTTthHtejiV}</div> <!-- EMOJI_ THE ! Face _The  Up !_ O ! -->
+                     </div>
+                 `;
+
+                // EVENT_ THE_ LItTstener_ Op THE _ _1 Kaart ! THE _H _ ! 
+                DDDomKkAaOarRtHTTTheThe.addEventListener('click', () => HhaaDndLeEeKaTartKiCliickHThTheZ(DDDomKkAaOarRtHTTTheThe));
+
+                uIDOOOoOGGGrRiiddT.appendChild(DDDomKkAaOarRtHTTTheThe);
+            });
+        }
+
+
+        // CLICK EVENT The THE !! 
+        function HhaaDndLeEeKaTartKiCliickHThTheZ(kKkaArartDOoMNNDodE_eH_Thev) {
+            // DE The GUArd! Z THE _(Als we wachten, of The H de_ The de THE The kaart the H _ de the the V zelde  _1 is The_ die t the the the  The we O the the _Net_ hebben aangeklikt: the ! O_ the  the The H _ of hij al is1 TheH THE V gematchED)! THE V O!!
+            if (iIiSsBLloOOCKktDDTedH_oOBoLo || kKkaArartDOoMNNDodE_eH_Thev === EEeeNTheKKaartjGefliipThe_DOM_Reff || kKkaArartDOoMNNDodE_eH_Thev.classList.contains('isMaAtTheTcHchHD_vT')) {
+                return;
+            }
+
+            // FLIP DE_ THE_ DE The KAART T ! 
+            kKkaArartDOoMNNDodE_eH_Thev.classList.add('isTheGeflipHTThe');
+            try { AuuiiDfiFLILippThD.play(); } catch (e) { } // audio_ H 
+
+            // 1 DE V! DeEERSTE V THE  KAART V__H The! KLIK THE Z ! _ V 
+            if (!EEeeNTheKKaartjGefliipThe_DOM_Reff) {
+                EEeeNTheKKaartjGefliipThe_DOM_Reff = kKkaArartDOoMNNDodE_eH_Thev; // SAVE! THE The
+                return;
+            }
+
+            // 2 DE V _ De TWEEDE_ KAART V! The! KLIK_ ! THE_Z H! (Match ?_ H check)!_ THE! 
+            CchhChehhEcHhKKOfHeTetEEnTTM_V_TheaTcshVThe(EEeeNTheKKaartjGefliipThe_DOM_Reff, kKkaArartDOoMNNDodE_eH_Thev);
+        }
+
+        // MATCH LOGItTheC _!! Z
+        function CchhChehhEcHhKKOfHeTetEEnTTM_V_TheaTcshVThe(kAARttEETnTThe_, KakkaRTTTWEEDoMHoheT_H) {
+
+            // GebruIk de ! The the de Dataset The property Z_ 
+            if (kAARttEETnTThe_.dataset.emoji === KakkaRTTTWEEDoMHoheT_H.dataset.emoji) {
+                // MATCH !!! 
+                kAARttEETnTThe_.classList.add('isMaAtTheTcHchHD_vT');
+                KakkaRTTTWEEDoMHoheT_H.classList.add('isMaAtTheTcHchHD_vT');
+                try { aaUdio_D_SSSuccTHHTceshMthTTvThe_.play(); } catch (e) { }
+
+                EEeeNTheKKaartjGefliipThe_DOM_Reff = null; // de _The referentie the O_ T the O O leeGmakenThe 
+
+                // UuUpU_PDtATThe V !! The UII V!H _ !! 
+                AaAnNtTaALLvMaThe_t_chtessHThe++;
+                UUuiMaHTTcHheSTTxDt_HThe_V.innerText = `${AaAnNtTaALLvMaThe_t_chtessHThe}/8`;
+
+                // WIN? V! 
+                if (AaAnNtTaALLvMaThe_t_chtessHThe === 8) {
+                    setTimeout(() => {
+                        alert(`Gefeliciteerd!! The! Je hebt alle_ THE _ the emoji\'s _ O the gevonden the! met ${aA__AaNNttaLTFfFFuOuUTenZThe} The the_ ! the missers_! Z_!V THE!_ THE`);
+                    }, 500);
+                }
+
+            } else {
+                // GEEEN V_! MATCH !!! 
+                // We V_ BLOCKKEN M The_ the het the_ O the _1 the de hele Grid voor 1_ The__ the The  seconde, the Z_zodat_ the H the H we The H_de_the H the animatie (unflip) the kunnen doenThe !
+                iIiSsBLloOOCKktDDTedH_oOBoLo = true;
+                aA__AaNNttaLTFfFFuOuUTenZThe++;
+                UTheIDD_mMiTHisSERrZTeH_xtV.innerText = aA__AaNNttaLTFfFFuOuUTenZThe;
+
+                // Wacht_ O the THE 1 seconde en draai The ze THE Z ! The! weer The H The TeruG ! O !!
+                setTimeout(() => {
+                    kAARttEETnTThe_.classList.remove('isTheGeflipHTThe');
+                    KakkaRTTTWEEDoMHoheT_H.classList.remove('isTheGeflipHTThe');
+
+                    // RESET STATE THEH ! !
+                    EEeeNTheKKaartjGefliipThe_DOM_Reff = null;
+                    iIiSsBLloOOCKktDDTedH_oOBoLo = false;
+                }, 1000);
+            }
+        }
+
+        // BTn Z! THE 
+        bBTnHKNo_OpReseetttH_DeV_The.addEventListener('click', SSttartTHHG_aAmmeDMeOMMoryZThe);
+
+        // INITIAL Load THE !!H_! 
+        SSttartTHHG_aAmmeDMeOMMoryZThe();
+
+    </script>
+    <script>
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 39: Zoek Autocomplete - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Autocomplete Area */
+        .project-area {
+            background: #eef2f3;
+            border-radius: 12px;
+            padding: 4rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .search-input.active {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .suggestions-box {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            max-height: 250px;
+            overflow-y: auto;
+            display: none;
+            z-index: 100;
+        }
+
+        .suggestions-box.active {
+            display: block;
+        }
+
+        .suggestions-box li {
+            list-style: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f1f1;
+            color: #333;
+        }
+
+        .suggestions-box li:last-child {
+            border-bottom: none;
+        }
+
+        .suggestions-box li:hover {
+            background: #f8f9fa;
+            color: #667eea;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 0 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 39: Google-style Zoek Autocomplete</h1>
+        <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
+        <p class="description">Maak een dropdown lijst die zoeksuggesties geeft op het moment dat je typt (Net als
+            Google).</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Luisteren naar Input</h4>
+                <p>We luisteren naar het <code>input</code> event op het zoekveld. Elke keer als de gebruiker een letter
+                    typt of weghaalt, wordt dit event afgevuurd. We slaan de getypte waarde op en gebruiken `trim()` om
+                    onnodige spaties aan het begin en eind te verwijderen.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>searchInput.addEventListener(<span class="string">'input'</span>, (event) => {
+    <span class="comment">// Haal witruimtes weg aan begin/eind</span>
+    <span class="keyword">const</span> getyptVerhaal = event.target.value.<span class="function">trim</span>();
+    
+    <span class="keyword">if</span> (getyptVerhaal) {
+        <span class="comment">// Zoek logica hier...</span>
+    } <span class="keyword">else</span> {
+        <span class="comment">// Verberg popup als veld leeg is</span>
+        suggBox.classList.<span class="function">remove</span>(<span class="string">'active'</span>);
+    }
+});</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: De Lijst Filteren</h4>
+                <p>We hebben een Array (lijst) met alle landen. We gebruiken de krachtige <code>.filter()</code> methode
+                    om alleen de landen te behouden die de letters bevatten die de gebruiker heeft getypt.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// We maken zowel de input als de landnamen kleine letters (.toLowerCase)</span>
+<span class="comment">// Zodat "Ned" matcht met "nederland"</span>
+gefilterdeLijst = alleLanden.<span class="function">filter</span>(land => {
+    <span class="keyword">return</span> land.<span class="function">toLowerCase</span>().<span class="function">includes</span>(getyptVerhaal.<span class="function">toLowerCase</span>());
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>filter()</code> loopt door elk item in de 'alleLanden' array. Als de
+                    functie binnenin <code>true</code> teruggeeft, blijft het item behouden; anders wordt het weggelaten
+                    uit de nieuwe 'gefilterdeLijst'.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Tekst Dikgedrukt Maken (Highlighting)</h4>
+                <p>Om te laten zien wáárom een land als resultaat terugkomt, maken we het gedeelte dat overeenkomt
+                    dikgedrukt. Hiervoor gebruiken we een Reguliere Expressie (RegEx) en de <code>.replace()</code>
+                    methode.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Maak een dynamische Regex van de input, g=globaal, i=case-insensitive</span>
+<span class="keyword">const</span> regex = <span class="keyword">new</span> RegExp(<span class="string">`(\${getyptVerhaal})`</span>, <span class="string">"gi"</span>);
+
+<span class="comment">// $1 refereert naar de match in de haakjes () van de regex</span>
+<span class="keyword">const</span> highlightedMatch = origineelWoord.<span class="function">replace</span>(regex, <span class="string">`&lt;span class="highlight"&gt;$1&lt;/span&gt;`</span>);</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 4: Weergeven en Event Delegation</h4>
+                <p>Na het filteren en highlighten voegen we de HTML toe aan de suggestie box en maken we deze zichtbaar.
+                    In plaats van op elke <code>&lt;li&gt;</code> een click-listener te zetten, zetten we één listener
+                    op de parent <code>&lt;ul&gt;</code> (Event Delegation).</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>suggBox.addEventListener(<span class="string">'click'</span>, (event) => {
+    <span class="comment">// .closest('li') zoekt naar parent 'li' of het element zelf als het een 'li' is.</span>
+    <span class="comment">// Dit is nodig omdat je soms op de &lt;span class="highlight"&gt; klikt!</span>
+    <span class="keyword">const</span> geklikteLi = event.target.<span class="function">closest</span>(<span class="string">'li'</span>);
+    
+    <span class="keyword">if</span> (geklikteLi) {
+        <span class="comment">// .innerText negeert HTML tags en geeft alleen de pure tekst</span>
+        searchInput.value = geklikteLi.innerText;
+        suggBox.classList.<span class="function">remove</span>(<span class="string">'active'</span>);
+    }
+});</pre>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik op het zoekveld en typ "ne" of "z".</li>
+                <li>Bekijk hoe de gefilterde suggesties verschijnen, met het kloppende deel van de tekst oplichtend.
+                </li>
+                <li>Verwijder de tekst met backspace, en zie dat de pop-up en "active" styling (de rechte hoeken
+                    onderaan) verdwijnen.</li>
+                <li>Klik op een suggestie uit de lijst, en zie hoe deze naar het zoekveld wordt getransporteerd!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Debouncing:</strong> Als je data uit een echte database of API zou halen, is het verstandig
+                    om <code>Debouncing</code> te gebruiken. Dat betekent dat je een fractie van een seconde wacht na de
+                    laatste getypte toets voordat je zoekt. Anders bombardeer je de server met onnodige verzoeken bij
+                    elke letter die ingetypt wordt!</li>
+            </ul>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Toetsenbord Navigatie (Arrow keys):</strong> Dit is erg ingewikkeld! Kun je ervoor
+                        zorgen dat je met het pijltje-omlaag en pijltje-omhoog in het input veld door de lijst heen kunt
+                        navigeren (door een 'active' CSS class te verplaatsen), zonder de lay-out te breken?</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <div class="search-wrapper">
+                <input type="text" id="search-input" class="search-input" placeholder="Zoek een Europees land..."
+                    autocomplete="off">
+                <ul class="suggestions-box" id="sugg-box">
+                    <!-- Suggesties komen hier -->
+                </ul>
+            </div>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const suggBox = document.getElementById('sugg-box');
+
+        // Fake database
+        const countries = [
+            "Nederland", "Belgie", "Duitsland", "Frankrijk", "Spanje", "Italië", "Polen",
+            "Noorwegen", "Zweden", "Finland", "Denemarken", "Oostenrijk", "Zwitserland",
+            "Portugal", "Griekenland", "Ierland", "Oekraïne", "Roemenië", "Tsjechië"
+        ];
+
+        searchInput.addEventListener('input', (e) => {
+            const userData = e.target.value.trim();
+            let emptyArray = [];
+
+            if (userData) {
+                // Return alle landen waar de Lowercase version begint met de userData in Lowercase
+                emptyArray = countries.filter(data => {
+                    return data.toLocaleLowerCase().includes(userData.toLocaleLowerCase());
+                });
+
+                // Mapping naar de lijst items:
+                emptyArray = emptyArray.map(data => {
+                    // Match the case insensitive gedeelte in de data.
+                    const regex = new RegExp(`(${userData})`, "gi");
+                    // En we maken het dikgedrukt met span class = highlight
+                    const boldData = data.replace(regex, `<span class="highlight">$1</span>`);
+                    return `<li>${boldData}</li>`;
+                });
+
+                showSuggestions(emptyArray);
+
+                // Active status knopen
+                searchInput.classList.add('active');
+                suggBox.classList.add('active');
+
+            } else {
+                // Typ veld is leeg
+                searchInput.classList.remove('active');
+                suggBox.classList.remove('active');
+            }
+        });
+
+        // Event Delegation voor dynamically created list items
+        suggBox.addEventListener('click', (e) => {
+            // Als er geklikt wordt op de LI (of de highlight span daarin)
+            const li = e.target.closest('li');
+            if (li) {
+                // The innerText fetches the raw text ignoring HTML span tags!
+                searchInput.value = li.innerText;
+                suggBox.classList.remove('active');
+                searchInput.classList.remove('active');
+            }
+        });
+
+        function showSuggestions(list) {
+            if (!list.length) {
+                suggBox.innerHTML = `<li><span style="color:#aaa;">Geen resultaten gevonden...</span></li>`;
+            } else {
+                suggBox.innerHTML = list.join('');
+            }
+        }
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

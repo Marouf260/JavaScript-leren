@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 35: Circular Progress - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Project Area */
+        .project-area {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid #eee;
+        }
+
+        .skill-section {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .circular-progress {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        /* SVG Circle Setup */
+        .circular-progress svg {
+            width: 150px;
+            height: 150px;
+            transform: rotate(-90deg);
+            /* Start at top */
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: #e6e6e6;
+            stroke-width: 12;
+        }
+
+        .circle-stroke {
+            fill: none;
+            stroke-width: 12;
+            stroke-linecap: round;
+            /* Dash array will be calculated in JS (circumference) */
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.1, 0.7, 0.1, 1);
+        }
+
+        /* Number in middle */
+        .progress-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .skill-label {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-update {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 35: Circular Progress Bars</h1>
+        <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
+        <p class="description">Bouw prachtige, geanimeerde ronde voortgangsbalken. Ideaal voor dashboards en
+            portfolio's!</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: SVG Cirkels in HTML</h4>
+                <p>Een ronde progressiebalk maken we niet met standaard <code>&lt;div&gt;</code> elementen, maar met
+                    Scalable Vector Graphics (SVG). We tekenen hiermee twee perfecte <code>&lt;circle&gt;</code>
+                    elementen over elkaar heen: een grijze achtergrondcirkel en een gekleurde voorgrondcirkel.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">&lt;!-- cx en cy bepalen het middelpunt, r is de straal (radius) --&gt;</span>
+&lt;svg&gt;
+    &lt;circle class="circle-bg" cx="75" cy="75" r="60"&gt;&lt;/circle&gt;
+    &lt;circle class="circle-stroke" cx="75" cy="75" r="60"&gt;&lt;/circle&gt;
+&lt;/svg&gt;</pre>
+                </div>
+                <p><strong>Uitleg:</strong> In de CSS draaien we de hele SVG <code>-90deg</code> zodat de start van de
+                    voorgrondcirkel bovenaan (op 12 uur) begint in plaats van rechts (op 3 uur).</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: De SVG 'Dash' Truc</h4>
+                <p>Hoe animeren we de lijn? We gebruiken de magische SVG stroke eigenschappen. Door de grens (stroke)
+                    van de cirkel in "streepjes" (dashes) op te delen, kunnen we één heel lang streepje maken dat
+                    evengroot is als de hele omtrek!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// 1. Bereken de Omtrek (2 * π * straal)</span>
+<span class="keyword">const</span> circumference = <span class="string">2</span> * Math.PI * radius;
+
+<span class="comment">// 2. Maak het "streepje" even lang als de hele cirkel!</span>
+circle.style.strokeDasharray = <span class="string">`\${circumference} \${circumference}`</span>;</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Nu is de cirkel technisch gezien één massief streepje. Door in stap 3 de
+                    basis (offset) van die streep te verschuiven, lijkt het of we de cirkel vullen of leegmaken!</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Het Percentage Berekenen</h4>
+                <p>Met de <code>stroke-dashoffset</code> verschuiven we het beginpunt van ons streepje we uit de vorige
+                    stap.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">setProgress</span>(percent) {
+    <span class="comment">// Wiskunde: hoeveel offset is 25% "leegte"?</span>
+    <span class="keyword">const</span> offset = circumference - (percent / <span class="string">100</span>) * circumference;
+    
+    <span class="comment">// Dankzij CSS 'transition' verandert deze waarde super soepel!</span>
+    circle.style.strokeDashoffset = offset;
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Als we <code>percent = 100</code> doorgeven, wordt de <code>offset</code> 0
+                    en is de hele cirkel te zien. Als <code>percent = 0</code> is, is de offset gelijk aan de hele
+                    omtrek en verdwijnt de progressie uit beeld!</p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (SetTimeout Delay)</h3>
+            <pre><span class="comment">// Als we de functie direct triggeren bij het openen van de pagina,</span>
+<span class="comment">// ziet de gebruiker de CSS animatie niet opbouwen. Wachten is de sleutel!</span>
+<span class="function">setTimeout</span>(() => {
+    <span class="function">setProgress</span>(<span class="string">'react-circle'</span>, <span class="string">'react-val'</span>, <span class="string">75</span>); <span class="comment">// 75% vol</span>
+}, <span class="string">300</span>);</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Bekijk de cirkels, wanneer ze inladen schieten ze mooi vloeiend naar de startwaardes!</li>
+                <li>Klik op "Genereer Random Data" om de balken vloeiend naar willekeurige nieuwe waardes te laten
+                    springen.</li>
+                <li>Merk op dat ook het percentage in het midden direct verandert.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong><code>stroke-linecap: round</code>:</strong> Door deze simpele CSS regel mee te geven aan je
+                    SVG cirkel, krijgt het uiteinde van je progressiebalk een mooie zachte afronding in plaats van een
+                    harde rechte lijn. Ontzettend clean!</li>
+                <li><strong>Dynamische Kleuren:</strong> In Javascript kun je eenvoudig met een if-statement checken: is
+                    de value onder de 50? Maak de <code>circle.style.stroke</code> dan oranje of rood.</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: <code>transform-origin</code> problemen</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - Als je de SVG -90deg draait in CSS (zodat ie netjes bovenaan begint), kan hij uit het center schieten. Let erop dat je de 'transform-origin: center' netjes instelt in je CSS indien dat gebeurt!</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Voeg Een <code>input type="number"</code> toe:</strong> Koppel een HTML textveldje of
+                        slider (zoals we deden bij de Videoplayer) aan het script, zodat je zelf de progressie de hoogte
+                        in kan sturen met een HTML element.</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="skill-section">
+
+                <div>
+                    <div class="circular-progress">
+                        <svg>
+                            <circle class="circle-bg" cx="75" cy="75" r="60"></circle>
+                            <circle class="circle-stroke" cx="75" cy="75" r="60" stroke="#FF6B6B" id="js-circle">
+                            </circle>
+                        </svg>
+                        <div class="progress-value" id="js-val">0%</div>
+                    </div>
+                    <div class="skill-label">HTML & CSS</div>
+                </div>
+
+                <div>
+                    <div class="circular-progress">
+                        <svg>
+                            <circle class="circle-bg" cx="75" cy="75" r="60"></circle>
+                            <circle class="circle-stroke" cx="75" cy="75" r="60" stroke="#4ECDC4" id="react-circle">
+                            </circle>
+                        </svg>
+                        <div class="progress-value" id="react-val">0%</div>
+                    </div>
+                    <div class="skill-label">JavaScript</div>
+                </div>
+
+                <div>
+                    <div class="circular-progress">
+                        <svg>
+                            <circle class="circle-bg" cx="75" cy="75" r="60"></circle>
+                            <circle class="circle-stroke" cx="75" cy="75" r="60" stroke="#FFE66D" id="node-circle">
+                            </circle>
+                        </svg>
+                        <div class="progress-value" id="node-val">0%</div>
+                    </div>
+                    <div class="skill-label">Problem Solving</div>
+                </div>
+
+            </div>
+
+            <div class="controls">
+                <button class="btn-update" onclick="randomizeData()">Genereer Random Data</button>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        // Initiele state
+        const circles = [
+            { id: 'js-circle', textId: 'js-val', startPercent: 90 },
+            { id: 'react-circle', textId: 'react-val', startPercent: 75 },
+            { id: 'node-circle', textId: 'node-val', startPercent: 60 }
+        ];
+
+        function setProgress(circleId, textId, percent) {
+            const circle = document.getElementById(circleId);
+            const textValue = document.getElementById(textId);
+
+            // Verkrijg straal uit het r-attribuut
+            const radius = circle.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius;
+
+            // Bereid de lijn voor
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+
+            // Bereken offset
+            const offset = circumference - (percent / 100) * circumference;
+
+            // Animeren door de dashoffset aan te passen (CSS transition doet de rest)
+            circle.style.strokeDashoffset = offset;
+
+            // Update Text
+            textValue.innerText = `${percent}%`;
+        }
+
+        function init() {
+            // Animatie bij laden
+            setTimeout(() => {
+                circles.forEach(item => {
+                    setProgress(item.id, item.textId, item.startPercent);
+                });
+            }, 300);
+        }
+
+        function randomizeData() {
+            circles.forEach(item => {
+                const randomVal = Math.floor(Math.random() * 101); // 0 to 100
+                setProgress(item.id, item.textId, randomVal);
+            });
+        }
+
+        init();
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

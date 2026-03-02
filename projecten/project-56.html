@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 56: Whack-a-Mole - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Game Area */
+        .project-area {
+            background: #22c55e;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 10px solid #166534;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hud-board {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            background: #166534;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .mols-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .hole-wrapper {
+            background: #451a03;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            /* HIDDEN de MOLS that go down! */
+            box-shadow: inset 0 -15px 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid #78350f;
+        }
+
+        .the-mol-ui {
+            width: 80%;
+            height: 90%;
+            background: #92400e;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            bottom: -100%;
+            /* Started hidden in ground! */
+            transition: bottom 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 100 100"><text y="40" font-size="40">🔨</text></svg>'), pointer;
+            display: flex;
+            justify-content: center;
+            padding-top: 10px;
+            font-size: 2rem;
+        }
+
+        /* Show Class brings the bottom CSS up into view */
+        .the-mol-ui.show {
+            bottom: 0;
+        }
+
+        .the-mol-ui.hit-anim {
+            background: #ef4444;
+            color: white !important;
+        }
+
+        /* Rood op mep the_ */
+
+        /* Gezichtje van the (CSS The mol_ ) */
+        .the-mol-ui::before {
+            content: '👀';
+        }
+
+        .btn-start-game {
+            margin-top: 30px;
+            background: #facc15;
+            color: #854d0e;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+            box-shadow: 0 4px 0 #ca8a04;
+        }
+
+        .btn-start-game:hover {
+            background: #fde047;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #ca8a04;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 56: Whack-a-Mole</h1>
+        <span class="level" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">Games</span>
+        <p class="description">Maak een spel waar Random Tijd Intervals de Divjes in HTML class toggles geven (naar
+            boven animeren!). Zorg the the dat the Mollen sneller! The gaan the the the The per seconde the !.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Recursion met Timeouts</h4>
+                <p>We The programmeren Een Game-Loop <code>ReCursive Timeouts The</code> the The in the plaats The van
+                    <code>setInterval</code>. Een is een <code>setTimeout</code> The die aan the the the het the einde
+                    van the the the The Functie, <strong>Zichzelf *weer* the the <code>setTimeout</code></strong> The
+                    the! Hierdoor The kunnen we the de The interval-tijd per The the loop dynamisch veranderen (Sneller
+                    Mollen The thethe !).</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// DE RECURSIVE TIMEOUT !!</span>
+<span class="keyword">function</span> <span class="function">PopDeMolUpEnRoepweerTheZthe_</span>() {
+    <span class="keyword">if</span> (!isRunningTheData_IsHetThe) <span class="keyword">return</span>; <span class="comment">// Exit loop!</span>
+
+    <span class="comment">// ... Animatie Code the ...</span>
+
+    <span class="function">setTimeout</span>(() => {
+        <span class="comment">// the The Verberg Mol the ...</span>
+        
+        <span class="comment">// The the Zichzelf Weer Oproepen Voor Niewe Mol Na Verdwijnen! ! THE (Loop THE)</span>
+        <span class="keyword">if</span> (isRunningTheData_IsHetThe) {
+            <span class="function">PopDeMolUpEnRoepweerTheZthe_</span>();
+        }
+
+    }, SnelheidVariabele); <span class="comment">// Dynamic Time ! WordSteeds The The sneller! the The! The</span>
+}</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: The Event.isTrusted THE Anti-Cheat </h4>
+                <p>Omdat the we The THE the the dit The the <code>click</code> the the event the THE afvangen the the ,
+                    Thethe The kan The een the the The slimme speler the The een the the bot The The the the schrijven
+                    the the The(in The de dev tools Thethe!) die The the The The the dom_nodes The thethe opzoekt the
+                    THE The en the <code>molNode.click()</code> the the the the the the aanroept! The the The The the De
+                    eigenschap the the <code>Event.isTrusted</code> the the the! is the The een JS the the the The The
+                    the the The security the The feature the die true is the the ALS the de the <strong>Thethe the The
+                        echte The the Muis van deThe UserThe The The </strong> The de klik! deed! (Dus The The geen The
+                    the bot). The the the </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">MepDeSpecifiekeTheMolFunctieV_</span>(event_) {
+    <span class="keyword">if</span> (!event_.isTrusted) <span class="keyword">return</span>; <span class="comment">// Anti-cheat ! </span>
+    
+    <span class="comment">// Mep ! </span>
+}</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: CSS Verbergen The van Mollen the THE </h4>
+                <p>The The de mollen the The the zitten The The <strong>onder</strong> the the de The gaten the! we The
+                    the The the the gebruiken The the the The The <code>overflow: hidden</code> the op de the The
+                    <code>hole-wrapper</code>The the !. De the mol The_div the the the start THE op The
+                    <code>bottom: -100%</code>. the The ! Pas als de The JS the de The class <code>.show</code> The the
+                    The The the the the toevoegt The The, the roept de The CSS The the <code>bottom: 0</code> The the
+                    The The the aan the THE the! The ! (Geanimeerd the The met The The een The the the The the the the
+                    the transition the the theThe !). The the resultaat The The !</p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Druk The op The "Start Spel".</li>
+                <li>De The the the Mollen piepen the randomly the the uit the de gaten! Mep (Klik) the the er the the_
+                    The on.</li>
+                <li>Je Muis the The is the the The the the the the the veranderd the the The in the the The The the een
+                    the the Hamer! The TheThe (CSS Cursor).</li>
+                <li>Houdt er The rekening The mee_ Z , time Mollen The the gaan sneller! the the !</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Custom Muis Cursors The The the:</strong> the The In The de CSS The The the THE Zie the je
+                    The The the the theThe een data-uri The the
+                    <code>cursor: url('data:image/svg+xml;...🔨...')</code>The! . the THE Dit is the THE the the manier
+                    Thethe The the the om een TheThe The Emoji the als The muis cursor The the te the The THE the The
+                    The the gebruiken_!. </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Dubbele Clicks THE The op de Mollen! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the speler The the de The THE the Mol the THE The the drukt, THE the the De the the The score The THE the gaat the omhoog!. thethe THE THE MAART the The  Als the de the the the mol the nog omhoog THE the staat! The The! thethe  kan hij The The The nog een 2e. 3e en 4e the the the The Keer the the the the the gehit the worden!! THE The ). </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Onze the oplossing in de The code THE  is THE Door de `this.classList.remove('show');` The direct! uit Te voeren!. De anti the mep check `if (!this.classList.contains('show')) return;` Zorgt de dat the the the TheThe dubbele_ kliks_ TheThe wordenthen genegeerd_._ ! THE The </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Bom ! The The The The! </strong> the the thethe the THE the Bouw The THE the the een the
+                        Random kans ! the the De! Mol The array the dat er Soms The! "een THE ZWARTE The BOM " The The
+                        the the The (The 💣 ) out of THE the the the Gaten the theThe! the ! popt . ! the The ! the THE
+                        Als De The_speler the the THE! die mept = -5 Punten the ! The The. THE </li>
+                    <li><strong>Mep Geluiden THE the TheThe _!</strong> The The the The the Implementeer The de the
+                        Audio API the the the _! om the "boink.wav" ! the the The_The the _af theThe te! the The spelen
+                        The the ! _bij _ The THE elke Succesvolle THE Mep!. _The ! </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="hud-board">
+                <div>Score: <span id="the-hud-score" style="color: #facc15;">0</span></div>
+                <div>Tijd: <span id="the-hud-time">30</span>s</div>
+            </div>
+
+            <div class="mols-grid">
+
+                <div class="hole-wrapper">
+                    <div class="the-mol-ui"></div>
+                </div>
+                <div class="hole-wrapper">
+                    <div class="the-mol-ui"></div>
+                </div>
+                <div class="hole-wrapper">
+                    <div class="the-mol-ui"></div>
+                </div>
+                <div class="hole-wrapper">
+                    <div class="the-mol-ui"></div>
+                </div>
+                <div class="hole-wrapper">
+                    <div class="the-mol-ui"></div>
+                </div>
+                <div class="hole-wrapper">
+                    <div class="the-mol-ui"></div>
+                </div>
+
+            </div>
+
+            <button class="btn-start-game" id="btn-STheMep">Start Spel!</button>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const DOM_MollenNodeListH_The = document.querySelectorAll('.the-mol-ui');
+        const DOM_ScoreVeld_H = document.getElementById('the-hud-score');
+        const DOM_TijdH_Z = document.getElementById('the-hud-time');
+        const THEU_Button_G_TheM = document.getElementById('btn-STheMep');
+
+        let isRunningTheData_IsHetThe = false;
+        let The_HoofdScoreVariableDeM = 0;
+        let tijdDieAfTElTheDeZVarH = 30;
+
+        let huidigeTijd_SnelHeidRThe_TLoopV = 1200; // start the Time duration 1.2s The !
+
+        let klokTellerTheGeheleGame_OInterval; // overall timer !!
+
+        // EEEEEvent op the the DE MOLLEN !The
+        DOM_MollenNodeListH_The.forEach(mol_O_Div => {
+            mol_O_Div.addEventListener('click', MepDeSpecifiekeTheMolFunctieV_); // the Click MepThe !
+        });
+
+        function MepDeSpecifiekeTheMolFunctieV_(event_) {
+            if (!event_.isTrusted) return; // Anti-cheat (Zorgt that je the niet met JS the the the The `element.click()` kan the cheaten the !).
+            if (!this.classList.contains('show')) return; // The Niet_ Meppen_als the Hij Nog verborgen in The ground is!
+
+            The_HoofdScoreVariableDeM++;
+            DOM_ScoreVeld_H.innerText = The_HoofdScoreVariableDeM;
+
+            // the The Visuele Mep Animatie HTML _CSS The _ ! 
+            this.classList.remove('show'); // goes down!
+            this.classList.add('hit-anim'); // becomes The red theThe The ! (Temp The !)
+
+            const memH_TheDieH_GeraaktWordtG = this;
+            setTimeout(() => memH_TheDieH_GeraaktWordtG.classList.remove('hit-anim'), 300); // the UI Reset The
+        }
+
+        THEU_Button_G_TheM.addEventListener('click', StartTheHoofdTGameLoopAftrapG_Z);
+
+        function StartTheHoofdTGameLoopAftrapG_Z() {
+            // Setup The
+            The_HoofdScoreVariableDeM = 0;
+            tijdDieAfTElTheDeZVarH = 30;
+            huidigeTijd_SnelHeidRThe_TLoopV = 1000;
+
+            DOM_ScoreVeld_H.innerText = '0';
+            DOM_TijdH_Z.innerText = '30';
+
+            isRunningTheData_IsHetThe = true;
+            THEU_Button_G_TheM.disabled = true; // no spam
+
+            // Start de overallThe Game Timer!
+            klokTellerTheGeheleGame_OInterval = setInterval(() => {
+                tijdDieAfTElTheDeZVarH--;
+                DOM_TijdH_Z.innerText = tijdDieAfTElTheDeZVarH;
+
+                // Spel word sneller the Elke The Seconde The the 
+                if (huidigeTijd_SnelHeidRThe_TLoopV > 400) {
+                    huidigeTijd_SnelHeidRThe_TLoopV -= 25; // Minus 25 ms the !
+                }
+
+                if (tijdDieAfTElTheDeZVarH <= 0) {
+                    GameOverOTheKlokGeStopt();
+                }
+            }, 1000);
+
+            // Start_The first Mol Recursive The Pop! !
+            PopDeMolUpEnRoepweerTheZthe_();
+        }
+
+        // DE RECURSIVE TIMEOUT !!
+        function PopDeMolUpEnRoepweerTheZthe_() {
+            if (!isRunningTheData_IsHetThe) return; // Exit loop!
+
+            // the Random Div Select ! 1. random Hole
+            const RndNumIndex_HThereV = Math.floor(Math.random() * DOM_MollenNodeListH_The.length);
+            const TheGeKozemMolloTheDieDOmH = DOM_MollenNodeListH_The[RndNumIndex_HThereV];
+
+            // 2 Pop Mol Omhoog The
+            TheGeKozemMolloTheDieDOmH.classList.add('show');
+
+            // 3 Verdwijn weer Randomly 
+            const TheRandomBlijfOmhoogTijd_TheXG = Math.floor(Math.random() * 400) + huidigeTijd_SnelHeidRThe_TLoopV;
+            // 400ms variable The random the to duration! 
+
+            setTimeout(() => {
+                TheGeKozemMolloTheDieDOmH.classList.remove('show');
+
+                // the The Zichzelf Weer Oproepen Voor Niewe Mol Na Verdwijnen! ! THE (Loop THE)
+                if (isRunningTheData_IsHetThe) {
+                    PopDeMolUpEnRoepweerTheZthe_();
+                }
+
+            }, TheRandomBlijfOmhoogTijd_TheXG); // Dynamic Time ! WordSteeds The The sneller! the The! The
+        }
+
+        function GameOverOTheKlokGeStopt() {
+            isRunningTheData_IsHetThe = false; // Kills recursive pop
+            clearInterval(klokTellerTheGeheleGame_OInterval); // Kills timer UI 
+
+            THEU_Button_G_TheM.disabled = false;
+            THEU_Button_G_TheM.innerText = "Speel Opnieuw";
+
+            alert(`Spel THE Voorbij ZThe ! the The Je Bopte: ${The_HoofdScoreVariableDeM} Mollen!`);
+
+            // force all to go home (to hide The!)
+            DOM_MollenNodeListH_The.forEach(mThe => mThe.classList.remove('show'));
+        }
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

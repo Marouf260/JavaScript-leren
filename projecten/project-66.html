@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 66: BMI Calculator - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .level {
+            display: block;
+            padding: 0.25rem 1rem;
+            background: #e2e8f0;
+            color: #475569;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+            text-transform: uppercase;
+        }
+
+        .pD_AppDeHTHTH_BmiTThemO_VTheDat_R {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .KThevB_HTInputMGrPTheV_C {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .KThevB_HTInputMGrPTheV_C label {
+            font-weight: bold;
+            color: #64748b;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .KThevB_HTInputMGrPTheV_C span.Z__TheW_NUIOTheval_Num {
+            color: #3b82f6;
+            font-size: 1.2rem;
+        }
+
+        /* CUSTOM THE SLIDERS _ The!!  Z H_ */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            outline: none;
+            margin-top: 10px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 25px;
+            width: 25px;
+            background: #3b82f6;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 2px 5px rgba(59, 130, 246, 0.5);
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .DTheH_RReSultaatBMB_TThe_O {
+            background: #f8fafc;
+            padding: 25px 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 10px;
+            border: 2px solid #e2e8f0;
+            transition: border-color 0.3s;
+        }
+
+        .L_DeTHTTheTekstHDataZTextT {
+            font-size: 1rem;
+            color: #64748b;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .Z_HTDBTheHeBNumMDeDataT_KTTk {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #1e293b;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .K_THThCattHZDTETheStttustextVThe {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+
+        /* Z de Kleuren The (dynamic CSS added JS_) ! */
+        .DTheH_RReSultaatBMB_TThe_O.c-onderweg {
+            border-color: #3b82f6;
+        }
+
+        .DTheH_RReSultaatBMB_TThe_O.c-onderweg .K_THThCattHZDTETheStttustextVThe {
+            color: #3b82f6;
+        }
+
+        .DTheH_RReSultaatBMB_TThe_O.c-gezond {
+            border-color: #10b981;
+        }
+
+        .DTheH_RReSultaatBMB_TThe_O.c-gezond .K_THThCattHZDTETheStttustextVThe {
+            color: #10b981;
+        }
+
+        .DTheH_RReSultaatBMB_TThe_O.c-over {
+            border-color: #f59e0b;
+        }
+
+        .DTheH_RReSultaatBMB_TThe_O.c-over .K_THThCattHZDTETheStttustextVThe {
+            color: #f59e0b;
+        }
+
+        .DTheH_RReSultaatBMB_TThe_O.c-obesitas {
+            border-color: #ef4444;
+        }
+
+        .DTheH_RReSultaatBMB_TThe_O.c-obesitas .K_THThCattHZDTETheStttustextVThe {
+            color: #ef4444;
+        }
+
+
+        .back-link {
+            display: block;
+            margin-top: 2.5rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            color: #334155;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>BMI Calculator</h1>
+        <span class="level">Utility Apps</span>
+
+        <span class="level">Utility Apps</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De Formule van BMI</h4>
+                <p>De standaard medische formule voor BMI_ is_ the_: `Gewicht (kg) / (Lengte (m) * Lengte (m))`. Omdat
+                    the _onze slider the _Centimeters`the _ is, delen The_ The the_we first_ door 100!
+                    <code>(170cm = 1.7m)</code>.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// DE MATH !! !</span>
+<span class="keyword">const</span> DLTheVMMMeeterLTheength_MDeThe_O = mTheH_LengeInCCmO_HZTThe / <span class="string">100</span>;
+<span class="keyword">const</span> D_BReeTheO_H_TheMMathTVV__MInZDataITheTheV = MDeKGBGeiwH_TheVHtO_Var_ / (DLTheVMMMeeterLTheength_MDeThe_O * DLTheVMMMeeterLTheength_MDeThe_O);
+
+<span class="comment">// Afronden 24.2234 -> 24.2 ! </span>
+<span class="keyword">const</span> GZGeROnDDTheDatVMMBMiv_HTzThe_H = D_BReeTheO_H_TheMMathTVV__MInZDataITheTheV.<span class="function">toFixed</span>(<span class="string">1</span>);</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: De Kleuren en ClassNames_ </h4>
+                <p>We_ the _The_ maken the the the_ the logica met_ `if / else if / else`The! Is het > 30_? Dan
+                    `Obesitas`. _En_ the we vervangen de the the_ CSS_ Klasse the THE the_ van the Kaart!! _
+                    <code>DeHoKaartDataBMIHTBBOxTheH_Z.className = ...</code>_ !</p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Schuif the the de_ 2 _the Sliders The! _the_ (Lengte The enThe Gewicht_). </li>
+                <li>Zie the hoe the LIVE_ ! the de the wiskunde The ! Wordt _The the the Uitgevoerd the_ the enThe de
+                    KLEUR changes_ THE_! </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Event_ input! the the:</strong> the The In The de JS The the zie je the_ The ! The _ dat we
+                    the The `input` _ event the The ! gebruiken_ OThe the the _in plaatsvan _ `change` !
+                    <code>input</code> the Vuurt ELKE The _Milliseconde the the the DAT de_ Slider_The schuift. `change`
+                    the _The the vuurt The _pas the als De _ Muis. O_ omhoog the! The the_ komt._ </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Centimeters vs Meters ! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je Met the The_  170 rekent_, the_ then The wordt ! the BMI_ the the 0.002 The ! The </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_ the! Meter = Cm / 100 !  _ </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Metric/Imperial the! ! !! The The The The! </strong> the the thethe the THE the Bouw The
+                        een The_ V Knop_ the The the OM the_ the ! Te the The switchen __ the The_ Tusssen de KG/CM_ en
+                        The LBS/INCH_ !! OpeN! The _ . _The !. THE </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <div class="pD_AppDeHTHTH_BmiTThemO_VTheDat_R">
+
+            <div class="KThevB_HTInputMGrPTheV_C">
+                <label>
+                    Lichaamslengte
+                    <span class="Z__TheW_NUIOTheval_Num" id="UUITkLengtthe_vTextZNUm_TheH_The">170 cm</span>
+                </label>
+                <!-- Z slider Lengte ! Z -->
+                <input type="range" id="InR_LSLidTheLengeGTH" min="100" max="220" value="170">
+            </div>
+
+            <div class="KThevB_HTInputMGrPTheV_C">
+                <label>
+                    Lichaamsgewicht
+                    <span class="Z__TheW_NUIOTheval_Num" id="UUIZDTheGWTTheNumHTextTheGe_H">70 kg</span>
+                </label>
+                <!-- O slider GThe WichtH! V -->
+                <input type="range" id="In_ROThD_HeS_GeWeHSliderO" min="30" max="200" value="70">
+            </div>
+
+            <div class="DTheH_RReSultaatBMB_TThe_O" id="TThHUItVBoxKaartVTheZDBMITheGZ">
+                <div class="L_DeTHTTheTekstHDataZTextT">Jouw BMI is</div>
+                <div class="Z_HTDBTheHeBNumMDeDataT_KTTk" id="uTTheDataNUMBMIeHTvK_H_ZDeText">24.2</div>
+                <div class="K_THThCattHZDTETheStttustextVThe" id="uDataTheCategoryTVTheTexHtThe">Gezond Gewicht</div>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const THEOUI_DTheLSLIDHHT_LeTheNge = document.getElementById('InR_LSLidTheLengeGTH');
+        const TITheSTheLDGeWiB_v_SliderTheH = document.getElementById('In_ROThD_HeS_GeWeHSliderO');
+
+        const TTuiDaKThe_LeegTheDeHTxtNumValO_ = document.getElementById('UUITkLengtthe_vTextZNUm_TheH_The');
+        const TUuiDataH_GewiO_htHNummTextH_ZThe = document.getElementById('UUIZDTheGWTTheNumHTextTheGe_H');
+
+        const DeHoKaartDataBMIHTBBOxTheH_Z = document.getElementById('TThHUItVBoxKaartVTheZDBMITheGZ');
+        const UUITbKDeTTheNumber_OBMITDeTTKTVa = document.getElementById('uTTheDataNUMBMIeHTvK_H_ZDeText');
+        const UUIDTheCategorieZTextoHTVAndDeH_TheDatH_zT = document.getElementById('uDataTheCategoryTVTheTexHtThe');
+
+
+        // De ENGINE !! (Calc) //
+        function TBeRekenDeDatThe_ZB_MB_MImMathH_V() {
+            const mTheH_LengeInCCmO_HZTThe = parseFloat(THEOUI_DTheLSLIDHHT_LeTheNge.value);
+            const MDeKGBGeiwH_TheVHtO_Var_ = parseFloat(TITheSTheLDGeWiB_v_SliderTheH.value);
+
+            // UPDATE T De T UI sliders nummers _ The ! 
+            TTuiDaKThe_LeegTheDeHTxtNumValO_.innerText = mTheH_LengeInCCmO_HZTThe + ' cm';
+            TUuiDataH_GewiO_htHNummTextH_ZThe.innerText = MDeKGBGeiwH_TheVHtO_Var_ + ' kg';
+
+            // DE MATH (BMI = KG / (Meter * Meter)) !
+            const DLTheVMMMeeterLTheength_MDeThe_O = mTheH_LengeInCCmO_HZTThe / 100;
+            const D_BReeTheO_H_TheMMathTVV__MInZDataITheTheV = MDeKGBGeiwH_TheVHtO_Var_ / (DLTheVMMMeeterLTheength_MDeThe_O * DLTheVMMMeeterLTheength_MDeThe_O);
+
+            // AfRonden O (1 decimaal !) 
+            const GZGeROnDDTheDatVMMBMiv_HTzThe_H = D_BReeTheO_H_TheMMathTVV__MInZDataITheTheV.toFixed(1);
+            UUITbKDeTTheNumber_OBMITDeTTKTVa.innerText = GZGeROnDDTheDatVMMBMiv_HTzThe_H;
+
+            T_R__BBeThePaalDeStatussTheenKleuR_TheTVO_H(DLTheVMMMeeterLTheength_MDeThe_O, GZGeROnDDTheDatVMMBMiv_HTzThe_H);
+        }
+
+        // De Kleur! V ! Z_ \
+        function T_R__BBeThePaalDeStatussTheenKleuR_TheTVO_H(LTheThe_MeterHTVVaZ_V, GBe_TheMBIDataTheVDeFloat) {
+            DeHoKaartDataBMIHTBBOxTheH_Z.className = "DTheH_RReSultaatBMB_TThe_O"; // reset the H _!!
+
+            if (GBe_TheMBIDataTheVDeFloat < 18.5) {
+                UUIDTheCategorieZTextoHTVAndDeH_TheDatH_zT.innerText = "Ondergewicht";
+                DeHoKaartDataBMIHTBBOxTheH_Z.classList.add('c-onderweg');
+            }
+            else if (GBe_TheMBIDataTheVDeFloat >= 18.5 && GBe_TheMBIDataTheVDeFloat < 25) {
+                UUIDTheCategorieZTextoHTVAndDeH_TheDatH_zT.innerText = "Gezond Gewicht";
+                DeHoKaartDataBMIHTBBOxTheH_Z.classList.add('c-gezond');
+            }
+            else if (GBe_TheMBIDataTheVDeFloat >= 25 && GBe_TheMBIDataTheVDeFloat < 30) {
+                UUIDTheCategorieZTextoHTVAndDeH_TheDatH_zT.innerText = "Overgewicht";
+                DeHoKaartDataBMIHTBBOxTheH_Z.classList.add('c-over');
+            }
+            else {
+                UUIDTheCategorieZTextoHTVAndDeH_TheDatH_zT.innerText = "Obesitas";
+                DeHoKaartDataBMIHTBBOxTheH_Z.classList.add('c-obesitas');
+            }
+        }
+
+        // EVENT BINDINGS_ H _ ! Z
+        THEOUI_DTheLSLIDHHT_LeTheNge.addEventListener('input', TBeRekenDeDatThe_ZB_MB_MImMathH_V);
+        TITheSTheLDGeWiB_v_SliderTheH.addEventListener('input', TBeRekenDeDatThe_ZB_MB_MImMathH_V);
+
+        // INITIAL LOAD THE Z ! 
+        TBeRekenDeDatThe_ZB_MB_MImMathH_V();
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

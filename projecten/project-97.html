@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 97: Markdown Previewer - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #18181b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            color: #f4f4f5;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            color: #e4e4e7;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            background: #3f3f46;
+            color: #a1a1aa;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .app-container {
+            display: flex;
+            width: 100%;
+            max-width: 1400px;
+            height: calc(100vh - 200px);
+            background: #27272a;
+            border-radius: 12px;
+            border: 1px solid #3f3f46;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 1);
+        }
+
+        .panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-panel {
+            border-right: 2px solid #3f3f46;
+        }
+
+        .panel-header {
+            background: #18181b;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #d4d4d8;
+            border-bottom: 1px solid #3f3f46;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        textarea {
+            flex: 1;
+            background: #1e1e24;
+            color: #e4e4e7;
+            border: none;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            resize: none;
+            outline: none;
+        }
+
+        textarea:focus {
+            background: #111;
+        }
+
+        .preview-area {
+            flex: 1;
+            background: #fff;
+            color: #1a1a1a;
+            padding: 30px;
+            overflow-y: auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Markdown Styles */
+        .preview-area h1,
+        .preview-area h2,
+        .preview-area h3 {
+            margin-bottom: 10px;
+            margin-top: 20px;
+            color: #111827;
+        }
+
+        .preview-area h1 {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 5px;
+        }
+
+        .preview-area p {
+            margin-bottom: 15px;
+        }
+
+        .preview-area ul,
+        .preview-area ol {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        .preview-area li {
+            margin-bottom: 5px;
+        }
+
+        .preview-area blockquote {
+            border-left: 4px solid #d1d5db;
+            padding-left: 15px;
+            color: #4b5563;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .preview-area code {
+            background: #f3f4f6;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #e11d48;
+        }
+
+        .preview-area pre {
+            background: #1f2937;
+            color: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        .preview-area pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        .preview-area a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .preview-area a:hover {
+            text-decoration: underline;
+        }
+
+        .preview-area img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .preview-area hr {
+            border: 0;
+            height: 1px;
+            background: #e5e7eb;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+                height: auto;
+                min-height: 800px;
+            }
+
+            .editor-panel {
+                border-right: none;
+                border-bottom: 2px solid #3f3f46;
+                height: 400px;
+                flex: none;
+            }
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #a1a1aa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #f4f4f5;
+        }
+
+        button.action-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        button.action-btn:hover {
+            background: #2563eb;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <h1><i class="fab fa-markdown"></i> Markdown Previewer</h1>
+        <span class="level">Grandmaster Project (Regex &amp; DOM)</span>
+
+        <!-- Tutorial Section -->
+        <div class="step-by-step" style="text-align: left; margin: 0 auto 1.5rem auto; max-width: 1200px; width: 100%;">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <div class="step">
+                <h4>Stap 1: Markdown Parsen met Regex</h4>
+                <p>We bouwen een eigen Markdown parser met <strong>reguliere expressies (Regex)</strong>. Elk
+                    Markdown-patroon wordt naar HTML vervangen met <code>str.replace()</code>.</p>
+                <div class="code-example" style="background: #1e1e24; color: #d4d4d8;">
+                    <pre><span style="color:#569cd6">// ** tekst ** wordt dikgedrukt</span>
+html = html.<span style="color:#dcdcaa">replace</span>(/\*\*(.*?)\*\*/g, <span style="color:#ce9178">'&lt;strong&gt;$1&lt;/strong&gt;'</span>);
+
+<span style="color:#569cd6">// # Koptekst wordt h1</span>
+html = html.<span style="color:#dcdcaa">replace</span>(/^# (.*$)/gim, <span style="color:#ce9178">'&lt;h1&gt;$1&lt;/h1&gt;'</span>);</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips" style="max-width: 1200px; width: 100%; margin: 0 auto 1rem auto; text-align: left;">
+            <h3>✅ Jouw Opdracht</h3>
+            <ul>
+                <li>Typ Markdown in het linkerpaneel en zie de live HTML-preview rechts!</li>
+                <li>Probeer koppen (<code>#</code> t/m <code>######</code>), **dikgedrukt**, *cursief* en lijsten!</li>
+            </ul>
+        </div>
+
+        <div class="expandable" id="expansions" style="max-width: 1200px; width: 100%; margin: 0 auto;">
+            <div class="tips" style="text-align: left;">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <ul>
+                    <li><strong>Tabel Support:</strong> Voeg Regex toe voor Markdown-tabellen
+                        (<code>| Col1 | Col2 |</code>)!</li>
+                    <li><strong>Export als HTML:</strong> Voeg een download-knop toe die de gegenereerde HTML downloadt
+                        als bestand!</li>
+                </ul>
+            </div>
+        </div>
+        <button onclick="toggleExpansions()"
+            style="display: block; margin: 1rem auto; background: #3f3f46; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">📖
+            Toon Uitbreidingsmogelijkheden</button>
+    </div>
+
+    <div class="app-container">
+        <!-- Editor -->
+        <div class="panel editor-panel">
+            <div class="panel-header">
+                <span><i class="fas fa-edit"></i> Editor</span>
+                <button class="action-btn" id="clearBtn">Clear</button>
+            </div>
+            <textarea id="editor" placeholder="Typ hier je Markdown..."># Welkom bij de Markdown Previewer!
+
+Hier is een introductie tot Markdown syntax.
+
+## Tekst Opmaak
+Je kan tekst **dikgedrukt** maken, of *cursief*, of zelfs ***beide***.
+Doorstrepen doe je ~~zo~~.
+
+## Lijsten
+Ongeordende lijst:
+* Item 1
+* Item 2
+  * Sub-item A
+  * Sub-item B
+
+Geordende lijst:
+1. Eerste stap
+2. Tweede stap
+3. Derde stap
+
+## Links en Afbeeldingen
+[Bezoek GitHub](https://github.com)
+
+![Leuke Kat](https://placekitten.com/300/200)
+
+## Code
+Inline code ziet er zo uit: \`const = "Hallo";\`
+
+Codeblokken:
+\`\`\`javascript
+function zegHallo(naam) {
+  console.log("Hallo " + naam + "!");
+}
+zegHallo("Wereld");
+\`\`\`
+
+## Quotes
+> Dit is een blockquote.
+> Het is erg handig voor citaten.
+
+---
+*Gemaakt met Regex in JavaScript.*
+</textarea>
+        </div>
+
+        <!-- Preview -->
+        <div class="panel">
+            <div class="panel-header">
+                <span><i class="fas fa-eye"></i> Preview</span>
+            </div>
+            <div class="preview-area" id="preview"></div>
+        </div>
+    </div>
+
+    <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+
+    <script>
+        const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+        const clearBtn = document.getElementById('clearBtn');
+
+        // Simple Markdown Parser Function
+        function parseMarkdown(md) {
+            let html = md;
+
+            // 1. Escape HTML tags to prevent XSS (basic)
+            html = html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+            // 2. Code blocks ```code```
+            html = html.replace(/\`\`\`(.*?)\s*\n([\s\S]*?)\`\`\`/g, '<pre><code class="language-$1">$2</code></pre>');
+
+            // 3. Inline code `code`
+            html = html.replace(/\`([^\`]+)\`/g, '<code>$1</code>');
+
+            // 4. Headers # Header
+            html = html.replace(/^###### (.*$)/gim, '<h6>$1</h6>');
+            html = html.replace(/^##### (.*$)/gim, '<h5>$1</h5>');
+            html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+            // 5. Blockquotes > text
+            html = html.replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>');
+
+            // 6. Bold & Italic ***text***, **text**, *text*
+            html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+            // Strikethrough ~~text~~
+            html = html.replace(/\~\~(.*?)\~\~/g, '<del>$1</del>');
+
+            // 7. Images ![alt](url)
+            html = html.replace(/\!\[(.*?)\]\((.*?)\)/g, "<img alt='$1' src='$2' />");
+
+            // 8. Links [text](url)
+            html = html.replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
+
+            // 9. Horizontal Rule ---
+            html = html.replace(/^\s*---\s*$/gim, '<hr />');
+
+            // 10. Unordered Lists * item or - item
+            html = html.replace(/^\s*[\*\-] (.*)/gim, '<ul><li>$1</li></ul>');
+            // Merge adjacent ul tags
+            html = html.replace(/<\/ul>\n?<ul>/g, '');
+
+            // 11. Ordered Lists 1. item
+            html = html.replace(/^\s*\d+\. (.*)/gim, '<ol><li>$1</li></ol>');
+            // Merge adjacent ol tags
+            html = html.replace(/<\/ol>\n?<ol>/g, '');
+
+            // 12. Paragraphs (lines that don't start with a tag)
+            // Split by double newline to form paragraphs
+            const paragraphs = html.split(/\n\n+/);
+            const parsedParagraphs = paragraphs.map(p => {
+                // If it already starts with a block tag, don't wrap in <p>
+                if (p.match(/^(<h|<ul|<ol|<li|<blockquote|<pre|<hr)/i)) {
+                    return p;
+                } else if (p.trim().length > 0) {
+                    // replace single newlines with <br> inside paragraphs
+                    return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+                }
+                return '';
+            });
+
+            return parsedParagraphs.join('\n');
+        }
+
+        function updatePreview() {
+            const rawMarkdown = editor.value;
+            preview.innerHTML = parseMarkdown(rawMarkdown);
+        }
+
+        editor.addEventListener('input', updatePreview);
+
+        clearBtn.addEventListener('click', () => {
+            editor.value = '';
+            updatePreview();
+            editor.focus();
+        });
+
+        // Init
+        updatePreview();
+    </script>
+    <script>
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

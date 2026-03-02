@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 26: Muziek Speler - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Music Player Project Area */
+        .project-area {
+            background: linear-gradient(135deg, #1e1e24 0%, #292930 100%);
+            border-radius: 12px;
+            padding: 3rem 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #1db954;
+        }
+
+        .player-container {
+            background: #1c1c1c;
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 320px;
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .cover-wrapper {
+            position: relative;
+            margin: 0 auto 20px;
+            width: 160px;
+            height: 160px;
+        }
+
+        .cover-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 8px solid #282828;
+            transform-origin: center;
+            animation-play-state: paused;
+        }
+
+        .cover-image.play {
+            animation: rotate 10s linear infinite;
+        }
+
+        .center-hole {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            background: #1c1c1c;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #333;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .song-info {
+            margin-bottom: 20px;
+        }
+
+        .song-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .song-artist {
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .progress-container {
+            background: #333;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 6px;
+            width: 100%;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .progress {
+            background: #1db954;
+            border-radius: 5px;
+            height: 100%;
+            width: 0%;
+            transition: width 0.1s linear;
+            position: relative;
+        }
+
+        .progress::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: -3px;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-ctrl {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            outline: none;
+        }
+
+        .btn-ctrl:hover {
+            color: #1db954;
+        }
+
+        .btn-play {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #1db954;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            color: white;
+            padding-left: 3px;
+        }
+
+        .btn-play.playing {
+            padding-left: 0;
+        }
+
+        /* center pause icon */
+        .btn-play:hover {
+            background: #1ed760;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 26: Muziek Speler</h1>
+        <span class="level">Master</span>
+        <p class="description">Bouw een muziekspeler met draaiende platen covers, een voortgangsbalk en play/pauze
+            commando's.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De Audio API</h4>
+                <p>Browsers hebben een ingebouwde speler voor geluid. Dit zit in de <code>&lt;audio&gt;</code> tag in je
+                    HTML, of je kan zoiets direct in JS maken met <code>new Audio()</code>.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> audio = document.<span class="function">getElementById</span>(<span class="string">'audio'</span>);
+
+<span class="keyword">if</span> (isPlaying) {
+    audio.<span class="function">pause</span>();
+} <span class="keyword">else</span> {
+    audio.<span class="function">play</span>();
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We roepen letterlijk <code>.play()</code> of <code>.pause()</code> aan op
+                    het DOM element! De browser regelt de rest.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: De Voortgangsbalk (Tijd Updaten)</h4>
+                <p>Terwijl de muziek speelt, zendt het <code>audio</code> element constant het <code>timeupdate</code>
+                    event uit. Hiermee kunnen we een visuele balk vullen.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">updateProgress</span>(e) {
+    <span class="keyword">const</span> { duration, currentTime } = e.srcElement;
+    <span class="keyword">const</span> progressPercent = (currentTime / duration) * <span class="string">100</span>;
+    
+    progress.style.width = <span class="string">`${progressPercent}%`</span>;
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We berekenen de verstreken tijd t.o.v. de totale duur (uit het event
+                    properties), vertalen dat naar een percentage (0 tot 100) en passen daarmee de CSS
+                    <code>width</code> stapsgewijs aan.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: De Klikbare Tijdlijn (Skippen)</h4>
+                <p>Wanneer de gebruiker op een willekeurig punt op de lange balk tikt, spoelt de audio door naar dat
+                    moment.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">setProgress</span>(e) {
+    <span class="keyword">const</span> width = <span class="keyword">this</span>.clientWidth;
+    <span class="keyword">const</span> clickX = e.offsetX;
+    
+    audio.currentTime = (clickX / width) * audio.duration;
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Als de balk 100px breed is, en je klikt op 50px (<code>offsetX</code>), dan
+                    zit je op exact 50%. We vertellen de <code>audio.currentTime</code> te springen naar de helft van de
+                    <code>duration</code> (totale tracklengte).</p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Visuele Muziek Synchronisatie)</h3>
+            <pre><span class="comment">// Als we op 'Play' klikken wekken we ook de interface tot leven.</span>
+<span class="keyword">function</span> <span class="function">togglePlay</span>() {
+    <span class="keyword">if</span> (isPlaying) {
+        audio.<span class="function">pause</span>();
+        playBtn.innerText = <span class="string">'▶'</span>;
+        cover.classList.<span class="function">remove</span>(<span class="string">'play'</span>); <span class="comment">// Stop de CD-animatie</span>
+    } <span class="keyword">else</span> {
+        audio.<span class="function">play</span>();
+        playBtn.innerText = <span class="string">'⏸'</span>;
+        cover.classList.<span class="function">add</span>(<span class="string">'play'</span>); <span class="comment">// Start de 360-graden draai-animatie</span>
+    }
+    isPlaying = !isPlaying;
+}</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Druk in de demo op de grote afspeelknop. Het liedje zal meteen afspelen (en de LP / cover image zal
+                    theatraal ronddraaien!).</li>
+                <li>Druk op "volgende" voor een andere titel (in deze demo blijft het audiosample hetzelfde bestand,
+                    maar reset de timer naar het begin).</li>
+                <li>Klik ergens op de grijze tijdlijn balk om in een vingerknip door het muziekstuk te skippen.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Muis-locatie <code>e.offsetX</code>:</strong> In muis events is <code>offsetX</code>
+                    relatief aan het blok waar je op klikte. Het vertelt je de muis positie <strong>binnen in</strong>
+                    de div, wat ideaal is voor berekeningen van o.a. balken en sliders.</li>
+                <li><strong>CORS & URL-Restricties:</strong> In JS is het vaak verboden om media van <strong>andere
+                        sites/domeinen</strong> met JS te bedienen om copyright en beveiligingsredenen (CORS). Voeg
+                    <code>crossorigin="anonymous"</code> toe aan je <code>&lt;audio&gt;</code> of
+                    <code>&lt;img&gt;</code> tag in je HTML om permissie te forceren op openbare servers!</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vroegtijdige start (<code>NaN</code> of Not a Number duration)</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Als het zware audiobestand in de 1e milliseconde nog moet laden, is duration nul! Delen door nul crasht rekenformules.</span>
+const progressPercent = (currentTime / duration) * 100;
+
+<span class="comment">// ✅ GOED - Verzeker dat je weel hoelang het nummer daadwerkelijk is (voorkom een fatale crash).</span>
+// Een simpele 'return' sluit de functie direct The af the vroege stadium.
+if (!duration) return;</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor meer? Probeer dit toe te voegen in eigen projecten:</p>
+                <ul>
+                    <li><strong>Volume Regelaar:</strong> Voeg een input slider (<code>type="range"</code>) toe die je
+                        koppelt aan de <code>audio.volume</code> (van 0.0 tot 1.0) eigenschap!</li>
+                    <li><strong>Echte Playlist:</strong> Voeg verschillende MP3 URL's toe aan de array in JS.</li>
+                    <li><strong>Mooie Tijd Formattering:</strong> Toon naast of the op de the The balk the de voortgang
+                        als getallen (bijv. <code>02:45 / 03:00</code>) the The (gebruik hier the een wiskundige the
+                        formule the <code>Math.floor(currentTime / 60)</code> voor minuten).</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <div class="player-container">
+                <div class="cover-wrapper">
+                    <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300&q=80" alt="Album Art"
+                        class="cover-image" id="cover">
+                    <div class="center-hole"></div>
+                </div>
+
+                <div class="song-info">
+                    <h2 class="song-title" id="title">Neon Nights</h2>
+                    <p class="song-artist" id="artist">Synthwave Boy</p>
+                </div>
+
+                <div class="progress-container" id="progress-container">
+                    <div class="progress" id="progress"></div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn-ctrl" id="prev">⏮</button>
+                    <button class="btn-ctrl btn-play" id="play">▶</button>
+                    <button class="btn-ctrl" id="next">⏭</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dummy audio source -->
+        <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+            crossorigin="anonymous"></audio>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const playBtn = document.getElementById('play');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        const cover = document.getElementById('cover');
+        const progressContainer = document.getElementById('progress-container');
+        const progress = document.getElementById('progress');
+
+        let isPlaying = false;
+
+        function togglePlay() {
+            if (isPlaying) {
+                audio.pause();
+                playBtn.innerText = '▶';
+                playBtn.classList.remove('playing');
+                cover.classList.remove('play');
+            } else {
+                audio.play().catch(e => console.log("Kan niet laden o.w.v CORS cross-site (Normaal in een project, maar theorie klopt)"));
+                playBtn.innerText = '⏸';
+                playBtn.classList.add('playing');
+                cover.classList.add('play');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function updateProgress(e) {
+            const { duration, currentTime } = e.srcElement;
+            if (!duration) return;
+            const progressPercent = (currentTime / duration) * 100;
+            progress.style.width = `${progressPercent}%`;
+        }
+
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audio.duration;
+            if (!duration) return;
+            audio.currentTime = (clickX / width) * duration;
+        }
+
+        playBtn.addEventListener('click', togglePlay);
+        audio.addEventListener('timeupdate', updateProgress);
+        progressContainer.addEventListener('click', setProgress);
+
+        // Dummy logic for next/prev
+        let songIndex = 0;
+        const songs = ["Neon Nights", "Midnight Drive", "Retro Sunset"];
+
+        function changeSong(direction) {
+            songIndex += direction;
+            if (songIndex < 0) songIndex = songs.length - 1;
+            if (songIndex >= songs.length) songIndex = 0;
+            document.getElementById('title').innerText = songs[songIndex];
+            audio.currentTime = 0;
+            if (isPlaying) audio.play();
+        }
+
+        prevBtn.addEventListener('click', () => changeSong(-1));
+        nextBtn.addEventListener('click', () => changeSong(1));
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

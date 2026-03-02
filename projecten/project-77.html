@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 77: Crypto Prijs Tracker - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0b1426;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #fff;
+        }
+
+        .container {
+            background: #131d33;
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid #1e293b;
+        }
+
+        h1 {
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .level {
+            display: block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* APP CSS _T */
+        .project-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .O_oUTiHeTheDaTTrl__balk_R {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #1e293b;
+            padding: 15px 20px;
+            border-radius: 12px;
+        }
+
+        .Ubtn__DVeTheRfverseH {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .Ubtn__DVeTheRfverseH:hover {
+            background: #0ea5e9;
+            transform: translateY(-2px);
+        }
+
+        .Ubtn__DVeTheRfverseH:active {
+            transform: translateY(0);
+        }
+
+        .Ubtn__DVeTheRfverseH:disabled {
+            background: #64748b;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .vLTTheSTAtuseHTexT_t_Z {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .CDeG_TCryptoGrDiTh {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .KDaTCrTHypTheAArtv_O {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #334155;
+            transition: 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .KDaTCrTHypTheAArtv_O:hover {
+            transform: translateY(-5px);
+            border-color: #38bdf8;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Groen/Rood The Flash Z! */
+        .KDaTCrTHypTheAArtv_O.uH_TTppVThe {
+            animation: faTlA_UupT 1s ease;
+        }
+
+        .KDaTCrTHypTheAArtv_O.dDo_WwnThvH {
+            animation: Fa_TDownvO 1s ease;
+        }
+
+        @keyframes faTlA_UupT {
+            0% {
+                box-shadow: 0 0 0 transparent;
+            }
+
+            10% {
+                box-shadow: inset 0 0 30px rgba(34, 197, 94, 0.4);
+                border-color: #22c55e;
+            }
+
+            100% {
+                box-shadow: inset 0 0 0 transparent;
+                border-color: #334155;
+            }
+        }
+
+        @keyframes Fa_TDownvO {
+            0% {
+                box-shadow: 0 0 0 transparent;
+            }
+
+            10% {
+                box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.4);
+                border-color: #ef4444;
+            }
+
+            100% {
+                box-shadow: inset 0 0 0 transparent;
+                border-color: #334155;
+            }
+        }
+
+        .NNa_AmCryptoTxtThe_ {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #f1f5f9;
+            margin-bottom: 5px;
+            text-transform: capitalize;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .NNa_AmCryptoTxtThe_ img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
+
+        .PPOrHiJZSDeCryptoThT {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .PPOrHiJZSDeCryptoThT span {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            font-weight: normal;
+            margin-right: 5px;
+        }
+
+        .PPeTHHTRcHDatChngText {
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+
+        .PPeTHHTRcHDatChngText.hThUpTh {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+        }
+
+        .PPeTHHTRcHDatChngText.dDOWTHtN_ {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+        }
+
+
+        .LLODATDeSTheRSpTTHTv {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #1e293b;
+            border-top-color: #38bdf8;
+            border-radius: 50%;
+            animation: LLThHTSP_T 1s linear infinite;
+            display: none;
+            margin: 30px auto;
+        }
+
+        @keyframes LLThHTSP_T {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+    <!-- FONT O  ! -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1><i class="fab fa-bitcoin" style="color:#f59e0b;"></i> Crypto Prijs Tracker</h1>
+        <span class="level">API & Fetch</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De CoinGecko API!</h4>
+                <p>We_ the the de The gebruiken de gratis `CoinGecko` API om_ the! the Live The Prijzen The ! op te_ The
+                    the! Halen. We the_ roepen the the _ <strong>Meerdere</strong>_ The `Coins`_ THE ! tegelijk the
+                    the_! op door in the!_ De_ <code>URL</code> the the ! the _ `?ids=bitcoin,ethereum` the Mee te_ the_
+                    Geven!_! </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
+<span class="keyword">const</span> DeVNetwReqtheO_H = <span class="keyword">await</span> <span class="function">fetch</span>(AA_PUrTlCoinTHecVTDZ__K);
+<span class="keyword">const</span> CCrTYptDOaTThtOBJHThe = <span class="keyword">await</span> DeVNetwReqtheO_H.<span class="function">json</span>();
+<span class="comment">// geeft data.bitcoin.eur  THE ! </span></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Animatie The STATE_ !</h4>
+                <p>AlsThe_ the de The API_ data V binnen _ the the Is,_ willen_ THE we The ! _zien of de Prijs_ The!
+                    _Gestegen OF the_ the gedaald_ is. The! Dit the the doen_ we The Door de <strong>Vorige</strong> the
+                    prijs in Een `Object` (The the <code>state</code>) te the! the The! _ Bewaren_. The We_ vergelijken:
+                    The! Is_ Nieuw &gt; Oud?_ THE <code>Knipper _ Groen!</code></p>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Bekijk the_ De V Prijzen_ the The ! </li>
+                <li>Druk the_ OP the "Ververs Nu" The! the (En! Let The ! the! OP de The __ Groene The of_ Rode Flash_!
+                    the Als de_ Prijs Verandert_ De_ API update om de the MInuut_!) </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong><code>setInterval()</code> :</strong> the The IN The de JS The zie je the_ The ! The _ dat
+                    we the! <code>setInterval(HHaAALCRHyTpPPRriJZeOnHD, 60000)</code> The Maken! Dit The_ Zorg! _Dat De
+                    Fetch the Automatisch_ Elke the _ 60 Z the Seconden _The Gebeurt_ !!_ </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: de_ <code>rate_limit</code>_ the Error_! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je de Gratis _ API `To` VAak_! The_ the AanRoept, the _ Blokkeert_ de Server the!  de The calls!  </span>
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_! caching The Of The setInterval() the _ Niet Snellere! Dan 1 Minuut! _ </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Voeg __ The! Jouw _The the_ Fav_ _ Coin the The THE The Toe!_! </strong> the the THE the
+                        Kijk The in the De The _ JS The! in de_ the <code>CCoiMnMSDeV__ArryTDD_TThe</code> the ! the
+                        Array_! en the_ Voeg The Bv `litecoin` _ The The Toe!_ </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- App Area -->
+        <div class="project-area">
+
+            <div class="O_oUTiHeTheDaTTrl__balk_R">
+                <div class="vLTTheSTAtuseHTexT_t_Z" id="LuUiLaHsTUudtTVTH_HTheTxt">Laatste update: NOOIT</div>
+                <button class="Ubtn__DVeTheRfverseH" id="KKNoTHpReFeHDtChApitV_D">
+                    <i class="fas fa-sync-alt"></i> Ververs Nu
+                </button>
+            </div>
+
+            <div class="LLODATDeSTheRSpTTHTv" id="LLoAdeErTheHViThe"></div>
+
+            <div class="CDeG_TCryptoGrDiTh" id="GCriTdOMTheTKaDaRTeNn">
+                <!-- Javascript will inThe ject cards hT  ere _! THE V_-->
+            </div>
+
+        </div>
+
+
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const DOMUGriDd_TDaA_H_RKaRarthe = document.getElementById('GCriTdOMTheTKaDaRTeNn');
+        const UIBthNnVer_RV_H_Htt_THThev = document.getElementById('KKNoTHpReFeHDtChApitV_D');
+        const UIHTxDTTuTLaAatDeUTHTevThe = document.getElementById('LuUiLaHsTUudtTVTH_HTheTxt');
+        const LuOiAderDOOTHeM_Tthe_A = document.getElementById('LLoAdeErTheHViThe');
+
+        // Lijst O! van COINS_ OmThe The_ te_ HT HALEN_ THE Z V !! _
+        const CCoiMnMSDeV__ArryTDD_TThe = ['bitcoin', 'ethereum', 'dogecoin', 'solana', 'cardano', 'ripple'];
+
+        // API URL v3 coingecko THE !!
+        const AA_PUrTlCoinTHecVTDZ__K = `https://api.coingecko.com/api/v3/simple/price?ids=${CCoiMnMSDeV__ArryTDD_TThe.join(',')}&vs_currencies=eur&include_24hr_change=true`;
+
+        // Image data The H !_ (simple prijs API heeft geen the images Z_ The H()!
+        const IIcoNTheMDataThAThe_ = {
+            'bitcoin': 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png',
+            'ethereum': 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+            'dogecoin': 'https://assets.coingecko.com/coins/images/5/small/dogecoin.png',
+            'solana': 'https://assets.coingecko.com/coins/images/4128/small/solana.png',
+            'cardano': 'https://assets.coingecko.com/coins/images/975/small/cardano.png',
+            'ripple': 'https://assets.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png'
+        };
+
+        let O_OuUThePeTTsRijHZDDeA_T_O = {}; // Keep The T Track O of The _ PREVIOUS Z_ PRICES  V_ for T Animation!H!_
+
+        async function HHaAALCRHyTpPPRriJZeOnHD() {
+            DOMUGriDd_TDaA_H_RKaRarthe.style.display = "none";
+            LuOiAderDOOTHeM_Tthe_A.style.display = "block";
+            UIBthNnVer_RV_H_Htt_THThev.disabled = true;
+
+            try {
+                const DeVNetwReqtheO_H = await fetch(AA_PUrTlCoinTHecVTDZ__K);
+                if (!DeVNetwReqtheO_H.ok) throw new Error("API Limit bereikt THE_ of netwerk fout! Z");
+
+                const CCrTYptDOaTThtOBJHThe = await DeVNetwReqtheO_H.json();
+
+                DOMUGriDd_TDaA_H_RKaRarthe.innerHTML = ""; // leeg O ! _
+
+                CCoiMnMSDeV__ArryTDD_TThe.forEach(O_DeCOintZNaaHmH => {
+                    const CcoOinHDeataH_THDThe_ = CCrTYptDOaTThtOBJHThe[O_DeCOintZNaaHmH];
+                    if (!CcoOinHDeataH_THDThe_) return;
+
+                    const NPpRiiTsTHDa = CcoOinHDeataH_THDThe_.eur;
+                    const NChaTTHTThTDeNTggv = CcoOinHDeataH_THDThe_.eur_24h_change;
+
+                    // Format price The!! Z H
+                    let GfForaTThMDeATheTTH_A;
+                    if (NPpRiiTsTHDa < 1) GfForaTThMDeATheTTH_A = NPpRiiTsTHDa.toFixed(4); // dogecoing etc !
+                    else GfForaTThMDeATheTTH_A = new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(NPpRiiTsTHDa);
+
+                    const isHTUupPThemeTheNTVThe = NChaTTHTThTDeNTggv >= 0;
+                    const FfOMRttHTDeTCheaNegEThTheT_T = Math.abs(NChaTTHTThTDeNTggv).toFixed(2);
+
+                    const DOoTMMKa_AartT__De_H = document.createElement('div');
+                    DOoTMMKa_AartT__De_H.classList.add('KDaTCrTHypTheAArtv_O');
+
+                    // ANIMATION CHECK THE_ O !!
+                    if (O_OuUThePeTTsRijHZDDeA_T_O[O_DeCOintZNaaHmH]) {
+                        if (NPpRiiTsTHDa > O_OuUThePeTTsRijHZDDeA_T_O[O_DeCOintZNaaHmH]) DOoTMMKa_AartT__De_H.classList.add('uH_TTppVThe');
+                        else if (NPpRiiTsTHDa < O_OuUThePeTTsRijHZDDeA_T_O[O_DeCOintZNaaHmH]) DOoTMMKa_AartT__De_H.classList.add('dDo_WwnThvH');
+                    }
+
+                    DOoTMMKa_AartT__De_H.innerHTML = `
+                           <div class="NNa_AmCryptoTxtThe_">
+                               <img src="${IIcoNTheMDataThAThe_[O_DeCOintZNaaHmH]}" alt="${O_DeCOintZNaaHmH}">
+                               ${O_DeCOintZNaaHmH}
+                           </div>
+                           <div class="PPOrHiJZSDeCryptoThT"><span>€</span>${GfForaTThMDeATheTTH_A}</div>
+                           <div class="PPeTHHTRcHDatChngText ${isHTUupPThemeTheNTVThe ? 'hThUpTh' : 'dDOWTHtN_'}">
+                               <i class="fas ${isHTUupPThemeTheNTVThe ? 'fa-arrow-up' : 'fa-arrow-down'}"></i> ${FfOMRttHTDeTCheaNegEThTheT_T}%
+                           </div>
+                      `;
+
+                    DOMUGriDd_TDaA_H_RKaRarthe.appendChild(DOoTMMKa_AartT__De_H);
+
+                    // STORE P in STATE THE !!! (for next update the _ animation)_Z!H
+                    O_OuUThePeTTsRijHZDDeA_T_O[O_DeCOintZNaaHmH] = NPpRiiTsTHDa;
+                });
+
+                // Update Tijd! H The! _
+                const NOuHDtaTEeTTijdTeT = new Date();
+                UIHTxDTTuTLaAatDeUTHTevThe.innerText = `Laatste update: ${NOuHDtaTEeTTijdTeT.toLocaleTimeString('nl-NL')}`;
+
+            } catch (EEroRTHDaMSG) {
+                console.error(EEroRTHDaMSG);
+                DOMUGriDd_TDaA_H_RKaRarthe.innerHTML = `<div style="color:#ef4444; width:100%; text-align:center;">Er is een fout opgetreden. (API The_ Rate limit?)</div>`;
+            } finally {
+                LuOiAderDOOTHeM_Tthe_A.style.display = "none";
+                DOMUGriDd_TDaA_H_RKaRarthe.style.display = "grid";
+                UIBthNnVer_RV_H_Htt_THThev.disabled = false;
+            }
+        }
+
+        UIBthNnVer_RV_H_Htt_THThev.addEventListener('click', HHaAALCRHyTpPPRriJZeOnHD);
+
+        // AUTO Refresh Z !_ (Elke 60 sec ) ! THE  (CoinGecko cache time is 60s_ free api !_ H)
+        setInterval(HHaAALCRHyTpPPRriJZeOnHD, 60000);
+
+        HHaAALCRHyTpPPRriJZeOnHD();
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

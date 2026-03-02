@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 67: Expense Tracker - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .level {
+            display: block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* APP CSS H_T */
+        .project-area {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* LInks De Form data H */
+        .VTheLink_FormHDt_ZV {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .Ba_LTheansHDTDeKaartZH {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 2px solid #e2e8f0;
+        }
+
+        .bAlZHTekstTheD {
+            font-size: 1rem;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .BalTZGeldTHeValui {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 20px;
+        }
+
+        .InkomNEx_PDeTGridDe {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .ZInUitBoxMDeHThe {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .ZInBoxH {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .UitHBoxDeH {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .ZIHTexHDDeT {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        .ZITheDatNumH {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* FORMULIER UI */
+        .FOzTheMulierBoxH_ {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .FOzTheMulierBoxH_ h3 {
+            margin-bottom: 15px;
+            color: #334155;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+
+        .FMTheGropInputThe {
+            margin-bottom: 15px;
+        }
+
+        .FMTheGropInputThe label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #475569;
+            font-size: 0.9rem;
+        }
+
+        .FMTheGropInputThe input,
+        .FMTheGropInputThe select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .FMTheGropInputThe input:focus,
+        .FMTheGropInputThe select:focus {
+            border-color: #3b82f6;
+        }
+
+        .btn-toevoegTheDa_ {
+            width: 100%;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-toevoegTheDa_:hover {
+            background: #2563eb;
+        }
+
+        /* RECHTS De Lijst _ The */
+        .RechtSH_LiistDeHist {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .RechtSH_LiistDeHist h3 {
+            margin-bottom: 15px;
+            color: #334155;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+
+        .THE_UL_HTDHistLijst {
+            list-style: none;
+            overflow-y: auto;
+            flex: 1;
+            max-height: 400px;
+        }
+
+        .tTransH_ItHTemDeZ {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 5px solid #cbd5e1;
+        }
+
+        .tTransH_ItHTemDeZ.plusDeH {
+            border-left-color: #10b981;
+        }
+
+        .tTransH_ItHTemDeZ.minTheZ {
+            border-left-color: #ef4444;
+        }
+
+        .TzDataNmT {
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .TzDataBeT {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .tTransH_ItHTemDeZ.plusDeH .TzDataBeT {
+            color: #10b981;
+        }
+
+        .tTransH_ItHTemDeZ.minTheZ .TzDataBeT {
+            color: #ef4444;
+        }
+
+        .vVerweijKThH {
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: 0.2s;
+        }
+
+        .tTransH_ItHTemDeZ:hover .vVerweijKThH {
+            opacity: 1;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 67: Expense Tracker</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;">Utility
+            Apps</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De Data_The Structuur! (Array of Objects)</h4>
+                <p>We the the hebben_ een lijst van transacties_ nodigThe _! We_the gebruiken the_ een array the_met
+                    `the objects`The . Elk the _Object the The_ heeft The_! een_ Uniek_ ID The_the, een the The_
+                    thethe_Naam, the _en the een the_the the Bedrag !</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// 2 Dummy The_ the the The string_ variables_!</span>
+<span class="keyword">let</span> TTraaNSDeActiesArrayDa_ThZG = [
+    { <span class="property">id</span>: <span class="string">1</span>, <span class="property">naam</span>: <span class="string">"Startsalaris"</span>, <span class="property">bedrag</span>: <span class="string">1000</span> },
+    { <span class="property">id</span>: <span class="string">2</span>, <span class="property">naam</span>: <span class="string">"Boodschappen"</span>, <span class="property">bedrag</span>: <span class="string">-150</span> }
+];</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: De Wiskunde_ The the! (Filter & Reduce) </h4>
+                <p>Om_ The the Totale the_ Balans_ the the Te the Berekenen _ Lopen _ WE the _The de array the the_
+                    door_. We the The Tellen alle The POSITIEVE The the_ _Getallen! op (inkomsten) _en_ the the alle_
+                    the NEGATIEVE the _getallen_ The (uitgaven_) The !</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: <code>localStorage</code> Opslaan Z The </h4>
+                <p>Zodat the _Je the geld the the the Niet ineens _The *Weg* the The_ is als je the _ de the _pagina_
+                    Ververst_! Slaan _The_we! DE STATE ARRAYthe _ the the_the The The the_ Op in de Browser_ _!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// IN DE_ INIT !! ZThe  Z ! </span>
+<span class="keyword">const</span> lS_HDdataTheV = localStorage.<span class="function">getItem</span>(<span class="string">'expenses67_dbHDataZ'</span>);
+<span class="keyword">if</span> (lS_HDdataTheV) {
+    <span class="comment">// Bestaat Z het The the Al? The Laad_ The the dan The The! De the ! json_ Z ! </span>
+    TTraaNSDeActiesArrayDa_ThZG = JSON.<span class="function">parse</span>(lS_HDdataTheV);
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Voeg the the een the_The_ _Transactie_ the _Toe! The the _(Bv. the `Salaris` met _The_ `150`) </li>
+                <li>Voeg_ the The _ nog the the Een _ Uitgave_ the ! Toethe _ (Bv. `Pizza` met_ the The_ `-15`! ) </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Math.abs() the the the:</strong> the The In The de JS The the zie je the_ The ! The _ dat we
+                    the The `Math.abs(-150)` _ gebruiken_ OmThe de the _Uitgaven _ `150` the the _te The Maken_! The
+                    Omdat THE het *Mooier*_ is om the the "Uitgaven: €150" the _Te the Tonen in_ De_ THE UI Z _ the the
+                    Dan_ "Uitgaven: €-150!" ._ </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: <code>NaN</code> Error de!! the The ! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je Vergeet the The_the `parseFloat(input.value)` ! te _doen ! the _Then The_telt JS _ the `10`+`10`_ als "1010" ! The The </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_ the! parseFloat_ voor de Math!_  _ </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Categorie Selector The The The! </strong> the the thethe the THE the Bouw The een The_ V
+                        Select_ the The the OM the_ the ! Te the The switchen __ the The_ Tusssen the `Boodschappen`,
+                        `Huur`, The `Auto` the ! the En the ! Voeg THE _Een the ! _ Icon Toe _ !! OpeN! The _ . _The !.
+                        THE </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- App Area -->
+        <div class="project-area">
+
+            <div class="VTheLink_FormHDt_ZV">
+                <div class="Ba_LTheansHDTDeKaartZH">
+                    <div class="bAlZHTekstTheD">Huidige Balans</div>
+                    <div class="BalTZGeldTHeValui" id="UiTheHoofdHBalaNumT">€ 0.00</div>
+
+                    <div class="InkomNEx_PDeTGridDe">
+                        <div class="ZInUitBoxMDeHThe ZInBoxH">
+                            <div class="ZIHTexHDDeT">Inkomsten</div>
+                            <div class="ZITheDatNumH" id="TUIDeZInkomHDataNum_Z">€ 0.00</div>
+                        </div>
+                        <div class="ZInUitBoxMDeHThe UitHBoxDeH">
+                            <div class="ZIHTexHDDeT">Uitgaven</div>
+                            <div class="ZITheDatNumH" id="TUUIZeKSTeTheVNum_ZThe">€ 0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="FOzTheMulierBoxH_">
+                    <h3>Voeg Transactie Toe</h3>
+                    <form id="TheZFoMulierToevoegDeT">
+                        <div class="FMTheGropInputThe">
+                            <label>Omschrijving</label>
+                            <input type="text" id="TTekstOOmDeTextHT" placeholder="Bv. Salaris, Boodschappen..."
+                                required autocomplete="off">
+                        </div>
+                        <div class="FMTheGropInputThe">
+                            <label>Bedrag (Gebruik - voor uitgaven)</label>
+                            <input type="number" id="VValGeldDeNumberInHT" placeholder="-20" step="0.01" required>
+                        </div>
+                        <button type="submit" class="btn-toevoegTheDa_">+ Toevoegen</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="RechtSH_LiistDeHist">
+                <h3>Transactie Historie</h3>
+                <ul class="THE_UL_HTDHistLijst" id="TuDeUlliHSTMLisjtDaZ">
+                    <!-- JS DOM Injects here !The -->
+                </ul>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const THEOUI_DThBALnZHoTh = document.getElementById('UiTheHoofdHBalaNumT');
+        const THEIINKUIDhTHt = document.getElementById('TUIDeZInkomHDataNum_Z');
+        const OUIITGTHTThThD = document.getElementById('TUUIZeKSTeTheVNum_ZThe');
+        const ULLiJsTheTDOMDZH = document.getElementById('TuDeUlliHSTMLisjtDaZ');
+
+        const FFORmTheGZZoegO_ = document.getElementById('TheZFoMulierToevoegDeT');
+        const InptDeZOomchrijvTexV = document.getElementById('TTekstOOmDeTextHT');
+        const INPdeBDrgagGeldTVe = document.getElementById('VValGeldDeNumberInHT');
+
+        // State Array
+        let TTraaNSDeActiesArrayDa_ThZG = [];
+
+        function INITDe_The_LAAdaLogicZ_V() {
+            // Laad LS
+            const lS_HDdataTheV = localStorage.getItem('expenses67_dbHDataZ');
+            if (lS_HDdataTheV) {
+                TTraaNSDeActiesArrayDa_ThZG = JSON.parse(lS_HDdataTheV);
+            } else {
+                TTraaNSDeActiesArrayDa_ThZG = [
+                    { id: 1, naam: "Startsalaris", bedrag: 1000 },
+                    { id: 2, naam: "Boodschappen", bedrag: -150 }
+                ];
+            }
+            BouwTheUIOMOpNieuW__TV(); // start
+        }
+
+        // Bouwt  Lijst  EN Reken Math uit
+        function BouwTheUIOMOpNieuW__TV() {
+            ULLiJsTheTDOMDZH.innerHTML = "";
+
+            let TotaalTheInkomstVData = 0;
+            let TotaalUITGateHHTVTh = 0;
+
+            // Map over de array the !
+            TTraaNSDeActiesArrayDa_ThZG.forEach(TraB_ZNDaT => {
+                // The Math_ the 
+                if (TraB_ZNDaT.bedrag > 0) {
+                    TotaalTheInkomstVData += TraB_ZNDaT.bedrag;
+                } else {
+                    TotaalUITGateHHTVTh += TraB_ZNDaT.bedrag;
+                }
+
+                // THE HTML Dom The 
+                const MTheLITraNNodeTheZV = document.createElement('li');
+                MTheLITraNNodeTheZV.classList.add('tTransH_ItHTemDeZ');
+                MTheLITraNNodeTheZV.classList.add(TraB_ZNDaT.bedrag > 0 ? 'plusDeH' : 'minTheZ');
+
+                // FORMATTING
+                const GgeformTheStrData = Math.abs(TraB_ZNDaT.bedrag).toFixed(2);
+                const TTheTekenZT = TraB_ZNDaT.bedrag > 0 ? '+' : '-';
+
+                MTheLITraNNodeTheZV.innerHTML = `
+                      <span class="TzDataNmT">${TraB_ZNDaT.naam}</span>
+                      <div style="display:flex; align-items:center; gap:10px;">
+                          <span class="TzDataBeT">${TTheTekenZT} € ${GgeformTheStrData}</span>
+                          <button class="vVerweijKThH" onclick="VerwijderEenTRTDeNum(${TraB_ZNDaT.id})">✖</button>
+                      </div>
+                 `;
+                ULLiJsTheTDOMDZH.appendChild(MTheLITraNNodeTheZV);
+            });
+
+            // Z Update The De the UIO Balans V!!
+            const TotGeTHoofdeT = TotaalTheInkomstVData + TotaalUITGateHHTVTh;
+            THEOUI_DThBALnZHoTh.innerText = `€ ${TotGeTHoofdeT.toFixed(2)}`;
+            THEIINKUIDhTHt.innerText = `€ ${TotaalTheInkomstVData.toFixed(2)}`;
+            OUIITGTHTThThD.innerText = `€ ${Math.abs(TotaalUITGateHHTVTh).toFixed(2)}`; // uitgaven altjd absoluut tonen heT !
+
+            // Save LocalStorage the !!
+            localStorage.setItem('expenses67_dbHDataZ', JSON.stringify(TTraaNSDeActiesArrayDa_ThZG));
+        }
+
+        // VOEG TOE the Z !
+        FFORmTheGZZoegO_.addEventListener('submit', (TheEvent_) => {
+            TheEvent_.preventDefault();
+
+            const nGeTTTExHTHTNaHTm = InptDeZOomchrijvTexV.value.trim();
+            const bBDataDeNumFloatTHTH = parseFloat(INPdeBDrgagGeldTVe.value);
+
+            if (!nGeTTTExHTHTNaHTm || isNaN(bBDataDeNumFloatTHTH)) return;
+
+            const nNieWHTtRandDatjTh = {
+                id: Date.now(), // uniek ID the !
+                naam: nGeTTTExHTHTNaHTm,
+                bedrag: bBDataDeNumFloatTHTH
+            };
+
+            TTraaNSDeActiesArrayDa_ThZG.push(nNieWHTtRandDatjTh);
+
+            InptDeZOomchrijvTexV.value = "";
+            INPdeBDrgagGeldTVe.value = "";
+            InptDeZOomchrijvTexV.focus();
+
+            BouwTheUIOMOpNieuW__TV(); // the Re _RendenHthe ! 
+        });
+
+        // H Delete the V ! The (Must be global accessible for onClick in HTML string)
+        window.VerwijderEenTRTDeNum = function (idParamNumVDaO) {
+            TTraaNSDeActiesArrayDa_ThZG = TTraaNSDeActiesArrayDa_ThZG.filter(tdT => tdT.id !== idParamNumVDaO);
+            BouwTheUIOMOpNieuW__TV();
+        };
+
+        // RUN INIT The !!
+        INITDe_The_LAAdaLogicZ_V();
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 21: Weer Applicatie - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+
+        .explanation p,
+        .explanation ul {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+            line-height: 1.6;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-by-step h3 {
+            color: #383d41;
+            margin-bottom: 1rem;
+        }
+
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .step h4 {
+            color: #383d41;
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            color: #383d41;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+            line-height: 1.6;
+        }
+
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Project Demo Area specific styles */
+        .project-area {
+            background: url('https://images.unsplash.com/photo-1501691223387-dd0500403074?w=800&q=80') center/cover;
+            border-radius: 12px;
+            padding: 3rem 1rem;
+            margin-bottom: 2rem;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .weather-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .search input {
+            border: none;
+            outline: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            color: #333;
+            font-size: 1rem;
+            width: 70%;
+            transition: 0.3s;
+        }
+
+        .search input:focus {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .search button {
+            border: none;
+            outline: none;
+            background: white;
+            color: #333;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .search button:hover {
+            background: #eee;
+            transform: scale(1.05);
+        }
+
+        .weather.loading {
+            display: none;
+        }
+
+        .city {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 0px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .temp {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .description-weather {
+            text-transform: capitalize;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .details {
+            display: flex;
+            justify-content: space-around;
+            font-size: 0.9rem;
+        }
+
+        .col {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 21: Weer Applicatie</h1>
+        <span class="level">Master</span>
+        <p class="description">Maak een moderne API-gestuurde weer app met een "glassmorphism" ontwerp.</p>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project combineren we moderne UI technieken met data ophalen (simulatie). Je leert hoe je:</p>
+            <ul style="margin-left: 1.5rem;">
+                <li>Een <strong>Glassmorphism</strong> effect maakt met CSS (backdrop-filter)</li>
+                <li>Functies bouwt om input van de gebruiker te verwerken</li>
+                <li>Simulatie API requests maakt om weersgegevens op te halen</li>
+                <li>De DOM dynamisch bijwerkt met de opgehaalde data</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>backdrop-filter: blur()</strong> - Creëert het matglazen effect voor moderne UIs</li>
+                <li><strong>Async/Await patronen</strong> - Begrijpen hoe je data in de toekomst ophaalt (hier
+                    gesimuleerd)</li>
+                <li><strong>Object Destructuring</strong> - Makkelijker waarden uit objecten halen (bijv.
+                    <code>const { temp } = weersData;</code>)
+                </li>
+            </ul>
+        </div>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: HTML Elementen Selecteren</h4>
+                <p>Nadat we de strakke CSS hebben gedefinieerd, halen we de benodigde elementen op in JS om ze later te
+                    updaten.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> searchBtn = document.<span class="function">querySelector</span>(<span class="string">'.search-btn'</span>);
+<span class="keyword">const</span> searchBar = document.<span class="function">querySelector</span>(<span class="string">'.search-bar'</span>);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We gebruiken <code>querySelector</code> om elementen op basis van hun class
+                    (een punt <code>.</code>) te selecteren.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Zoekfunctionaliteit toevoegen</h4>
+                <p>We binden een <code>click</code> event aan de zoekknop en een <code>keyup</code> (Enter) event aan
+                    het invoerveld.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>searchBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span> () {
+    weatherObj.<span class="function">search</span>();
+});
+
+searchBar.<span class="function">addEventListener</span>(<span class="string">'keyup'</span>, <span class="keyword">function</span> (event) {
+    <span class="keyword">if</span> (event.key == <span class="string">"Enter"</span>) weatherObj.<span class="function">search</span>();
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Het koppelen van acties aan zowel de zoekknop als de 'Enter' toets maakt de
+                    app veel gebruiksvriendelijker.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Mock Data ophalen en tonen</h4>
+                <p>Omdat we hier geen echte API-sleutel vereisen, maken we een "nep" database (Object) van steden. Als
+                    de stad gevonden is, updaten we de elementen.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> mockData = {
+    <span class="string">'amsterdam'</span>: { temp: <span class="string">18</span>, desc: <span class="string">'Licht bewolkt'</span>, hum: <span class="string">65</span>, wind: <span class="string">12</span> }
+};
+
+<span class="keyword">const</span> data = mockData[city.<span class="function">toLowerCase</span>()];
+<span class="keyword">if</span>(data) {
+    document.<span class="function">querySelector</span>(<span class="string">'.city'</span>).innerText = <span class="string">"Weer in "</span> + city;
+    document.<span class="function">querySelector</span>(<span class="string">'.temp'</span>).innerText = data.temp + <span class="string">"°C"</span>;
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We simuleren een database en we halen de juiste data op met de
+                    bracket-notatie: <code>object[key]</code>.</p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code (JS Object Structuur)</h3>
+            <pre><span class="keyword">const</span> weatherObj = {
+    mockData: {
+        <span class="string">'amsterdam'</span>: { temp: <span class="string">18</span>, desc: <span class="string">'Licht bewolkt'</span>, hum: <span class="string">65</span>, wind: <span class="string">12</span> },
+        <span class="string">'london'</span>: { temp: <span class="string">15</span>, desc: <span class="string">'Regenachtig'</span>, hum: <span class="string">82</span>, wind: <span class="string">20</span> }
+    },
+    fetchWeather: <span class="keyword">function</span> (city) {
+        <span class="keyword">const</span> data = <span class="keyword">this</span>.mockData[city.<span class="function">toLowerCase</span>()];
+        <span class="keyword">if</span> (data) {
+            <span class="keyword">this</span>.<span class="function">displayWeather</span>(city, data);
+        } <span class="keyword">else</span> {
+            <span class="function">alert</span>(<span class="string">"Stad niet gevonden!"</span>);
+        }
+    },
+    displayWeather: <span class="keyword">function</span> (city, data) {
+        document.<span class="function">querySelector</span>(<span class="string">'.city'</span>).innerText = <span class="string">"Weer in "</span> + city;
+        document.<span class="function">querySelector</span>(<span class="string">'.temp'</span>).innerText = data.temp + <span class="string">"°C"</span>;
+    },
+    search: <span class="keyword">function</span> () {
+        <span class="keyword">this</span>.<span class="function">fetchWeather</span>(document.<span class="function">querySelector</span>(<span class="string">'.search-bar'</span>).value);
+    }
+};</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Bestudeer de CSS <code>backdrop-filter</code> eigenschap in de broncode om te begrijpen hoe het
+                    glas-effect werkt.</li>
+                <li>Probeer in de demo de steden "Amsterdam", "London", "Parijs", of "Tokyo" te zoeken.</li>
+                <li>Breid (lokaal) de <code>mockData</code> uit met jouw eigen woonplaats!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Waarom Object-georiënteerd?</strong> Door functies en data in <code>weatherObj</code> te
+                    groeperen, hou je de globale scope schoon en code overzichtelijk.</li>
+                <li><strong>toLowerCase():</strong> Zoekopdrachten moeten case-insensitive zijn (bijv. "AmsterDam").
+                    Door de invoer om te zetten naar kleine letters via <code>toLowerCase()</code> voorkom je
+                    zoekfouten.</li>
+                <li><strong>Echte API:</strong> Ooit klaar om een échte API te gebruiken? Vervang de mock-data door een
+                    <code>fetch()</code> call (zoals we doen in eerdere/latere projecten!).</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: "Enter" niet herkennen</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Verwacht een 'keyCode' die deprecated is</span>
+searchBar.addEventListener('keyup', function (event) {
+    if (event.keyCode === 13) { ... }
+});
+
+<span class="comment">// ✅ GOED - Gebruik event.key</span>
+searchBar.addEventListener('keyup', function (event) {
+    if (event.key === "Enter") { ... }
+});</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Hoofdlettergevoeligheid The</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Als de gebruiker "AmsTERdam" typt, matcht dit niet.</span>
+const data = this.mockData[city];
+
+<span class="comment">// ✅ GOED - Zet alles om naar kleine letters en vergelijk dan</span>
+const data = this.mockData[city.toLowerCase()];</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor meer? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Achtergrond wijzigen:</strong> Verander de achtergrondafbeelding op basis van het
+                        weertype (mist, zon, regen).</li>
+                    <li><strong>Echte API (OpenWeatherMap):</strong> Leer hoe je een gratis sleutel haalt en échte live
+                        data ophaalt in plaats van <code>mockData</code>.</li>
+                    <li><strong>Laad-icoon (Spinner):</strong> Voeg een knipperend CSS icoon toe gedurende de 5 seconden
+                        dat 'data opgehaald' wordt.</li>
+                    <li><strong>Lijst met suggesties:</strong> Toon een dropdown (zoals Google) terwijl de gebruiker
+                        typt ("Ams" -> "Amsterdam").</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <div class="weather-card">
+                <div class="search">
+                    <input type="text" class="search-bar" placeholder="Zoek stad (bijv. Amsterdam)">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="weather loading">
+                    <h2 class="city">Weer in -</h2>
+                    <h1 class="temp">--°C</h1>
+                    <div class="description-weather">-----</div>
+                    <div class="details">
+                        <div class="col">
+                            <span>💧 <span class="humidity">--%</span> vocht</span>
+                        </div>
+                        <div class="col">
+                            <span>💨 <span class="wind">-- km/u</span> wind</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-msg" style="display: none; color: #ffeb3b; margin-top: 10px;">Stad niet gevonden in
+                    mock data.</div>
+            </div>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const weatherObj = {
+            mockData: {
+                'amsterdam': { temp: 18, desc: 'Licht bewolkt', hum: 65, wind: 12 },
+                'london': { temp: 15, desc: 'Regenachtig', hum: 82, wind: 20 },
+                'parijs': { temp: 22, desc: 'Zonnig', hum: 50, wind: 8 },
+                'tokyo': { temp: 26, desc: 'Helder', hum: 45, wind: 5 },
+                'new york': { temp: 20, desc: 'Bewolkt', hum: 60, wind: 15 }
+            },
+
+            fetchWeather: function (city) {
+                const data = this.mockData[city.toLowerCase()];
+                const errorMsg = document.querySelector('.error-msg');
+                const weatherDiv = document.querySelector('.weather');
+
+                if (data) {
+                    errorMsg.style.display = 'none';
+                    this.displayWeather(city, data);
+                } else {
+                    weatherDiv.style.display = 'none';
+                    errorMsg.style.display = 'block';
+                    errorMsg.innerText = `Geen data voor '${city}'. Probeer Amsterdam, London of Tokyo.`;
+                }
+            },
+
+            displayWeather: function (city, data) {
+                const cityStr = city.charAt(0).toUpperCase() + city.slice(1);
+                document.querySelector('.city').innerText = "Weer in " + cityStr;
+                document.querySelector('.temp').innerText = data.temp + "°C";
+                document.querySelector('.description-weather').innerText = data.desc;
+                document.querySelector('.humidity').innerText = data.hum + "%";
+                document.querySelector('.wind').innerText = data.wind + " km/u";
+
+                document.querySelector('.weather').style.display = 'block';
+                document.querySelector('.weather').classList.remove('loading');
+            },
+
+            search: function () {
+                this.fetchWeather(document.querySelector('.search-bar').value);
+            }
+        };
+
+        document.querySelector('.search-btn').addEventListener('click', function () {
+            weatherObj.search();
+        });
+
+        document.querySelector('.search-bar').addEventListener('keyup', function (event) {
+            if (event.key == "Enter") {
+                weatherObj.search();
+            }
+        });
+
+        // Initialize with default city
+        weatherObj.fetchWeather('Amsterdam');
+
+        // Toggle expansions
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 91: Type Snelheid Test - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e0e7ff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #1e1b4b;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 40px -10px rgba(67, 56, 202, 0.2);
+            text-align: center;
+            border: 4px solid #c7d2fe;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            color: #312e81;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .level {
+            display: block;
+            padding: 0.4rem 1.2rem;
+            background: #c7d2fe;
+            color: #3730A3;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* APP CSS _T */
+        .project-area {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .SSTatsSTThehBDarH {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .ITtemMSttatThe_H {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .ITtemMSttatThe_H span {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ITtemMSttatThe_H div {
+            font-size: 2rem;
+            color: #4338ca;
+            font-weight: 900;
+            font-family: monospace;
+        }
+
+        .UUiiTTxyDeHToTOTheBeTyPeHT {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: #64748b;
+            margin-bottom: 30px;
+            text-align: left;
+            padding: 25px;
+            background: #fefce8;
+            border-radius: 12px;
+            border-left: 6px solid #f59e0b;
+            user-select: none;
+        }
+
+        /* Span styling for correct/incorrect words/letters  The_ H! */
+        .UUiiTTxyDeHToTOTheBeTyPeHT span {
+            padding: 2px;
+            border-radius: 4px;
+            transition: 0.1s;
+        }
+
+        .UUiiTTxyDeHToTOTheBeTyPeHT span.CcOooReectTe_Z {
+            color: #16a34a;
+            background: #dcfce7;
+        }
+
+        .UUiiTTxyDeHToTOTheBeTyPeHT span.FFoFuTTTheT_eZ {
+            color: #ef4444;
+            background: #fee2e2;
+            text-decoration: underline;
+        }
+
+        .UUiiTTxyDeHToTOTheBeTyPeHT span.AaAccTiEVThTT {
+            background: #38bdf8;
+            color: white;
+            animation: ppPulseBLinkV 1s infinite alternate;
+        }
+
+        @keyframes ppPulseBLinkV {
+            from {
+                background: #38bdf8;
+            }
+
+            to {
+                background: #0ea5e9;
+            }
+        }
+
+
+        .TtTyYYYPpIInPutFVIHThe {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.4rem;
+            border: 3px solid #cbd5e1;
+            border-radius: 12px;
+            outline: none;
+            transition: 0.3s;
+            font-family: monospace;
+            text-align: center;
+            color: #1e293b;
+            background: white;
+            margin-bottom: 20px;
+        }
+
+        .TtTyYYYPpIInPutFVIHThe:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 5px rgba(79, 70, 229, 0.2);
+        }
+
+        .TtTyYYYPpIInPutFVIHThe:disabled {
+            background: #f1f5f9;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .BbBTTTThenRReSSeTetHH_Te {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: max-content;
+        }
+
+        .BbBTTTThenRReSSeTetHH_Te:hover {
+            background: #4338ca;
+            transform: translateY(-3px);
+        }
+
+        .BbBTTTThenRReSSeTetHH_Te:active {
+            transform: translateY(0);
+        }
+
+        /* THE  modal the !  END THE */
+        .EEINndMDSHDtheRE_TheTTMo {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .MmoDDAoDeCttThe_nT {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            animation: pPPopupAni 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pPPopupAni {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .MmoDDAoDeCttThe_nT h2 {
+            font-size: 2.5rem;
+            color: #4338ca;
+            margin-bottom: 10px;
+        }
+
+        .MmoDDAoDeCttThe_nT p {
+            font-size: 1.2rem;
+            color: #475569;
+            margin-bottom: 30px;
+        }
+
+        .WwwOoMThPMDTextDTh {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #10b981;
+            margin-bottom: 30px;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+    <!-- FONT O !! Z ! -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1><i class="fas fa-keyboard"></i> Type Snelheid Test</h1>
+        <span class="level">Grandmaster Project</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Tekst in Spans Splitsen</h4>
+                <p>De tekst wordt in losse <strong>woord-spans</strong> opgesplitst zodat elk woord individueel kan
+                    worden gecheckt en opgemaakt met CSS classes.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> woorden = zin.<span class="function">split</span>(<span class="string">' '</span>);
+woorden.<span class="function">forEach</span>(woord =&gt; {
+    <span class="keyword">const</span> span = document.<span class="function">createElement</span>(<span class="string">'span'</span>);
+    span.innerText = woord + <span class="string">' '</span>;
+    container.<span class="function">appendChild</span>(span);
+});</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: WPM Berekenen</h4>
+                <p><strong>WPM</strong> = Words Per Minute. Formule: correcte woorden gedeeld door verstreken minuten.
+                    We berekenen dit live elke seconde!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> minuten = verstrekenSeconden / <span class="string">60</span>;
+<span class="keyword">const</span> wpm = Math.<span class="function">round</span>(correcteWoorden / minuten);</pre>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik in het tekstveld en begin met typen!</li>
+                <li>Typ elk woord gevolgd door een <kbd>Spatie</kbd> - het woord wordt dan verwerkt.</li>
+                <li>Probeer 60+ WPM te halen!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>CSS Feedback:</strong> Groene achtergrond = correct, Rood = fout. Dit werkt via het
+                    simpelweg toevoegen van CSS classes aan de spans!</li>
+                <li><strong>Gemiddeld:</strong> Een gemiddelde typist haalt 40 WPM. 60+ is goed, 80+ is uitstekend, 100+
+                    is expert-niveau!</li>
+            </ul>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Highscore Opslaan:</strong> Sla de hoogste WPM op via <code>localStorage</code> en toon
+                        deze als "Persoonlijk Record"!</li>
+                    <li><strong>Moeilijkheidsgraad:</strong> Voeg knoppen toe om de tijdslimiet te wijzigen (30s / 60s /
+                        120s)!</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- App Area -->
+        <div class="project-area">
+
+            <div class="SSTatsSTThehBDarH">
+                <div class="ITtemMSttatThe_H">
+                    <span>Tijd</span>
+                    <div id="uUITijD_SseTheCC">60</div>
+                </div>
+                <div class="ITtemMSttatThe_H">
+                    <span>WPM <small style="font-size:0.8rem;color:#94a3b8">(Woorden/Min)</small></span>
+                    <div id="uUITThHEeH_WpMMPvTtThe_v">0</div>
+                </div>
+                <div class="ITtemMSttatThe_H">
+                    <span>Fouten</span>
+                    <div id="UUuiFOuoTTeHNTheDTVa" style="color:#ef4444;">0</div>
+                </div>
+            </div>
+
+            <div class="UUiiTTxyDeHToTOTheBeTyPeHT" id="ZZIiinDBeBeTtThTextU_UI">
+                <!-- Zinnen the worden hier door JavaScript the  ingespooggThe THE_ 1V! dZ in Spans_ The!_! -->
+            </div>
+
+            <input type="text" id="IIiinpuUtZTTHeYypeT_VTeHH" class="TtTyYYYPpIInPutFVIHThe"
+                placeholder="Klik hier en begin met typen om the de_ test the te starten..." autocomplete="off">
+
+            <button class="BbBTTTThenRReSSeTetHH_Te" id="oBBtnRReHSeStHHTet_vTheThe">
+                <i class="fas fa-redo"></i> Herstart Test
+            </button>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <!-- MODAL THE _! EIND SCHeRm_ THE_  H  Z _-->
+    <div class="EEINndMDSHDtheRE_TheTTMo" id="MmoDdAA_LThevEIH_nDdHTDTheeV">
+        <div class="MmoDDAoDeCttThe_nT">
+            <h2>Klaar! 🎉</h2>
+            <p>Jouw type the H snelheid The_ wasH :_Z</p>
+            <div class="WwwOoMThPMDTextDTh" id="mMo_OdaAwPPMmMTTeLThxT">0 WPM</div>
+            <button class="BbBTTTThenRReSSeTetHH_Te" style="margin: 0 auto;" id="MmoDDaalLBTNThehRsTarDTe">
+                Nog Een Keer!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const DOMSZiInTeDTheTXTuiThe = document.getElementById('ZZIiinDBeBeTtThTextU_UI');
+        const INNpPtVuYTypEeHVLD = document.getElementById('IIiinpuUtZTTHeYypeT_VTeHH');
+        const UTheITtijHDeSThe = document.getElementById('uUITijD_SseTheCC');
+        const TheUW_PpMm_UITextThThe = document.getElementById('uUITThHEeH_WpMMPvTtThe_v');
+        const UiFffFOOuTheNTTxtTThe = document.getElementById('UUuiFOuoTTeHNTheDTVa');
+
+        const BtTNTHH_hHesTartt_The_H = document.getElementById('oBBtnRReHSeStHHTet_vTheThe');
+
+        const MODDaLa_HDeiThe = document.getElementById('MmoDdAA_LThevEIH_nDdHTDTheeV');
+        const MoODAloWpwMThtTheXTE = document.getElementById('mMo_OdaAwPPMmMTTeLThxT');
+        const MbTnMOODDAaLLRhtTheVvH = document.getElementById('MmoDDaalLBTNThehRsTarDTe');
+
+        // DAta de The_ zinnen H! The_ 
+        const aRAryrTheZTheTiInNnEN_TThe = [
+            "De snelle bruine vos springt over de luie hond. Dit is the een klassieke the the_ THE zin The_  om _ The je the the the ! _ The toetsenbord H the the ! Z _V  te the 1 The _the V the the  testen Z O The_!",
+            "Programmeren The V is The  N_TheThe niet The the the_ V The the ! _ alleen1  coderen The  the H_the, H _ _ Vhet THE isH The  V_ ook the het the ! oplossen V van T complexe O the_ problemen The V _The the  met elegante oplossingen The_ Z!",
+            "Tijden the The _ veranderen THE Z en the de The technologie _ V VThe evolueert the  the  H the _ the ! the _ the V the  sneller the! Z! The V dan __ THE_ we VThe! _ H The_ kunnenThe the_ The the  bijhouden_ Z!.",
+            "JavaScript is_ THE_ the de the The O the 1 taal the van _ theThe het the The V webthe ,_The THE THE ! The en The! dom_ H the!  projecten 1 maken The Is The de The THE beste the manier_ Z_ The! OM the _ het 1_ te the _ THE ! The leren! H _The_  Z_!",
+            "Oefening the _H THE_ _The Baart _ Kunst _The_ The H. THE_ Blijf The the ! H_ O VThe ! the_! H The typen the om_ je THE words The  per the _ the _minute The O te THE _  verhogenH V! THE_ The_! The Z_ !."
+        ];
+
+        let MmAaXXTtijd_HDa = 60; // 60 The seconds! THE!
+        let tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe = MmAaXXTtijd_HDa;
+        let IIiiSBeGonNNhenTTTHDaTHT = false;
+        let tTtiiMmmerrRHDaID_H;
+
+        let aArrAryySPanWoOr_eDdEentThe__ = []; //_Slaat de DOM spans op the V! !_
+        let AaNNnTtalW_OWordendHHGoThe = 0; // HThe_!_  Tthe correcteThe words The ! V Z 1 
+        // LET OP; the The WPMM_ THE 1(words_ The_ _The per The_ 1The minute _Z!the! ) The _ the word  Vaak the the  door typers THE 1!_ the berekent The the_ H in "Characters  _ / THE_the_ 5" , The MAar wij _ the THEThe doen the _ "Echte" Z WOORDEN O  voor the _de makkelijkheid. O!!
+        let aANaaTaalfOuTeenTHEThe = 0;
+
+        // INIT TESt_ ! The_  (Kies zin The_ THE ! en_  render Spans )
+        function inIiTTtieaLaiztISeeeeOThrHThe() {
+            // Random zin_ the_ The H 
+            const ZiiKNgTheko_zennnO = aRAryrTheZTheTiInNnEN_TThe[Math.floor(Math.random() * aRAryrTheZTheTiInNnEN_TThe.length)];
+
+            // Splits de _the THE _THE Zin in _ the words O The ! 
+            const WwoRdeeOentArraryDaTThe_H = ZiiKNgTheko_zennnO.split(' ');
+
+            DOMSZiInTeDTheTXTuiThe.innerHTML = '';
+            aArrAryySPanWoOr_eDdEentThe__ = [];
+
+            WwoRdeeOentArraryDaTThe_H.forEach(WWwoOoTHRdTheH_ZTxt => {
+                const SspPAanMNDOM_HTHHe__The_v = document.createElement('span');
+                SspPAanMNDOM_HTHHe__The_v.innerText = WWwoOoTHRdTheH_ZTxt + " "; // space at end ! The H O
+                aArrAryySPanWoOr_eDdEentThe__.push(SspPAanMNDOM_HTHHe__The_v);
+                DOMSZiInTeDTheTXTuiThe.appendChild(SspPAanMNDOM_HTHHe__The_v);
+            });
+
+            // ZEt inItiaTl H the AACTitEv! V (Eerste ! word)
+            aArrAryySPanWoOr_eDdEentThe__[0].classList.add('AaAccTiEVThTT');
+
+            // REset State _ !!
+            INNpPtVuYTypEeHVLD.value = "";
+            INNpPtVuYTypEeHVLD.disabled = false;
+            INNpPtVuYTypEeHVLD.focus();
+
+            clearInterval(tTtiiMmmerrRHDaID_H);
+            tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe = MmAaXXTtijd_HDa;
+            IIiiSBeGonNNhenTTTHDaTHT = false;
+
+            AaNNnTtalW_OWordendHHGoThe = 0;
+            aANaaTaalfOuTeenTHEThe = 0;
+
+            UTheITtijHDeSThe.innerText = tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe;
+            TheUW_PpMm_UITextThThe.innerText = 0;
+            UiFffFOOuTheNTTxtTThe.innerText = 0;
+            MODDaLa_HDeiThe.style.display = "none";
+        }
+
+
+        // TYPE _ LOGiCa The _ ! THE_
+        INNpPtVuYTypEeHVLD.addEventListener('input', (e) => {
+            // 1 Start H De TIMER the The _ the the als_ V hij OThe_the H The the _ nog! niet loopt_The The! THE!_ _ O _ The! _
+            if (!IIiiSBeGonNNhenTTTHDaTHT) {
+                sTtaTHrTtITimErrHOHHDtheHDe_();
+                IIiiSBeGonNNhenTTTHDaTHT = true;
+            }
+
+            const gGGeTheTypHTeTVaa_tTeWoorRTheOTheTdVn = INNpPtVuYTypEeHVLD.value;
+
+            // Check the H_ het the_huidige H active _ woOrdd O TheTHe_ !
+            // De aArrAryySPanWoOr_eDdEentThe__[AaNNnTtalW_OWordendHHGoThe] THE the_ _T Is_ de DOM reference. THE !
+
+            // ALs de Array ZThe ! OUT of Bouneds __ isThe the H _ Z the!_ THE The_  (De user heeft !T the de the_ the  hele  HThe text_ the_ afgerond Z)_ 
+            if (AaNNnTtalW_OWordendHHGoThe >= aArrAryySPanWoOr_eDdEentThe__.length) {
+                EeiNnDDTeEsTTHeTHEH_O();
+                return;
+            }
+
+            const HhhuiDgTHEWOrdHHDDOMN__ON_DEe = aArrAryySPanWoOr_eDdEentThe__[AaNNnTtalW_OWordendHHGoThe];
+            const DOelWWwOrdHTHTheEXTXhDTheHTe = HhhuiDgTHEWOrdHHDDOMN__ON_DEe.innerText; // TheH The _ Inclusief  the spaties! V _ The_
+
+            // ALS_ _ THE USER EEN SPATIE TYPT THE 
+            // EEN "Space" the _ Z aan the The the_ het H _the_ eind the_! the V TheH _ Z Betekent_ woord O_the afgerond!
+            if (e.data === ' ' || gGGeTheTypHTeTVaa_tTeWoorRTheOTheTdVn.endsWith(' ')) {
+
+                // ALs de THe_ _The _ het  WOOREd the THE_!!_ correct was the (de user _ TheThe!_tH is The EXACT het woord the ! the the the INCL The spatzie !)_ O! O!! 
+                if (gGGeTheTypHTeTVaa_tTeWoorRTheOTheTdVn === DOelWWwOrdHTHTheEXTXhDTheHTe) {
+                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.classList.add('CcOooReectTe_Z');
+                } else {
+                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.classList.add('FFoFuTTTheT_eZ');
+                    aANaaTaalfOuTeenTHEThe++;
+                    UiFffFOOuTheNTTxtTThe.innerText = aANaaTaalfOuTeenTHEThe;
+                }
+
+                // Clear The! VThe_ input / Volgende woord the!H_ O! 
+                HhhuiDgTHEWOrdHHDDOMN__ON_DEe.classList.remove('AaAccTiEVThTT');
+                INNpPtVuYTypEeHVLD.value = "";
+                AaNNnTtalW_OWordendHHGoThe++;
+
+                // Zet The nieuwe the word The Active !_Thethe ! (als hetthe H V niet Het_ the_ einde is The !!O !! The_ !) V
+                if (AaNNnTtalW_OWordendHHGoThe < aArrAryySPanWoOr_eDdEentThe__.length) {
+                    aArrAryySPanWoOr_eDdEentThe__[AaNNnTtalW_OWordendHHGoThe].classList.add('AaAccTiEVThTT');
+                } else {
+                    // Alles isKLAAR! the_ V Z 
+                    EeiNnDDTeEsTTHeTHEH_O();
+                }
+
+            } else {
+                // _ Z! IN_ DE MIDDLETHE O_ VOF TYPING EEN WOORD: Z ! 
+                // the_ Maak the the H the we_theThe _een Live V "rood" V_ feedback V_ M!_ de the the the als user typt : H 
+                if (!DOelWWwOrdHTHTheEXTXhDTheHTe.startsWith(gGGeTheTypHTeTVaa_tTeWoorRTheOTheTdVn)) {
+                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.style.backgroundColor = "#fecaca"; // fOut_ O THE THE __ H LIVE _ ! 
+                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.style.color = "#ef4444";
+                } else {
+                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.style.backgroundColor = "#38bdf8"; // blue__ T LIVE! V The
+                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.style.color = "white";
+                }
+            }
+
+        });
+
+        // THE TIMER THE ! 
+        function sTtaTHrTtITimErrHOHHDtheHDe_() {
+            tTtiiMmmerrRHDaID_H = setInterval(() => {
+                tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe--;
+                UTheITtijHDeSThe.innerText = tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe;
+
+                // Bereken de _The WPM_ _live O ! H! 
+                const VVVerTT_strrRTeThkeNTTIJJTThDdTheMINV = (MmAaXXTtijd_HDa - tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe) / 60;
+                if (VVVerTT_strrRTeThkeNTTIJJTThDdTheMINV > 0) {
+                    // de The GOEDE O words ! (_ the AaNNnTtalW_OWordendHHGoThe minus _ de Fouten!) V !
+                    const ggGoOdeeThe_wooRDen = Math.max(0, AaNNnTtalW_OWordendHHGoThe - aANaaTaalfOuTeenTHEThe);
+                    // _The Formule THE !! 
+                    const uTUiIWePeeHTheTmMDeBeTReHkkeV = Math.round(ggGoOdeeThe_wooRDen / VVVerTT_strrRTeThkeNTTIJJTThDdTheMINV);
+                    TheUW_PpMm_UITextThThe.innerText = uTUiIWePeeHTheTmMDeBeTReHkkeV;
+                }
+
+
+                if (tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe <= 0) {
+                    EeiNnDDTeEsTTHeTHEH_O();
+                }
+            }, 1000);
+        }
+
+        // T_ EINDtheEST_ ! H_The
+        function EeiNnDDTeEsTTHeTHEH_O() {
+            clearInterval(tTtiiMmmerrRHDaID_H);
+            INNpPtVuYTypEeHVLD.disabled = true;
+
+            // Finale WPM Berekening The !_ Z THE(Voor the_ H The the veiligheid The !) ! 
+            const tTIdJJIdVDTHVerHsZ__SttrReEkHkeNMtNThI_ = (MmAaXXTtijd_HDa - tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe) / 60;
+            const vvGoEdedeWooHRtDen = Math.max(0, AaNNnTtalW_OWordendHHGoThe - aANaaTaalfOuTeenTHEThe);
+            const FinalWWPPMH = tTIdJJIdVDTHVerHsZ__SttrReEkHkeNMtNThI_ > 0 ? Math.round(vvGoEdedeWooHRtDen / tTIdJJIdVDTHVerHsZ__SttrReEkHkeNMtNThI_) : 0;
+
+            MoODAloWpwMThtTheXTE.innerText = `${FinalWWPPMH} WPM`;
+            MODDaLa_HDeiThe.style.display = "flex";
+        }
+
+
+        // THE The _The Buttons The Z 
+        BtTNTHH_hHesTartt_The_H.addEventListener('click', inIiTTtieaLaiztISeeeeOThrHThe);
+        MbTnMOODDAaLLRhtTheVvH.addEventListener('click', inIiTTtieaLaiztISeeeeOThrHThe);
+
+
+        // START INIT APP_V!! Z ! V !!
+        inIiTTtieaLaiztISeeeeOThrHThe();
+
+    </script>
+    <script>
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

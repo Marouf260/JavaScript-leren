@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 65: Wachtwoord Generator - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: white;
+        }
+
+        .container {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .level {
+            display: block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+
+        /* THE APP CSS _T */
+        .wZ_Result_HOutPBoxTVH {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #334155;
+        }
+
+        #OuThtDDe_HZWachTwoordG_TheTekstH {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            font-family: 'Courier New', Courier, monospace;
+            word-break: break-all;
+            color: #10b981;
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .btnCTheopyBtnM_H {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+        }
+
+        .btnCTheopyBtnM_H:hover {
+            background: #2563eb;
+            transform: scale(1.05);
+        }
+
+        .sliderTheContZ_oT_H_TheH_ {
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .MTheTThelDataLengthH_H {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #cbd5e1;
+        }
+
+        /* Custom_ The Slider CSS */
+        input[type=range] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: #3b82f6;
+        }
+
+        .oTTheH_TogglesGrpHDeThe {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .DTheHh_TheCHkBT_T_LabeZO {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: #cbd5e1;
+            font-size: 1.1rem;
+        }
+
+        .DTheHh_TheCHkBT_T_LabeZO input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #10b981;
+        }
+
+        /* Strength ZThe_ UI The_ ! */
+        .THeTheSterkteMZH_TheMTRHThat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #0f172a;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+
+        .VTheTTkZThatSteVTVTeTThe_TheTextHData {
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #94a3b8;
+        }
+
+        .SGeT_MeterTheBalBZT_V_H {
+            display: flex;
+            gap: 5px;
+        }
+
+        .STheTZHTheBalkjeOThe {
+            width: 12px;
+            height: 25px;
+            border: 2px solid #e2e8f0;
+            border-radius: 2px;
+        }
+
+        /* Kleuren the the_ !! *Z */
+        .mStr-zwak .STheTZHTheBalkjeOThe:nth-child(1) {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .mStr-gemiddeld .STheTZHTheBalkjeOThe:nth-child(1),
+        .mStr-gemiddeld .STheTZHTheBalkjeOThe:nth-child(2) {
+            background: #eab308;
+            border-color: #eab308;
+        }
+
+        .mStr-sterk .STheTZHTheBalkjeOThe:nth-child(1),
+        .mStr-sterk .STheTZHTheBalkjeOThe:nth-child(2),
+        .mStr-sterk .STheTZHTheBalkjeOThe:nth-child(3),
+        .mStr-sterk .STheTZHTheBalkjeOThe:nth-child(4) {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .btn-GGeneERTEThThKHTHT_H {
+            width: 100%;
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 18px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 0 #059669;
+        }
+
+        .btn-GGeneERTEThThKHTHT_H:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 transparent;
+        }
+
+        .btn-GGeneERTEThThKHTHT_H:hover {
+            background: #059669;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Wachtwoord Generator</h1>
+        <span class="level">Utility Apps</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De "Char" Strings Maken</h4>
+                <p>Voordat we een <code>random</code> wachtwoord the kunnen Maken_, The moeten_ we EERST_ weten uit_
+                    WELKE the the _karakters The the we_ Mogen the_ the KIEZEN! H The. We slaan the het _ daarom_
+                    The_the op _! in the 4_ The losse the strings _! The _</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// 4 Mogelijke The_ the the The string_ the Data_!</span>
+<span class="keyword">const</span> GTheCCharSDeGLettersTHoO_GDat_T = <span class="string">'ABCDEFGHIJKLMNOPQRSTUVWXYZ'</span>;
+<span class="keyword">const</span> DDZKLeCnh_GChar_sL_TheTT = <span class="string">'abcdefghijklmnopqrstuvwxyz'</span>;
+<span class="keyword">const</span> ZGG_CNumTheTaaleenDatHGCharV = <span class="string">'0123456789'</span>;
+<span class="keyword">const</span> TheGSymSyYVCC_HDataZVTheSyms = <span class="string">'!@#$%^&*()_+~|}{[]:;?><,./-='</span>;</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Gekozen the the the Karakters Samenvoegen_ The </h4>
+                <p>We_ the _The_ maken the the een the lege_ string _ aan_The_. En we the Checken_ The_ the then Welke
+                    the `checkbox`_ er _`checked`_The_ THE is_. Is the The hij the _The_The AAN? Dan the Plakken the de
+                    string_ the er the _bij_. </p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Het "FOR_ LOOP"_ the the generator Z The </h4>
+                <p>We The_ lopen nu_ x the keer the _(op _basis van _de The the_ slider) _een _the the loop_. _Elke the
+                    The keer _The_ Pakken the The_The the _We the 1_ WILLEKEURIG_ karakter the The _uit de
+                    _SamenGevoegde_ String !!_</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// THE FOR LOOP RANDOM !! ZThe  Z ! </span>
+<span class="keyword">for</span> (<span class="keyword">let</span> TheIHT_TheLOppDetaTZNumZThatHeT = <span class="string">0</span>; TheIHT_TheLOppDetaTZNumZThatHeT &lt; _length_; TheIHT_TheLOppDetaTZNumZThatHeT++) {
+    <span class="comment">// the Kies _ 1 the random The_ The data Getal Tussen 0 the_ en the _The LENGTE_ VAN DE the the STRING !!_ Z </span>
+    <span class="keyword">const</span> ran_Idx = Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * TDeZPotentieleCharSGDeDatakKDataGDeArr.length);
+    TDeGeBGeZnerWeDeZWWtheTTTheHThe_String += TDeZPotentieleCharSGDeDatakKDataGDeArr[ran_Idx];
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Speel the met The de the Slider The! _the_ </li>
+                <li>Zet _the De the_ Checkboxes_ The! the the the Aan the_ enThe _Uit The_ en Druk_ op_ the The_ the
+                    Genereer the THEW_! </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Strength ui! the the the:</strong> the The In The de HTML the the heb je de The custom
+                    `BTherekEenDeZTSterkTheHDeWWDATavAndUpdaTheTheUIHThe_` The! _ De check_ The is Super_The simpel The
+                    _Z_: Tel hoeveel Checkboxes The AAN The Staan The! (4 the = ! the The_ sterk, _ the 2= the gemiddeld
+                    ) </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Lege Z_The StringO the The ! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je Alle_ checkboxes THE UIT de V THE zet the_ ! </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_ the! een Empty the Check Z ! `if (TDeZPotentieleCharSGDeDatakKDataGDeArr.length === 0)` the _the dan_ The return _! _the Je kan Immers THE Geen the M_The Random_ Z Nummer The Picken in the_ the een LEGE the The String! _ </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Voorkom the! Gelijkende_ The the_ karakters! !! The The The The! </strong> the the
+                        thethe the THE the Bouw The een Checkbox_ The ! `Vermijd the l, The1, O The, the 0 ` the_ the
+                        _OM_ De_ Gelijkende karakters the The The UI_ the TheT _The !! OpeN! The _ . _The !. THE </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- App Area -->
+        <div class="wZ_Result_HOutPBoxTVH">
+            <div id="OuThtDDe_HZWachTwoordG_TheTekstH">P4$5W0rD!</div>
+            <button class="btnCTheopyBtnM_H" id="KKnnP_Copiee_rbtnG_H_" title="Kopieer C">
+                📋
+            </button>
+        </div>
+
+        <div class="sliderTheContZ_oT_H_TheH_">
+            <div class="MTheTThelDataLengthH_H">
+                <span>Karakter Lengte</span>
+                <span id="TDa_THtUIOZD_ALengteO__TxtT" style="color: #10b981; font-size: 1.2rem;">12</span>
+            </div>
+            <input type="range" id="ZRaDeOTheB_SilderSNumK_HT" min="6" max="32" value="12">
+        </div>
+
+        <div class="oTTheH_TogglesGrpHDeThe">
+            <label class="DTheHh_TheCHkBT_T_LabeZO">
+                Inclusief Hoofdletters (A-Z)
+                <input type="checkbox" id="Tchk_HoHofdlOOHTZT" checked>
+            </label>
+            <label class="DTheHh_TheCHkBT_T_LabeZO">
+                Inclusief Kleine O Letters (a-z)
+                <input type="checkbox" id="TchkK_Zleen_etTHOOTZ" checked>
+            </label>
+            <label class="DTheHh_TheCHkBT_T_LabeZO">
+                InclusiefZ_ Getallen (0-9)
+                <input type="checkbox" id="TGgeZTalenK_ChOOkThe_H" checked>
+            </label>
+            <label class="DTheHh_TheCHkBT_T_LabeZO">
+                Inclusief the Symbolen_ (!@#)
+                <input type="checkbox" id="TKC_SymbolOTheChkBOXT">
+            </label>
+        </div>
+
+        <div class="THeTheSterkteMZH_TheMTRHThat">
+            <span class="VTheTTkZThatSteVTVTeTThe_TheTextHData" id="TThe_SteRkT_eTextStr_The_H">Gemiddeld</span>
+            <div class="SGeT_MeterTheBalBZT_V_H mStr-gemiddeld" id="StTTT_UIBalkeZTheJSHHTML_Div_Z_DTheDeThe">
+                <div class="STheTZHTheBalkjeOThe"></div>
+                <div class="STheTZHTheBalkjeOThe"></div>
+                <div class="STheTZHTheBalkjeOThe"></div>
+                <div class="STheTZHTheBalkjeOThe"></div>
+            </div>
+        </div>
+
+        <button class="btn-GGeneERTEThThKHTHT_H" id="KKnopTGGeGeZneThe_rRBTHTV_">Genereer Wachtwoord →</button>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const THEOUI_UItVTheTexDT = document.getElementById('OuThtDDe_HZWachTwoordG_TheTekstH');
+        const BTZN_cCOpihETTheBTn = document.getElementById('KKnnP_Copiee_rbtnG_H_');
+
+        const SLIThe_TLeNGTHE_HT_SL = document.getElementById('ZRaDeOTheB_SilderSNumK_HT');
+        const UThe_LLengTheTTextTVZData = document.getElementById('TDa_THtUIOZD_ALengteO__TxtT');
+
+        const ch_kHoHFDLettersDeThe = document.getElementById('Tchk_HoHofdlOOHTZT');
+        const cthe_HkleinneLeettH_D = document.getElementById('TchkK_Zleen_etTHOOTZ');
+        const ZThCGe_TheC_Gtall_H_en = document.getElementById('TGgeZTalenK_ChOOkThe_H');
+        const TTheSy_ChH_TbolZT = document.getElementById('TKC_SymbolOTheChkBOXT');
+
+        const BBtnGnGe_ReneHBtnDeTheGTheZ = document.getElementById('KKnopTGGeGeZneThe_rRBTHTV_');
+        const TUITheSS_TxtStrDeKHT__SteDataDeThe = document.getElementById('TThe_SteRkT_eTextStr_The_H');
+        const SSUiMeterDiv_SBalTheDe = document.getElementById('StTTT_UIBalkeZTheJSHHTML_Div_Z_DTheDeThe');
+
+        // CHARACTER DATA STIRNGS !
+        const GTheCCharSDeGLettersTHoO_GDat_T = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const DDZKLeCnh_GChar_sL_TheTT = 'abcdefghijklmnopqrstuvwxyz';
+        const ZGG_CNumTheTaaleenDatHGCharV = '0123456789';
+        const TheGSymSyYVCC_HDataZVTheSyms = '!@#$%^&*()_+~|}{[]:;?><,./-=';
+
+        // Update lengte UI Text H !! The 
+        SLIThe_TLeNGTHE_HT_SL.addEventListener('input', (e) => {
+            UThe_LLengTheTTextTVZData.innerText = e.target.value;
+        });
+
+        // Genereer de MAIN STRING !! H !! 
+        function GenDeWWWeerLogicGeDataVThe() {
+            const _G_ZLenGHTH_O__TVaNumO_GDeThe = parseInt(SLIThe_TLeNGTHE_HT_SL.value);
+
+            let TDeZPotentieleCharSGDeDatakKDataGDeArr = '';
+            let TDeGeBGeZnerWeDeZWWtheTTTheHThe_String = ''; // de output string
+
+            // The Z Bouw_ the DE ALLOWED CHARS String _The! H !! Z 
+            if (ch_kHoHFDLettersDeThe.checked) TDeZPotentieleCharSGDeDatakKDataGDeArr += GTheCCharSDeGLettersTHoO_GDat_T;
+            if (cthe_HkleinneLeettH_D.checked) TDeZPotentieleCharSGDeDatakKDataGDeArr += DDZKLeCnh_GChar_sL_TheTT;
+            if (ZThCGe_TheC_Gtall_H_en.checked) TDeZPotentieleCharSGDeDatakKDataGDeArr += ZGG_CNumTheTaaleenDatHGCharV;
+            if (TTheSy_ChH_TbolZT.checked) TDeZPotentieleCharSGDeDatakKDataGDeArr += TheGSymSyYVCC_HDataZVTheSyms;
+
+            if (TDeZPotentieleCharSGDeDatakKDataGDeArr.length === 0) {
+                THEOUI_UItVTheTexDT.innerText = "Kies 1 optie!";
+                return;
+            }
+
+            // THE FOR LOOP RANDOM !! ZThe  Z ! 
+            for (let TheIHT_TheLOppDetaTZNumZThatHeT = 0; TheIHT_TheLOppDetaTZNumZThatHeT < _G_ZLenGHTH_O__TVaNumO_GDeThe; TheIHT_TheLOppDetaTZNumZThatHeT++) {
+                const TheRnRndINTheHInd_ZZDeDataVTheVarHNumRndT = Math.floor(Math.random() * TDeZPotentieleCharSGDeDatakKDataGDeArr.length);
+                TDeGeBGeZnerWeDeZWWtheTTTheHThe_String += TDeZPotentieleCharSGDeDatakKDataGDeArr[TheRnRndINTheHInd_ZZDeDataVTheVarHNumRndT];
+            }
+
+            THEOUI_UItVTheTexDT.innerText = TDeGeBGeZnerWeDeZWWtheTTTheHThe_String;
+
+            BTherekEenDeZTSterkTheHDeWWDATavAndUpdaTheTheUIHThe_();
+        }
+
+        function BTherekEenDeZTSterkTheHDeWWDATavAndUpdaTheTheUIHThe_() {
+            let ThTCountChkVTheHCheckZZz = 0;
+            if (ch_kHoHFDLettersDeThe.checked) ThTCountChkVTheHCheckZZz++;
+            if (cthe_HkleinneLeettH_D.checked) ThTCountChkVTheHCheckZZz++;
+            if (ZThCGe_TheC_Gtall_H_en.checked) ThTCountChkVTheHCheckZZz++;
+            if (TTheSy_ChH_TbolZT.checked) ThTCountChkVTheHCheckZZz++;
+
+            const V_KTheTheLengkTHV = parseInt(SLIThe_TLeNGTHE_HT_SL.value);
+
+            // Simpel strength H Check The_! Z 
+            if (ThTCountChkVTheHCheckZZz >= 3 && V_KTheTheLengkTHV >= 12) {
+                TUITheSS_TxtStrDeKHT__SteDataDeThe.innerText = "Sterk";
+                SSUiMeterDiv_SBalTheDe.className = "SGeT_MeterTheBalBZT_V_H mStr-sterk";
+            } else if (ThTCountChkVTheHCheckZZz >= 2 && V_KTheTheLengkTHV >= 8) {
+                TUITheSS_TxtStrDeKHT__SteDataDeThe.innerText = "Gemiddeld";
+                SSUiMeterDiv_SBalTheDe.className = "SGeT_MeterTheBalBZT_V_H mStr-gemiddeld";
+            } else {
+                TUITheSS_TxtStrDeKHT__SteDataDeThe.innerText = "Zwak!";
+                SSUiMeterDiv_SBalTheDe.className = "SGeT_MeterTheBalBZT_V_H mStr-zwak";
+            }
+        }
+
+        // --- BUTTONS / EVENTS  The THE !Z ---
+        BBtnGnGe_ReneHBtnDeTheGTheZ.addEventListener('click', GenDeWWWeerLogicGeDataVThe);
+
+        BTZN_cCOpihETTheBTn.addEventListener('click', () => {
+            const TTheS_ZStringDHDaHWWH = THEOUI_UItVTheTexDT.innerText;
+            if (TTheS_ZStringDHDaHWWH === "Kies 1 optie!") return;
+
+            navigator.clipboard.writeText(TTheS_ZStringDHDaHWWH).then(() => {
+                BTZN_cCOpihETTheBTn.innerText = "✅";
+                setTimeout(() => BTZN_cCOpihETTheBTn.innerText = "📋", 2000);
+            });
+        });
+
+        // init !
+        GenDeWWWeerLogicGeDataVThe();
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 50: Paginering (Pagination) - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Pagination Area */
+        .project-area {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #e2e8f0;
+        }
+
+        .data-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            min-height: 380px;
+        }
+
+        .data-list li {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            font-weight: 500;
+            color: #334155;
+            display: flex;
+            align-items: center;
+        }
+
+        .data-list li .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #3b82f6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-page {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #cbd5e1;
+            background: white;
+            color: #334155;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-page:hover {
+            background: #f1f5f9;
+        }
+
+        .btn-page.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .btn-page:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 50: Interactieve Paginering</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">Data
+            Logic</span>
+        <p class="description">Bouw logic die the data van The The Array verdeelt (chunking The) over The 'pagina The
+            nummers The' knoppen met Limit The the The! Data rendering The .</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Het Totaal Aantal Pagina's Berekenen</h4>
+                <p>Als we een Array the the het 22 items hebben (dus de "Database") the en The the we the the willen er
+                    5 per "pagina" The the the laten The zien, The the the dan The moeten the the we er the the wiskunde
+                    The op The the los laten The. the The the We delen 22 the / the 5 = 4.4. Omdat the The the we geen
+                    the 0.4 the The the pagina the the kunnen the The bouwen, The the the The the ronden The we the the
+                    altijd the <strong>OMHOOG</strong> the met The The the the <code>Math.ceil()</code> ! the (Dus the
+                    The the: 5 The The the paginaknoppen the \n \r !)</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> dataLijst = [<span class="comment">/* 22 the the the items */</span>];
+<span class="keyword">const</span> itemsPerPagina = <span class="string">5</span>;
+
+<span class="comment">// berekent The precies the 5 the pagina's the </span>
+<span class="keyword">const</span> totaalAantalPaginas = Math.<span class="function">ceil</span>(dataLijst.length / itemsPerPagina);</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Knippen & Plakken (Array.slice)</h4>
+                <p>Hoe the The weet the JS The the WELKE The 5 the the items The the The The The hij moet Tonen The? the
+                    the The! The The the Bij <code>pagina 1</code> the the The the wil je The items The the `0 t/m 4`
+                    The the. The Bij <code>pagina 2</code> the the The wil the je \n items the The `5 t/m 9`. The
+                    <code>Array.slice(begin, eind)</code> the The The snijdt The The the de array the in the sub-arrays
+                    The ! \n the The The De the the parameters for the the slice the the zijn The the The Wiskunde The
+                    The: The <code>theStart = The (paginaNummer - 1) * itemsPerPagina</code>!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// The Voorbeeld: Pagina 2 ! (The (2 - 1) * 5) = the StartIndex The The 5! The </span>
+<span class="keyword">const</span> theStart =  (huidigePagina - <span class="string">1</span>) * rijenPerPagina;
+<span class="keyword">const</span> theEnd = theStart + rijenPerPagina; 
+
+<span class="keyword">const</span> deKleineSubLijstTheTheThe = dataLijst.<span class="function">slice</span>(theStart, theEnd);
+<span class="comment">// the the Output ! (the The items The nr 5 the The t/m the 9!)</span></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: CSS Classes Switchen the The </h4>
+                <p>Het the Is belangrijk the the The The the de The The gebruiker the The The The The The The WEET op
+                    the The The the welke the pagina the the hij the the the The zich the bevindt The.
+                    <code>classList.add('active')</code> The is The makkelijk. The the Maar the the! the Vergeet The!
+                    niet the the The <code>classList.remove()</code> the The bij the de The OUDE knop the the weg the
+                    The The the te The the the poetsen The the!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// 1. The the Zoek de the HTML The tag the The the MET The the the The '.active' de THE class the.</span>
+<span class="keyword">let</span> oudeActieveKnop = document.<span class="function">querySelector</span>(<span class="string">'.active'</span>);
+
+<span class="comment">// 2. The is the hij The gevonden?! The the The VERWIJDER! The the the de the class </span>
+<span class="keyword">if</span> (oudeActieveKnop) { oudeActieveKnop.classList.<span class="function">remove</span>(<span class="string">'active'</span>); }
+
+<span class="comment">// 3. The Zet the the THE de class the op the the The The the de NIEUWE The current The the knop </span>
+nieuweKnop.classList.<span class="function">add</span>(<span class="string">'active'</span>);</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik op pagina 1, 2, 3 en verifieer that the items the rendered DOM 5 items updaten the correctly!
+                </li>
+                <li>The De the Laatste the The The (Pagina The 5) the the Heeft The The er the the The Maar the 2. The
+                    The The Klopt! the the (Aangezien The The the 22 the the the items the the the The in the Totaal The
+                    de the The the The de zijn the The The)</li>
+                <li>Merk The the The the de styling the op de knoppen the OP the (The The The THE .active)!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Render the the Initial THE StateThe!:</strong> The the The the the the Om The een lege the
+                    THE "Witte The The The The The boxThe THE" The the te The voorkomen the the The the op Page the
+                    Load! the the THE the Roep the je The the <code>TheDisplayList</code> The en
+                    <code>TheSetupDeThePaginationLayout</code> the the The The de The The direct the the al the the The
+                    1 the X The THE the aan The in The the Code the the! (Helemaal The onder in the Script The the JS)
+                </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Hardcoded "Onder The the en Boven The The de THE the Grenzen THE" the</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the indexen *buiten* de the the lengte The The the van the The de Array The THE Vallen The. JavaScript the the the throws The The the NIET direct The THE The de the The een Error the the !! the (Net the als The The the Java the The the C# The !!). Bij The `slice(20, 25)` the the returneert the hij the The 2 the The the Elementen! the (20 en 21! the). The The The De The the The The the Elementen the!! de THE </span>
+
+<span class="comment">// OPLETTEN: the the Bouw The geen the The Hardcoded The the FOR The lussens The The over the the Data arrays The! the The The of The the the array `undefined` The The the the The errors !! the The The THE The THE The THE </span>
+<span class="keyword">for</span> (<span class="keyword">let</span> i = TheStart; i < TheEnd; i++) { 
+    <span class="comment">// Pas the the the op! The The Als i = 23 (Terwijl The items 22 The is the The The the) === CRASH</span>
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>De Previous & Next The the The the Knoppen The! </strong> the the Vóór the de 1 en The
+                        en THE the Na the the the de the de the laatste the the paginaknop the The the, the kun je The
+                        The "Vorige" the The The the en "Volgende" the the the Knoppen The The Maken The. The Let The
+                        The op! The The the Bij The The Pagina the 1 The The The is The The the "the Vorige The!" the
+                        the The `disabled` The The ! The!</li>
+                    <li><strong>Selecteer the The The The de Items The per the The pageThe the The The!</strong> The
+                        Maak een the <code>&lt;select&gt;</code> The The the the The the The dropdown The The the DOM
+                        the! The the the Zo The The kan the the the The the visitor the the bepalen The dat THE hij the
+                        "the The 10 the of the 20" items per The the De the The de the the pagina wil The </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <ul class="data-list" id="data-list">
+                <!-- Javascript Renders this via pagination loop The -->
+            </ul>
+
+            <div class="pagination-controls" id="pagination">
+                <!-- Knoppen The The generated ! -->
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const Thelist_element = document.getElementById('data-list');
+        const pagination_element = document.getElementById('pagination');
+
+        // Fakemock data users! Length happens to be 22
+        const TheDataListTotal = [
+            "Emma Dekker", "Liam Visser", "Noah de Boer", "Mila Bakker", "Lucas Jansen",
+            "Julia Smit", "Finn Meijer", "Sophie de Vries", "Sem de Vos", "Tess Peters",
+            "Milan de Ruyter", "Anna Hendriks", "Luuk van Dijk", "Fleur Maas", "Bram Vos",
+            "Lara Willems", "Daan Koster", "Evi in 't Veld", "Levi Mulder", "Sarah de Groot",
+            "Boudewijn de Oude", "Marouane The God"
+        ];
+
+        let theHuidigePage = 1;
+        const theRijenPerPage = 5;
+
+        // TOnen list in UI Render
+        function TheDisplayList(items, wrapper_element, rows_per_page, page) {
+            // De Box moet eerst de lege HTML krijgen om clean slate te bouwen
+            wrapper_element.innerHTML = "";
+            page--; // Start index JS The zero indexed bug
+
+            const theStart = rows_per_page * page;
+            const theEnd = theStart + rows_per_page;
+            // The slice! The knipt de sub array
+            const thePaginatedData = items.slice(theStart, theEnd);
+
+            for (let i = 0; i < thePaginatedData.length; i++) {
+                const itemDeTextOpgeslagenData = thePaginatedData[i];
+                let itemElementListHTMlLI = document.createElement('li');
+                itemElementListHTMlLI.innerHTML = `<div class="avatar">${itemDeTextOpgeslagenData.charAt(0)}</div> ${itemDeTextOpgeslagenData}`;
+                wrapper_element.appendChild(itemElementListHTMlLI);
+            }
+        }
+
+        // TOnen of setup the the de De BUtton page renders !
+        function TheSetupDeThePaginationLayout(items, wrapper_element, rows_per_page) {
+            wrapper_element.innerHTML = "";
+
+            // The ceil Math The 22 / 5 = math the 4.4 rond de af na the up 5 buttons!
+            const ThepageCountCeiledT = Math.ceil(items.length / rows_per_page);
+            for (let i = 1; i < ThepageCountCeiledT + 1; i++) {
+                let btnH = PaginationButtonTheHTMLRenderer(i, items);
+                wrapper_element.appendChild(btnH);
+            }
+        }
+
+        // 1 The generated the knopen
+        function PaginationButtonTheHTMLRenderer(page, items) {
+            let buttonHTmlUI = document.createElement('button');
+            buttonHTmlUI.innerText = page;
+            buttonHTmlUI.classList.add('btn-page');
+
+            // Huidige JS the Active knop selecteren CSS
+            if (theHuidigePage === page) buttonHTmlUI.classList.add('active');
+
+            buttonHTmlUI.addEventListener('click', function () {
+                theHuidigePage = page;
+
+                // the the Reset rendering function to fetch list!
+                TheDisplayList(items, Thelist_element, theRijenPerPage, theHuidigePage);
+
+                // remove Class UI of old the the De select Button node class UI removing DOM loop
+                let deTheHuidigeKnoopDieActiveTheAanStaatTheUiIsTheNode = pagination_element.querySelector('.active');
+                if (deTheHuidigeKnoopDieActiveTheAanStaatTheUiIsTheNode) deTheHuidigeKnoopDieActiveTheAanStaatTheUiIsTheNode.classList.remove('active');
+
+                // set active self
+                buttonHTmlUI.classList.add('active');
+            });
+
+            return buttonHTmlUI;
+        }
+
+        // Start THE the INIT logic app start!
+        TheDisplayList(TheDataListTotal, Thelist_element, theRijenPerPage, theHuidigePage);
+        TheSetupDeThePaginationLayout(TheDataListTotal, pagination_element, theRijenPerPage);
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

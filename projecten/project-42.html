@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 42: Regex Tester - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* RegExp Area */
+        .project-area {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 2px dashed #3b82f6;
+        }
+
+        .regex-input-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 5px 15px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-family: monospace;
+        }
+
+        .regex-input-box span {
+            color: #d97706;
+            font-weight: bold;
+        }
+
+        .regex-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 1.1rem;
+            color: #b91c1c;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .regex-flags {
+            width: 50px;
+            border: none;
+            outline: none;
+            padding: 10px;
+            color: #2563eb;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .test-string-box {
+            position: relative;
+        }
+
+        .test-string {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            resize: vertical;
+            outline: none;
+            font-family: monospace;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            color: transparent;
+            background: transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            caret-color: black;
+            margin: 0;
+        }
+
+        .highlights {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            color: #444;
+            background: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container-highlite {
+            position: relative;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+
+        .highlights mark {
+            background-color: rgba(59, 130, 246, 0.4);
+            border-radius: 3px;
+            color: transparent;
+        }
+
+        .err-msg {
+            color: #ef4444;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            min-height: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 42: RegEx Highlighter</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">Data
+            Logic</span>
+        <p class="description">Bouw een live editor voor Reguliere Expressies (RegExp) en zie direct wat jouw code
+            matcht in de tekst!</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Dynamic Highlighting (De Illusie)</h4>
+                <p>Een standaard <code>&lt;textarea&gt;</code> ondersteunt geen HTML elementen zoals
+                    <code>&lt;mark&gt;</code> of dikgedrukte kleuren er in. Hoe maken pseudo-code editors dit dan toch
+                    mogelijk? Met een optische illusie!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">&lt;!-- OP ACHTERGROND: Een transparante textarea, waar je écht in typt --&gt;</span>
+&lt;textarea class="test-string" spellcheck="false"&gt;Jouw tekst&lt;/textarea&gt;
+
+<span class="comment">&lt;!-- OP VOORGROND: Een DIV direct over de textarea gelegd via CSS Absolute Position --&gt;</span>
+<span class="comment">&lt;!-- pointer-events: none; zorgt dat je clicks er 'doorheen' vallen.</span>
+&lt;div class="highlights"&gt;&lt;mark&gt;Jouw&lt;/mark&gt; tekst&lt;/div&gt;</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: De RegEx Machine</h4>
+                <p>Net als de letterlijke slashes <code>/patroon/g</code> die je typt, genereert onze Javascript live
+                    een object genaamd <code>new RegExp()</code>.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Lees de inputvelden uit</span>
+<span class="keyword">const</span> patroon = regexInput.value; <span class="comment">// bijv: "\b[A-Z]"</span>
+<span class="keyword">const</span> flag = flagsInput.value;   <span class="comment">// bijv: "g"</span>
+
+<span class="comment">// Draai de Javascript machine aan</span>
+<span class="keyword">const</span> regex = <span class="keyword">new</span> RegExp(patroon, flag);
+
+<span class="comment">// Vervang alles in de tekst dat de RegExp raakt door een &lt;mark&gt; element!</span>
+<span class="comment">// Het speciale "$&" karakter plakt het originele woord er netjes in terug.</span>
+<span class="keyword">const</span> highlightedText = text.<span class="function">replace</span>(regex, <span class="string">'&lt;mark&gt;$&amp;&lt;/mark&gt;'</span>);</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Foutafhandeling (Try-Catch)</h4>
+                <p>Omdat de gebruiker live RegEx typt in de inputvelden, crasht de applicatie genadeloos als the RegEx
+                    ineens ongeldig gemaakt wordt (bijvoorbeeld bij het openen van een <code>[</code> maar nog niet
+                    sluiten). JavaScript probeert in paniek die incomplete regex the runnen, maar weet zich er geen raad
+                    mee.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">try</span> {
+    <span class="comment">// PROBEER dit uit te voeren...</span>
+    <span class="keyword">const</span> regex = <span class="keyword">new</span> RegExp(patroon, flag);
+    
+    <span class="comment">// Geen error? Dan printen wij de markup in de frontend div!</span>
+    highlights.innerHTML = text.<span class="function">replace</span>(regex, <span class="string">'&lt;mark&gt;$&amp;&lt;/mark&gt;'</span>);
+    
+} <span class="keyword">catch</span> (err) {
+    <span class="comment">// Als het PROBEER gedeelte weigert te compilen, val je genadeloos hierin!</span>
+    <span class="comment">// In plaats van de hele site te doen crashen on-screen... geven wij een sierlijke melding.</span>
+    errMsg.innerText = <span class="string">"Syntax Error: Je RegExp is ongeldig gebouwd."</span>;
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>De default test zoekt naar alle woorden gestart met een letter (w+).</li>
+                <li>Verander de regex naar <code>[0-9]+</code> om alleen getallen in de zin te omcirkelen.</li>
+                <li>Voer een ongeldige RegEx in, verwijder bijvoorbeeld het sluitende haakje, en verander
+                    <code>[0-9]+</code> naar <code>[0-9+</code> om de rode Foutmelding (Try/Catch) the testen! De
+                    website is onbeschadigd vanwege de error handling.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>RegEx Leren:</strong> RegEx blijft voor de meesten onleesbare hiërogliefen. Maar gelukkig
+                    hoef je ze niet uit the hoofd the kennen. Maak wel alvast kennis met <code>\d</code> (digit/cijfer),
+                    <code>\w</code> (word/letter/cijfer), en the anchor <code>^</code> (begin van de string).</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Linebreaks (Enters) en HTML</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - Een textarea begrijpt dat "Enter" een newline '\n' is. Maar de gerenderde DIV begrijpt dat totaal niet en klapt alles op 1 regel. Ouderwetse truc is nodig! Vervang '\n' the RegEx expliciet door het HTML taggetje '&lt;br&gt;'!</span>
+<span class="keyword">const</span> fixedLineBreaks = highlightedText.<span class="function">replace</span>(<span class="regexp">/\n/g</span>, <span class="string">'&lt;br&gt;'</span>);</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Matches Tellen:</strong> Onder de error tekst "Ongeldige syntax", schrijf je in
+                        real-time hoeveel <em>Matches</em> de RegEx gevonden heeft (the <code>replace</code> functie
+                        overigens heeft toegang tot de match via parameters indien in een loop-callback gebruikt, of je
+                        gebruikt de <code>.match()</code> array op de string).</li>
+                    <li><strong>Cheatsheet Toggle:</strong> Bouw een info knopje, dat een panel over the rechterflank
+                        van the form in laat sliden, die een tabel met common regex tokens laat zien.</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <div>
+                <label style="font-weight:bold; margin-bottom:8px; display:block; color:#555;">RegEx Pattern</label>
+                <div class="regex-input-box">
+                    <span>/</span>
+                    <input type="text" class="regex-input" id="regex" value="\b[A-Za-z]{4,}\b">
+                    <span>/</span>
+                    <input type="text" class="regex-flags" id="flags" value="g">
+                </div>
+                <div class="err-msg" id="error"></div>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <label style="font-weight:bold; margin-bottom:8px; display:block; color:#555;">Test Tekst</label>
+                <div class="container-highlite">
+                    <div class="highlights" id="highlights"></div>
+                    <textarea class="test-string" id="test-text" spellcheck="false">Welkom bij de RegExp Tester 2026!
+Hier kan je live testen of je code, zoals 123 of email@test.com, gepakt wordt.
+De default (bovenin) markeert alle woorden met 4 of meer letters.</textarea>
+                </div>
+            </div>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const regexInput = document.getElementById('regex');
+        const flagsInput = document.getElementById('flags');
+        const testText = document.getElementById('test-text');
+        const highlights = document.getElementById('highlights');
+        const errMsg = document.getElementById('error');
+
+        function updateHighlights() {
+            const text = testText.value;
+            const patroon = regexInput.value;
+            const flag = flagsInput.value;
+
+            // Zorg we render newline breaks (zodat the highlighted div snapt wnr een enter gepressd is)
+            const textForDiv = text.replace(/\n/g, '<br>');
+
+            if (!patroon) {
+                highlights.innerHTML = textForDiv;
+                errMsg.innerText = '';
+                return;
+            }
+
+            try {
+                // Compile the Javascript RegExp class using dynamic strings
+                const regex = new RegExp(patroon, flag);
+
+                // We want to wrap matches in <mark> tags!
+                // "g" flag is usually needed for multiple matches
+
+                // $& representeert the matched string uit het origineel!!
+                const highlightedText = text.replace(regex, '<mark>$&</mark>');
+
+                // Need to convert linebreaks manually since we are dumping into innerHTML
+                const fixedLineBreaks = highlightedText.replace(/\n/g, '<br>');
+
+                highlights.innerHTML = fixedLineBreaks;
+                errMsg.innerText = '';
+
+            } catch (err) {
+                // Syntax Error triggered! (By incomplete regex usually)
+                errMsg.innerText = "Error: Onvolledige of foute RegEx Expressie.";
+                highlights.innerHTML = textForDiv;
+            }
+        }
+
+        // Knoopt textarea scrolling aan the invisible div, om sync issues te fixen:
+        function syncScroll() {
+            highlights.scrollTop = testText.scrollTop;
+            highlights.scrollLeft = testText.scrollLeft;
+        }
+
+        // Live Event Listeners
+        regexInput.addEventListener('input', updateHighlights);
+        flagsInput.addEventListener('input', updateHighlights);
+        testText.addEventListener('input', updateHighlights);
+        testText.addEventListener('scroll', syncScroll);
+
+        // Run On load
+        updateHighlights();
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

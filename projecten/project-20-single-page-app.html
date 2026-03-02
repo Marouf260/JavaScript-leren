@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 20: Single Page App - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #F8D7DA;
+            color: #721C24;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 20: Single Page App</h1>
+        <span class="level">Expert</span>
+        <p class="description">Maak een complete SPA met routing en state management.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je een complete Single Page Application bouwen. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>Client-side routing implementeren</li>
+                <li>History API gebruiken voor URL updates</li>
+                <li>popstate event gebruiken voor browser navigatie</li>
+                <li>State management tussen pagina's</li>
+                <li>Hash-based routing implementeren</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>Hash routing</strong> - Routing op basis van URL hash (#home, #about)</li>
+                <li><strong>History API</strong> - pushState() om URL te updaten zonder reload</li>
+                <li><strong>popstate event</strong> - Event bij browser back/forward</li>
+                <li><strong>window.location.hash</strong> - Eigenschap om hash te lezen</li>
+                <li><strong>SPA (Single Page App)</strong> - App die zonder page reload werkt</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: showPage functie maken</h4>
+                <p>Maak functie die pagina toont en andere verbergt:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">showPage</span>(pageId) {
+    pages.<span class="function">forEach</span>(page => {
+        page.style.display = <span class="string">'none'</span>;
+    });
+    
+    <span class="keyword">const</span> targetPage = document.<span class="function">getElementById</span>(pageId + <span class="string">'-page'</span>);
+    <span class="keyword">if</span> (targetPage) {
+        targetPage.style.display = <span class="string">'block'</span>;
+    }
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Verberg eerst alle pagina's, toon dan alleen de gevraagde pagina. pageId wordt gecombineerd met '-page' voor ID.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: Active link styling</h4>
+                <p>Update styling van actieve navigatie link:</p>
+                <div class="code-example">
+                    <pre>links.<span class="function">forEach</span>(link => {
+    link.style.fontWeight = <span class="string">'normal'</span>;
+    link.style.color = <span class="string">'#333'</span>;
+});
+
+<span class="keyword">const</span> activeLink = document.<span class="function">querySelector</span>(<span class="string">`[href="#${pageId}"]`</span>);
+<span class="keyword">if</span> (activeLink) {
+    activeLink.style.fontWeight = <span class="string">'bold'</span>;
+    activeLink.style.color = <span class="string">'#F7DF1E'</span>;
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Reset eerst alle links, markeer dan actieve link met andere styling.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Link click handlers</h4>
+                <p>Voeg click listeners toe die preventDefault gebruiken:</p>
+                <div class="code-example">
+                    <pre>links.<span class="function">forEach</span>(link => {
+    link.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>(e) {
+        e.preventDefault();
+        <span class="keyword">const</span> pageId = <span class="keyword">this</span>.getAttribute(<span class="string">'href'</span>).substring(<span class="string">1</span>);
+        <span class="function">showPage</span>(pageId);
+        window.history.pushState({page: pageId}, <span class="string">''</span>, <span class="string">'#' + pageId</span>);
+    });
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> preventDefault() voorkomt standaard link gedrag. substring(1) verwijdert #. pushState() update URL.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 4: Browser back/forward handling</h4>
+                <p>Luister naar popstate voor browser navigatie:</p>
+                <div class="code-example">
+                    <pre>window.<span class="function">addEventListener</span>(<span class="string">'popstate'</span>, <span class="keyword">function</span>(e) {
+    <span class="keyword">const</span> pageId = e.state ? e.state.page : <span class="string">'home'</span>;
+    <span class="function">showPage</span>(pageId);
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> popstate gaat af bij back/forward. e.state bevat data die we met pushState hebben opgeslagen.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 5: Initial page load</h4>
+                <p>Laad juiste pagina bij eerste load:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> initialPage = window.location.hash.substring(<span class="string">1</span>) || <span class="string">'home'</span>;
+<span class="function">showPage</span>(initialPage);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Lees hash uit URL. Als er geen hash is, gebruik 'home' als default.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="keyword">const</span> links = document.<span class="function">querySelectorAll</span>(<span class="string">'.spa-link'</span>);
+<span class="keyword">const</span> pages = document.<span class="function">querySelectorAll</span>(<span class="string">'.spa-page'</span>);
+
+<span class="keyword">function</span> <span class="function">showPage</span>(pageId) {
+    pages.<span class="function">forEach</span>(page => {
+        page.style.display = <span class="string">'none'</span>;
+    });
+    
+    <span class="keyword">const</span> targetPage = document.<span class="function">getElementById</span>(pageId + <span class="string">'-page'</span>);
+    <span class="keyword">if</span> (targetPage) {
+        targetPage.style.display = <span class="string">'block'</span>;
+    }
+    
+    links.<span class="function">forEach</span>(link => {
+        link.style.fontWeight = <span class="string">'normal'</span>;
+        link.style.color = <span class="string">'#333'</span>;
+    });
+    
+    <span class="keyword">const</span> activeLink = document.<span class="function">querySelector</span>(<span class="string">`[href="#${pageId}"]`</span>);
+    <span class="keyword">if</span> (activeLink) {
+        activeLink.style.fontWeight = <span class="string">'bold'</span>;
+        activeLink.style.color = <span class="string">'#F7DF1E'</span>;
+    }
+}
+
+links.<span class="function">forEach</span>(link => {
+    link.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>(e) {
+        e.preventDefault();
+        <span class="keyword">const</span> pageId = <span class="keyword">this</span>.getAttribute(<span class="string">'href'</span>).substring(<span class="string">1</span>);
+        <span class="function">showPage</span>(pageId);
+        window.history.pushState({page: pageId}, <span class="string">''</span>, <span class="string">'#' + pageId</span>);
+    });
+});
+
+window.<span class="function">addEventListener</span>(<span class="string">'popstate'</span>, <span class="keyword">function</span>(e) {
+    <span class="keyword">const</span> pageId = e.state ? e.state.page : <span class="string">'home'</span>;
+    <span class="function">showPage</span>(pageId);
+});
+
+<span class="keyword">const</span> initialPage = window.location.hash.substring(<span class="string">1</span>) || <span class="string">'home'</span>;
+<span class="function">showPage</span>(initialPage);</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Maak showPage functie die pagina's toont/verbergt</li>
+                <li>Update active link styling in showPage</li>
+                <li>Voeg click listeners toe met preventDefault</li>
+                <li>Gebruik pushState om URL te updaten</li>
+                <li>Luister naar popstate voor browser navigatie</li>
+                <li>Laad initial page op basis van hash</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Hash vs History:</strong> Hash routing (#) werkt zonder server config, History API (/path) vereist server setup</li>
+                <li><strong>pushState parameters:</strong> (state, title, url) - state wordt opgeslagen, title wordt vaak genegeerd</li>
+                <li><strong>popstate state:</strong> e.state bevat data die je met pushState hebt opgeslagen</li>
+                <li><strong>substring(1):</strong> Verwijdert eerste karakter (#) van hash</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten preventDefault</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Pagina reload bij klik</span>
+link.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    <span class="function">showPage</span>(pageId); <span class="comment">// Vergeet preventDefault!</span>
+});
+
+<span class="comment">// ✅ GOED - Voorkom standaard gedrag</span>
+link.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>(e) {
+    e.preventDefault();
+    <span class="function">showPage</span>(pageId);
+});</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Vergeten popstate handler</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Back knop werkt niet</span>
+window.history.pushState(...); <span class="comment">// Vergeet popstate listener!</span>
+
+<span class="comment">// ✅ GOED - Luister naar popstate</span>
+window.<span class="function">addEventListener</span>(<span class="string">'popstate'</span>, <span class="keyword">function</span>(e) {
+    <span class="function">showPage</span>(e.state.page);
+});</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Verkeerde hash parsing</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Hash bevat nog steeds #</span>
+<span class="keyword">const</span> pageId = window.location.hash; <span class="comment">// "#home"</span>
+document.<span class="function">getElementById</span>(pageId + <span class="string">'-page'</span>); <span class="comment">// "#home-page" bestaat niet!</span>
+
+<span class="comment">// ✅ GOED - Verwijder #</span>
+<span class="keyword">const</span> pageId = window.location.hash.substring(<span class="string">1</span>); <span class="comment">// "home"</span>
+document.<span class="function">getElementById</span>(pageId + <span class="string">'-page'</span>); <span class="comment">// "home-page"</span></pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Route parameters:</strong> Ondersteun routes zoals #user/123</li>
+                    <li><strong>Route guards:</strong> Voorkom toegang tot bepaalde routes</li>
+                    <li><strong>Lazy loading:</strong> Laad pagina content alleen wanneer nodig</li>
+                    <li><strong>Transition animations:</strong> Voeg animaties toe bij route changes</li>
+                    <li><strong>Nested routes:</strong> Ondersteun geneste routes</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: Route Parameters</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">parseRoute</span>(hash) {
+    <span class="keyword">const</span> parts = hash.split(<span class="string">'/'</span>);
+    <span class="keyword">return</span> {
+        page: parts[<span class="string">0</span>],
+        params: parts.slice(<span class="string">1</span>)
+    };
+}
+
+<span class="keyword">const</span> route = <span class="function">parseRoute</span>(window.location.hash.substring(<span class="string">1</span>));
+<span class="comment">// #user/123 wordt {page: 'user', params: ['123']}</span></pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <nav id="spa-nav" style="display: flex; gap: 1rem; margin-bottom: 1rem; border-bottom: 2px solid #ddd; padding-bottom: 0.5rem;">
+                <a href="#home" class="spa-link" style="text-decoration: none; color: #333; padding: 0.5rem; cursor: pointer;">Home</a>
+                <a href="#about" class="spa-link" style="text-decoration: none; color: #333; padding: 0.5rem; cursor: pointer;">About</a>
+                <a href="#contact" class="spa-link" style="text-decoration: none; color: #333; padding: 0.5rem; cursor: pointer;">Contact</a>
+            </nav>
+            <div id="spa-content">
+                <div id="home-page" class="spa-page" style="padding: 1rem;">
+                    <h2>Home Pagina</h2>
+                    <p>Welkom op de home pagina!</p>
+                </div>
+                <div id="about-page" class="spa-page" style="padding: 1rem; display: none;">
+                    <h2>About Pagina</h2>
+                    <p>Dit is de about pagina.</p>
+                </div>
+                <div id="contact-page" class="spa-page" style="padding: 1rem; display: none;">
+                    <h2>Contact Pagina</h2>
+                    <p>Neem contact met ons op!</p>
+                </div>
+            </div>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const links = document.querySelectorAll('.spa-link');
+        const pages = document.querySelectorAll('.spa-page');
+
+        function showPage(pageId) {
+            pages.forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            const targetPage = document.getElementById(pageId + '-page');
+            if (targetPage) {
+                targetPage.style.display = 'block';
+            }
+            
+            links.forEach(link => {
+                link.style.fontWeight = 'normal';
+                link.style.color = '#333';
+            });
+            
+            const activeLink = document.querySelector(`[href="#${pageId}"]`);
+            if (activeLink) {
+                activeLink.style.fontWeight = 'bold';
+                activeLink.style.color = '#F7DF1E';
+            }
+        }
+
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('href').substring(1);
+                showPage(pageId);
+                window.history.pushState({page: pageId}, '', '#' + pageId);
+            });
+        });
+
+        // Handle browser back/forward
+        window.addEventListener('popstate', function(e) {
+            const pageId = e.state ? e.state.page : 'home';
+            showPage(pageId);
+        });
+
+        // Initial page
+        const initialPage = window.location.hash.substring(1) || 'home';
+        showPage(initialPage);
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

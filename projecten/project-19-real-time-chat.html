@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 19: Real-time Chat - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #F8D7DA;
+            color: #721C24;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 19: Real-time Chat</h1>
+        <span class="level">Expert</span>
+        <p class="description">Maak een chat interface met berichten die automatisch verschijnen.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je een real-time chat interface bouwen. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>Dynamisch berichten toevoegen met timestamps</li>
+                <li>Auto-scroll implementeren naar laatste bericht</li>
+                <li>Date object gebruiken voor timestamps</li>
+                <li>innerHTML gebruiken voor HTML content</li>
+                <li>Simuleren van real-time updates met setTimeout</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>Date object</strong> - JavaScript object voor datum en tijd</li>
+                <li><strong>toLocaleTimeString()</strong> - Formatteert tijd naar locale string</li>
+                <li><strong>scrollHeight</strong> - Totale scrollbare hoogte</li>
+                <li><strong>scrollTop</strong> - Huidige scroll positie</li>
+                <li><strong>Template literals</strong> - Strings met ${variabele} voor dynamische content</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: addMessage functie maken</h4>
+                <p>Maak functie die berichten toevoegt met timestamp:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">addMessage</span>(text, user = <span class="string">'Jij'</span>) {
+    <span class="keyword">const</span> messageDiv = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
+    messageDiv.className = <span class="string">'message'</span>;
+    
+    <span class="keyword">const</span> time = <span class="keyword">new</span> Date().toLocaleTimeString();
+    messageDiv.innerHTML = <span class="string">`&lt;strong&gt;${user}:&lt;/strong&gt; ${text} &lt;span&gt;(${time})&lt;/span&gt;`</span>;
+    
+    messagesContainer.<span class="function">appendChild</span>(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Template literal maakt HTML string. scrollTop = scrollHeight scrollt naar beneden.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: sendMessage functie</h4>
+                <p>Maak functie die bericht verzendt en input leegt:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">sendMessage</span>() {
+    <span class="keyword">if</span> (chatInput.value.trim() !== <span class="string">''</span>) {
+        <span class="function">addMessage</span>(chatInput.value);
+        chatInput.value = <span class="string">''</span>;
+    }
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Valideer input, voeg bericht toe, leeg input veld.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Simuleer antwoord</h4>
+                <p>Gebruik setTimeout om automatisch antwoord te simuleren:</p>
+                <div class="code-example">
+                    <pre><span class="function">setTimeout</span>(() => {
+    <span class="function">addMessage</span>(<span class="string">'Bedankt voor je bericht!'</span>, <span class="string">'Bot'</span>);
+}, <span class="string">1000</span>);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> setTimeout simuleert server response. In echte app zou dit WebSocket of polling zijn.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="keyword">const</span> messagesContainer = document.<span class="function">getElementById</span>(<span class="string">'chat-messages'</span>);
+<span class="keyword">const</span> chatInput = document.<span class="function">getElementById</span>(<span class="string">'chat-input'</span>);
+<span class="keyword">const</span> sendBtn = document.<span class="function">getElementById</span>(<span class="string">'chat-send'</span>);
+
+<span class="keyword">function</span> <span class="function">addMessage</span>(text, user = <span class="string">'Jij'</span>) {
+    <span class="keyword">const</span> messageDiv = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
+    messageDiv.className = <span class="string">'message'</span>;
+    messageDiv.style.cssText = <span class="string">'margin-bottom: 0.5rem; padding: 0.5rem; background: #e3f2fd; border-radius: 4px;'</span>;
+    
+    <span class="keyword">const</span> time = <span class="keyword">new</span> Date().toLocaleTimeString();
+    messageDiv.innerHTML = <span class="string">`&lt;strong&gt;${user}:&lt;/strong&gt; ${text} &lt;span style="font-size: 0.75rem; color: #666;"&gt;(${time})&lt;/span&gt;`</span>;
+    
+    messagesContainer.<span class="function">appendChild</span>(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+<span class="keyword">function</span> <span class="function">sendMessage</span>() {
+    <span class="keyword">if</span> (chatInput.value.trim() !== <span class="string">''</span>) {
+        <span class="function">addMessage</span>(chatInput.value);
+        chatInput.value = <span class="string">''</span>;
+        
+        <span class="function">setTimeout</span>(() => {
+            <span class="function">addMessage</span>(<span class="string">'Bedankt voor je bericht!'</span>, <span class="string">'Bot'</span>);
+        }, <span class="string">1000</span>);
+    }
+}
+
+sendBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, sendMessage);
+chatInput.<span class="function">addEventListener</span>(<span class="string">'keypress'</span>, <span class="keyword">function</span>(e) {
+    <span class="keyword">if</span> (e.key === <span class="string">'Enter'</span>) <span class="function">sendMessage</span>();
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Maak addMessage functie met timestamp</li>
+                <li>Gebruik Date object voor tijd</li>
+                <li>Gebruik innerHTML voor HTML content</li>
+                <li>Zet scrollTop op scrollHeight voor auto-scroll</li>
+                <li>Maak sendMessage functie die input valideert</li>
+                <li>Simuleer antwoord met setTimeout</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>scrollHeight:</strong> Totale hoogte inclusief niet-zichtbare content</li>
+                <li><strong>toLocaleTimeString():</strong> Formatteert tijd volgens locale instellingen</li>
+                <li><strong>Template literals:</strong> Gebruik backticks voor strings met variabelen</li>
+                <li><strong>innerHTML vs textContent:</strong> innerHTML voor HTML, textContent voor alleen tekst</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten auto-scroll</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Nieuwe berichten zijn niet zichtbaar</span>
+messagesContainer.<span class="function">appendChild</span>(messageDiv); <span class="comment">// Vergeet scroll!</span>
+
+<span class="comment">// ✅ GOED - Scroll naar beneden</span>
+messagesContainer.<span class="function">appendChild</span>(messageDiv);
+messagesContainer.scrollTop = messagesContainer.scrollHeight;</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Verkeerde scroll property</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - scrollHeight is read-only</span>
+messagesContainer.scrollHeight = <span class="string">1000</span>; <span class="comment">// Werkt niet!</span>
+
+<span class="comment">// ✅ GOED - Zet scrollTop</span>
+messagesContainer.scrollTop = messagesContainer.scrollHeight;</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Vergeten input te valideren</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Lege berichten kunnen worden verzonden</span>
+<span class="function">addMessage</span>(chatInput.value); <span class="comment">// Vergeet trim()!</span>
+
+<span class="comment">// ✅ GOED - Valideer eerst</span>
+<span class="keyword">if</span> (chatInput.value.trim() !== <span class="string">''</span>) {
+    <span class="function">addMessage</span>(chatInput.value);
+}</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>WebSocket:</strong> Implementeer echte real-time chat met WebSocket</li>
+                    <li><strong>Emoji support:</strong> Voeg emoji picker toe</li>
+                    <li><strong>File upload:</strong> Laat gebruikers bestanden delen</li>
+                    <li><strong>Message history:</strong> Bewaar berichten in localStorage</li>
+                    <li><strong>Typing indicator:</strong> Toon wanneer iemand aan het typen is</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: WebSocket</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:8080'</span>);
+
+ws.onmessage = <span class="keyword">function</span>(event) {
+    <span class="keyword">const</span> message = JSON.parse(event.data);
+    <span class="function">addMessage</span>(message.text, message.user);
+};
+
+<span class="keyword">function</span> <span class="function">sendMessage</span>() {
+    ws.send(JSON.stringify({text: chatInput.value, user: <span class="string">'Jij'</span>}));
+}</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <div id="chat-container" style="border: 1px solid #ddd; border-radius: 8px; height: 300px; display: flex; flex-direction: column;">
+                <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 1rem;">
+                    <div class="message" style="margin-bottom: 0.5rem; padding: 0.5rem; background: #e3f2fd; border-radius: 4px;"><strong>Gebruiker:</strong> Hallo!</div>
+                </div>
+                <div style="border-top: 1px solid #ddd; padding: 0.5rem; display: flex;">
+                    <input type="text" id="chat-input" placeholder="Type bericht..." style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                    <button id="chat-send" class="demo-btn" style="margin-left: 0.5rem;">Verzend</button>
+                </div>
+            </div>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const messagesContainer = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('chat-send');
+
+        function addMessage(text, user = 'Jij') {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            messageDiv.style.cssText = 'margin-bottom: 0.5rem; padding: 0.5rem; background: #e3f2fd; border-radius: 4px;';
+            
+            const time = new Date().toLocaleTimeString();
+            messageDiv.innerHTML = `<strong>${user}:</strong> ${text} <span style="font-size: 0.75rem; color: #666;">(${time})</span>`;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            if (chatInput.value.trim() !== '') {
+                addMessage(chatInput.value);
+                chatInput.value = '';
+                
+                // Simuleer antwoord na 1 seconde
+                setTimeout(() => {
+                    addMessage('Bedankt voor je bericht!', 'Bot');
+                }, 1000);
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 36: Wachtwoord Sterkte Meter - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Project Area */
+        .project-area {
+            background: #202b38;
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .auth-box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .auth-box h2 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .input-wrap {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-wrap input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* The Strength Bar */
+        .strength-meter-bg {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .strength-meter-bar {
+            height: 100%;
+            width: 0%;
+            transition: 0.3s width, 0.3s background-color;
+            background: transparent;
+        }
+
+        /* Checkbox requirements list */
+        .requirements {
+            list-style: none;
+            margin-left: 0;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .requirements li {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .requirements li::before {
+            content: '❌';
+            font-size: 0.8rem;
+        }
+
+        .requirements li.valid {
+            color: #10b981;
+        }
+
+        .requirements li.valid::before {
+            content: '✅';
+        }
+
+        /* Strength Label */
+        .strength-label {
+            text-align: right;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 36: Wachtwoord Sterkte Meter</h1>
+        <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
+        <p class="description">Maak een robuuste client-side validatietool die de veiligheid van een wachtwoord toetst.
+        </p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Reguliere Expressies Leren Kennen</h4>
+                <p>Reguliere Expressies, vaak afgekort tot <strong>RegEx</strong>, vormen een mini-taaltje waarmee je
+                    patronen in tekst kunt zoeken. Het ziet er vaak uit als ingewikkelde computercode, maar is logisch
+                    opgebouwd.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Zoek naar in ieder geval 1 hoofdletter:</span>
+<span class="keyword">const</span> heeftHoofdletter = <span class="string">/[A-Z]/</span>.<span class="function">test</span>(<span class="string">"mijnWachtwoord"</span>); <span class="comment">// &rarr; true</span>
+
+<span class="comment">// Zoek naar een cijfer (0 t/m 9):</span>
+<span class="keyword">const</span> heeftCijfer = <span class="string">/[0-9]/</span>.<span class="function">test</span>(<span class="string">"geheim"</span>); <span class="comment">// &rarr; false</span></pre>
+                </div>
+                <p><strong>Uitleg:</strong> We gebruiken <code>/patroon/.test(string)</code> in JavaScript. Deze functie
+                    retouneert altijd vliegensvlug een simpele true of false. Dat is ideaal voor wachtwoord validatie!
+                </p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Het 'Input' Event Luisteren</h4>
+                <p>We moeten elke keer dat de gebruiker iets intypt, ons validatie-script opnieuw runnen. We gebruiken
+                    hiervoor niet <code>keyup</code> of <code>keydown</code>, maar het <code>input</code> event!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>wachtwoordVeld.addEventListener(<span class="string">'input'</span>, (event) => {
+    <span class="comment">// Lees de actuele ingetypte waarde uit het veld</span>
+    <span class="keyword">const</span> text = event.target.value;
+    
+    <span class="comment">// Voer de RegEx checks op deze tekst uit!</span>
+    <span class="function">checkWachtwoord</span>(text);
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Het <code>input</code> event is perfect. Waarom? Omdat dit event <i>ook</i>
+                    afgaat als de gebruiker met de rechtermuisknop een wachtwoord 'plakt', iets wat de
+                    toetsenbord-events (keyup/down) volledig missen!</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Het CSS Score Systeem</h4>
+                <p>Elke keer als het wachtwoord aan een eis voldoet (bijv. lente > 8 of een cijfer), voegen we een punt
+                    toe aan de score (maximaal 4 punten). Die score vertalen we naar een CSS percentage.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">updateMeter</span>(score) {
+    <span class="comment">// Score gedeeld door max score * 100 = Percentage</span>
+    <span class="keyword">let</span> breedte = (score / <span class="string">4</span>) * <span class="string">100</span>;
+    meterBar.style.width = <span class="string">`\${breedte}%`</span>;
+    
+    <span class="keyword">if</span> (score === <span class="string">4</span>) {
+        meterBar.style.backgroundColor = <span class="string">'#10b981'</span>; <span class="comment">// Groen = veilig!</span>
+    }
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Hoe hoger de score, hoe langer het CSS gekleurde balkje wordt. We veranderen
+                    bij de topscore ook het kleurtje naar geruststellend groen.</p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Speciale Karakters Vinden)</h3>
+            <pre><span class="comment">// Een speciaal teken vinden is lastig. Is het een @, een $, een ! ?</span>
+<span class="comment">// We doen het omgekeerd! Het dakje (^) betekent in RegEx: "ALLES BEHALVE"</span>
+
+<span class="comment">// Dit patroon betekent dus: "Alles behalve hoofdletters, kleine letters of cijfers"</span>
+<span class="keyword">const</span> checkSpeciaal = <span class="string">/[^A-Za-z0-9]/</span>; 
+
+<span class="comment">// Als hij hier TRUE op zegt, dan ZIT er dus een vreemd, speciaal teken in de string!</span></pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Typ een simpel wachtwoord in de demo (zoals 'wachtwoord'). De score-balk reageert en blijft
+                    rood/zwak.</li>
+                <li>Voeg nu hoofdletters, cijfers en vreemde karakters (zoals #, $, @ of !) toe.</li>
+                <li>Merk op hoe de dynamische bulletpoints live afvinken en de balk naar 100% Groen springt!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Gevoelige Data Feedback:</strong> Vertel een gebruiker altijd <i>waarom</i> een wachtwoord
+                    afgekeurd wordt. Dat is de reden achter de live afvinkende bulletpoints. Dat is véél betere UX (User
+                    Experience) dan een vage "Wachtwoord te zwak" popup achteraf!</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Lege Input Bugs</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - Als de gebruiker zijn tekst fout typt, en het wachtwoord weer volledig weghaalt met Backspace (zodat de input leeg is), kan het zijn dat de meter op 10% breedte blijft hangen. Zorg altijd voor een 'if(length === 0)' check die dan de balk resoluut op 0% width (en transparant) instelt!</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Voeg een 'Wachtwoord Weergeven' Knop toe:</strong> Voeg een oog-icoontje toe naast het
+                        veld. Koppel hier een onClick actie aan die het <code>type="password"</code> veld verandert naar
+                        <code>type="text"</code> met JS, zodat de gebruiker zijn typo's kan controleren!</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <div class="auth-box">
+                <h2>Nieuw Account</h2>
+
+                <div class="input-wrap">
+                    <input type="password" id="pw-input" placeholder="Creëer een wachtwoord...">
+                </div>
+
+                <div class="strength-meter-bg">
+                    <div class="strength-meter-bar" id="meter-bar"></div>
+                </div>
+                <div class="strength-label" id="strength-text">Te Zwak</div>
+
+                <ul class="requirements">
+                    <li id="req-length">Minimaal 8 karakters</li>
+                    <li id="req-upper">Minimaal 1 hoofdletter</li>
+                    <li id="req-number">Minimaal 1 cijfer</li>
+                    <li id="req-special">Minimaal 1 speciaal teken</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const pwInput = document.getElementById('pw-input');
+        const meterBar = document.getElementById('meter-bar');
+        const strengthText = document.getElementById('strength-text');
+
+        // Requirement Nodes
+        const reqLength = document.getElementById('req-length');
+        const reqUpper = document.getElementById('req-upper');
+        const reqNumber = document.getElementById('req-number');
+        const reqSpecial = document.getElementById('req-special');
+
+        pwInput.addEventListener('input', (e) => {
+            const pw = e.target.value;
+            let score = 0;
+
+            // 1. Lengte Check
+            if (pw.length >= 8) {
+                reqLength.classList.add('valid');
+                score++;
+            } else {
+                reqLength.classList.remove('valid');
+            }
+
+            // 2. Hoofdletter Check
+            if (/[A-Z]/.test(pw)) {
+                reqUpper.classList.add('valid');
+                score++;
+            } else {
+                reqUpper.classList.remove('valid');
+            }
+
+            // 3. Cijfer Check
+            if (/[0-9]/.test(pw)) {
+                reqNumber.classList.add('valid');
+                score++;
+            } else {
+                reqNumber.classList.remove('valid');
+            }
+
+            // 4. Speciaal teken Check
+            // ^ = NOT (alles behalve letters en cijfers dus)
+            if (/[^A-Za-z0-9]/.test(pw)) {
+                reqSpecial.classList.add('valid');
+                score++;
+            } else {
+                reqSpecial.classList.remove('valid');
+            }
+
+            updateMeter(score, pw.length);
+        });
+
+        function updateMeter(score, length) {
+            if (length === 0) {
+                meterBar.style.width = '0%';
+                strengthText.innerText = '';
+                return;
+            }
+
+            // Map score do percentages and colors
+            // score kan max 4 zijn
+            let width = (score / 4) * 100;
+            if (length > 0 && score === 0) width = 10; // Iets ingevuld, maar 0 bonus = 10% breed
+
+            meterBar.style.width = `${width}%`;
+
+            if (score <= 1) {
+                meterBar.style.backgroundColor = '#ef4444'; // Rood
+                strengthText.innerText = 'Zwak';
+                strengthText.style.color = '#ef4444';
+            } else if (score === 2 || score === 3) {
+                meterBar.style.backgroundColor = '#f59e0b'; // Oranje/Geel
+                strengthText.innerText = 'Gemiddeld';
+                strengthText.style.color = '#f59e0b';
+            } else if (score === 4) {
+                meterBar.style.backgroundColor = '#10b981'; // Groen
+                strengthText.innerText = 'Sterk!';
+                strengthText.style.color = '#10b981';
+            }
+        }
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

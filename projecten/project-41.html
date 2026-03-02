@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 41: Wachtwoord Generator - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Generator Area */
+        .project-area {
+            background: #202b38;
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .gen-box {
+            background: #2b3a4a;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .result-container {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+
+        .result-text {
+            font-size: 1.2rem;
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+
+        .btn-copy {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: #2563eb;
+        }
+
+        .setting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .btn-generate {
+            width: 100%;
+            background: #10b981;
+            color: white;
+            font-size: 1.1rem;
+            border: none;
+            padding: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+
+        .btn-generate:hover {
+            background: #059669;
+        }
+
+        input[type="range"] {
+            width: 150px;
+            accent-color: #3b82f6;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #3b82f6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 41: Wachtwoord Generator</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">Data
+            Logic</span>
+        <p class="description">Bouw een tool die complexe, gerandomiseerde strings genereert op basis van
+            gebruikersinstellingen.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De "Pool" (Karakter Vijver) Bouwen</h4>
+                <p>We maken voor elke soort (hoofdletters, cijfers, symbolen) een lange string met alle mogelijke
+                    karakters. Als de gebruiker een checkbox aanvinkt, gooien we die string in de grote
+                    <code>passwordList</code> vijver.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">let</span> passwordList = <span class="string">''</span>;
+
+<span class="comment">// Als checkbox 'lower' aan staat (true), voeg a-z toe aan de pool</span>
+<span class="keyword">if</span> (lower) passwordList += <span class="string">'abcdefghijklmnopqrstuvwxyz'</span>;
+<span class="keyword">if</span> (number) passwordList += <span class="string">'0123456789'</span>;
+
+<span class="comment">// Als beide aanstaan is de vijver nu: 'abcdefghijklmnopqrstuvwxyz0123456789'</span></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Hengelen met Random()</h4>
+                <p>Nu we een mooie vijver hebben, gaan we er met een <code>for</code> loop net zovaak uit hengelen
+                    (random karakter pakken) als de lengte (slider) die de gebruiker wil.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">let</span> gegenereerdWachtwoord = <span class="string">''</span>;
+
+<span class="comment">// Loop 'length' aantal keer (bijv. 12 keer)</span>
+<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="string">0</span>; i < length; i++) {
+    <span class="comment">// Kies een willekeurig getal tussen 0 en de lengte van de vijver</span>
+    <span class="keyword">const</span> randomIndex = Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * passwordList.length);
+    
+    <span class="comment">// Plak die specifieke letter vast aan het wachtwoord antwoord</span>
+    gegenereerdWachtwoord += passwordList[randomIndex];
+}</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Het Klembord (Clipboard API)</h4>
+                <p>Het gegenereerde wachtwoord overtypen is niet te doen. We gebruiken een ingebouwde browserfunctie
+                    (API) om het direct naar het Klembord van de gebruiker (CTRL+C) te sturen!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Belangrijk: De Clipboard API werkt via 'Promises' (Asynchroon)</span>
+<span class="comment">// Het duurt een milliseconde om naar de OS te praten. .then() voert pas uit als het OS 'OK' zegt!</span>
+navigator.clipboard.<span class="function">writeText</span>(wachtwoord).<span class="function">then</span>(() => {
+    <span class="function">alert</span>(<span class="string">"Gekopieerd!"</span>); 
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We geven ook direct feedback in de knop (kleurtje wijzigen) zodat de
+                    gebruiker wéét dat de actie is geslaagd. Dat is goede UX design!</p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Zet opties aan of uit (Kleine letters, Cijfers, Symbolen) met de checkboxes.</li>
+                <li>Schuif de "Lengte" slider omhoog of omlaag en zie het getal veranderen.</li>
+                <li>Druk op <strong>Genereer Wachtwoord</strong> en bekijk het resultaat! Gebruik tenslotte de "Kopieer"
+                    knop en plak het (CTRL+V) ergens.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Range Slider Truc:</strong> Een <code>&lt;input type="range"&gt;</code> (de slider)
+                    retourneert standaard zijn <code>.value</code> als een "String" (tekst), NIET als een Number! In de
+                    code zie je <code>const length = +lengthEl.value;</code>. Dat rare plusje <code>+</code> is een
+                    Javascript trucje om een 'string' getal instantly om te toveren in een 'number' getal!</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: De "Lege Vijver" Crash</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - Wat als de domme/eigenwijze gebruiker ALLE checkboxes uit vinkt, en dan op Genereer drukt? Dan is passwordList === '' (Leeg!). Dan crasht the Math.random() loop omdat hij een index probeert te zoeken in het niks! </span>
+<span class="comment">// OPLOSSING: Vang het af in je functie als de pool leeg is!</span>
+<span class="keyword">if</span> (passwordList === <span class="string">''</span>) {
+    <span class="keyword">return</span> <span class="string">'Selecteer een optie'</span>;
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Combineer Project 36:</strong> Weet je nog [Project 36](../project-36.html)? Dat is een
+                        Wachtwoord Sterkte Meter. Kan je dat project hier in integreren? Zodat onder de generate knop
+                        ook nog een visuele sterkte-balk verschijnt die groen kleurt als de gebruiker een veilig (lang
+                        en met symbolen) password heeft afgedwongen?</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+            <div class="gen-box">
+                <div class="result-container">
+                    <span class="result-text" id="result">P4$5W0rD!</span>
+                    <button class="btn-copy" id="copy-btn">Kopieer</button>
+                </div>
+
+                <div class="setting">
+                    <label>Lengte (<span id="len-val">12</span>)</label>
+                    <input type="range" id="length" min="4" max="32" value="12">
+                </div>
+
+                <div class="setting">
+                    <label>Kleine Letters (a-z)</label>
+                    <input type="checkbox" id="lowercase" checked>
+                </div>
+                <div class="setting">
+                    <label>Hoofdletters (A-Z)</label>
+                    <input type="checkbox" id="uppercase" checked>
+                </div>
+                <div class="setting">
+                    <label>Cijfers (0-9)</label>
+                    <input type="checkbox" id="numbers" checked>
+                </div>
+                <div class="setting">
+                    <label>Symbolen (!@#$)</label>
+                    <input type="checkbox" id="symbols" checked>
+                </div>
+
+                <button class="btn-generate" id="generate-btn">Genereer Wachtwoord</button>
+            </div>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const resultEl = document.getElementById('result');
+        const lengthEl = document.getElementById('length');
+        const lenValEl = document.getElementById('len-val');
+        const uppercaseEl = document.getElementById('uppercase');
+        const lowercaseEl = document.getElementById('lowercase');
+        const numbersEl = document.getElementById('numbers');
+        const symbolsEl = document.getElementById('symbols');
+        const generateBtn = document.getElementById('generate-btn');
+        const copyBtn = document.getElementById('copy-btn');
+
+        const upperLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const lowerLetters = 'abcdefghijklmnopqrstuvwxyz';
+        const numbers = '0123456789';
+        const symbols = '!@#$%^&*()_+~|}{[]:;?><,./-=';
+
+        // Update Range slider text live
+        lengthEl.addEventListener('input', (e) => {
+            lenValEl.innerText = e.target.value;
+        });
+
+        generateBtn.addEventListener('click', () => {
+            const length = +lengthEl.value; // + converts to number natively in JS
+            const hasLower = lowercaseEl.checked;
+            const hasUpper = uppercaseEl.checked;
+            const hasNumber = numbersEl.checked;
+            const hasSymbol = symbolsEl.checked;
+
+            resultEl.innerText = generatePassword(hasLower, hasUpper, hasNumber, hasSymbol, length);
+        });
+
+        function generatePassword(lower, upper, number, symbol, length) {
+            let passwordList = '';
+
+            // Bouw de "Pool" met toegestane karakters
+            if (lower) passwordList += lowerLetters;
+            if (upper) passwordList += upperLetters;
+            if (number) passwordList += numbers;
+            if (symbol) passwordList += symbols;
+
+            if (passwordList === '') {
+                return 'Selecteer een optie';
+            }
+
+            let generatedPassword = '';
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * passwordList.length);
+                generatedPassword += passwordList[randomIndex];
+            }
+
+            return generatedPassword;
+        }
+
+        // Kopieer functie
+        copyBtn.addEventListener('click', () => {
+            const tempPassword = resultEl.innerText;
+            if (!tempPassword || tempPassword === 'Selecteer een optie') return;
+
+            navigator.clipboard.writeText(tempPassword).then(() => {
+                const oud = copyBtn.innerText;
+                copyBtn.innerText = "Gekopieerd!";
+                copyBtn.style.background = "#10b981";
+
+                setTimeout(() => {
+                    copyBtn.innerText = oud;
+                    copyBtn.style.background = "#3b82f6";
+                }, 2000);
+            });
+        });
+
+        // Genereer bij inladen 1 wachtwoord
+        generateBtn.click();
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

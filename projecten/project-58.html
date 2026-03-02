@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 58: Flappy Bird Clone (DOM) - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: hidden;
+            /* prevents scroll on jump Z! */
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Game Area CSS! */
+        .project-area {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score-hud-The {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #f59e0b;
+            text-shadow: 2px 2px 0 #b45309;
+            margin-bottom: 10px;
+            font-family: Impact, sans-serif;
+            letter-spacing: 2px;
+        }
+
+        /* De the Spel Wereld (Kader H_) */
+        .game-straat {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: #7dd3fc;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #334155;
+            border-radius: 8px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+            background-image: linear-gradient(to bottom, #7dd3fc 60%, #bae6fd 100%);
+            /* Background anim HThe_ (Fake movement) */
+        }
+
+        /* The The Grond The  */
+        .grond-balk {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: #fbbf24;
+            border-top: 4px solid #d97706;
+            z-index: 5;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 0, 0, 0.1) 10px, rgba(0, 0, 0, 0.1) 20px);
+        }
+
+        .speler-vogel {
+            position: absolute;
+            width: 40px;
+            height: 30px;
+            background: #facc15;
+            border-radius: 50%;
+            left: 50px;
+            top: 180px;
+            z-index: 10;
+            border: 2px solid #a16207;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+        }
+
+        /* VogelThe CSS Zthe Details Oog, Bek V*/
+        .speler-vogel::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            top: 5px;
+            right: 8px;
+            border: 2px solid #333;
+        }
+
+        .speler-vogel::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 8px;
+            background: #f97316;
+            border-radius: 10px;
+            right: -8px;
+            top: 12px;
+            border: 2px solid #c2410c;
+        }
+
+        /* Obstacles (Buizen H) */
+        .obstakel-De-BuisRechtOpH {
+            position: absolute;
+            width: 60px;
+            background: #4ade80;
+            border: 3px solid #166534;
+            z-index: 4;
+            right: -80px;
+            /* Start buiten beeld! */
+            box-shadow: inset 10px 0 rgba(255, 255, 255, 0.2), inset -10px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .obstakel-topO {
+            top: 0;
+            border-radius: 0 0 6px 6px;
+            border-top: none;
+        }
+
+        .obstakel-botV {
+            bottom: 40px;
+            /* Boven the grond The  */
+            border-radius: 6px 6px 0 0;
+            border-bottom: none;
+        }
+
+        .btn-jumpThe {
+            margin-top: 15px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 6px;
+            border: 2px solid #cbd5e1;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .theAABGgame-over-scherm {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            color: white;
+            border-radius: 6px;
+        }
+
+        .btheKnopSstartH {
+            margin-top: 20px;
+            background: #facc15;
+            color: #713f12;
+            padding: 10px 30px;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 58: Flappy Bird</h1>
+        <span class="level" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">Games</span>
+        <p class="description">Bouw Flappy Bird! Zwaartekracht trekt The de vogel the constant omlaag. (Math logic!).
+        </p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Fysica Motor (Zwaartekracht)</h4>
+                <p>We maken een pure <strong>DOM game LoopThe Zmet <code>requestAnimationFrame</code>
+                        !</strong>Zwaartekracht trekt The de vogel the constant omlaag. (Math logic!).
+                    <code>y_snelheid += gravity</code> The. the Snelheid V wordt steeds groter, dus vogelH the valt
+                    steeds harderThe Omlaag Z!.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// 1. the The de_TheFYSICA REKENEN_The Vogel</span>
+VG_THE_Y_Snelheid_De_v += ZWAARTEKRACHT_CDeZ;
+VOGEL_TYthe_Y_POS_DeH_the += VG_THE_Y_Snelheid_De_v;
+
+<span class="comment">// 2. VOGEL DOM RENDER The the T the</span>
+VOGEL_DOM_H.style.top = VOGEL_TYthe_Y_POS_DeH_the + <span class="string">'px'</span>;</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Bounding Box Collision</h4>
+                <p>We lezen de <code>getBoundingClientRect()</code> the the The uit the The The van the vogel en buizen
+                    the the om the elkaar the the thete the rakenThe_(Box intersections math). </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">CheckRectDeThe_HBotsingVTheH</span>(TrectO1H_V, HrectZ2K_The) {
+    <span class="keyword">return</span> !(
+        TrectO1H_V.top > HrectZ2K_The.bottom ||
+        TrectO1H_V.right &lt; HrectZ2K_The.left ||
+        TrectO1H_V.bottom &lt; HrectZ2K_The.top ||
+        TrectO1H_V.left > HrectZ2K_The.right
+    );
+}</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: requestAnimationFrame </h4>
+                <p>Voor the vlotte The Animatie maken the _ we! Gebruik The Van the THE
+                    <code>requestAnimationFrame(functie)</code> the_. the The In The the Plaats the van the The The een
+                    the the The <code>setInterval</code>Thethe the the the The The thethe ! Browser refreshed op 60fps
+                    frame rate ! the _the The The The! </p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Druk The op <strong>Spatiebalk</strong> of the klik The op het "Flap the !" knopje the the om The
+                    the The The the te the theThe the springen_ ! </li>
+                <li>Probeer the Door the The buizen the te The The the vliegenThe. theThe </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Rotatie the the Animatie The The the:</strong> the The In The de code The The the THE Zie
+                    the je The The the the theThe een berekening_ the The om _de the vogel the te The The ! the laten
+                    Kijken_ (Draaien The!) the The Naar _ Boven/Onder_ Afhankelijk van de the the the `y_Snelheid` ! the
+                    !_ the !_ </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Meerdere requestAnimationFrame loops THE The tegelijk open </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the speler The the de The THE the Mol the THE The the drukt, THE the the De the the Emoji the THE the vuist! `✊`  kijkt The_ standardThe  naar The Rechts_ ! . thethe THE THE Dit klopt the The Niet the the Voor de CPu_!!!  Zijn vuist the the theThe_ !thethe  moet naar Links The The !_! THE The ). </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe VOORDAT the the The je The the the! The The! een *NIEUWE* request! Animation de! call The StartThe THE!_ the_ `cancelAnimationFrame(FrameHandleVar);` eerst the The Oude loop The The !_! THE The </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>GAT THE Formaat! The The The The! </strong> the the thethe the THE the Bouw The THE the
+                        the een the The! The code om! theThe! the ! te Zorgen the_! Dat the na _elke 10 the The Buizen
+                        the the_ the _ het the gat The `BUIZEN_GAT_GROOTTEDeHTthe_` steeds 5 pixels the_ The! krapThe _
+                        per! wordt The . _The !. THE </li>
+                    <li><strong>FlapThe Geluid THE the TheThe _!</strong> The The the The the Implementeer The de the
+                        Audio API the the the _! om the "woosh.wav" ! the the The_The the _af theThe te! the The spelen
+                        The the ! _bij _ The THE elke Druk Op SpatieMep!. _The ! </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="score-hud-The" id="s-HUD">0</div>
+
+            <div class="game-straat" id="Z_GameStraatH_Div">
+
+                <div class="speler-vogel" id="h-Vogel_speler"></div>
+                <div class="grond-balk"></div>
+
+                <div class="theAABGgame-over-scherm" id="g-UIH_DeadScreenH">
+                    <h2 style="font-size: 2.5rem; text-shadow: 2px 2px 0 #000;">GAME OVER</h2>
+                    <p style="margin-top: 5px;">Score: <span id="e-ScoreTheZFinalH">0</span></p>
+                    <button class="btheKnopSstartH" onclick="T_HerstartSpelFunctieZ()">Speel Opnieuw!</button>
+                </div>
+            </div>
+
+            <button class="btn-jumpThe" id="mBtn-TheJumpDataH_V">🪽 [Spatie] om te flappen!</button>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const VOGEL_DOM_H = document.getElementById('h-Vogel_speler');
+        const STRAAT_DOM_Z = document.getElementById('Z_GameStraatH_Div');
+        const HUD_score_Z_H = document.getElementById('s-HUD');
+        const OVER_SCHERM_Z_Th = document.getElementById('g-UIH_DeadScreenH');
+        const OVER_EINDSCOREH_DataH = document.getElementById('e-ScoreTheZFinalH');
+        const MBTN_FlAP_BTNTheV = document.getElementById('mBtn-TheJumpDataH_V');
+
+        // Fysica constanten
+        const ZWAARTEKRACHT_CDeZ = 0.5;
+        const JUMP_KRACHTDTheTheH_V = -7; // Minus is Up !!!The (DOM Y coordinates O O)
+        const OBSTAKEL_SNELHEID_HTheTTheZ = 4; // 4px links per frame_ _
+        const BUIZEN_GAT_GROOTTEDeHTthe_ = 130; // Pixel ruimte tussen_ them buis the! _
+
+        // STATE Data Z O
+        let VOGEL_TYthe_Y_POS_DeH_the = 180;
+        let VG_THE_Y_Snelheid_De_v = 0;
+
+        let SPEL_IsOTheZInRun_HTheV_RunStatusDe = false;
+        let DeScoreZTheDataZCurrentScoreZ_Var = 0;
+
+        let BUISDataZTheArrayTheH_VTheArrayR = []; // Houd buizen The Z {topEl, botEl, xPos, passedH_}  V The _ _!
+
+        let GameLoopRAF_RequestFrameKlokHDivZ = null; // de frame identifier !The!Z
+        let FrameTellerVoorSpawningDeZTheVTheVar_Z_ = 0; // The keep The track The Zto generate new the pipes Z ! V
+
+        function SpringDeVogelFlapZ_() {
+            if (!SPEL_IsOTheZInRun_HTheV_RunStatusDe) return;
+            VG_THE_Y_Snelheid_De_v = JUMP_KRACHTDTheTheH_V; // force UPThe! !
+        }
+
+        // INIT SPEL_De_ The
+        function T_HerstartSpelFunctieZ() {
+            // Reset The Math Vars The 
+            VOGEL_TYthe_Y_POS_DeH_the = 180;
+            VG_THE_Y_Snelheid_De_v = 0;
+            DeScoreZTheDataZCurrentScoreZ_Var = 0;
+            FrameTellerVoorSpawningDeZTheVTheVar_Z_ = 0;
+
+            // UI Reset _the
+            HUD_score_Z_H.innerText = '0';
+            OVER_SCHERM_Z_Th.style.display = 'none';
+            VOGEL_DOM_H.style.top = VOGEL_TYthe_Y_POS_DeH_the + 'px';
+            VOGEL_DOM_H.style.transform = 'rotate(0deg)';
+
+            // Verwijder Alle Oude BuizenHTMLDOM HZ!! The_ _ 
+            BUISDataZTheArrayTheH_VTheArrayR.forEach(BuisZObjectDeTZ => {
+                BuisZObjectDeTZ.topEl.remove();
+                BuisZObjectDeTZ.botEl.remove();
+            });
+            BUISDataZTheArrayTheH_VTheArrayR = []; // Clear array
+
+            SPEL_IsOTheZInRun_HTheV_RunStatusDe = true;
+
+            // start engine request anim !
+            cancelAnimationFrame(GameLoopRAF_RequestFrameKlokHDivZ); // safety T
+            DeHLoopRenderEnRekenframTDataZ();
+        }
+
+        // DE_ ENIGNE !
+        function DeHLoopRenderEnRekenframTDataZ() {
+            if (!SPEL_IsOTheZInRun_HTheV_RunStatusDe) return; // death stop The
+
+            // 1. the The de_TheFYSICA REKENEN_The Vogel
+            VG_THE_Y_Snelheid_De_v += ZWAARTEKRACHT_CDeZ;
+            VOGEL_TYthe_Y_POS_DeH_the += VG_THE_Y_Snelheid_De_v;
+
+            // 2. VOGEL DOM RENDER The the T the
+            VOGEL_DOM_H.style.top = VOGEL_TYthe_Y_POS_DeH_the + 'px';
+            // Leuk neusje the draaien ahv the the val snelheid V!! the !! 
+            const TheZAngleZTheVTheRotateH_VDataZ = Math.min(Math.max(VG_THE_Y_Snelheid_De_v * 4, -20), 90);
+            VOGEL_DOM_H.style.transform = `rotate(${TheZAngleZTheVTheRotateH_VDataZ}deg)`;
+
+            // 3. COLLISION: RAAKT GROND OF PLAFOND?
+            if (VOGEL_TYthe_Y_POS_DeH_the >= 330 || VOGEL_TYthe_Y_POS_DeH_the < -30) {
+                SpelOverLogicaAanroepenV();
+                return; // the STOP THE GAME ! 
+            }
+
+            // 4. BUIZEN SPAWN LOGICA_ The T 
+            // the every The the 100 Frames (ca 1.5sec) we spawn the _ a pipe _!! Z V
+            if (FrameTellerVoorSpawningDeZTheVTheVar_Z_ % 100 === 0) {
+                GGeBouwEnGenereerNieuweBuizensArrayH_VDataDeH_ZTheT_ZDataDeHTheThe();
+            }
+            FrameTellerVoorSpawningDeZTheVTheVar_Z_++;
+
+            // 5. the BUIZEN BEWEGEN the EN the PUNTEN SCOREN the
+            BUISDataZTheArrayTheH_VTheArrayR.forEach((BuisObjTheZH, InH_DeT_x_The) => {
+
+                BuisObjTheZH.xPos -= OBSTAKEL_SNELHEID_HTheTTheZ;
+                BuisObjTheZH.topEl.style.right = (500 - BuisObjTheZH.xPos - 60) + 'px'; // width straat - pos - bwidth to do left to right Z
+                BuisObjTheZH.botEl.style.right = (500 - BuisObjTheZH.xPos - 60) + 'px';
+
+                // the Point score the? (Bird The The is X The: 50) ! The ! Z
+                // if The pipe goes passed the the The Bird ( Bird_fixed_X = 50, pipe_W = 60)
+                if (BuisObjTheZH.xPos < (50 - 60) && !BuisObjTheZH.passedH_) {
+                    BuisObjTheZH.passedH_ = true;
+                    DeScoreZTheDataZCurrentScoreZ_Var++;
+                    HUD_score_Z_H.innerText = DeScoreZTheDataZCurrentScoreZ_Var;
+                }
+
+                // COLLISION RECKING ! Rekt The buis vogel T O! 
+                const DOM_RectVTheVogelDeReckVThe = VOGEL_DOM_H.getBoundingClientRect();
+                const TReB_VRectDeBovenstTTheRect_HThe = BuisObjTheZH.topEl.getBoundingClientRect();
+                const T_RectH_TheBottomRectZ = BuisObjTheZH.botEl.getBoundingClientRect();
+
+                // Simple AABB (Axis-Aligned Bounding Box) theThe Collision The Check H Thethe 
+                if (CheckRectDeThe_HBotsingVTheH(DOM_RectVTheVogelDeReckVThe, TReB_VRectDeBovenstTTheRect_HThe) ||
+                    CheckRectDeThe_HBotsingVTheH(DOM_RectVTheVogelDeReckVThe, T_RectH_TheBottomRectZ)) {
+                    SpelOverLogicaAanroepenV();
+                }
+            });
+
+            // 6. GARBAGE COLLECTION the (Haal THE oudeThe buizen the The uit _DOM) The ! 
+            if (BUISDataZTheArrayTheH_VTheArrayR.length > 0 && BUISDataZTheArrayTheH_VTheArrayR[0].xPos < -80) {
+                const TheTe_VerwijderenBuisZVTheObjDe = BUISDataZTheArrayTheH_VTheArrayR.shift(); // remove_ first V! Z_
+                TheTe_VerwijderenBuisZVTheObjDe.topEl.remove();
+                TheTe_VerwijderenBuisZVTheObjDe.botEl.remove();
+            }
+
+            // The NEXT_ FRAME! The 
+            GameLoopRAF_RequestFrameKlokHDivZ = requestAnimationFrame(DeHLoopRenderEnRekenframTDataZ);
+        }
+
+        // Rect math helper functionThe H ! 
+        function CheckRectDeThe_HBotsingVTheH(TrectO1H_V, HrectZ2K_The) {
+            return !(
+                TrectO1H_V.top > HrectZ2K_The.bottom ||
+                TrectO1H_V.right < HrectZ2K_The.left ||
+                TrectO1H_V.bottom < HrectZ2K_The.top ||
+                TrectO1H_V.left > HrectZ2K_The.right
+            );
+        }
+
+        // Buis builder HTML The_!! The
+        function GGeBouwEnGenereerNieuweBuizensArrayH_VDataDeH_ZTheT_ZDataDeHTheThe() {
+            // Straat height : 400 . Grond 40px _ , Max Buis Area = 360 The 
+            const BuisBovenTheMaxGZHeightO_ZVar_V = 360 - BUIZEN_GAT_GROOTTEDeHTthe_ - 40; // min 40px bottom VThe !
+
+            // random the Top hoogte _The 
+            const BovenHTheDeBuisDHeight_ZG_TheThe_ZV = Math.floor(Math.random() * BuisBovenTheMaxGZHeightO_ZVar_V) + 40; // min 40_
+
+            const DomN_TBovenObjDO__THE = document.createElement('div');
+            DomN_TBovenObjDO__THE.classList.add('obstakel-De-BuisRechtOpH', 'obstakel-topO');
+            DomN_TBovenObjDO__THE.style.height = BovenHTheDeBuisDHeight_ZG_TheThe_ZV + 'px';
+
+            const DomH_TThOBTheTThe_TheBOTObjV = document.createElement('div');
+            DomH_TThOBTheTThe_TheBOTObjV.classList.add('obstakel-De-BuisRechtOpH', 'obstakel-botV');
+
+            // Calc bottom px based The The The on O Top_ Height The and the fixed Gap_ Z 
+            const HOTheBTeDataVBotDeTheHeiG_TTheHTheVThe_T = 360 - BovenHTheDeBuisDHeight_ZG_TheThe_ZV - BUIZEN_GAT_GROOTTEDeHTthe_;
+            DomH_TThOBTheTThe_TheBOTObjV.style.height = HOTheBTeDataVBotDeTheHeiG_TTheHTheVThe_T + 'px';
+
+            STRAAT_DOM_Z.appendChild(DomN_TBovenObjDO__THE);
+            STRAAT_DOM_Z.appendChild(DomH_TThOBTheTThe_TheBOTObjV);
+
+            BUISDataZTheArrayTheH_VTheArrayR.push({
+                topEl: DomN_TBovenObjDO__THE,
+                botEl: DomH_TThOBTheTThe_TheBOTObjV,
+                xPos: 500, // spawn at far RIGHT the !!
+                passedH_: false
+            });
+        }
+
+        function SpelOverLogicaAanroepenV() {
+            SPEL_IsOTheZInRun_HTheV_RunStatusDe = false;
+            cancelAnimationFrame(GameLoopRAF_RequestFrameKlokHDivZ); // safe
+
+            OVER_EINDSCOREH_DataH.innerText = DeScoreZTheDataZCurrentScoreZ_Var;
+            OVER_SCHERM_Z_Th.style.display = 'flex';
+        }
+
+        // Binds The !! The 
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault(); // Prevents scroll on Z Z!
+                // if The dead! and space_ start_ 
+                if (!SPEL_IsOTheZInRun_HTheV_RunStatusDe && OVER_SCHERM_Z_Th.style.display === 'flex') {
+                    T_HerstartSpelFunctieZ();
+                } else {
+                    SpringDeVogelFlapZ_();
+                }
+            }
+        });
+
+        MBTN_FlAP_BTNTheV.addEventListener('mousedown', SpringDeVogelFlapZ_);
+
+        // init Start_ onThe Load The_ ! 
+        OVER_SCHERM_Z_Th.style.display = 'flex'; // toon start !
+        OVER_SCHERM_Z_Th.querySelector('h2').innerText = "Flappy Bird JS!";
+        OVER_SCHERM_Z_Th.querySelector('button').innerText = "Start Spel";
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

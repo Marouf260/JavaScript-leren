@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 16: Dynamische Tabel - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #F8D7DA;
+            color: #721C24;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 16: Dynamische Tabel</h1>
+        <span class="level">Expert</span>
+        <p class="description">Maak een tabel met sorteren, filteren en paginatie.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je werken met complexe data manipulatie en tabel operaties. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>Array.sort() gebruiken voor sorteren</li>
+                <li>Array.from() gebruiken om NodeList naar Array te converteren</li>
+                <li>isNaN() gebruiken om te controleren of waarde nummer is</li>
+                <li>localeCompare() gebruiken voor string vergelijking</li>
+                <li>Complexe state management met meerdere functies</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>Array.sort()</strong> - Sorteert array op basis van compare functie</li>
+                <li><strong>Array.from()</strong> - Converteert NodeList/iterable naar Array</li>
+                <li><strong>isNaN()</strong> - Controleert of waarde geen nummer is</li>
+                <li><strong>localeCompare()</strong> - Vergelijkt strings met locale-aware sorting</li>
+                <li><strong>cells[index]</strong> - Eigenschap om specifieke cel in rij te krijgen</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: Headers selecteren en state</h4>
+                <p>Selecteer headers en maak state object voor sort richtingen:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> headers = table.<span class="function">querySelectorAll</span>(<span class="string">'th'</span>);
+<span class="keyword">let</span> sortDirection = {}; <span class="comment">// Object om richting per kolom bij te houden</span></pre>
+                </div>
+                <p><strong>Uitleg:</strong> sortDirection object houdt bij welke kolom welke richting heeft (true = oplopend, false = aflopend).</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: Event listener op headers</h4>
+                <p>Voeg click listener toe aan elke header:</p>
+                <div class="code-example">
+                    <pre>headers.<span class="function">forEach</span>((header, index) => {
+    header.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+        <span class="comment">// Sorteer logica</span>
+    });
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> forEach geeft index parameter. Deze gebruiken we om te weten welke kolom gesorteerd moet worden.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Rijen converteren naar Array</h4>
+                <p>Converteer NodeList naar Array voor sorteren:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> tbody = table.<span class="function">querySelector</span>(<span class="string">'tbody'</span>);
+<span class="keyword">const</span> rows = Array.from(tbody.<span class="function">querySelectorAll</span>(<span class="string">'tr'</span>));</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Array.from() is nodig omdat sort() alleen op arrays werkt, niet op NodeLists.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 4: Sort functie met type detectie</h4>
+                <p>Maak sort functie die nummers en strings behandelt:</p>
+                <div class="code-example">
+                    <pre>rows.<span class="function">sort</span>((a, b) => {
+    <span class="keyword">const</span> aText = a.cells[index].textContent.trim();
+    <span class="keyword">const</span> bText = b.cells[index].textContent.trim();
+    
+    <span class="keyword">if</span> (!isNaN(aText) && !isNaN(bText)) {
+        <span class="keyword">return</span> sortDirection[index] ? aText - bText : bText - aText;
+    }
+    
+    <span class="keyword">return</span> sortDirection[index] 
+        ? aText.localeCompare(bText)
+        : bText.localeCompare(aText);
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> isNaN() controleert of tekst nummer is. Voor nummers gebruiken we -, voor strings localeCompare().</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 5: Rijen opnieuw toevoegen</h4>
+                <p>Voeg gesorteerde rijen opnieuw toe aan tbody:</p>
+                <div class="code-example">
+                    <pre>rows.<span class="function">forEach</span>(row => tbody.<span class="function">appendChild</span>(row));</pre>
+                </div>
+                <p><strong>Uitleg:</strong> appendChild verplaatst elementen (niet kopieert). Rijen worden in nieuwe volgorde geplaatst.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="keyword">const</span> table = document.<span class="function">getElementById</span>(<span class="string">'data-table'</span>);
+<span class="keyword">const</span> searchInput = document.<span class="function">getElementById</span>(<span class="string">'table-search'</span>);
+<span class="keyword">const</span> headers = table.<span class="function">querySelectorAll</span>(<span class="string">'th'</span>);
+<span class="keyword">let</span> sortDirection = {};
+
+headers.<span class="function">forEach</span>((header, index) => {
+    header.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+        <span class="keyword">const</span> tbody = table.<span class="function">querySelector</span>(<span class="string">'tbody'</span>);
+        <span class="keyword">const</span> rows = Array.from(tbody.<span class="function">querySelectorAll</span>(<span class="string">'tr'</span>));
+        
+        sortDirection[index] = !sortDirection[index];
+        
+        rows.<span class="function">sort</span>((a, b) => {
+            <span class="keyword">const</span> aText = a.cells[index].textContent.trim();
+            <span class="keyword">const</span> bText = b.cells[index].textContent.trim();
+            
+            <span class="keyword">if</span> (!isNaN(aText) && !isNaN(bText)) {
+                <span class="keyword">return</span> sortDirection[index] ? aText - bText : bText - aText;
+            }
+            
+            <span class="keyword">return</span> sortDirection[index] 
+                ? aText.localeCompare(bText)
+                : bText.localeCompare(aText);
+        });
+        
+        rows.<span class="function">forEach</span>(row => tbody.<span class="function">appendChild</span>(row));
+    });
+});
+
+searchInput.<span class="function">addEventListener</span>(<span class="string">'input'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">const</span> searchTerm = <span class="keyword">this</span>.value.toLowerCase();
+    <span class="keyword">const</span> rows = table.<span class="function">querySelectorAll</span>(<span class="string">'tbody tr'</span>);
+    
+    rows.<span class="function">forEach</span>(row => {
+        <span class="keyword">const</span> text = row.textContent.toLowerCase();
+        row.style.display = text.includes(searchTerm) ? <span class="string">''</span> : <span class="string">'none'</span>;
+    });
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Selecteer tabel headers en maak sortDirection object</li>
+                <li>Voeg click listeners toe aan headers met index</li>
+                <li>Converteer rijen naar Array met Array.from()</li>
+                <li>Gebruik sort() met compare functie</li>
+                <li>Controleer type met isNaN() voor juiste sortering</li>
+                <li>Voeg gesorteerde rijen opnieuw toe</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Array.from() is belangrijk:</strong> NodeLists hebben geen sort() methode</li>
+                <li><strong>isNaN() check:</strong> Controleer beide waarden voordat je nummer sortering gebruikt</li>
+                <li><strong>localeCompare():</strong> Beter dan <code>&gt;</code> voor strings omdat het locale-aware is</li>
+                <li><strong>appendChild verplaatst:</strong> Element wordt verwijderd van oude locatie en toegevoegd aan nieuwe</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten Array.from()</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - NodeList heeft geen sort()</span>
+<span class="keyword">const</span> rows = tbody.<span class="function">querySelectorAll</span>(<span class="string">'tr'</span>);
+rows.<span class="function">sort</span>(...); <span class="comment">// Error!</span>
+
+<span class="comment">// ✅ GOED - Converteer naar Array</span>
+<span class="keyword">const</span> rows = Array.from(tbody.<span class="function">querySelectorAll</span>(<span class="string">'tr'</span>));
+rows.<span class="function">sort</span>(...);</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Verkeerde type check</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - typeof check werkt niet voor strings die nummers zijn</span>
+<span class="keyword">if</span> (typeof aText === <span class="string">'number'</span>) { ... }
+
+<span class="comment">// ✅ GOED - Gebruik isNaN()</span>
+<span class="keyword">if</span> (!isNaN(aText) && !isNaN(bText)) { ... }</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Vergeten sortDirection te toggle</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Richting verandert niet</span>
+rows.<span class="function">sort</span>(...); <span class="comment">// Vergeet sortDirection[index] = !sortDirection[index]</span>
+
+<span class="comment">// ✅ GOED - Toggle richting</span>
+sortDirection[index] = !sortDirection[index];
+rows.<span class="function">sort</span>(...);</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Paginatie:</strong> Toon alleen X rijen per pagina met navigatie</li>
+                    <li><strong>Multi-column sort:</strong> Sorteer op meerdere kolommen tegelijk</li>
+                    <li><strong>Filter per kolom:</strong> Voeg dropdown filters toe per kolom</li>
+                    <li><strong>Export functionaliteit:</strong> Exporteer tabel naar CSV</li>
+                    <li><strong>Row selection:</strong> Laat gebruikers rijen selecteren</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: Paginatie</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">let</span> currentPage = <span class="string">1</span>;
+<span class="keyword">const</span> itemsPerPage = <span class="string">10</span>;
+
+<span class="keyword">function</span> <span class="function">showPage</span>(page) {
+    <span class="keyword">const</span> start = (page - <span class="string">1</span>) * itemsPerPage;
+    <span class="keyword">const</span> end = start + itemsPerPage;
+    rows.<span class="function">forEach</span>((row, index) => {
+        row.style.display = (index >= start && index < end) ? <span class="string">''</span> : <span class="string">'none'</span>;
+    });
+}</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <input type="text" id="table-search" placeholder="Zoek..." style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;">
+            <table id="data-table" style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f0f0f0;">
+                        <th style="padding: 0.75rem; text-align: left; cursor: pointer; border: 1px solid #ddd;">Naam <span>⇅</span></th>
+                        <th style="padding: 0.75rem; text-align: left; cursor: pointer; border: 1px solid #ddd;">Leeftijd <span>⇅</span></th>
+                        <th style="padding: 0.75rem; text-align: left; cursor: pointer; border: 1px solid #ddd;">Stad <span>⇅</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Jan</td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">25</td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Amsterdam</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Piet</td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">30</td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Rotterdam</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Klaas</td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">28</td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Utrecht</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const table = document.getElementById('data-table');
+        const searchInput = document.getElementById('table-search');
+        const headers = table.querySelectorAll('th');
+        let sortDirection = {};
+
+        headers.forEach((header, index) => {
+            header.addEventListener('click', function() {
+                const tbody = table.querySelector('tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                
+                sortDirection[index] = !sortDirection[index];
+                
+                rows.sort((a, b) => {
+                    const aText = a.cells[index].textContent.trim();
+                    const bText = b.cells[index].textContent.trim();
+                    
+                    if (!isNaN(aText) && !isNaN(bText)) {
+                        return sortDirection[index] ? aText - bText : bText - aText;
+                    }
+                    
+                    return sortDirection[index] 
+                        ? aText.localeCompare(bText)
+                        : bText.localeCompare(aText);
+                });
+                
+                rows.forEach(row => tbody.appendChild(row));
+            });
+        });
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = table.querySelectorAll('tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

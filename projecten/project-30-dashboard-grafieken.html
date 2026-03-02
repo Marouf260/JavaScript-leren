@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 30: Dashboard & Grafieken - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Dashboard Area - Uses CSS container queries / flex for scoping */
+        .project-area {
+            background: #f4f7f6;
+            border-radius: 12px;
+            padding: 0;
+            margin-bottom: 2rem;
+            display: flex;
+            border: 2px solid #ccc;
+            overflow: hidden;
+            min-height: 500px;
+            transition: 0.3s;
+        }
+
+        /* Dark Mode for Demo */
+        .project-area.dark-theme {
+            background: #121212;
+            color: #ffffff;
+            border-color: #333;
+        }
+
+        .project-area.dark-theme .dash-sidebar {
+            background: #1f1f1f;
+            border-right-color: #333;
+        }
+
+        .project-area.dark-theme .stat-card {
+            background: #2d2d2d;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+
+        .project-area.dark-theme .dash-nav li:hover,
+        .project-area.dark-theme .dash-nav li.active {
+            background: #3d3d3d;
+        }
+
+        .project-area.dark-theme .stat-number,
+        .project-area.dark-theme h2 {
+            color: #fff;
+        }
+
+        .dash-sidebar {
+            width: 220px;
+            background: #ffffff;
+            border-right: 1px solid #e0e0e0;
+            padding: 20px;
+            transition: 0.3s;
+        }
+
+        .dash-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #10b981;
+        }
+
+        .dash-nav {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .dash-nav li {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .dash-nav li:hover,
+        .dash-nav li.active {
+            background: #e0f2fe;
+            color: #0284c7;
+        }
+
+        .dash-main {
+            flex: 1;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .dash-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .theme-toggle-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .project-area.dark-theme .theme-toggle-btn {
+            background: #333;
+        }
+
+        .dash-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .stat-growth {
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .stat-growth.positive {
+            color: #10b981;
+        }
+
+        .chart-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .project-area.dark-theme .chart-box {
+            background: #2d2d2d;
+        }
+
+        .chart-title {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* CSS Bar Chart */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 150px;
+            padding-top: 20px;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+            gap: 10px;
+        }
+
+        .bar-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100%;
+            position: relative;
+        }
+
+        .bar {
+            width: 100%;
+            background: #3b82f6;
+            border-radius: 4px 4px 0 0;
+            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 5px;
+        }
+
+        .bar:hover {
+            background: #2563eb;
+        }
+
+        .bar-label {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .bar-tooltip {
+            position: absolute;
+            top: -25px;
+            background: #333;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: 0.2s;
+            pointer-events: none;
+        }
+
+        .bar-container:hover .bar-tooltip {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 30: Data Dashboard</h1>
+        <span class="level">Master</span>
+        <p class="description">Het summum. Verbind styling, CSS animaties en Javascript Data om een professioneel
+            dashboard te genereren.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De "Procentuele Wiskunde" (Max Waarde Berekenen)</h4>
+                <p>Als je een staafdiagram wilt maken met flexibele hoogtes, moet je eerst weten wat je referentiepunt
+                    is (de 100% kapstok). We doen dit door met de power API <code>Math.max()</code> de allerhoogste
+                    waarde in onze lijst met data te vinden.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// 1. Array extractie m.b.v de Spread Operator</span>
+<span class="comment">// 2. [30, 45, 95...] wordt hier 'uitgepakt' en vergeleken!</span>
+<span class="keyword">const</span> maxVal = Math.<span class="function">max</span>(...chartData.<span class="function">map</span>(d => d.value));
+<span class="comment">// Uitkomst in dit script: maxVal = 95</span></pre>
+                </div>
+                <p><strong>Uitleg:</strong> Als we weten dat het hoogste cijfer (bijvoorbeeld 95k in juli) ons plafond
+                    is, kunnen alle andere maanden dynamisch via een percentageberekening (zoals
+                    <code>(huidig / 95) * 100</code>) visueel geproportioneerd worden.
+                </p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Elementen Creëren en Tekenen</h4>
+                <p>Zodra we de data hebben omgerekend, bouwen we de grafiek visueel op in onze HTML
+                    <code>chartContainer</code>. Voor elk data item (elke maand) in de loop, bouwen we een container div
+                    inclusief tooltip, bar div en label div.
+                </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>chartData.<span class="function">forEach</span>(item => {
+    <span class="comment">// Maak de container (vergelijkbaar met document.createElement('div'))</span>
+    <span class="keyword">const</span> container = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
+    container.className = <span class="string">'bar-container'</span>;
+
+    <span class="comment">// Injecteer de statische HTML elementen MET 0% beginhoogte</span>
+    container.innerHTML = <span class="string">`
+        &lt;div class="bar-tooltip"&gt;${item.value}K&lt;/div&gt;
+        &lt;div class="bar" style="height: 0%"&gt;&lt;/div&gt;  
+        &lt;div class="bar-label"&gt;${item.label}&lt;/div&gt;
+    `</span>;
+    chartContainer.<span class="function">appendChild</span>(container);
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We starten <em>bewust</em> met een element hoogte van 0%. De animatie groeit
+                    namelijk sneller visueel in <code>setTimeout()</code> wanneer de CSS engine begrijpt dat het een
+                    overgang van 0 tot X% opzet.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Het CSS Dark/Light Thema Wisselen</h4>
+                <p>Tegenwoordig heeft elke professionele app een Donkere Modus. Met een boolean variable houden we in JS
+                    gemakkelijk de status van de app bij en 'togglen' we de interface classes die op de main parent
+                    body/dashboard zijn gedeclareerd.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>themeBtn.addEventListener(<span class="string">'click'</span>, () => {
+    isDark = !isDark; <span class="comment">// Flip (Inverteer de booolian True/False statement)</span>
+    
+    <span class="keyword">if</span> (isDark) {
+        dashArea.classList.<span class="function">add</span>(<span class="string">'dark-theme'</span>);
+        themeBtn.innerText = <span class="string">'☀️'</span>;
+    } <span class="keyword">else</span> {
+        dashArea.classList.<span class="function">remove</span>(<span class="string">'dark-theme'</span>);
+        themeBtn.innerText = <span class="string">'🌙'</span>;
+    }
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> In de CSS zie je regels zoals
+                    <code>.project-area.dark-theme .stat-card</code>. Als we globaal via knop events de parent class
+                    aansturen, passen alle child cards, navbars en kleuren zich direct proactief door de cascading style
+                    layout perfect aan.
+                </p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (CSS Bar Chart Animatie)</h3>
+            <pre><span class="comment">// Binnen de 'forEach' array loop voor elke grafiek kolom</span>
+<span class="keyword">setTimeout</span>(() => {
+    <span class="comment">// Na één seconde (micro event cycle), stel de height waarde in!</span>
+    <span class="comment">// Omdat we in CSS the 'transition: height 1s' declaratie The The</span>
+    <span class="comment">// heebben staan the The the the the groeit onze balk vloeiend naar de TOP position!</span>
+    container.<span class="function">querySelector</span>(<span class="string">'.bar'</span>).style.height = <span class="string">`${heightPercent}%`</span>;
+}, <span class="string">100</span>);</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik rechtsboven op het thema-icoontje (Zon/Maan) voor "Dark Mode". Alle dashboard componenten
+                    verkleuren automatisch d.m.v global parent states.</li>
+                <li>Houd je cursor (hover) over de speelse blauwe staven van de grafiek onderaan om de individuele
+                    datapunten (de tooltips) visueel in te zien.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Waarom geen Chart.js Library?</strong> Voor snelle, lichte prototypes is een element query
+                    via simpele CSS vaak honderden kilobytes "lichter" om te laden voor een browser over netwerken, en
+                    een perfecte manier om creatieve inzichtelijke wiskunde logica te bouwen in JavaScript!</li>
+                <li><strong><code>position: relative</code> & <code>position: absolute</code>:</strong> Om de "tooltips"
+                    exact BOVEN de staaf te positioneren, geven we de <code>.bar-container</code> parent de statische
+                    eigenschap <code>relative</code> en de tooltip class de <code>absolute</code>. Zo zweeft de tooltip
+                    <i>relatief!</i> t.o.v zijn eigen staaf.</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Parent Height niet strak instellen</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Als je de CSS <code>.bar-chart</code> class parent (de grijze base border layout) niet voorziet van een vaste <code>height</code> (bijv. <code>150px</code>), dan weten je <code>.bar</code> kind elementen met hun <code>100%</code> height parameters helemaal NIET HOOG ze moeten worden! Ze vallen dan plat naar 0px.</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Voeg nieuwe data toe:</strong> Voeg in de JavaScript <code>array</code> een item toe
+                        voor 'Aug' met bijv. <code>value: 120</code>. Let op dat het complete script zich automatisch
+                        aanpast en het totale percentage height plafond naar 120 verschuift!</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area" id="dashboard-area">
+            <!-- Sidebar -->
+            <div class="dash-sidebar">
+                <div class="dash-logo">📊 DataPro</div>
+                <ul class="dash-nav">
+                    <li class="active">Overzicht</li>
+                    <li>Analytics</li>
+                    <li>Rapportages</li>
+                    <li>Instellingen</li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="dash-main">
+                <div class="dash-topbar">
+                    <h2 style="margin:0;">Dashboard Overzicht</h2>
+                    <button class="theme-toggle-btn" id="theme-btn">🌙</button>
+                </div>
+
+                <div class="dash-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-title">Bezoekers</div>
+                        <div class="stat-number">12,450</div>
+                        <div class="stat-growth positive">↑ +14.5%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Omzet</div>
+                        <div class="stat-number">€45,920</div>
+                        <div class="stat-growth positive">↑ +8.2%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Conversie</div>
+                        <div class="stat-number">3.24%</div>
+                        <div class="stat-growth" style="color: #ef4444;">↓ -1.1%</div>
+                    </div>
+                </div>
+
+                <div class="chart-box">
+                    <h3 class="chart-title">Verkoop per Maand (in duizenden)</h3>
+                    <div class="bar-chart" id="bar-chart">
+                        <!-- Bars injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const themeBtn = document.getElementById('theme-btn');
+        const dashArea = document.getElementById('dashboard-area');
+        let isDark = false;
+
+        themeBtn.addEventListener('click', () => {
+            isDark = !isDark;
+            if (isDark) {
+                dashArea.classList.add('dark-theme');
+                themeBtn.innerText = '☀️';
+            } else {
+                dashArea.classList.remove('dark-theme');
+                themeBtn.innerText = '🌙';
+            }
+        });
+
+        const chartData = [
+            { label: 'Jan', value: 30 },
+            { label: 'Feb', value: 45 },
+            { label: 'Mrt', value: 38 },
+            { label: 'Apr', value: 60 },
+            { label: 'Mei', value: 85 },
+            { label: 'Jun', value: 70 },
+            { label: 'Jul', value: 95 }
+        ];
+
+        const chartContainer = document.getElementById('bar-chart');
+
+        function renderChart() {
+            // Vind de hoogste waarde voor het 100% punt.
+            const maxVal = Math.max(...chartData.map(d => d.value));
+
+            chartData.forEach(item => {
+                const heightPercent = (item.value / maxVal) * 100;
+
+                const container = document.createElement('div');
+                container.className = 'bar-container';
+
+                container.innerHTML = `
+                    <div class="bar-tooltip">${item.value}K</div>
+                    <div class="bar" style="height: 0%"></div>
+                    <div class="bar-label">${item.label}</div>
+                `;
+
+                chartContainer.appendChild(container);
+
+                // Animate bars on next frame
+                setTimeout(() => {
+                    container.querySelector('.bar').style.height = `${heightPercent}%`;
+                }, 100);
+            });
+        }
+
+        renderChart();
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

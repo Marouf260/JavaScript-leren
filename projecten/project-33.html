@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 33: 3D Tilt Hover Kaarten - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Tilt Area */
+        .project-area {
+            background: #eef2f3;
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            perspective: 1000px;
+            /* Cruciaal voor 3D context in parent */
+        }
+
+        .tilt-card {
+            width: 250px;
+            height: 350px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transform-style: preserve-3d;
+            transition: box-shadow 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        /* Inner content for parallax inside card */
+        .tilt-card-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transform: translateZ(50px);
+            /* Pushes content forward 3D! */
+        }
+
+        .tilt-img {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            transform: translateZ(30px);
+        }
+
+        .tilt-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            transform: translateZ(20px);
+        }
+
+        .tilt-desc {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            transform: translateZ(10px);
+        }
+
+        /* The glow effect across the card */
+        .glare {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.4) 25%, transparent 30%);
+            transform: translateX(-100%);
+            pointer-events: none;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 33: 3D Tilt Hover Kaarten</h1>
+        <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
+        <p class="description">Bouw Premium 'Apple-style' 3D kaarten die roteren naar je muis toe met een licht-glans
+            effect.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: HTML Box Boundaries Uitlezen</h4>
+                <p>Voordat we berekeningen kunnen doen, moeten we de precieze dimensies van de gehoverde HTML kaart te
+                    weten komen. We gebruiken hier de professionele API <code>getBoundingClientRect()</code> voor.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre>card.addEventListener(<span class="string">'mousemove'</span>, (e) => {
+    <span class="comment">// Wat is de X, Y, Width en Height van deze kaart in de browser?</span>
+    <span class="keyword">const</span> rect = card.<span class="function">getBoundingClientRect</span>();
+    
+    <span class="comment">// Bereken de muis-positie puur BINNEN de kaart!</span>
+    <span class="keyword">const</span> x = e.clientX - rect.left;
+    <span class="keyword">const</span> y = e.clientY - rect.top;
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Als we de de links- en top-marge van het document van onze globale
+                    <code>e.clientX</code> en <code>e.clientY</code> aftrekken, weten we exact waar de muis op de HTML
+                    kaart zich bevindt!
+                </p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Wiskunde voor 3D Rotatie</h4>
+                <p>We willen de kaart kantelen naar DEZELFDE kant als waar de muis zich bevindt.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// De '10' is een dempingsfactor. Zonder dit draait de kaart TE SNEL!</span>
+<span class="keyword">const</span> rotateY = -((x - rect.width / <span class="string">2</span>) / <span class="string">10</span>);
+<span class="keyword">const</span> rotateX = ((y - rect.height / <span class="string">2</span>) / <span class="string">10</span>);
+
+card.style.transform = <span class="string">`rotateX(${rotateX}deg) rotateY(${rotateY}deg)`</span>;</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Door de breedte van de kaart door 2 te delen, weten we waar het middelpunt
+                    is. Als de muis links van het midden is, wordt <code>x - width/2</code> een NEGATIEF getal. Dit
+                    zorgt ervoor dat de kaart naar links kantelt!</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Het 'Glare' Effect (Lichtglans)</h4>
+                <p>Een echte premium kaart heeft ook een lichtglans die over het scherm schiet als je de kaart beweegt!
+                </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Hoever zit de muis op de kaart in procenten? </span>
+<span class="keyword">const</span> glarePercent = (x / rect.width) * <span class="string">100</span>;
+
+<span class="comment">// Schuif de witte gradient over de kaart heen</span>
+glare.style.transform = <span class="string">`translateX(${glarePercent - 100}%)`</span>;</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>.glare</code> is een div met een witte linear-gradient die we met een
+                    <code>translateX</code> altijd mooi laten meeschuiven met de muis.
+                </p>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Reset upon Leave)</h3>
+            <pre><span class="comment">// Als de muis de kaart verlaat, moeten we het kaartje weer plat leggen!</span>
+card.addEventListener(<span class="string">'mouseleave'</span>, () => {
+    <span class="comment">// Reset de rotatie naar 0 graden (plat)</span>
+    card.style.transform = <span class="string">`perspective(1000px) rotateX(0) rotateY(0)`</span>;
+    card.style.transition = <span class="string">`transform 0.5s ease`</span>; <span class="comment">// Zachte animatie terug!</span>
+});</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Beweeg je muis over de twee kaarten hieronder.</li>
+                <li>Let op hoe de tekst "zweeft" bovenop de achtergrond!</li>
+                <li>Let ook op de witte "glans" (glare) die door de kaart schiet.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong><code>perspective(1000px)</code>:</strong> Zonder deze CSS eigenschap in de parent of direct
+                    in de kaart JS, krijg je geen 3D effect! Deze waarde bepaalt hoe "diep" de 3D inkijk is. Je kan de
+                    hoek extremer maken door dit naar <code>500px</code> te veranderen.</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: <code>transition</code> conflicts</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - Als je de CSS <code>transition</code> op de kaart altijd aan laat staan (bijv. <code>transition: all 0.3s</code>), dan zal de kaart langzamer de muis volgen. Dit veroorzaakt een wankelende, schokkende beweging. Daarom is <code>card.style.transition = 'none'</code> in de mousemove heel cruciaal!</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Voeg Extra 'Floating' Objecten toe:</strong> Pas alle child elementen aan (zoals een
+                        badge of iconen) en geef ze allemaal een <code>translateZ(waarde)</code> via CSS zodat ze op
+                        verschillende afstanden van de kaart vliegen!</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="tilt-card">
+                <div class="glare"></div>
+                <div class="tilt-card-content">
+                    <div class="tilt-img">🚀</div>
+                    <div class="tilt-title">Startup</div>
+                    <div class="tilt-desc">Lanceer je ideeën de ruimte in met ons geweldige masterplan.</div>
+                </div>
+            </div>
+
+            <div class="tilt-card" style="background: linear-gradient(135deg, #111, #333); color: white; border: none;">
+                <div class="glare"></div>
+                <div class="tilt-card-content" style="color: white;">
+                    <div class="tilt-img">💎</div>
+                    <div class="tilt-title" style="color: white;">Premium</div>
+                    <div class="tilt-desc" style="color: #ccc;">Ervaar de beste kwaliteit 3D elementen en interfaces in
+                        deze tier.</div>
+                </div>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const cards = document.querySelectorAll('.tilt-card');
+
+        cards.forEach(card => {
+            const glare = card.querySelector('.glare');
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Deel door een factor (bijv. 10) om de tilt te verzachten
+                const rotateY = -((x - rect.width / 2) / 10);
+                const rotateX = ((y - rect.height / 2) / 10);
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                card.style.transition = `none`; // Geen vertraging als de muis *vrij* beweegt
+
+                // Verplaats de glans aan de hand van X positie
+                const glarePercent = (x / rect.width) * 100;
+                glare.style.transform = `translateX(${glarePercent - 100}%)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                // Reset de kaart zachtjes als de muis weggaat
+                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0)`;
+                card.style.transition = `transform 0.5s ease`;
+                glare.style.transform = `translateX(-100%)`;
+            });
+
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = `none`; // Haal de vertraging weg bij binnenkomst
+            });
+        });
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

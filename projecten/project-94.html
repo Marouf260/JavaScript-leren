@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 94: Virtuele Piano - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #18181b;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #f4f4f5;
+        }
+
+        .container {
+            background: #27272a;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 1);
+            border: 2px solid #3f3f46;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            color: #e4e4e7;
+            font-size: 2.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            background: #3f3f46;
+            color: #a1a1aa;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .piano-wrapper {
+            background: #111;
+            padding: 20px 20px 10px 20px;
+            border-radius: 20px 20px 10px 10px;
+            border-bottom: 10px solid #000;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+            display: flex;
+            position: relative;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            background: #18181b;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #3f3f46;
+        }
+
+        .controls label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #a1a1aa;
+        }
+
+        .key {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 15px;
+            font-weight: bold;
+            color: #71717a;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+
+        .key-white {
+            width: 60px;
+            height: 250px;
+            background: #fff;
+            border: 1px solid #d4d4d8;
+            border-radius: 0 0 5px 5px;
+            z-index: 1;
+            margin: 0 2px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .key-black {
+            width: 40px;
+            height: 160px;
+            background: linear-gradient(#333, #000);
+            border-radius: 0 0 5px 5px;
+            position: absolute;
+            top: 0;
+            left: 45px;
+            z-index: 2;
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid #000;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .hide-text .key span {
+            display: none;
+        }
+
+        /* Active states */
+        .key-white.active {
+            background: #f4f4f5;
+            transform: translateY(2px);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .key-black.active {
+            background: linear-gradient(#111, #000);
+            transform: translateY(2px);
+            box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .instructions {
+            margin-top: 20px;
+            color: #71717a;
+            font-size: 0.95rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 3rem;
+            color: #a1a1aa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #f4f4f5;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1><i class="fas fa-music"></i> Virtuele Piano</h1>
+        <span class="level">Grandmaster Project (Web Audio API)</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: AudioContext en OscillatorNode</h4>
+                <p>De <strong>Web Audio API</strong> werkt met een signaalnetwerk. Een <code>OscillatorNode</code>
+                    genereert de geluidsgolf op een bepaalde frequentie (Hz). We verbinden hem via een
+                    <code>GainNode</code> (volume) aan de speakers.</p>
+                <div class="code-example" style="background: #2d3748; color: #f8f8f8;">
+                    <pre><span style="color:#81c784">const</span> ctx = <span style="color:#81c784">new</span> AudioContext();
+<span style="color:#81c784">const</span> osc = ctx.<span style="color:#64b5f6">createOscillator</span>();
+<span style="color:#81c784">const</span> gain = ctx.<span style="color:#64b5f6">createGain</span>();
+
+osc.<span style="color:#64b5f6">connect</span>(gain);
+gain.<span style="color:#64b5f6">connect</span>(ctx.destination); <span style="color:#78909c">// speakers</span>
+osc.frequency.value = <span style="color:#f48fb1">440</span>; <span style="color:#78909c">// Hz = La (A4)</span>
+osc.type = <span style="color:#a5d6a7">'triangle'</span>; <span style="color:#78909c">// golfvorm</span>
+osc.<span style="color:#64b5f6">start</span>();</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Envelope (Attack &amp; Release)</h4>
+                <p>Een echte piano klinkt niet abrupt. We gebruiken <code>exponentialRampToValueAtTime()</code> voor een
+                    natuurlijk klingende fade-out (de <strong>envelope</strong>).</p>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Gebruik je toetsenbord (A-L voor witte toetsen, W,E,T,Y,U,O,P voor zwarte)!</li>
+                <li>Probeer de verschillende golfvormen in het dropdownmenu!</li>
+                <li>Klik ook met je muis op de toetsen!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>AudioContext Suspend:</strong> Browsers blokkeren audio totdat de gebruiker iets klikt
+                    (autoplay policy). We initialiseren de <code>AudioContext</code> pas bij de eerste toetsaanslag!
+                </li>
+                <li><strong>Frequenties:</strong> Muzieknoten hebben vaste frequenties: La (A4) = 440 Hz. Elke octaaf
+                    hoger verdubbelt de frequentie!</li>
+            </ul>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Opnemen:</strong> Gebruik de <code>MediaRecorder API</code> om je spel op te nemen en te
+                        downloaden als audio!</li>
+                    <li><strong>Reverb Effect:</strong> Voeg een <code>ConvolverNode</code> toe voor een halleffect!
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()"
+            style="background: #4f46e5; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 1rem 0;">📖
+            Toon Uitbreidingsmogelijkheden</button>
+
+        <div class="project-area">
+            <div class="controls">
+                <label>
+                    <i class="fas fa-volume-up"></i> Volume
+                    <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5">
+                </label>
+                <label>
+                    <input type="checkbox" id="showKeysCheck" checked> Toon Toetsen
+                </label>
+                <label>
+                    Golfvorm:
+                    <select id="waveformSelect"
+                        style="padding: 5px; border-radius: 5px; background: #27272a; color: white; border: 1px solid #3f3f46;">
+                        <option value="triangle">Piano-ish (Triangle)</option>
+                        <option value="sine">Zacht (Sine)</option>
+                        <option value="square">Retro 8-bit (Square)</option>
+                        <option value="sawtooth">Scherp (Sawtooth)</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="piano-wrapper" id="piano">
+                <!-- C4 -->
+                <div class="key key-white" data-key="a" data-note="261.63"><span>A</span>
+                    <div class="key key-black" data-key="w" data-note="277.18"><span>W</span></div>
+                </div>
+                <!-- D4 -->
+                <div class="key key-white" data-key="s" data-note="293.66"><span>S</span>
+                    <div class="key key-black" data-key="e" data-note="311.13"><span>E</span></div>
+                </div>
+                <!-- E4 -->
+                <div class="key key-white" data-key="d" data-note="329.63"><span>D</span></div>
+                <!-- F4 -->
+                <div class="key key-white" data-key="f" data-note="349.23"><span>F</span>
+                    <div class="key key-black" data-key="t" data-note="369.99"><span>T</span></div>
+                </div>
+                <!-- G4 -->
+                <div class="key key-white" data-key="g" data-note="392.00"><span>G</span>
+                    <div class="key key-black" data-key="y" data-note="415.30"><span>Y</span></div>
+                </div>
+                <!-- A4 -->
+                <div class="key key-white" data-key="h" data-note="440.00"><span>H</span>
+                    <div class="key key-black" data-key="u" data-note="466.16"><span>U</span></div>
+                </div>
+                <!-- B4 -->
+                <div class="key key-white" data-key="j" data-note="493.88"><span>J</span></div>
+                <!-- C5 -->
+                <div class="key key-white" data-key="k" data-note="523.25"><span>K</span>
+                    <div class="key key-black" data-key="o" data-note="554.37"><span>O</span></div>
+                </div>
+                <!-- D5 -->
+                <div class="key key-white" data-key="l" data-note="587.33"><span>L</span>
+                    <div class="key key-black" data-key="p" data-note="622.25"><span>P</span></div>
+                </div>
+                <!-- E5 -->
+                <div class="key key-white" data-key=";" data-note="659.25"><span>;</span></div>
+            </div>
+
+            <p class="instructions">Gebruik je toetsenbord (A-L voor witte toetsen, W-P voor zwarte) of klik met je
+                muis.</p>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        // DOM Elements
+        const piano = document.getElementById('piano');
+        const keys = document.querySelectorAll('.key');
+        const volSlider = document.getElementById('volumeSlider');
+        const showKeysCheck = document.getElementById('showKeysCheck');
+        const waveformSelect = document.getElementById('waveformSelect');
+
+        // Web Audio API context
+        let audioCtx;
+        let masterGainNode;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                masterGainNode = audioCtx.createGain();
+                masterGainNode.connect(audioCtx.destination);
+                masterGainNode.gain.value = volSlider.value;
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Keep track of active oscillators
+        const activeNotes = {};
+
+        function playNote(freq, keyId) {
+            initAudio();
+
+            // Prevent re-triggering the same note
+            if (activeNotes[keyId]) return;
+
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            osc.connect(gainNode);
+            gainNode.connect(masterGainNode);
+
+            osc.type = waveformSelect.value;
+            osc.frequency.value = freq;
+
+            // Attack & Decay Envelope
+            gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2.5);
+
+            osc.start();
+
+            activeNotes[keyId] = { osc, gainNode };
+        }
+
+        function stopNote(keyId) {
+            const note = activeNotes[keyId];
+            if (note) {
+                // Quick Release
+                note.gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+                note.gainNode.gain.setValueAtTime(note.gainNode.gain.value, audioCtx.currentTime);
+                note.gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.1);
+
+                note.osc.stop(audioCtx.currentTime + 0.1);
+                delete activeNotes[keyId];
+            }
+        }
+
+        // Keydown & Keyup (Keyboard)
+        document.addEventListener('keydown', (e) => {
+            if (e.repeat) return;
+            const keyChar = e.key.toLowerCase();
+            const keyEl = document.querySelector(`[data-key="${keyChar}"]`);
+            if (keyEl) {
+                keyEl.classList.add('active');
+                playNote(parseFloat(keyEl.dataset.note), keyChar);
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            const keyChar = e.key.toLowerCase();
+            const keyEl = document.querySelector(`[data-key="${keyChar}"]`);
+            if (keyEl) {
+                keyEl.classList.remove('active');
+                stopNote(keyChar);
+            }
+        });
+
+        // Mouse Down & Mouse Up (UI)
+        keys.forEach(key => {
+            const getNoteData = (el) => {
+                return { freq: parseFloat(el.dataset.note), id: el.dataset.key };
+            };
+
+            const triggerPlay = (e) => {
+                e.stopPropagation(); // Prevent black key from triggering white key
+                const { freq, id } = getNoteData(key);
+                key.classList.add('active');
+                playNote(freq, id);
+            };
+
+            const triggerStop = () => {
+                const { id } = getNoteData(key);
+                key.classList.remove('active');
+                stopNote(id);
+            };
+
+            key.addEventListener('mousedown', triggerPlay);
+            key.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                triggerPlay(e);
+            });
+
+            key.addEventListener('mouseup', triggerStop);
+            key.addEventListener('mouseleave', triggerStop);
+            key.addEventListener('touchend', triggerStop);
+        });
+
+        // UI Controls
+        volSlider.addEventListener('input', (e) => {
+            if (masterGainNode) {
+                masterGainNode.gain.value = parseFloat(e.target.value);
+            }
+        });
+
+        showKeysCheck.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                piano.classList.remove('hide-text');
+            } else {
+                piano.classList.add('hide-text');
+            }
+        });
+
+    </script>
+    <script>
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

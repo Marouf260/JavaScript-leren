@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 17: WYSIWYG Editor - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #F8D7DA;
+            color: #721C24;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 17: WYSIWYG Editor</h1>
+        <span class="level">Expert</span>
+        <p class="description">Maak een rich text editor met formatting opties.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je werken met contentEditable en document.execCommand. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>contentEditable gebruiken om elementen bewerkbaar te maken</li>
+                <li>document.execCommand() gebruiken voor text formatting</li>
+                <li>Focus management voor betere UX</li>
+                <li>Dynamisch knoppen genereren</li>
+                <li>Rich text editing implementeren</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>contentEditable</strong> - HTML attribuut om element bewerkbaar te maken</li>
+                <li><strong>document.execCommand()</strong> - API voor text formatting (deprecated maar nog gebruikt)</li>
+                <li><strong>focus()</strong> - Methode om focus naar element te verplaatsen</li>
+                <li><strong>Selection API</strong> - Modern alternatief voor execCommand</li>
+                <li><strong>Rich text editing</strong> - Tekst bewerken met formatting</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: contentEditable element maken</h4>
+                <p>Maak div met contentEditable attribuut:</p>
+                <div class="code-example">
+                    <pre><span class="comment">&lt;div id="editor-content" contenteditable="true"&gt;Type hier...&lt;/div&gt;</span></pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>contenteditable="true"</code> maakt element bewerkbaar zoals een textarea, maar met HTML formatting mogelijk.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: Format knoppen met data attributen</h4>
+                <p>Maak knoppen met data-command attributen:</p>
+                <div class="code-example">
+                    <pre><span class="comment">&lt;button class="format-btn" data-command="bold"&gt;B&lt;/button&gt;</span>
+<span class="comment">&lt;button class="format-btn" data-command="italic"&gt;I&lt;/button&gt;</span></pre>
+                </div>
+                <p><strong>Uitleg:</strong> data-command bevat de execCommand naam die uitgevoerd moet worden.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: execCommand gebruiken</h4>
+                <p>Voer formatting command uit bij klik:</p>
+                <div class="code-example">
+                    <pre>formatBtns.<span class="function">forEach</span>(btn => {
+    btn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+        <span class="keyword">const</span> command = <span class="keyword">this</span>.dataset.command;
+        document.execCommand(command, <span class="keyword">false</span>, <span class="keyword">null</span>);
+        content.focus();
+    });
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> execCommand(command, showUI, value). showUI=false betekent geen dialoog, value=null betekent geen extra waarde.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 4: Focus behouden</h4>
+                <p>Zet focus terug op editor na formatting:</p>
+                <div class="code-example">
+                    <pre>content.focus();</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Focus zorgt dat gebruiker direct verder kan typen zonder eerst te klikken.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="keyword">const</span> toolbar = document.<span class="function">getElementById</span>(<span class="string">'editor-toolbar'</span>);
+<span class="keyword">const</span> content = document.<span class="function">getElementById</span>(<span class="string">'editor-content'</span>);
+<span class="keyword">const</span> formatBtns = toolbar.<span class="function">querySelectorAll</span>(<span class="string">'.format-btn'</span>);
+
+formatBtns.<span class="function">forEach</span>(btn => {
+    btn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+        <span class="keyword">const</span> command = <span class="keyword">this</span>.dataset.command;
+        document.execCommand(command, <span class="keyword">false</span>, <span class="keyword">null</span>);
+        content.focus();
+    });
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Maak div met contenteditable="true"</li>
+                <li>Maak toolbar met knoppen en data-command attributen</li>
+                <li>Selecteer alle format knoppen</li>
+                <li>Voeg click listeners toe die execCommand uitvoeren</li>
+                <li>Zet focus terug op editor na formatting</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>execCommand is deprecated:</strong> Gebruik Selection API voor moderne implementaties</li>
+                <li><strong>Beschikbare commands:</strong> bold, italic, underline, justifyLeft, justifyCenter, insertUnorderedList</li>
+                <li><strong>Selection check:</strong> Controleer of tekst geselecteerd is voordat je format toepast</li>
+                <li><strong>Undo/redo:</strong> Gebruik execCommand('undo') en execCommand('redo')</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten contentEditable attribuut</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Element is niet bewerkbaar</span>
+&lt;div id=<span class="string">"editor-content"</span>&gt;Type hier...&lt;/div&gt; <span class="comment">// Vergeet contenteditable!</span>
+
+<span class="comment">// ✅ GOED - Voeg attribuut toe</span>
+&lt;div id=<span class="string">"editor-content"</span> contenteditable=<span class="string">"true"</span>&gt;Type hier...&lt;/div&gt;</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Verkeerde execCommand syntax</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Verkeerde parameters</span>
+document.execCommand(<span class="string">'bold'</span>); <span class="comment">// Werkt maar niet standaard</span>
+
+<span class="comment">// ✅ GOED - Gebruik alle parameters</span>
+document.execCommand(<span class="string">'bold'</span>, <span class="keyword">false</span>, <span class="keyword">null</span>);</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Vergeten focus te zetten</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Gebruiker moet handmatig klikken</span>
+document.execCommand(<span class="string">'bold'</span>, <span class="keyword">false</span>, <span class="keyword">null</span>); <span class="comment">// Vergeet focus!</span>
+
+<span class="comment">// ✅ GOED - Zet focus</span>
+document.execCommand(<span class="string">'bold'</span>, <span class="keyword">false</span>, <span class="keyword">null</span>);
+content.focus();</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Selection API:</strong> Gebruik moderne Selection API in plaats van execCommand</li>
+                    <li><strong>Color picker:</strong> Voeg tekst kleur en achtergrond kleur toe</li>
+                    <li><strong>Link insertie:</strong> Voeg dialoog toe om links in te voegen</li>
+                    <li><strong>Image upload:</strong> Laat gebruikers afbeeldingen uploaden</li>
+                    <li><strong>Export HTML:</strong> Exporteer content als HTML</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: Link Insertie</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">insertLink</span>() {
+    <span class="keyword">const</span> url = prompt(<span class="string">'Voer URL in:'</span>);
+    <span class="keyword">if</span> (url) {
+        document.execCommand(<span class="string">'createLink'</span>, <span class="keyword">false</span>, url);
+    }
+}</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <div id="editor-toolbar" style="border: 1px solid #ddd; padding: 0.5rem; background: #f0f0f0; border-radius: 4px 4px 0 0;">
+                <button class="format-btn" data-command="bold" style="padding: 0.25rem 0.5rem; margin-right: 0.25rem; cursor: pointer;">B</button>
+                <button class="format-btn" data-command="italic" style="padding: 0.25rem 0.5rem; margin-right: 0.25rem; cursor: pointer;">I</button>
+                <button class="format-btn" data-command="underline" style="padding: 0.25rem 0.5rem; margin-right: 0.25rem; cursor: pointer;">U</button>
+            </div>
+            <div id="editor-content" contenteditable="true" style="min-height: 200px; padding: 1rem; border: 1px solid #ddd; border-top: none; border-radius: 0 0 4px 4px;">Type hier je tekst...</div>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const toolbar = document.getElementById('editor-toolbar');
+        const content = document.getElementById('editor-content');
+        const formatBtns = toolbar.querySelectorAll('.format-btn');
+
+        formatBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const command = this.dataset.command;
+                document.execCommand(command, false, null);
+                content.focus();
+            });
+        });
+
+        // Voeg meer commands toe
+        const commands = ['bold', 'italic', 'underline', 'justifyLeft', 'justifyCenter', 'justifyRight'];
+        commands.forEach(cmd => {
+            const btn = document.createElement('button');
+            btn.textContent = cmd;
+            btn.className = 'format-btn';
+            btn.dataset.command = cmd;
+            btn.style.cssText = 'padding: 0.25rem 0.5rem; margin-right: 0.25rem; cursor: pointer;';
+            btn.addEventListener('click', function() {
+                document.execCommand(cmd, false, null);
+                content.focus();
+            });
+            toolbar.appendChild(btn);
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

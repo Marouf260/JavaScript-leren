@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 49: Notitie App - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* App Area */
+        .project-area {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid #e2e8f0;
+        }
+
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-add {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-add:hover {
+            background: #059669;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .note {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s;
+        }
+
+        .note:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .note-header {
+            background: #fdf2f8;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: flex-end;
+            border-bottom: 1px solid #fecdd3;
+        }
+
+        .btn-del {
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .btn-del:hover {
+            color: #b91c1c;
+        }
+
+        .note-body {
+            flex: 1;
+        }
+
+        .note-input {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border: none;
+            outline: none;
+            resize: none;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: #334155;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 49: Notitie App (Local Storage)</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">Data
+            Logic</span>
+        <p class="description">Maak the the een app the the Notitie-applicatie the the the welke je aantekeningen (Text
+            Data!) lokaal opslaat in the de The Browser Memory, the zodat de data *nooit* The kwijt the the The
+            disappears niet The refresh! the !</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Het "Storage" Object (De Database)</h4>
+                <p>Jouw the de Browser heeft The The een the ingebouwd database-object The The
+                    <code>localStorage</code>. Je kan The the hier the data The in "the Setten"
+                    <code>setItem(sleutel, waarde)</code> the The en data the uithalen The The met
+                    <code>getItem(sleutel)</code>.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// The the Ophalen the van the The the the de the data op the the de sleutel-naam "notities"</span>
+<span class="keyword">const</span> dataString = localStorage.<span class="function">getItem</span>(<span class="string">'notities'</span>);
+
+<span class="comment">// Is er nog the the geen The the the data? the The return een The de standaard "Lege the Array" the met de OR The `||` the </span>
+<span class="keyword">let</span> defaultData = JSON.<span class="function">parse</span>(dataString) || [];</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: The Stringify The The The The The The The Vertaling </h4>
+                <p>LocalStorage The The is super the The The handig, The the The maar heet The een the gigantisch The
+                    nadeel: Hij The The kan the THE The ALLEEN maar TEXT the (Strings The The) the the The the the The
+                    the opslaan The The. The Een the The The Array the the the The kan The the The hij the the The The
+                    the niet lezen. The The The The The JSON.stringify the The lost the The The The Dit op The The !</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> mijnArray = [<span class="string">"Notitie 1"</span>, <span class="string">"Notitie 2"</span>];
+
+<span class="comment">// FOUT The The ❌ (the Opslaan The The the as array The the the)</span>
+localStorage.<span class="function">setItem</span>(<span class="string">'fout'</span>, mijnArray); <span class="comment">// the The Browser the The The renders this the the as: "Notitie 1,Notitie 2" (Hij the verliest The The alle Array eigenschappen)</span>
+
+<span class="comment">// GOED The The ✅ (the the the The JSON the string) </span>
+localStorage.<span class="function">setItem</span>(<span class="string">'goed'</span>, JSON.<span class="function">stringify</span>(mijnArray)); <span class="comment">// The the Slaat The exact the the: "[\"Notitie 1\",\"Notitie 2\"]" the The op! </span></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Het Verzamelaar-Script The</h4>
+                <p>Hoe the The weet the The the JS The The the code The THE the wat the er The the the the the the moet
+                    worden opgeslagen The? the THE Telkens the The als the the jij the the typt, zoekt the he the The
+                    The the the The code The the ALLE the The tekstvakken The the op het the The the the the the scherm
+                    the The The The met <code>querySelectorAll()</code>. Vervolgens the the loopt the the de
+                    <code>forEach()</code> the DE the THE The over The the ze the heen The The en the The the duwt the
+                    the the <code>node.value</code> THE in the the een the lege The the the the Array the! The THE The!
+                </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// The The Code the Snippet the The The the the dat in de the Background the the the The draait The !</span>
+<span class="keyword">const</span> textvakjes = document.<span class="function">querySelectorAll</span>(<span class="string">'.note-input'</span>);
+<span class="keyword">const</span> textOpslag = [];
+
+textvakjes.<span class="function">forEach</span>(vakje => {
+    textOpslag.<span class="function">push</span>(vakje.value);
+});
+
+<span class="comment">// Sla de opgebouwde Array the in The The 1 The klap The op !</span>
+localStorage.<span class="function">setItem</span>(<span class="string">'notes-data'</span>, JSON.<span class="function">stringify</span>(textOpslag));</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Typ the the The the the the The een the stuk the text The in en The the wacht! </li>
+                <li>Refresh je The browser (F5 The the page The The reload!) </li>
+                <li>Heeft IE DE DATA THE THE *ONTHOUDEN!!*?! The BINGO The !! The Local Storage werkt!</li>
+                <li>Probeer the The Ook the de Notitie The the the te THE the verwijderen The The en The refresh The the
+                    The nog een The keer The !</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>The Developer The Tools:</strong> The Wil the the The The je the zelf The The Zien the The
+                    The the the HOE the The the the the data is opgeslagen THE!? The The The Druk the op F12, ga the The
+                    the THE The the naar The The "Application" the the The THE The The the the the (in Chrome the The )
+                    the the The of the the the The the The "Storage" (the The in THE the the Firefox the ) en the The
+                    The THE The The klik op The "Local Storage" THE The! the The The the Hier the the the zie je The !
+                </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: "Cannot The read The properties of the the null the the The The (reading The the the The
+                    'forEach')"the</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The de the the the the the the localstorage The NOG LEEG THE is The The the The The (!the the Dus the the de The bezoeker The the The The is the the The voor the the the the EERST THE The the op de website The The The THE THE), the the The The The THE The the dan The retourneert THE the `getItem` NULL. The THE THE the The En the the je kunt the the the The een the the THE the `forEach` THE the loop niet The the The the op The The een the The *The Nulla the THE the The* the variabele The the the uitvoeren TheThe ! </span>
+
+<span class="comment">// OPLOSSING: the The de the the Fallback The The the the The value The The (|| the THE de default!)the The</span>
+<span class="keyword">const</span> thethetheTheDataThe = JSON.<span class="function">parse</span>(localStorage.<span class="function">getItem</span>(<span class="string">'sleutel'</span>)) || []; <span class="comment">// the the the The de the !!The !!the The the The The </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>De Title The in the Data the THE the Model THE! </strong> Nu the sla the je the The
+                        alleen de `vakje.value` the The op the The the (de strings the The in the The The Array the the
+                        THE The). Maar THE The the The wat The als je The the The the Notities titles the wilt the THE
+                        the the geven? the Maak the the THE van de the String The Array THE The The een the the The The
+                        Object Array THE The The! The: <code>[{ titel: "Mijn tytel", text: "Text hier" }]</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="header-controls">
+                <span style="font-weight:bold; color:#334155;">Jouw Notities:</span>
+                <button class="btn-add" id="add-note-btn">+ Nieuwe Notitie</button>
+            </div>
+
+            <div class="notes-grid" id="notes-grid">
+                <!-- Javascript will map elements here based on stored array value -->
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const addBtn = document.getElementById('add-note-btn');
+        const grid = document.getElementById('notes-grid');
+
+        // 1. the The Meteen at page the Load The The Inladen!
+        // Haalt existing op (parse converts strings back to Arrays!!). Anders [] leeg array the The as falback The default the The default.
+        const notes = JSON.parse(localStorage.getItem('notes-data')) || ["Typ hier the the The je Notitie..."];
+
+        // the Initialization
+        if (notes) {
+            notes.forEach(noteText => addNewNoteElement(noteText));
+        }
+
+        // Add Btn Listens to push the new note The
+        addBtn.addEventListener('click', () => {
+            addNewNoteElement("");
+            // empty string saves automatically! The save method the 
+        });
+
+        // 2. We Generate The Note THE element
+        function addNewNoteElement(text = "") {
+            const note = document.createElement('div');
+            note.classList.add('note');
+
+            note.innerHTML = `
+                <div class="note-header">
+                    <button class="btn-del" title="Verwijderen">🗑</button>
+                </div>
+                <div class="note-body">
+                    <textarea class="note-input">${text}</textarea>
+                </div>
+            `;
+
+            // Grab events of elements INSIDE the the new div WE JUST created
+            const deleteBtn = note.querySelector('.btn-del');
+            const textArea = note.querySelector('.note-input');
+
+            // Save triggers when typing stops using event changes!
+            textArea.addEventListener('input', (e) => {
+                updateStorageData();
+            });
+
+            deleteBtn.addEventListener('click', () => {
+                // The DOM removal
+                note.remove();
+                // DB updates after deleting
+                updateStorageData();
+            });
+
+            grid.appendChild(note);
+            // Save when an empty The created the as well ! (Bug fix The)
+            updateStorageData();
+        }
+
+        // 3. De opslag! Loop over alle the actuele The <TextAreas> DOM nodes The the The en store The in local Storage The!
+        function updateStorageData() {
+            // Find ALL Node list textareas op scherm the op dit moment!
+            const actueleNotitiesInTheWindow = document.querySelectorAll('.note-input');
+            const dataArrayToHold = [];
+
+            // Value of those DOM boxes the Push into array The Array
+            actueleNotitiesInTheWindow.forEach(node => {
+                dataArrayToHold.push(node.value);
+            });
+
+            // "Stringify" JSON and Dump array the in Memory THE STORAGE API THE !
+            localStorage.setItem('notes-data', JSON.stringify(dataArrayToHold));
+        }
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

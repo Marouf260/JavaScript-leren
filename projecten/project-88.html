@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 88: IndexedDB Notities - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fdf4ff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #4a044e;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 650px;
+            width: 100%;
+            box-shadow: 0 15px 40px -5px rgba(192, 38, 211, 0.15);
+            border: 2px solid #fae8ff;
+            border-top: 8px solid #c026d3;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #701a75;
+        }
+
+        .level {
+            display: block;
+            padding: 0.35rem 1rem;
+            background: #fae8ff;
+            color: #a21caf;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* APP CSS H_T */
+        .project-area {
+            width: 100%;
+        }
+
+        .oUiINfTheBoXTh__N_N {
+            padding: 15px;
+            background: #fefce8;
+            border-left: 4px solid #eab308;
+            color: #854d0e;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .FFoRRMInThV_TNoTT {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .FFoRRMInThV_TNoTT input {
+            flex: 1;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #f0abfc;
+            font-size: 1.1rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .FFoRRMInThV_TNoTT input:focus {
+            border-color: #c026d3;
+            box-shadow: 0 0 0 4px rgba(192, 38, 211, 0.1);
+        }
+
+        .btn_THVT_HVoegTHThe {
+            background: #c026d3;
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .btn_THVT_HVoegTHThe:hover {
+            background: #a21caf;
+        }
+
+        /* THE  LIjst ! */
+        .LllIJ_sTNnOOTiTHesDOMThe {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .KkaH_TheUaRTTieNotM__ {
+            background: #fdf4ff;
+            border: 1px solid #f5d0fe;
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+        }
+
+        .KkaH_TheUaRTTieNotM__:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transform: translateX(5px);
+        }
+
+        .ThHTExtGDeTDenNotV {
+            font-size: 1.1rem;
+            color: #4a044e;
+            font-weight: 500;
+        }
+
+        .TTTheiDDeTaTtTNot {
+            font-size: 0.8rem;
+            color: #a21caf;
+            margin-top: 5px;
+        }
+
+        .bBToNTnTheDEElLeOthe_V {
+            background: #fee2e2;
+            color: #ef4444;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .bBToNTnTheDEElLeOthe_V:hover {
+            background: #ef4444;
+            color: white;
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        /* Lege state Z  ! _ THE V  O !  H */
+        .LlLegeSTTheeSTh_DeTa_MTheHMsg {
+            text-align: center;
+            color: #c026d3;
+            font-style: italic;
+            padding: 20px;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #c026d3;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+    <!-- FONT O !! Z ! -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1><i class="fas fa-database"></i> IndexedDB Notities</h1>
+        <span class="level">Advanced APIs</span>
+
+        <div class="oUiINfTheBoXTh__N_N">
+            <b>IndexedDB</b> is een_ echte _V The the the <em>Database</em> HThe! the inside The je browser. H!_ Het THE
+            is 100x v_ The the _! beter O the_ The the en groter THE H the dan `localStorage` want de het slaat the _
+            Objects the ! asynchronously _ O_Z The OTheThe !! the H the OP ! _
+        </div>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De Database Openen</h4>
+                <p><strong>IndexedDB</strong> is een echte database in de browser. Het openen werkt callback-gebaseerd.
+                    De <code>onupgradeneeded</code> event is de plek om je "tabellen" (objectStores) aan te maken.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">const</span> req = window.indexedDB.<span class="function">open</span>(<span class="string">'MijnDb'</span>, <span class="string">1</span>);
+req.onupgradeneeded = (e) =&gt; {
+    e.target.result.<span class="function">createObjectStore</span>(<span class="string">'notities'</span>,
+        { keyPath: <span class="string">'id'</span>, autoIncrement: <span class="keyword">true</span> });
+};
+req.onsuccess = (e) =&gt; db = e.target.result;</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Data Lezen & Schrijven via Transacties</h4>
+                <p>Elke operatie (lezen/schrijven) gaat via een <strong>Transactie</strong>. Schrijven =
+                    <code>'readwrite'</code>, Lezen = <code>'readonly'</code>.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Schrijven</span>
+<span class="keyword">const</span> tx = db.<span class="function">transaction</span>([<span class="string">'notities'</span>], <span class="string">'readwrite'</span>);
+tx.objectStore(<span class="string">'notities'</span>).<span class="function">add</span>({ tekst: <span class="string">'Hallo!'</span> });
+
+<span class="comment">// Lezen</span>
+tx.objectStore(<span class="string">'notities'</span>).<span class="function">getAll</span>().onsuccess = (e) =&gt; 
+    console.<span class="function">log</span>(e.target.result);</pre>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Typ een notitie en klik op <strong>+</strong> om te bewaren!</li>
+                <li>Herlaad de pagina - de notities blijven dankzij IndexedDB!</li>
+                <li>Verwijder een notitie met de rode afvalemmers.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>vs localStorage:</strong> <code>localStorage</code> slaat alleen strings op. IndexedDB slaat
+                    volledige JavaScript Objecten op, is asynchroon en heeft vrijwel geen opslaglimiet!</li>
+            </ul>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Bewerk Notitie:</strong> Voeg een ✏️ knop toe per notitie. Gebruik
+                        <code>objectStore.put()</code> om een bestaand object bij te werken in plaats van
+                        <code>.add()</code>!</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Info box & App Area -->
+        <div class="project-area">
+
+            <form class="FFoRRMInThV_TNoTT" id="FfFormHVo_oHGenNOOOtiTheTV_H_ZTheO">
+                <input type="text" id="UU_iinTTHxtptutDHaTaTHNNot"
+                    placeholder="Typ een notitie... (slaat op in the IDB!)" required autocomplete="off">
+                <button type="submit" class="btn_THVT_HVoegTHThe"><i class="fas fa-plus"></i></button>
+            </form>
+
+            <div class="LlLegeSTTheeSTh_DeTa_MTheHMsg" id="MmsGErrLlgeTHeiHlij_ZTVST">Geen notities. Z The voeg_ H der1
+                eentje toe! THE!</div>
+
+            <ul class="LllIJ_sTNnOOTiTHesDOMThe" id="uUiiTheLLTijstTDOMHDataThV">
+                <!-- Javascript fills dit THE !! ! H -->
+            </ul>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const DOMHUIoFrrmmN__TTtieVTTh = document.getElementById('FfFormHVo_oHGenNOOOtiTheTV_H_ZTheO');
+        const UiHThInTptVDeTEXTHNThetO_TheH = document.getElementById('UU_iinTTHxtptutDHaTaTHNNot');
+        const UUuiLlLListDOMTheNotTHEi_ThTV = document.getElementById('uUiiTheLLTijstTDOMHDataThV');
+        const mmmsGLEGEElLIHjJStDe = document.getElementById('MmsGErrLlgeTHeiHlij_ZTVST');
+
+        // 1 INIT THE DATABASE THE !! (De IndexedDB_ H API is the oud the V! en V THE callbacks gebasseerd, niet O H_ THE the the _ Promises ! default! THE )
+        let dbHOTheObjectD_BDataTh_v;
+        const DDbTHTeNnAAmO_TDBH_V = 'MijnNotitieDatabase_P88';
+        const DDhTheVveRrSrieTDthe__DHH = 1;
+
+        const ReQuUeTheHstTheAANDDBBVHDTReThe_ = window.indexedDB.open(DDbTHTeNnAAmO_TDBH_V, DDhTheVveRrSrieTDthe__DHH);
+
+        // A_ Als the database the H _ V the  voor The O the de_ The EERSTE x THE V_ The_ 1 O ! The ! the the  wordt the aangemaakt OF_ Vthe V the_ O !The update heeft the! _ H THE ! the 
+        ReQuUeTheHstTheAANDDBBVHDTReThe_.onupgradeneeded = (vEE_eTveTTThe_vTnHtTTH_) => {
+            dbHOTheObjectD_BDataTh_v = vEE_eTveTTThe_vTnHtTTH_.target.result;
+            // Maak een "Tabel" (ObjectStore)_ THE H the the  met H een auto-increment_ THE_!1  the _ ID sleutel (keyPath OH_ !!T) !! 
+            if (!dbHOTheObjectD_BDataTh_v.objectStoreNames.contains('notities')) {
+                dbHOTheObjectD_BDataTh_v.createObjectStore('notities', { keyPath: 'id', autoIncrement: true });
+            }
+        };
+
+        // B_ Succesvolle_ The H _ The THE 1 !! connectie
+        ReQuUeTheHstTheAANDDBBVHDTReThe_.onsuccess = (vEE_eTveTTThe_vTnHtTTH_) => {
+            dbHOTheObjectD_BDataTh_v = vEE_eTveTTThe_vTnHtTTH_.target.result;
+            // THE LAAD DE DATA THE INIT !!
+            AAlTlTLeVNOoHtieTTiess_TheHTheVVeeHTTeLADenOThe_TV();
+        };
+
+        // C FOut ! THE_
+        ReQuUeTheHstTheAANDDBBVHDTReThe_.onerror = (e) => {
+            console.error("The__ IndexedD_B DB The FfOut_ !!:", e);
+        };
+
+
+        // 2 VOEG The EEN THE NOTITIE_ O H! TOE AAN THE DATABASE !!
+        function VVOEegtheNoteHiTHTIe_EToeInVDDbH(tTeXxtD_TheVNotiiZTTheTHH) {
+            // A: Maak_ de _ Transactie in "readwrite" The the the modus _ The op de Tabel H "!notities"  _! THE !
+            const DeTh_vTrV_aNnSscaTIEHHDTBaT = dbHOTheObjectD_BDataTh_v.transaction(['notities'], 'readwrite');
+
+            // B: HAla_ THE de the The the the the Store Tabel _1O !! HThe 
+            const ThOoOobHbjStoreH__DTVTTeDataTabelThe = DeTh_vTrV_aNnSscaTIEHHDTBaT.objectStore('notities');
+
+            // C : VOEg de THE JSON the Object the THE! VThe V_ the The erin !!
+            const HHhETThNIEUweE__NN_OOoDttThOBjjthe_ = {
+                tekst: tTeXxtD_TheVNotiiZTTheTHH,
+                aanmaakDatum: new Date().toLocaleString('nl-NL')
+            };
+
+            const addReqVThHOoeeG_ToTHeTheReqKTheV = ThOoOobHbjStoreH__DTVTTeDataTabelThe.add(HHhETThNIEUweE__NN_OOoDttThOBjjthe_);
+
+            addReqVThHOoeeG_ToTHeTheReqKTheV.onsuccess = () => {
+                // The THE _The the Is GELUKT! update ui !! THE V
+                UiHThInTptVDeTEXTHNThetO_TheH.value = "";
+                AAlTlTLeVNOoHtieTTiess_TheHTheVVeeHTTeLADenOThe_TV();
+            }
+        }
+
+
+        // 3 LEES ALLE__! The NOTITIES_ O H ! UI T De DATABaBSe! H!_
+        function AAlTlTLeVNOoHtieTTiess_TheHTheVVeeHTTeLADenOThe_TV() {
+            const DeTh_vTrV_aNnSscaTIEHHDTBaT = dbHOTheObjectD_BDataTh_v.transaction(['notities'], 'readonly');
+            const ThOoOobHbjStoreH__DTVTTeDataTabelThe = DeTh_vTrV_aNnSscaTIEHHDTBaT.objectStore('notities');
+
+            // GEEF_ The ALLES _ THE "_ O !! V !! H H
+            const HGetHHaLTheLLAAelesDeRReQuees_tttThe_ = ThOoOobHbjStoreH__DTVTTeDataTabelThe.getAll();
+
+            HGetHHaLTheLLAAelesDeRReQuees_tttThe_.onsuccess = () => {
+                const aArRrRyV_HTheNotieSTheHDta_TheAThe = HGetHHaLTheLLAAelesDeRReQuees_tttThe_.result;
+
+                UUuiLlLListDOMTheNotTHEi_ThTV.innerHTML = ""; // leeg _The ui 
+
+                if (aArRrRyV_HTheNotieSTheHDta_TheAThe.length === 0) {
+                    mmmsGLEGEElLIHjJStDe.style.display = "block";
+                } else {
+                    mmmsGLEGEElLIHjJStDe.style.display = "none";
+
+                    // Render_The they !!_H the The
+                    aArRrRyV_HTheNotieSTheHDta_TheAThe.forEach(OEEEnNDTOthHBN_OoTiHTTHEhe_ => {
+                        const DOMlIIHTiTeMvTheT_N_DTh = document.createElement('li');
+                        DOMlIIHTiTeMvTheT_N_DTh.classList.add('KkaH_TheUaRTTieNotM__');
+
+                        DOMlIIHTiTeMvTheT_N_DTh.innerHTML = `
+                               <div>
+                                    <div class="ThHTExtGDeTDenNotV">${OEEEnNDTOthHBN_OoTiHTTHEhe_.tekst}</div>
+                                    <div class="TTTheiDDeTaTtTNot">${OEEEnNDTOthHBN_OoTiHTTHEhe_.aanmaakDatum}</div>
+                               </div>
+                               <button class="bBToNTnTheDEElLeOthe_V" onclick="DeLTTTeHTeNoOtHTiVTeHDatTi(${OEEEnNDTOthHBN_OoTiHTTHEhe_.id})">
+                                   <i class="fas fa-trash-alt"></i>
+                               </button>
+                           `;
+                        // ZTThe V Voeg The TOP ! The the T the aan _ the! the_ list the toe the THE! the reverse The the (niewste bovne)__ H_ The !
+                        UUuiLlLListDOMTheNotTHEi_ThTV.prepend(DOMlIIHTiTeMvTheT_N_DTh);
+                    });
+                }
+            }
+        }
+
+
+        // 4 THE THE  DELETE EEN  __The H NOTITIE UIT DE _the ! DB !! THE 
+        // global function so H V_ DOM onclick The _ kan the vinden_ !_ H
+        window.DeLTTTeHTeNoOtHTiVTeHDatTi = (iDNDTheoUmBBDtheOer_ZTheHT) => {
+            const DeTh_vTrV_aNnSscaTIEHHDTBaT = dbHOTheObjectD_BDataTh_v.transaction(['notities'], 'readwrite');
+            const ThOoOobHbjStoreH__DTVTTeDataTabelThe = DeTh_vTrV_aNnSscaTIEHHDTBaT.objectStore('notities');
+
+            // DELETE O!!!
+            const oDeELH_eTEHOoPRquuTheTVHst_T = ThOoOobHbjStoreH__DTVTTeDataTabelThe.delete(iDNDTheoUmBBDtheOer_ZTheHT);
+
+            oDeELH_eTEHOoPRquuTheTVHst_T.onsuccess = () => {
+                AAlTlTLeVNOoHtieTTiess_TheHTheVVeeHTTeLADenOThe_TV(); // re THE render _ ! z
+            }
+        }
+
+
+        // 5 THE EVENT THE V !! LIsTENRER V!!_ (sUBMIT The _ THE FORM! _ )!
+        DOMHUIoFrrmmN__TTtieVTTh.addEventListener('submit', (TthEvvHTeNHTtV_Z_) => {
+            TthEvvHTeNHTtV_Z_.preventDefault();
+            const uiTheThe_VTT_TextT_IThe = UiHThInTptVDeTEXTHNThetO_TheH.value.trim();
+
+            if (uiTheThe_VTT_TextT_IThe) {
+                VVOEegtheNoteHiTHTIe_EToeInVDDbH(uiTheThe_VTT_TextT_IThe);
+            }
+        });
+
+    </script>
+    <script>
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 80: ISS Tracker - DOM Projecten</title>
+    <!-- Leeflet CSS voor MAP_ THE O!! !-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #fff;
+        }
+
+        .container {
+            background: #111827;
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            border: 1px solid #374151;
+        }
+
+        h1 {
+            color: #f9fafb;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .level {
+            display: block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(99, 102, 241, 0.2);
+            color: #818cf8;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* APP CSS H_T */
+        .project-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .IInnFoObaLAlK_THEIsz_S {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            background: #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #374151;
+        }
+
+        .IIteMTDaTaissH_Z {
+            text-align: center;
+        }
+
+        .IIteMTDaTaissH_Z span {
+            display: block;
+            font-size: 0.9rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .IIteMTDaTaissH_Z div {
+            font-size: 1.5rem;
+            color: #6366f1;
+            font-weight: 900;
+            font-family: monospace;
+        }
+
+        /* DE MAP CONTianerThe V! ! */
+        #MMaThPpIdDDOMHZT__Kaart {
+            width: 100%;
+            height: 400px;
+            border-radius: 12px;
+            z-index: 1;
+            border: 2px solid #374151;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* CUSTOM CSS Voor the THE Leaflet the_ H popuop_ */
+        .leaflet-popup-content-wrapper {
+            background: #1f2937;
+            color: #f9fafb;
+            border: 1px solid #374151;
+            border-radius: 8px;
+        }
+
+        .leaflet-popup-tip {
+            background: #1f2937;
+        }
+
+        .leaflet-popup-content {
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            color: #818cf8;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🛰️ Waar is het ISS?</h1>
+        <span class="level">API & Map</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De ISS API</h4>
+                <p>We_ the The! gebruiken_ de API `wheretheiss.at`! Deze_ the geeft _ de the LIVE_! the _
+                    <code>Latitude</code> The_ (Breedtegraad) The the en <code>Longitude</code> _ the! (Lengtegraad) Van
+                    the _het_ the ISS The_ the (International _ Space_ Station) The !!_ Terug!. </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
+<span class="keyword">const</span> NNNetTReS_sDThe = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'https://api.wheretheiss.at/v1/satellites/25544'</span>);
+<span class="keyword">const</span> data = <span class="keyword">await</span> NNNetTReS_sDThe.<span class="function">json</span>();
+<span class="comment">// Nu The hebben The_ we data.latitude  en  data.longitude !! _ </span></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Leaflet.js (Map Library)</h4>
+                <p>Niemand _wil the_ Alleen_ the Getalletjes _ the Zien! We the_ the the _gebruiken_ The_ the
+                    `Leaflet.js` The_ (Een library!) the! om een the <strong>Echte the the Kaart 🌍</strong> The te ! _
+                    Tekenen_. We vertellen The_ the _ Leaflet exactly _ The! waar the _de_ Marker (Het the!_ icoontje)_
+                    the MOet_! The! Staan the! met <code>setLatLng([lat, lng])</code>. </p>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Bekijk the_ De V Kaart!_ the The ! </li>
+                <li>Zoom_ The in the! of the _uit! The </li>
+                <li>The the <strong>Wacht !</strong> the_ _Paar The _ Secondes en _ THE Zie_! Dit_ het the MAnnetjes_
+                    Icoon! the_ Zich_ the LIVE _! THE Verplaatst!_ (Het the! ISS_ Vliegt_ Echt_ Snel!!!) </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>3 Seconden :</strong> the The IN The de JS The zie je dat _ The ! de Fetch the
+                    <code>setInterval</code> _Om de_ The 3000ms the_ (3_ Sec)_ the Gebeurt!. Er zijn _ the _ Strikte_
+                    The API The ! Limieten!. _ the </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: de_ <code>Z-Index</code>_ map_ Bug!! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Leaflet.jsThe _ injecteert The Veel! the_ css en the! divjes_ in _ Jouw HTML! Soms _ Zorgt _ Dit dat the the Kaart OThe! Bovenop de The! Rest_ the! van _ de Website the_ Ligt.  </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_! Zorg the_the dat de <code>#MMaThPpIdDDOMHZT__Kaart</code> container the een <code>z-index: 1</code> the Of_  Lager heeft in Jouw_ de_ CSS!_  _ </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Snelheid / Hoogte!_! </strong> the the THE the Kijk The in the De The _ Data _The ! de_
+                        the <code>API</code>! the the the the The Geeft the V Oook_ The de the <code>velocity</code>
+                        the! en <code>altitude</code>. the_ the The Voeg_ The The 2 ! The ! Nieuwe The Vakjes the toe _
+                        The En ! The toon The The _ Dit Ook!_ </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- App Area -->
+        <div class="project-area">
+
+            <div class="IInnFoObaLAlK_THEIsz_S">
+                <div class="IIteMTDaTaissH_Z">
+                    <span>Latitude (Breedtegraad)</span>
+                    <div id="uUILZAttTextD__VDataThe">0.0000</div>
+                </div>
+                <div class="IIteMTDaTaissH_Z">
+                    <span>Longitude (Lengtegraad)</span>
+                    <div id="uULonnGtTextD__VDataTh__">0.0000</div>
+                </div>
+            </div>
+
+            <!-- THE MAP THE !! H_ Z_ -->
+            <div id="MMaThPpIdDDOMHZT__Kaart"></div>
+
+        </div>
+
+
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <!-- The V LeaAflett JJS library! The -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        const DOMHLaa_AATHTeT_xTtt = document.getElementById('uUILZAttTextD__VDataThe');
+        const DOMLONHGTeDTTxTvtThe = document.getElementById('uULonnGtTextD__VDataTh__');
+
+        const VUAAPIILssUurTlTheK_ZHData = 'https://api.wheretheiss.at/v1/satellites/25544';
+
+        // 1 INIT DE KAART H_ ! THE (Leaflet.js !Z  )
+        // Set view the (lat, long, zoom)
+        const dDeHHTTheMMAOpDKaarrTT___tVO = L.map('MMaThPpIdDDOMHZT__Kaart').setView([0, 0], 2);
+
+        // 2 VOEG THE TTheILES THE TOE ! Z_ (Stradard the open the street the map ! The_ _)
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(dDeHHTTheMMAOpDKaarrTT___tVO);
+
+        // 3 VOEG THE ISsZ M_MaRR_rKEr TOE !
+        // CustOm THe Ico_N The !! 
+        const ODeISSSHIcoonN_DDeZThe = L.icon({
+            iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/International_Space_Station.svg', // SVG ISS iCcon  _ T !
+            iconSize: [60, 40], // B, H 
+            iconAnchor: [30, 20], // mid The H ! point !
+            popupAnchor: [0, -20]
+        });
+
+        // Plaats the the marker oV_ default the the op_ 0.0 THE!
+        const DDiZMaRkreTTissHThDOMO_the = L.marker([0, 0], { icon: ODeISSSHIcoonN_DDeZThe })
+            .addTo(dDeHHTTheMMAOpDKaarrTT___tVO)
+            .bindPopup("Het ISS is hier! 👨‍🚀");
+
+
+        let iIIEsFIist_tLLoaoddT_VThDataZThe = true;
+
+        // FETCH THE LOGIC C! !H 
+        async function VvAaLGHZDaattThTheissAPIoOPP() {
+            try {
+                const NNNetTReS_sDThe = await fetch(VUAAPIILssUurTlTheK_ZHData);
+                if (!NNNetTReS_sDThe.ok) throw new Error("API faalt!");
+                const AApiDaT_TJJHjSOn = await NNNetTReS_sDThe.json();
+
+                const VLlThe_AatTTTTV_ThDaA = AApiDaT_TJJHjSOn.latitude;
+                const VLlTheOoONnG_VTTtv_T_DTVaA = AApiDaT_TJJHjSOn.longitude;
+
+                // UPDATE THE DE UI text!! H
+                DOMHLaa_AATHTeT_xTtt.innerText = VLlThe_AatTTTTV_ThDaA.toFixed(4);
+                DOMLONHGTeDTTxTvtThe.innerText = VLlTheOoONnG_VTTtv_T_DTVaA.toFixed(4);
+
+                // verplaats_ the DE_ MARKER op the de KAaRART _ THE H !! H (Leaflet_ JS THE) !!
+                DDiZMaRkreTTissHThDOMO_the.setLatLng([VLlThe_AatTTTTV_ThDaA, VLlTheOoONnG_VTTtv_T_DTVaA]);
+
+                // de_ 1e _The keer the the data loaden: _  centreer _ de data the Kaart H !The V_  enThe zoomenV !!
+                if (iIIEsFIist_tLLoaoddT_VThDataZThe) {
+                    dDeHHTTheMMAOpDKaarrTT___tVO.setView([VLlThe_AatTTTTV_ThDaA, VLlTheOoONnG_VTTtv_T_DTVaA], 4);
+                    iIIEsFIist_tLLoaoddT_VThDataZThe = false;
+                }
+
+
+            } catch (DeEErrTheVThehOMsg_THDe) {
+                console.error(DeEErrTheVThehOMsg_THDe);
+            }
+        }
+
+        // Start ! The_!! Z
+        VvAaLGHZDaattThTheissAPIoOPP();
+
+        // UPDAT_Z THE EELke The 3 ! seconde_ the_ omdat het THE ! ISS The the fucking ! Snel the Gaat ! 
+        setInterval(VvAaLGHZDaattThTheissAPIoOPP, 3000);
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

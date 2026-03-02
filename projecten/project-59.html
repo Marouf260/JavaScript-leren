@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 59: Vier op een Rij - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Game Area CSS! */
+        .project-area {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .status-header-H_O {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-align: center;
+            background: #f1f5f9;
+            border: 2px solid #cbd5e1;
+        }
+
+        .turn-rood {
+            color: #ef4444;
+        }
+
+        .turn-geel {
+            color: #eab308;
+        }
+
+        /* Het Blauwe Bord 7 kolommen , 6 rij! V */
+        .bord-B_The {
+            background: #2563eb;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), inset 0 5px 10px rgba(255, 255, 255, 0.2);
+            display: grid;
+            grid-template-columns: repeat(7, 50px);
+            grid-template-rows: repeat(6, 50px);
+            gap: 10px;
+        }
+
+        /* 42 Gaten in bord_  The_ */
+        .gat-CelH_De {
+            width: 50px;
+            height: 50px;
+            background: #f8fafc;
+            border-radius: 50%;
+            box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* The Munten die erin vallen ! CSS The ! */
+        .muntje-TheZData {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            top: -300px;
+            /* Start boven the bord for fall anim! */
+            left: 0;
+            transition: top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .muntje-TheZData.rood {
+            background: radial-gradient(circle at 15px 15px, #fca5a5, #ef4444, #991b1b);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .muntje-TheZData.geel {
+            background: radial-gradient(circle at 15px 15px, #fdf08a, #eab308, #854d0e);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .muntje-TheZData.droppedH {
+            top: 0;
+        }
+
+        /* Anim class The _*/
+
+        .h-anim-winTheMuntFlashZ_ {
+            animation: pulseWinZ_VThe 1s infinite alternate;
+            border: 3px solid #10b981;
+        }
+
+        @keyframes pulseWinZ_VThe {
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        .btn-restart-ZThis {
+            margin-top: 20px;
+            background: #334155;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-restart-ZThis:hover {
+            background: #0f172a;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 59: Vier op een Rij </h1>
+        <span class="level" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">Games</span>
+        <p class="description">Maak een the Connect 4 Spel! ! Klik op een kolom the the om het V muntje er The_inThe Z
+            The the te_ the the Laten The vallen ! .</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: Het the The 2D-Bord The the the </h4>
+                <p>the The Connect 4 The Check _the O the The is flink _! lastiger dan the the The Boter Kaas The En
+                    Eieren_Z! We maken the DeThe 6 Rijen the De en The 7 the the Kolommen in The een the array The the
+                    the the the: <code>[ [0,0,0,0,0,0,0], [0,0...</code> .theThe! Als the the je the the op THE een
+                    _Kolom Z klikt (bv the ZThe Kolomthe 3), the the dan the Thethe moet THE de Code The alle_ the Rij_
+                    6, 5, 4 _ etc. afgaanthe in_die_the specifieke_kolomThe_!._ Om _theThe het Laagste the legevakje te
+                    _thethe vinden.! </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ZOEKT HET LAAGSTE LEGE VAKJE IN DEZE KOLOM Z !! The </span>
+<span class="keyword">let</span> ZDeLeegSteRijXTeZTheIndex = -<span class="string">1</span>;
+
+<span class="comment">// We loop from bottom (r 5) to top (r 0) !!!  The_  V ! </span>
+<span class="keyword">for</span> (<span class="keyword">let</span> rDataDeTeHChecknLoopV = B_RIJEN_Z - <span class="string">1</span>; rDataDeTeHChecknLoopV >= <span class="string">0</span>; rDataDeTeHChecknLoopV--) {
+    <span class="keyword">if</span> (BO_Logic_MatrixArrZDe[rDataDeTeHChecknLoopV][TheKolIndx_Arg_] === <span class="string">0</span>) {
+        ZDeLeegSteRijXTeZTheIndex = rDataDeTeHChecknLoopV; <span class="comment">// Found the bottom-most empty slot!</span>
+        <span class="keyword">break</span>;
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: The the Zwaartekracht The Animatie Maken The the THE Z</h4>
+                <p>Wanneer we het the_ Laagste lege THE the the the vakje the the thethe the THE hebben gevonden The
+                    The, the Then The the _ the the The Plakken we The the een <code>div</code> The The the the IN THE
+                    de the cellThe the the! !. the Met the de the The CSS the the start THE the the Z
+                    <code>top:-300px</code> The! Vervolgens the THE The the the wachten the the_ we 10ms_ The the en The
+                    then the The geven the The_ the The the we de The_the the the <code>.droppedH</code> The the THE The
+                    class mee TheThe the the. THE ! (Deze sets The the <code>top: 0</code>). CSS the_ the The doet_
+                    <code>transition</code> the the </p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: 4Richtingen_WinCheck_ O:</h4>
+                <p>Na the elke beurt controleren thethe!The _we _Horizontaal, The Verticaal, the _The the
+                    Linksom-Diagonaal, the__The the Rechtsom_Diagonaal! _ !!</p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik the the op the _The een_The_V the kolom om _The the een Muntje (Rood/Geel) te __ the de
+                    <code><span class="keyword">droppenH_</span></code>.</li>
+                <li>the Z! the Zorg erThe voorZThe The ! V dat The the the je the V The _vier 4_ Z op1RIJ krijgt! </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Relatieve CSS The the posites The The the:</strong> the The In The de code The The the THE
+                    Zie the je The The the the theThe een berekening_ the The om _de the <code>muntje-TheZData</code>
+                    the te The The ! the the The The `absolute` The the The ! in The de `gat-CelH_De` (The Die is _
+                    `position: relative` _The !). Hierdoor Vallen The munten The_ The Netjes IN The _de the the de
+                    divjes _! the !_ the !_ </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: De 4 op eenRij the winThe the Check! is the Lastig ! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ Je kan THE niet zomaar the The The de 14 the _ the _ de Array_ checks The_  the_ the O !  _! . thethe THE THE Z  </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Kijk ! in the the source The the the the code the naar de the The `THeCheckDirectionVoorZDatV_XenYZLoopZ(delta_y, delta_x)` functieThethe ! We Tellenthe The The The the stukjes in the the de The + the the The the richting The the the  The EN in de the `-` The theThe the oppositze_ the direction THE! _! THE The </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Speler Naman !! The The The The! </strong> the the thethe the THE the Bouw The THE the
+                        the een the The! The inputThe the The the ! veltje the! ! Dat he_ Speler ! 1 / ! 2 ! the _ he
+                        The naam! O ! Laat The dit the Z! in the UIt de Title zien!The _ . _The !. THE </li>
+                    <li><strong>AI Tegenstander! THE the TheThe _!</strong> The The the The the the Maak THE The_ 1
+                        Speler Modus the _the ! Laat de computer Random the_ in een ! lege The The_ the The The ! Kolom
+                        gooien ! (Math.random !) als the Speler_ Geel de!_ the Aan de The ! _beurt Is The !. _The !
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="status-header-H_O turn-rood" id="UI_H_StatusTextHThe">Beurt: Speler ROOD (1)</div>
+
+            <div class="bord-B_The" id="BORD_GridDeH_The_">
+                <!-- JS Generates 42 Divjes The! -->
+            </div>
+
+            <button class="btn-restart-ZThis" id="BTN_HREstartHeThe_" style="display:none;">Opnieuw Spelen</button>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const UI_TEXTvDe_O = document.getElementById('UI_H_StatusTextHThe');
+        const THE_G_GridBordOmHTMLO = document.getElementById('BORD_GridDeH_The_');
+        const BTN_G_TheResetZBtnH = document.getElementById('BTN_HREstartHeThe_');
+
+        // BORD IS 6 rows, 7 cols! 
+        const B_RIJEN_Z = 6;
+        const B_KOLOMMEN_V = 7;
+
+        // the State Variables 
+        let BO_Logic_MatrixArrZDe = []; // 6x7 2D Array data The! 
+        let BO_H_HtmlTheGridDOM_MatHThe = []; // Reference to HTML cell div nodes The! 
+
+        let SpelerHuidigNummerZ_ = 1; // 1 = ROOD, 2 = GEEL O 
+        let GameOverOTheBooleanH_ZThe = false;
+
+        function THE_InitBouwDatBordLoop_G_H() {
+            THE_G_GridBordOmHTMLO.innerHTML = "";
+            BO_Logic_MatrixArrZDe = [];
+            BO_H_HtmlTheGridDOM_MatHThe = [];
+
+            // loop rows 
+            for (let The_Rij = 0; The_Rij < B_RIJEN_Z; The_Rij++) {
+                const matrixO_RiJLogicArrV = [];
+                const DataTheHTML_DO_mRiZTheArrV = [];
+
+                // loop cols for logic
+                for (let deKolThe = 0; deKolThe < B_KOLOMMEN_V; deKolThe++) {
+                    matrixO_RiJLogicArrV.push(0); // 0 is LEEG THE ! 
+
+                    const TheGCDOMNodeDivCellH = document.createElement('div');
+                    TheGCDOMNodeDivCellH.classList.add('gat-CelH_De');
+
+                    // Attach event on EACH cell that passed to drops column
+                    TheGCDOMNodeDivCellH.addEventListener('click', () => {
+                        DropHetMuntjeInDezeZKOLOMK_TheH(deKolThe);
+                    });
+
+                    THE_G_GridBordOmHTMLO.appendChild(TheGCDOMNodeDivCellH);
+                    DataTheHTML_DO_mRiZTheArrV.push(TheGCDOMNodeDivCellH);
+                }
+                BO_Logic_MatrixArrZDe.push(matrixO_RiJLogicArrV);
+                BO_H_HtmlTheGridDOM_MatHThe.push(DataTheHTML_DO_mRiZTheArrV);
+            }
+            // reeset colors an var the   
+            SpelerHuidigNummerZ_ = 1;
+            GameOverOTheBooleanH_ZThe = false;
+            UpdateZThe_UIStatusTextKleurZ();
+            BTN_G_TheResetZBtnH.style.display = "none";
+        }
+
+        // De SPELBEURT LOGICA Z! 
+        function DropHetMuntjeInDezeZKOLOMK_TheH(TheKolIndx_Arg_) {
+            if (GameOverOTheBooleanH_ZThe) return;
+
+            // ZOEKT HET LAAGSTE LEGE VAKJE IN DEZE KOLOM Z !! The 
+            let ZDeLeegSteRijXTeZTheIndex = -1;
+
+            // We loop from bottom (r 5) to top (r 0) !!!  The_  V ! 
+            for (let rDataDeTeHChecknLoopV = B_RIJEN_Z - 1; rDataDeTeHChecknLoopV >= 0; rDataDeTeHChecknLoopV--) {
+                if (BO_Logic_MatrixArrZDe[rDataDeTeHChecknLoopV][TheKolIndx_Arg_] === 0) {
+                    ZDeLeegSteRijXTeZTheIndex = rDataDeTeHChecknLoopV; // Found the bottom-most empty slot!
+                    break;
+                }
+            }
+
+            // The Als the helemala The  Vol is (-1) ! O 
+            if (ZDeLeegSteRijXTeZTheIndex === -1) {
+                return; // cant place in this col !!! Return and wait for another click O 
+            }
+
+            // BOEM ! V THE the data !! Z The_! the UPDATE HET LOGICA BORD
+            BO_Logic_MatrixArrZDe[ZDeLeegSteRijXTeZTheIndex][TheKolIndx_Arg_] = SpelerHuidigNummerZ_;
+
+            // BOEM_ RENDEREN in_ THE HTML! Z! 
+            const DeTheHtmlGatNodeDivDeZVThatGetaDataVThe = BO_H_HtmlTheGridDOM_MatHThe[ZDeLeegSteRijXTeZTheIndex][TheKolIndx_Arg_];
+            const TheMuntjeDivChildHDataZThe = document.createElement('div');
+            TheMuntjeDivChildHDataZThe.classList.add('muntje-TheZData');
+            TheMuntjeDivChildHDataZThe.classList.add(SpelerHuidigNummerZ_ === 1 ? 'rood' : 'geel');
+            DeTheHtmlGatNodeDivDeZVThatGetaDataVThe.appendChild(TheMuntjeDivChildHDataZThe);
+
+            // Trigger Animation V (Needs setTimeout so CSS transition fires V) The_  Z!
+            setTimeout(() => { TheMuntjeDivChildHDataZThe.classList.add('droppedH'); }, 10);
+
+
+            // C Heek win ??
+            const isEerVierDataO = TheDeWinnnaarGevondenOFWinThe(ZDeLeegSteRijXTeZTheIndex, TheKolIndx_Arg_, SpelerHuidigNummerZ_);
+            if (isEerVierDataO) {
+                GameOverOTheBooleanH_ZThe = true;
+                UI_TEXTvDe_O.innerText = `🎉 SPELER ${SpelerHuidigNummerZ_ === 1 ? 'ROOD' : 'GEEL'} WINT! 🎉`;
+                UI_TEXTvDe_O.style.background = SpelerHuidigNummerZ_ === 1 ? '#fecaca' : '#fef08a';
+                BTN_G_TheResetZBtnH.style.display = 'block';
+                return;
+            }
+
+            // Check draw THE!
+            if (CheckBordIsCompleetVtheDO_GVoltZThe_()) {
+                GameOverOTheBooleanH_ZThe = true;
+                UI_TEXTvDe_O.innerText = `Tjees! the THE Gelijkspel The! O `;
+                UI_TEXTvDe_O.style.background = '#e2e8f0'; UI_TEXTvDe_O.style.color = '#334155';
+                BTN_G_TheResetZBtnH.style.display = 'block';
+                return;
+            }
+
+            // SWAP THE TURN The Z!! 
+            SpelerHuidigNummerZ_ = SpelerHuidigNummerZ_ === 1 ? 2 : 1;
+            UpdateZThe_UIStatusTextKleurZ();
+        }
+
+        // WIIN CHECKER O !!!
+        function TheDeWinnnaarGevondenOFWinThe(r_zThe, k_ThO, SpelerNumCodeDeDataT_) {
+
+            // Helper function to count identical pieces in a specific direction (deltaRow, deltaCol)
+            function THeCheckDirectionVoorZDatV_XenYZLoopZ(DR_YtheV, DK_XDeX_H) {
+                let TheCountTellerDatVData_Z = 0; // count self later O
+                let ArrayMetHTheCrdZVoorAniamtiesV = [{ r: r_zThe, k: k_ThO }]; // Self
+
+                // + direction
+                for (let i = 1; i < 4; i++) {
+                    const deLoopTheCheckRijVTheNumVarZ = r_zThe + (DR_YtheV * i);
+                    const DdeLoopTheCheckTheKolX_num_VData_ = k_ThO + (DK_XDeX_H * i);
+                    if (deLoopTheCheckRijVTheNumVarZ >= 0 && deLoopTheCheckRijVTheNumVarZ < B_RIJEN_Z && DdeLoopTheCheckTheKolX_num_VData_ >= 0 && DdeLoopTheCheckTheKolX_num_VData_ < B_KOLOMMEN_V && BO_Logic_MatrixArrZDe[deLoopTheCheckRijVTheNumVarZ][DdeLoopTheCheckTheKolX_num_VData_] === SpelerNumCodeDeDataT_) {
+                        TheCountTellerDatVData_Z++;
+                        ArrayMetHTheCrdZVoorAniamtiesV.push({ r: deLoopTheCheckRijVTheNumVarZ, k: DdeLoopTheCheckTheKolX_num_VData_ });
+                    } else { break; }
+                }
+
+                // - direction (opposite side The )
+                for (let i = 1; i < 4; i++) {
+                    const deLoopTheCheckRijVTheNumVarZ = r_zThe - (DR_YtheV * i);
+                    const DdeLoopTheCheckTheKolX_num_VData_ = k_ThO - (DK_XDeX_H * i);
+                    if (deLoopTheCheckRijVTheNumVarZ >= 0 && deLoopTheCheckRijVTheNumVarZ < B_RIJEN_Z && DdeLoopTheCheckTheKolX_num_VData_ >= 0 && DdeLoopTheCheckTheKolX_num_VData_ < B_KOLOMMEN_V && BO_Logic_MatrixArrZDe[deLoopTheCheckRijVTheNumVarZ][DdeLoopTheCheckTheKolX_num_VData_] === SpelerNumCodeDeDataT_) {
+                        TheCountTellerDatVData_Z++;
+                        ArrayMetHTheCrdZVoorAniamtiesV.push({ r: deLoopTheCheckRijVTheNumVarZ, k: DdeLoopTheCheckTheKolX_num_VData_ });
+                    } else { break; }
+                }
+
+                // If >= 3 other pieces found (+ the 1 we dropped = 4!)
+                if (TheCountTellerDatVData_Z >= 3) {
+                    // flash class adden V !! the_ 
+                    ArrayMetHTheCrdZVoorAniamtiesV.forEach(cTheCordOBJ => {
+                        const DtheMTheDivCelV = BO_H_HtmlTheGridDOM_MatHThe[cTheCordOBJ.r][cTheCordOBJ.k].querySelector('.muntje-TheZData');
+                        if (DtheMTheDivCelV) DtheMTheDivCelV.classList.add('h-anim-winTheMuntFlashZ_');
+                    });
+                    return true;
+                }
+                return false;
+            }
+
+            // Run checks on all 4 directions! -> the (dRow, dCol) _ 
+            const HeeftGeoZWin = (
+                THeCheckDirectionVoorZDatV_XenYZLoopZ(0, 1) || // Horizontaal -
+                THeCheckDirectionVoorZDatV_XenYZLoopZ(1, 0) || // Verticaal |
+                THeCheckDirectionVoorZDatV_XenYZLoopZ(1, 1) || // Diagonaal \
+                THeCheckDirectionVoorZDatV_XenYZLoopZ(1, -1)   // Diagonaal /
+            );
+            return HeeftGeoZWin;
+        }
+
+        // check of de the bord array is completely filled with NO_ '0' z 
+        function CheckBordIsCompleetVtheDO_GVoltZThe_() {
+            for (let rTheHLoop_Var = 0; rTheHLoop_Var < B_RIJEN_Z; rTheHLoop_Var++) {
+                for (let kZtheData_Var = 0; kZtheData_Var < B_KOLOMMEN_V; kZtheData_Var++) {
+                    if (BO_Logic_MatrixArrZDe[rTheHLoop_Var][kZtheData_Var] === 0) return false;
+                }
+            }
+            return true;
+        }
+
+        function UpdateZThe_UIStatusTextKleurZ() {
+            UI_TEXTvDe_O.innerText = `Beurt: Speler ${SpelerHuidigNummerZ_ === 1 ? 'ROOD' : 'GEEL'} (${SpelerHuidigNummerZ_})`;
+            UI_TEXTvDe_O.className = 'status-header-H_O ' + (SpelerHuidigNummerZ_ === 1 ? 'turn-rood' : 'turn-geel');
+            UI_TEXTvDe_O.style.background = '#f1f5f9'; // reset bg for the games
+        }
+
+        BTN_G_TheResetZBtnH.addEventListener('click', THE_InitBouwDatBordLoop_G_H);
+
+        // INITIALSTART ! 
+        THE_InitBouwDatBordLoop_G_H();
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

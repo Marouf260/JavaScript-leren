@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1: Klik Teller - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #D4EDDA;
+            color: #155724;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #counter-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 1: Klik Teller</h1>
+        <span class="level">Beginner</span>
+        <p class="description">Maak een knop die een teller verhoogt bij elke klik.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je de basis van DOM manipulatie en event handling. Je leert hoe je:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>Elementen selecteert uit de HTML</li>
+                <li>Event listeners toevoegt aan elementen</li>
+                <li>Variabelen gebruikt om state bij te houden</li>
+                <li>De DOM dynamisch update wanneer iets gebeurt</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>getElementById()</strong> - Selecteert een element op basis van zijn ID</li>
+                <li><strong>addEventListener()</strong> - Voegt een event listener toe aan een element</li>
+                <li><strong>textContent</strong> - Eigenschap om tekst in een element te wijzigen</li>
+                <li><strong>Variabelen (let/const)</strong> - Om data op te slaan die kan veranderen</li>
+                <li><strong>Events</strong> - Gebeurtenissen zoals klikken, typen, etc.</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: Variabele maken</h4>
+                <p>We beginnen met een variabele die de huidige teller waarde bijhoudt:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">let</span> teller = <span class="string">0</span>; <span class="comment">// Begin bij 0</span></pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>let</code> maakt een variabele die je later kunt aanpassen. We beginnen bij 0 omdat de teller nog niet is gebruikt.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: Elementen selecteren</h4>
+                <p>We moeten de knop en het display element uit de HTML halen:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> knop = document.<span class="function">getElementById</span>(<span class="string">'counter-btn'</span>);
+<span class="keyword">const</span> display = document.<span class="function">getElementById</span>(<span class="string">'counter-display'</span>);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>document.getElementById()</code> zoekt een element met een specifieke ID. We gebruiken <code>const</code> omdat deze referenties niet veranderen.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Event Listener toevoegen</h4>
+                <p>We luisteren naar klik events op de knop:</p>
+                <div class="code-example">
+                    <pre>knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    <span class="comment">// Code die uitgevoerd wordt bij klik</span>
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>addEventListener</code> voegt een functie toe die wordt uitgevoerd wanneer het 'click' event gebeurt op de knop.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 4: Teller verhogen en updaten</h4>
+                <p>Bij elke klik verhogen we de teller en updaten we de display:</p>
+                <div class="code-example">
+                    <pre>knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    teller++; <span class="comment">// Verhoog teller met 1</span>
+    display.textContent = <span class="string">'Teller: ' + teller</span>; <span class="comment">// Update tekst</span>
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>teller++</code> is hetzelfde als <code>teller = teller + 1</code>. <code>textContent</code> wijzigt de zichtbare tekst in het element.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="comment">// Stap 1: Variabele voor teller</span>
+<span class="keyword">let</span> teller = <span class="string">0</span>;
+
+<span class="comment">// Stap 2: Selecteer elementen</span>
+<span class="keyword">const</span> knop = document.<span class="function">getElementById</span>(<span class="string">'counter-btn'</span>);
+<span class="keyword">const</span> display = document.<span class="function">getElementById</span>(<span class="string">'counter-display'</span>);
+
+<span class="comment">// Stap 3 & 4: Event listener met logica</span>
+knop.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    teller++; <span class="comment">// Verhoog teller</span>
+    display.textContent = <span class="string">'Teller: ' + teller</span>; <span class="comment">// Update display</span>
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Maak een variabele om de teller bij te houden (begin bij 0)</li>
+                <li>Selecteer de knop element met getElementById</li>
+                <li>Selecteer het display element</li>
+                <li>Voeg een click event listener toe aan de knop</li>
+                <li>Verhoog de teller bij elke klik met ++</li>
+                <li>Update de tekst met textContent</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Waarom let en const?</strong> Gebruik <code>let</code> voor variabelen die veranderen (zoals teller), en <code>const</code> voor elementen die niet veranderen.</li>
+                <li><strong>Alternatief voor textContent:</strong> Je kunt ook <code>innerHTML</code> gebruiken, maar <code>textContent</code> is veiliger tegen XSS aanvallen.</li>
+                <li><strong>Arrow functions:</strong> Je kunt ook <code>() => {}</code> gebruiken in plaats van <code>function() {}</code></li>
+                <li><strong>Debuggen:</strong> Voeg <code>console.log(teller)</code> toe om de waarde te zien in de console.</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten elementen te selecteren</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Element bestaat nog niet</span>
+knop.addEventListener('click', function() {
+    teller++;
+});
+
+<span class="comment">// ✅ GOED - Eerst selecteren</span>
+const knop = document.getElementById('counter-btn');
+knop.addEventListener('click', function() {
+    teller++;
+});</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Verkeerde ID naam</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - ID bestaat niet</span>
+const knop = document.getElementById('button'); <span class="comment">// Moet 'counter-btn' zijn</span>
+
+<span class="comment">// ✅ GOED - Correcte ID</span>
+const knop = document.getElementById('counter-btn');</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Teller niet verhogen</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Teller blijft altijd 0</span>
+display.textContent = 'Teller: ' + teller; <span class="comment">// Vergeet teller++</span>
+
+<span class="comment">// ✅ GOED - Verhoog eerst</span>
+teller++;
+display.textContent = 'Teller: ' + teller;</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Reset knop:</strong> Voeg een knop toe die de teller terugzet naar 0</li>
+                    <li><strong>Verlaag knop:</strong> Voeg een knop toe die de teller verlaagt</li>
+                    <li><strong>Kleur verandering:</strong> Verander de kleur van de teller wanneer deze boven 10 komt</li>
+                    <li><strong>Geluid:</strong> Speel een geluid af bij elke klik</li>
+                    <li><strong>LocalStorage:</strong> Sla de teller waarde op zodat deze behouden blijft na refresh</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: Reset Functionaliteit</h4>
+                <div class="code-example">
+                    <pre><span class="comment">// Voeg een reset knop toe in HTML:</span>
+<span class="comment">// &lt;button id="reset-btn"&gt;Reset&lt;/button&gt;</span>
+
+<span class="keyword">const</span> resetBtn = document.<span class="function">getElementById</span>(<span class="string">'reset-btn'</span>);
+resetBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    teller = <span class="string">0</span>;
+    display.textContent = <span class="string">'Teller: 0'</span>;
+});</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <!-- Demo Area -->
+        <div class="project-area">
+            <h3 style="margin-bottom: 1rem; color: #333;">🎮 Probeer het zelf:</h3>
+            <div id="counter-display">Teller: 0</div>
+            <button id="counter-btn" class="demo-btn">Klik Mij!</button>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        // Stap 1: Variabele voor teller
+        let teller = 0;
+        
+        // Stap 2: Selecteer elementen
+        const knop = document.getElementById('counter-btn');
+        const display = document.getElementById('counter-display');
+
+        // Stap 3 & 4: Event listener met logica
+        knop.addEventListener('click', function() {
+            teller++; // Verhoog teller met 1
+            display.textContent = 'Teller: ' + teller; // Update de tekst
+            
+            // Bonus: Verander kleur bij hoge waarden
+            if (teller > 10) {
+                display.style.color = '#e74c3c';
+            } else if (teller > 5) {
+                display.style.color = '#f39c12';
+            } else {
+                display.style.color = '#667eea';
+            }
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

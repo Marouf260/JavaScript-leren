@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 44: Stopwatch & Laps - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Watch Area */
+        .project-area {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid #e2e8f0;
+        }
+
+        .timer-display {
+            font-size: 4rem;
+            font-family: monospace;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            background: white;
+            padding: 20px 40px;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn-fab {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-play {
+            background: #10b981;
+        }
+
+        .btn-play:hover {
+            background: #059669;
+        }
+
+        .btn-pause {
+            background: #f59e0b;
+        }
+
+        .btn-pause:hover {
+            background: #d97706;
+        }
+
+        .btn-reset {
+            background: #ef4444;
+        }
+
+        .btn-reset:hover {
+            background: #dc2626;
+        }
+
+        .btn-lap {
+            background: #3b82f6;
+        }
+
+        .btn-lap:hover {
+            background: #2563eb;
+        }
+
+        .btn-fab:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .laps-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .lap-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            border-bottom: 1px solid #f1f5f9;
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #475569;
+        }
+
+        .lap-item:last-child {
+            border-bottom: none;
+        }
+
+        .lap-item span.lap-num {
+            color: #94a3b8;
+            font-weight: bold;
+        }
+
+        .lap-item span.lap-time {
+            color: #0f172a;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 44: Stopwatch & Laps</h1>
+        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">Data
+            Logic</span>
+        <p class="description">Maak een strakke, op milliseconden-nauwkeurige stopwatch met ronde-tijd (lap)
+            functionaliteiten.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De "Delta Tijd" Formule</h4>
+                <p>Als je een klok maakt die elke seconde <code>+1</code> doet, loopt deze na verloop van tijd scheef
+                    door "browser lag" (de browser is soms even druk met andere dingen). Daarom slaan we de exacte
+                    starttijd op, en trekken we die continu af van het exacte "nu". Dit heet de <em>tijd-delta</em>
+                    berekenen!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Date.now() geeft de huidige tijd in een reusachtig getal milliseconden</span>
+<span class="comment">// Bijv: 1735002000000 (Sinds 1 januari 1970)</span>
+<span class="keyword">let</span> startTime = 0;
+<span class="keyword">let</span> elapsedTime = 0;
+
+<span class="comment">// Op Klik "Start":</span>
+<span class="comment">// Waarom minus elapsedTime? Zodat als we 'Pauzeren' en weer doorgaan, de klok niet verspringt!</span>
+startTime = Date.<span class="function">now</span>() - elapsedTime;
+
+<span class="comment">// Binnen the update loop: Actuele tijd = Nu - Starttijd</span>
+elapsedTime = Date.<span class="function">now</span>() - startTime;</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Tijd Formatteren (Wiskunde)</h4>
+                <p>Dat reusachtige getal aan verstreken milliseconden (<code>elapsedTime</code>) moeten we begrijpelijk
+                    maken. Daarvoor gebruiken we "Modulo rekenen" (<code>%</code>), oftewel de restwaarde delen.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Stap 1: Hoeveel uren / minuten / seconden passen er in het getal?</span>
+<span class="keyword">let</span> totaalSeconden = Math.<span class="function">floor</span>(elapsedTime / <span class="string">1000</span>);
+
+<span class="comment">// Uren, Minuten en Seconden destilleren (Modulo the the rescue)</span>
+<span class="keyword">let</span> uren = Math.<span class="function">floor</span>(totaalSeconden / <span class="string">3600</span>);
+<span class="keyword">let</span> minuten = Math.<span class="function">floor</span>((totaalSeconden / <span class="string">60</span>) % <span class="string">60</span>);
+<span class="keyword">let</span> seconden = totaalSeconden % <span class="string">60</span>;
+
+<span class="comment">// Milliseconden (We knippen het laatste cijfer weg via delen door 10 (0 tot 99))</span>
+<span class="keyword">let</span> mili = Math.<span class="function">floor</span>((elapsedTime % <span class="string">1000</span>) / <span class="string">10</span>);</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Cijfers opvullen met 0 (padStart)</h4>
+                <p>Een klok mag nooit "1:2:5.4" laten zien. Dat moet zijn "01:02:05.04". Gelukkig heeft JavaScript hier
+                    een method voor genaamd <code>.padStart()</code>!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Maak van het getal eerst een string .toString()</span>
+<span class="comment">// .padStart(2, '0') betekent: "Zorg dat het minstens 2 karakters is, zo niet, vul op met een '0' aan de voorkant"</span>
+<span class="keyword">let</span> mooiSeconden = seconden.<span class="function">toString</span>().<span class="function">padStart</span>(<span class="string">2</span>, <span class="string">"0"</span>);
+
+<span class="keyword">return</span> <span class="string">`\${mooiMinuten}:\${mooiSeconden}.\${mooiMili}`</span>;</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik op de ▶ (Start) knop om te beginnen.</li>
+                <li>Zie the 1/100e miliseconden accuraat voorbij vliegen!</li>
+                <li>Druk een paar keer op 🚩 (Lap) om ronde-tijden de the registeren in the box er onder. </li>
+                <li>Druk op de oranje knop ⏸ (Pause) en de rode knop ⏹ (Reset) the the test af te ronden.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Lap Prependen:</strong> In eerdere projecten voegden we vaak items toe aan het
+                    <em>einde</em> van een lijst met <code>.appendChild()</code>. Bij rondetijden is dat niet logisch
+                    (je wil de nieuwste bovenaan). Gebruik daarom <code>ouderDiv.prepend(kindDiv)</code> om the items in
+                    the DOM als éérste child toe te voegen!</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Meerdere Intervallen tegelijk!</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - Als de UI niet was beveiligd met (disabled knoppen)... kan je de Startknop meermaals the indrukken! </span>
+<span class="comment">// Wat er dan gebeurt (the "double trigger" bug): de browser creëert dan meerdere `setInterval` the functies tegelijk op één target. Daardoor gaat the timer plots "2 keer the zo the snel the" en kan the Pauzeknop hem nooit meer effectief stoppen! </span>
+<span class="comment">// OPLOSSING: In JS altijd goed checken: "if (isRunning) return;" bij the start knop the.</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Round-the-clock Lap the Delta:</strong> Normaal (in de echte the wereld) registreert the
+                        the Lap knop the de tijd tússen 2 rondetijden the the ronde the in, niet the "total Elapsedthe"
+                        the the. Kun jij <code>huidigeRondeTijd = elapsedTime - vorigeLapTijd</code> the code the
+                        implenteren? </li>
+                    <li><strong>Snelle Clicks the Intercepteren:</strong> Zorg ervoor data the the the "Lap" the knop
+                        minimaal the de de the 0.5 sec "cooldown" heeft in the code the voorkomen the data de the The
+                        the DOM the overspoelt met "0.10s" the rondetijden!</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="timer-display" id="display">00:00:00.00</div>
+
+            <div class="controls">
+                <button class="btn-fab btn-play" id="btn-start" title="Start">▶</button>
+                <button class="btn-fab btn-pause" id="btn-pause" title="Pauze" disabled>⏸</button>
+                <button class="btn-fab btn-lap" id="btn-lap" title="Ronde (Lap)" disabled>🚩</button>
+                <button class="btn-fab btn-reset" id="btn-reset" title="Reset">⏹</button>
+            </div>
+
+            <div class="laps-container" id="laps-box">
+                <!-- Laps go here -->
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+        const startBtn = document.getElementById('btn-start');
+        const pauseBtn = document.getElementById('btn-pause');
+        const resetBtn = document.getElementById('btn-reset');
+        const lapBtn = document.getElementById('btn-lap');
+        const lapsBox = document.getElementById('laps-box');
+
+        // State Variabelen
+        let startTime = 0;
+        let elapsedTime = 0;
+        let timerInterval;
+        let isRunning = false;
+        let lapCount = 0;
+
+        // --- Functions ---
+        function formatTime(timeInMs) {
+            // Bereken de blokken
+            let diffInHrs = timeInMs / 3600000;
+            let hh = Math.floor(diffInHrs);
+
+            let diffInMin = (diffInHrs - hh) * 60;
+            let mm = Math.floor(diffInMin);
+
+            let diffInSec = (diffInMin - mm) * 60;
+            let ss = Math.floor(diffInSec);
+
+            let diffInMs = (diffInSec - ss) * 100;
+            let ms = Math.floor(diffInMs);
+
+            // Pad met nullen voor de strakke look
+            let formattedHH = hh.toString().padStart(2, "0");
+            let formattedMM = mm.toString().padStart(2, "0");
+            let formattedSS = ss.toString().padStart(2, "0");
+            let formattedMS = ms.toString().padStart(2, "0");
+
+            // HH weglaten indien het nog niet nodig is, mag je zelf besturen. Voor nu laten we t er in.
+            return `${formattedHH}:${formattedMM}:${formattedSS}.${formattedMS}`;
+        }
+
+        function printTime() {
+            elapsedTime = Date.now() - startTime;
+            display.innerText = formatTime(elapsedTime);
+        }
+
+        // --- Event Listeners ---
+        startBtn.addEventListener('click', () => {
+            // we trekken elapsed time er direct vanaf zodat wanneer gecorrigeerd of "Resumed" uit pauze
+            // de rekensom nog klopt
+            startTime = Date.now() - elapsedTime;
+            timerInterval = setInterval(printTime, 10); // Run elke 10 miliseconden!
+            isRunning = true;
+
+            // UI
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            lapBtn.disabled = false;
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            clearInterval(timerInterval); // Stop de loop
+            isRunning = false;
+
+            // UI
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            lapBtn.disabled = true;
+        });
+
+        resetBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            isRunning = false;
+
+            startTime = 0;
+            elapsedTime = 0;
+            lapCount = 0;
+            display.innerText = "00:00:00.00";
+            lapsBox.innerHTML = ""; // leeg the laps
+
+            // UI
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            lapBtn.disabled = true;
+        });
+
+        lapBtn.addEventListener('click', () => {
+            if (!isRunning) return;
+
+            lapCount++;
+            const li = document.createElement('div');
+            li.className = 'lap-item';
+
+            const num = document.createElement('span');
+            num.className = 'lap-num';
+            num.innerText = `Ronde ${lapCount}`;
+
+            const tijd = document.createElement('span');
+            tijd.className = 'lap-time';
+            tijd.innerText = formatTime(elapsedTime);
+
+            li.appendChild(num);
+            li.appendChild(tijd);
+
+            // Voeg the lap boven the andere laps toe door the prependen (ipv appendChild)
+            lapsBox.prepend(li);
+        });
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

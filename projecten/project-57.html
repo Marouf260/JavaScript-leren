@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 57: Steen, Papier, Schaar - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Game Area */
+        .project-area {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid #cbd5e1;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 400px;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #475569;
+        }
+
+        .score-box {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            border: 2px solid #e2e8f0;
+        }
+
+        .the-arena {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            width: 100%;
+            min-height: 150px;
+        }
+
+        .fighter-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: #64748b;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .fighter-emoji {
+            font-size: 5rem;
+            line-height: 1;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* the Flip right emoji */
+            transform: scaleX(-1);
+            animation: bounceIn 0.5s ease;
+        }
+
+        /* Stop Flip for player to face opponent */
+        .player-box .fighter-emoji {
+            transform: scaleX(1);
+        }
+
+        .vs-text {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        /* Uitslag Tekst! */
+        .result-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 30px;
+            height: 40px;
+            color: #334155;
+        }
+
+        .result-text.win {
+            color: #10b981;
+        }
+
+        .result-text.lose {
+            color: #ef4444;
+        }
+
+        .result-text.draw {
+            color: #f59e0b;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-choice {
+            background: white;
+            border: 3px solid #cbd5e1;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-choice:hover {
+            transform: translateY(-5px) scale(1.1);
+            border-color: #3b82f6;
+            box-shadow: 0 10px 15px rgba(59, 130, 246, 0.2);
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            60% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .player-box .fighter-emoji {
+            animation-name: bounceInPlayer;
+        }
+
+        @keyframes bounceInPlayer {
+            0% {
+                transform: scaleX(1) scale(0);
+                opacity: 0;
+            }
+
+            60% {
+                transform: scaleX(1) scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scaleX(1) scale(1);
+            }
+        }
+
+        /* CPU Animation_ The spin */
+        .cpu-box .fighter-emoji.rolling {
+            animation: none;
+            position: relative;
+        }
+
+        .cpu-box .fighter-emoji.rolling::after {
+            content: '❓';
+            position: absolute;
+            font-size: 4rem;
+            animation: spinQ 0.5s linear infinite;
+        }
+
+        @keyframes spinQ {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 57: Steen, Papier, Schaar</h1>
+        <span class="level" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">Games</span>
+        <p class="description">Speel de klassieker the The tegen The the Z De Computer de the_ (Math.random). The en the
+            hou the de the score bij .</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De Data Dictionary the The (Win/Verlies the The) </h4>
+                <p>We The gebruiken in dit The project the The een Object Dictionary om The "Winnende combinaties" op_
+                    the te the slaan! In_ The The plaats the The the van the The eindeloze the <code>if / else</code>
+                    the statements The _the <code>if(player == 'steen' &amp;&amp; cpu == 'schaar')</code> The maken The
+                    the the we The the een Object_: <code>{ steen: 'schaar', papier: 'steen' }</code>.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// The Key V (Speler Keuze Z_ ) verslaat The the de Value (Computer The) </span>
+<span class="keyword">const</span> winCondities = {
+    <span class="string">'steen'</span>: <span class="string">'schaar'</span>,  <span class="comment">// The steen V verslaat schaar !Z</span>
+    <span class="string">'papier'</span>: <span class="string">'steen'</span>,  <span class="comment">// H papier V verslaat steen Z !</span>
+    <span class="string">'schaar'</span>: <span class="string">'papier'</span>  <span class="comment">// S schaar V verslaat papier ! G</span>
+};</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: The Winnaar the MThe the Bepalen the THE Z</h4>
+                <p>Door the the de the String The the (the bijv. 'steen') in te The voeren in the the de The dictionary
+                    kunnen we the Checken Of de The Computer the_ choice the the HETZELFDE the The the! is als the the
+                    The_ "the The The de waarde die de speler the _kan_ the verslaan_! ". </p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">KiekWieWintErH</span>(spelerH, cpuH) {
+    <span class="keyword">if</span> (spelerH === cpuH) <span class="keyword">return</span> <span class="string">'Gelijkspel!'</span>;
+    
+    <span class="comment">// We steken de speler string als The Key Z in the De Dictionary O !</span>
+    <span class="keyword">if</span> (winCondities[spelerH] === cpuH) {
+        <span class="keyword">return</span> <span class="string">'Gewonnen!'</span>;
+    } <span class="keyword">else</span> {
+        <span class="keyword">return</span> <span class="string">'Verloren!'</span>;
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: CSS Animatie Reset The (Hergebruiken the THE) </h4>
+                <p>Wanneer de The speler The (en de The Computer) their Emojis ! The! The de ring! insturen The the the
+                    , Speelt er The The Een the the the kleine <code>bounceIn</code> the the The CSS animatie The The
+                    op. the the The! Om deze de the *elke beurt* the the the_ the opnieuw te The the_ the laten spelen
+                    The The, moeten we theThe THE de the class_ the of het MThe the thethe_ de style Even The!
+                    Verwijderen the the_ The the the <code>animation = 'none'</code> the_! Daarna_ ! roepen we de the
+                    the the <code>offsetHeight</code> the theThe _ (HackThe_!) aan the _om the de the browser the teThe
+                    forceren_ De the! the_ the paint teThe_ _ te berekenen_!. en The then_! turn anim_ weer! the _ on!
+                    The_ . The the resultaat The The !</p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Kies Steen, Papier of Schaar via de buttons.</li>
+                <li>De The the the computer the kiest the randomly the the via <code>Math.random()</code>!</li>
+                <li>Score the_ wordt_ Opgeslagen the THE in the variables!.</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>State Locking The The the:</strong> the The In The de code The The the THE Zie the je The
+                    The the the theThe een <code>if (DeSpelWordtG_SpeeltH) return;</code>The! . the THE Dit is the THE
+                    the the cruciaal Thethe The the the Omdat TheThe The de Cpu_ 'denk'_ Animatie The 600ms_ ! the
+                    duurtThe. The the Deze lock the the The Zorgt _ ervoor ! dat je in the the THE die_ 600ms!_ geen_
+                    input mag the theThe! the ! geven . ! the The ! the THE . _! </li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Niet de Emoji omdraaien </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the speler The the de The THE the Mol the THE The the drukt, THE the the De the the Emoji the THE the vuist! `✊`  kijkt The_ standardThe  naar The Rechts_ ! . thethe THE THE Dit klopt the The Niet the the Voor de CPu_!!!  Zijn vuist the the theThe_ !thethe  moet naar Links The The !_! THE The ). </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe in de CSS ! `transform: scaleX(-1);` flip je _ Horizontaal !  _! THE The </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Lizard, Spock ! The The The The! </strong> the the thethe the THE the Bouw The THE the
+                        the een the The! The array en de dict! theThe! the ! uit met the_! de 2 extra Hand the theThe!
+                        the ! opties_ . ! the The ! the THE (The rock paper_ scissors lizard ! spock ) the ! The The.
+                        THE </li>
+                    <li><strong>Best of 5 THE the TheThe _!</strong> The The the The the Voeg TheThe the _een teller
+                        toe! the theThe _. the ! the de The_The the _speler! the The the The_ eersteThe _The met 5
+                        punten_ ! heeft gewonnen! The . _The ! Toon dan un Groot The the the the the_ Overwinnings_
+                        scherm!The the . </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="score-board">
+                <div class="score-box">
+                    <div>Speler</div>
+                    <div style="font-size: 2rem; color: #3b82f6;" id="s-plr">0</div>
+                </div>
+                <div class="score-box">
+                    <div>Computer</div>
+                    <div style="font-size: 2rem; color: #ef4444;" id="s-cpu">0</div>
+                </div>
+            </div>
+
+            <div class="result-text" id="r-tekst">Kies je wapen!</div>
+
+            <div class="the-arena">
+                <div class="fighter-box player-box">
+                    <span>Jij</span>
+                    <div class="fighter-emoji" id="ui-plr-emj">✊</div>
+                </div>
+
+                <div class="vs-text">VS</div>
+
+                <div class="fighter-box cpu-box">
+                    <span>CPU</span>
+                    <div class="fighter-emoji" id="ui-cpu-emj">🤖</div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn-choice" data-keuze="steen" title="Steen">✊</button>
+                <button class="btn-choice" data-keuze="papier" title="Papier">✋</button>
+                <button class="btn-choice" data-keuze="schaar" title="Schaar">✌️</button>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const btnMDeList__Knoppen = document.querySelectorAll('.btn-choice');
+        const UiPlrZText = document.getElementById('s-plr');
+        const UiCpuZText = document.getElementById('s-cpu');
+        const UiResultHDe = document.getElementById('r-tekst');
+        const UIPlEmojiH_R = document.getElementById('ui-plr-emj');
+        const UICpuEmojiZ_R = document.getElementById('ui-cpu-emj');
+
+        let ScDePlayer_G_0 = 0;
+        let ScDeCpu_G_0 = 0;
+        let DeSpelWordtG_SpeeltH = false; // block inputs during css UI anim_ !!
+
+        // Data map Dictionary The_ !
+        const GTheWinMapDeDicti = {
+            'steen': 'schaar',
+            'papier': 'steen',
+            'schaar': 'papier'
+        };
+
+        const EmojiMTheDeH_The = {
+            'steen': '✊',
+            'papier': '✋',
+            'schaar': '✌️'
+        };
+        const AllOVK_euZzzenDataArrayDeZ = ['steen', 'papier', 'schaar'];
+
+        function PlayGameZ_TheRonde(GeSpeel_KeuDeSpelerR_Z) {
+            if (DeSpelWordtG_SpeeltH) return;
+            DeSpelWordtG_SpeeltH = true;
+
+            // Update Pl UI direct_
+            UIPlEmojiH_R.innerText = EmojiMTheDeH_The[GeSpeel_KeuDeSpelerR_Z];
+
+            // Re-trigger animation tricks via the the _the The HTML reflow (Hack)
+            UIPlEmojiH_R.style.animation = 'none';
+            UIPlEmojiH_R.offsetHeight; // triggers the browser repaint Z! 
+            UIPlEmojiH_R.style.animation = null;
+
+            // CPU 'denkt' UI animatie G _
+            UICpuEmojiZ_R.innerText = "";
+            UICpuEmojiZ_R.classList.add('rolling');
+            UiResultHDe.innerText = "Computer kiest...";
+            UiResultHDe.className = "result-text"; // reset colors Z
+
+            setTimeout(() => {
+                UICpuEmojiZ_R.classList.remove('rolling');
+
+                // Genereer CPU The choice Z 
+                const THE_C_RandomGekozenZNumV = Math.floor(Math.random() * AllOVK_euZzzenDataArrayDeZ.length);
+                const CpuKTheeuzeStringGez = AllOVK_euZzzenDataArrayDeZ[THE_C_RandomGekozenZNumV];
+
+                // Update CPU UI The R
+                UICpuEmojiZ_R.innerText = EmojiMTheDeH_The[CpuKTheeuzeStringGez];
+                UICpuEmojiZ_R.style.animation = 'none';
+                UICpuEmojiZ_R.offsetHeight;
+                UICpuEmojiZ_R.style.animation = null;
+
+                H_BedenkWieWintErLogicCheckDataZ(GeSpeel_KeuDeSpelerR_Z, CpuKTheeuzeStringGez);
+
+                DeSpelWordtG_SpeeltH = false;
+
+            }, 600); // the the 600ms fake thinking Z the the! !
+        }
+
+        function H_BedenkWieWintErLogicCheckDataZ(SpelerZ_V, Cpu_Z_V) {
+            if (SpelerZ_V === Cpu_Z_V) {
+                // Gelijk / Draw _  T !
+                UiResultHDe.innerText = "Gelijkspel! 🤝";
+                UiResultHDe.classList.add('draw');
+            }
+            else if (GTheWinMapDeDicti[SpelerZ_V] === Cpu_Z_V) {
+                // Winnn! The ! Z 
+                UiResultHDe.innerText = "Je Hebt Gewonnen! 🎉";
+                UiResultHDe.classList.add('win');
+                ScDePlayer_G_0++;
+                UiPlrZText.innerText = ScDePlayer_G_0;
+            }
+            else {
+                // Oof! Verlies The Z 
+                UiResultHDe.innerText = "Computer Wint! 🤖";
+                UiResultHDe.classList.add('lose');
+                ScDeCpu_G_0++;
+                UiCpuZText.innerText = ScDeCpu_G_0;
+            }
+        }
+
+        // Loop knoppen !
+        btnMDeList__Knoppen.forEach(btnDatHDataZ => {
+            btnDatHDataZ.addEventListener('click', () => {
+                const spelerTheZKeuzeStringZ = btnDatHDataZ.getAttribute('data-keuze');
+                PlayGameZ_TheRonde(spelerTheZKeuzeStringZ);
+            });
+        });
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

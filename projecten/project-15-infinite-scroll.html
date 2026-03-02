@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 15: Infinite Scroll - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #FFE5B4;
+            color: #CC6600;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 15: Infinite Scroll</h1>
+        <span class="level">Advanced</span>
+        <p class="description">Laad meer content automatisch wanneer je scrollt.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je werken met scroll events en scroll berekeningen. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>Scroll events gebruiken voor detectie</li>
+                <li>Scroll properties gebruiken (scrollTop, scrollHeight, clientHeight)</li>
+                <li>Berekenen wanneer gebruiker bijna onderaan is</li>
+                <li>Dynamisch content toevoegen</li>
+                <li>Loading states beheren</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>scrollTop</strong> - Afstand van bovenkant tot zichtbaar gebied</li>
+                <li><strong>scrollHeight</strong> - Totale hoogte van scrollbaar content</li>
+                <li><strong>clientHeight</strong> - Zichtbare hoogte van element</li>
+                <li><strong>scroll event</strong> - Event dat afgaat tijdens scrollen</li>
+                <li><strong>Threshold</strong> - Afstand tot einde voordat nieuwe content laadt</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: Scroll properties begrijpen</h4>
+                <p>Leer de drie belangrijke scroll properties:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> scrollTop = container.scrollTop; <span class="comment">// Hoe ver gescrolled</span>
+<span class="keyword">const</span> scrollHeight = container.scrollHeight; <span class="comment">// Totale hoogte</span>
+<span class="keyword">const</span> clientHeight = container.clientHeight; <span class="comment">// Zichtbare hoogte</span></pre>
+                </div>
+                <p><strong>Uitleg:</strong> scrollTop + clientHeight = waar je bent. scrollHeight = waar einde is. Wanneer ze bijna gelijk zijn, ben je bijna onderaan.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: Scroll event listener</h4>
+                <p>Luister naar scroll events:</p>
+                <div class="code-example">
+                    <pre>container.<span class="function">addEventListener</span>(<span class="string">'scroll'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">const</span> scrollTop = <span class="keyword">this</span>.scrollTop;
+    <span class="keyword">const</span> scrollHeight = <span class="keyword">this</span>.scrollHeight;
+    <span class="keyword">const</span> clientHeight = <span class="keyword">this</span>.clientHeight;
+    <span class="comment">// Check logica</span>
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Scroll event gaat af bij elke scroll beweging. We berekenen of gebruiker bijna onderaan is.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Check of bijna onderaan</h4>
+                <p>Controleer of gebruiker binnen threshold is:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">if</span> (scrollTop + clientHeight >= scrollHeight - <span class="string">10</span>) {
+    <span class="comment">// Laad meer content</span>
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> -10 is threshold. Wanneer scrollTop + clientHeight binnen 10px van scrollHeight is, laad meer.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 4: Dynamisch items toevoegen</h4>
+                <p>Voeg nieuwe items toe met setTimeout voor loading effect:</p>
+                <div class="code-example">
+                    <pre>loading.style.display = <span class="string">'block'</span>;
+<span class="function">setTimeout</span>(() => {
+    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="string">0</span>; i < <span class="string">3</span>; i++) {
+        itemCount++;
+        <span class="keyword">const</span> item = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
+        item.textContent = <span class="string">'Item ' + itemCount</span>;
+        container.<span class="function">appendChild</span>(item);
+    }
+    loading.style.display = <span class="string">'none'</span>;
+}, <span class="string">500</span>);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> setTimeout simuleert loading tijd. In echte app zou dit een API call zijn.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="keyword">const</span> container = document.<span class="function">getElementById</span>(<span class="string">'scroll-container'</span>);
+<span class="keyword">const</span> loading = document.<span class="function">getElementById</span>(<span class="string">'loading'</span>);
+<span class="keyword">let</span> itemCount = <span class="string">3</span>;
+
+container.<span class="function">addEventListener</span>(<span class="string">'scroll'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">const</span> scrollTop = <span class="keyword">this</span>.scrollTop;
+    <span class="keyword">const</span> scrollHeight = <span class="keyword">this</span>.scrollHeight;
+    <span class="keyword">const</span> clientHeight = <span class="keyword">this</span>.clientHeight;
+    
+    <span class="keyword">if</span> (scrollTop + clientHeight >= scrollHeight - <span class="string">10</span>) {
+        loading.style.display = <span class="string">'block'</span>;
+        
+        <span class="function">setTimeout</span>(() => {
+            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="string">0</span>; i < <span class="string">3</span>; i++) {
+                itemCount++;
+                <span class="keyword">const</span> item = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
+                item.className = <span class="string">'scroll-item'</span>;
+                item.style.cssText = <span class="string">'padding: 1rem; margin: 0.5rem 0; background: #f0f0f0; border-radius: 4px;'</span>;
+                item.textContent = <span class="string">'Item ' + itemCount</span>;
+                container.<span class="function">appendChild</span>(item);
+            }
+            loading.style.display = <span class="string">'none'</span>;
+        }, <span class="string">500</span>);
+    }
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Selecteer scroll container en loading indicator</li>
+                <li>Voeg scroll event listener toe</li>
+                <li>Bereken scrollTop, scrollHeight en clientHeight</li>
+                <li>Check of scrollTop + clientHeight >= scrollHeight - threshold</li>
+                <li>Toon loading, voeg items toe, verberg loading</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Threshold waarde:</strong> 10-50px is goed. Te klein = te vaak laden, te groot = te laat laden</li>
+                <li><strong>Debouncing:</strong> Voorkom meerdere loads tegelijk met een flag</li>
+                <li><strong>Performance:</strong> Scroll events gaan vaak af, gebruik requestAnimationFrame voor betere performance</li>
+                <li><strong>End detection:</strong> Check of er nog meer content is voordat je laadt</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Verkeerde scroll berekening</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Verkeerde vergelijking</span>
+<span class="keyword">if</span> (scrollTop >= scrollHeight) { ... } <span class="comment">// Werkt niet!</span>
+
+<span class="comment">// ✅ GOED - Gebruik scrollTop + clientHeight</span>
+<span class="keyword">if</span> (scrollTop + clientHeight >= scrollHeight - <span class="string">10</span>) { ... }</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Meerdere loads tegelijk</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Kan meerdere keren laden</span>
+container.<span class="function">addEventListener</span>(<span class="string">'scroll'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (nearBottom) loadMore(); <span class="comment">// Geen flag!</span>
+});
+
+<span class="comment">// ✅ GOED - Gebruik loading flag</span>
+<span class="keyword">let</span> isLoading = <span class="keyword">false</span>;
+<span class="keyword">if</span> (nearBottom && !isLoading) {
+    isLoading = <span class="keyword">true</span>;
+    loadMore();
+}</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Vergeten loading te verbergen</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Loading blijft zichtbaar</span>
+loading.style.display = <span class="string">'block'</span>;
+<span class="function">loadItems</span>(); <span class="comment">// Vergeet loading.style.display = 'none'!</span>
+
+<span class="comment">// ✅ GOED - Verberg na laden</span>
+loading.style.display = <span class="string">'block'</span>;
+<span class="function">loadItems</span>();
+loading.style.display = <span class="string">'none'</span>;</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Intersection Observer:</strong> Gebruik moderne API in plaats van scroll events</li>
+                    <li><strong>Virtual scrolling:</strong> Render alleen zichtbare items voor betere performance</li>
+                    <li><strong>Pull to refresh:</strong> Voeg pull-to-refresh functionaliteit toe</li>
+                    <li><strong>End message:</strong> Toon bericht wanneer alle content geladen is</li>
+                    <li><strong>Error handling:</strong> Behandel errors bij het laden van content</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: Intersection Observer</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> observer = <span class="keyword">new</span> IntersectionObserver((entries) => {
+    <span class="keyword">if</span> (entries[<span class="string">0</span>].isIntersecting) {
+        <span class="function">loadMore</span>();
+    }
+});
+
+<span class="keyword">const</span> sentinel = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
+container.<span class="function">appendChild</span>(sentinel);
+observer.<span class="function">observe</span>(sentinel);</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <div id="scroll-container" style="max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 1rem;">
+                <div class="scroll-item" style="padding: 1rem; margin: 0.5rem 0; background: #f0f0f0; border-radius: 4px;">Item 1</div>
+                <div class="scroll-item" style="padding: 1rem; margin: 0.5rem 0; background: #f0f0f0; border-radius: 4px;">Item 2</div>
+                <div class="scroll-item" style="padding: 1rem; margin: 0.5rem 0; background: #f0f0f0; border-radius: 4px;">Item 3</div>
+            </div>
+            <div id="loading" style="text-align: center; padding: 1rem; display: none;">Laden...</div>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const container = document.getElementById('scroll-container');
+        const loading = document.getElementById('loading');
+        let itemCount = 3;
+
+        container.addEventListener('scroll', function() {
+            const scrollTop = this.scrollTop;
+            const scrollHeight = this.scrollHeight;
+            const clientHeight = this.clientHeight;
+            
+            if (scrollTop + clientHeight >= scrollHeight - 10) {
+                loading.style.display = 'block';
+                
+                setTimeout(() => {
+                    for (let i = 0; i < 3; i++) {
+                        itemCount++;
+                        const item = document.createElement('div');
+                        item.className = 'scroll-item';
+                        item.style.cssText = 'padding: 1rem; margin: 0.5rem 0; background: #f0f0f0; border-radius: 4px;';
+                        item.textContent = 'Item ' + itemCount;
+                        container.appendChild(item);
+                    }
+                    loading.style.display = 'none';
+                }, 500);
+            }
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

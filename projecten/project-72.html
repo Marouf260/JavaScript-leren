@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 72: Random Quote Generator - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            transition: background 0.5s;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 650px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        /* API App CSS */
+        .project-area {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 250px;
+            justify-content: center;
+            position: relative;
+        }
+
+        .QQtTHteHeTextZ {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #1e293b;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-family: Georgia, serif;
+        }
+
+        .AAAAtuteur_TextKthe {
+            font-size: 1.1rem;
+            color: #64748b;
+            font-style: italic;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .AAAAtuteur_TextKthe::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: #64748b;
+        }
+
+        .AAAAtuteur_TextKthe::after {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: #64748b;
+        }
+
+        .oKnopoGRoopMThe_H {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btnTThekNOpHaaloP {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 6px rgba(245, 158, 11, 0.3);
+        }
+
+        .btnTThekNOpHaaloP:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+
+        .btnTThekNOpHaaloP:active {
+            transform: translateY(0);
+        }
+
+        .btnTThekNOpHaaloP:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btnTTwweetTheKnoP {
+            background: #1da1f2;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 6px rgba(29, 161, 242, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+        }
+
+        .btnTTwweetTheKnoP:hover {
+            background: #1a91da;
+        }
+
+        /* Loader ! */
+        .LdLOaderROundSpinnerTH {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f4f6;
+            border-top-color: #f59e0b;
+            border-radius: 50%;
+            animation: VTheSpinOThe 1s linear infinite;
+            position: absolute;
+        }
+
+        @keyframes VTheSpinOThe {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #d97706;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #b45309;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 72: Quote Generator</h1>
+        <span class="level">API & Fetch</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De <code>fetch()</code> Aanroep</h4>
+                <p>We the maken the _een netwerkverzoek_ Naar outside The (Een echte the_externe API). Omdat the_! dit
+                    The! the Tijd_ kost Z , _The Returnt Dit__ Een`Promise` (Belofte) The_! _!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
+<span class="keyword">const</span> HetZRepsonSNettheDataTHTerkV = <span class="keyword">await</span> <span class="function">fetch</span>(APPIDDummMyUrlDat_TTheHQuoteH);
+<span class="keyword">const</span> theTJSONHTheDO_OObjv_The = <span class="keyword">await</span> HetZRepsonSNettheDataTHTerkV.<span class="function">json</span>();</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Wachten the (<code>async / await</code>)</h4>
+                <p>The! We_ the the The gebruiken <code>await</code> THE_ om JS the_ the Tethe Maken_ wachten_ The !
+                    Daarna the Checken we of_the de response _the_ <code>.ok</code> The is_ THE! the (! Error
+                    handling_).</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Tweet the URL_The </h4>
+                <p>Om_ The een the exact the! _Tweet The!_ Voor te Bereiden _the the_ MakenThe we the_Een the_ String
+                    aan met The_ de `text=` the_ queryThe! param! O_ `encodeURIComponent()`_ the _Zorgt ERVoor _ The _
+                    dat de Tekst _the ! The 100% URL_ safe THE is !</p>
+            </div>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik the_ OP the_ "Nieuwe Quote" _The! _the_ </li>
+                <li>Bekijk The_ The de the the Spinning The_ Loader de the ! _TerwiJl the_ the Data the wordt the!
+                    Opgehaald! </li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>The Try Catch Block the:</strong> the The In The de JS The zie je the_ The ! The _ dat de
+                    de_ the Fetch The_ IN the The _een ! the the <code>try { } catch (e) { }</code> block the Staat!
+                    Dit_ THE ! The Is_ Super_ the Belangrijk the_ Omdat_ Je The Niet the de The the Controle the Hebt
+                    over een_ server! _ </li>
+                <li><strong>UI Bonus:</strong> We veranderen the de body background the met the Een the random H the
+                    gradient color the the! O _ bij the elke The_ nieuwe the JSON response !</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: de_ <code>await</code>_ Vergeten_! </h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je de await vergeet_ dan The_! The is `const data = response.json()` een   _ pending_! Promise the_The _ Object!! en Geen The JSON _The ! The </span>
+
+<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_! await_ voor de .json_!_!  _ </span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Lijst THE_! !! The The The The! </strong> the the thethe the THE the Bouw The DE V The_
+                        the the the The_ Logica OM The_The Niet! _ 1 _ The! Quote_ maar The the Bv_ The 5 Quotes _The
+                        gelijk op the_ Te Halen _ the EN_! the de DOM the_ Te ! Vullen ! </li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="LdLOaderROundSpinnerTH" id="SSPinUITheHHLoad_V"></div>
+
+            <div id="uIDataKCOntentZTVQuoteDeThe_R">
+                <div class="QQtTHteHeTextZ" id="THTxtQuoDTeSSttDringZZ_V">
+                    <i class="fas fa-quote-left"></i> Loading quote... <i class="fas fa-quote-right"></i>
+                </div>
+                <div class="AAAAtuteur_TextKthe" id="HDUUIATEurNNaaMTheTThe_VTheK">
+                    Loading
+                </div>
+            </div>
+
+            <div class="oKnopoGRoopMThe_H">
+                <!-- X (Twitter) Z Share Intent URL the !!  -->
+                <a class="btnTTwweetTheKnoP" id="BBtn_STXwiterSTheetVThe" target="_blank">
+                    𝕏 Tweet
+                </a>
+                <button class="btnTThekNOpHaaloP" id="kKNopQquoteDaDTheFetchTTH_V">
+                    Nieuwe Quote 🔮
+                </button>
+            </div>
+
+        </div>
+
+
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <!-- FontAwesome the quotes!  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        const DOMHUIQTheteTTExTT = document.getElementById('THTxtQuoDTeSSttDringZZ_V');
+        const DOATHEHAAuutTEeTherNNH = document.getElementById('HDUUIATEurNNaaMTheTThe_VTheK');
+        const knNOpFetcZTheBTNTVeD = document.getElementById('kKNopQquoteDaDTheFetchTTH_V');
+        const UiTtweetBBtnDHTML_TheO = document.getElementById('BBtn_STXwiterSTheetVThe');
+
+        const CONtttThe_MDeQuotDTheVDivDe = document.getElementById('uIDataKCOntentZTVQuoteDeThe_R');
+        const LLoaderUSHTSpiNnOHTt_The = document.getElementById('SSPinUITheHHLoad_V');
+
+        // Free Ninja API_ or dummy data API The the! (Quotable API is deprecated, we will use a reliable free dummyjson API_ Z the_ !)
+        // https://dummyjson.com/quotes/random returns good The _ random json data !
+        const APPIDDummMyUrlDat_TTheHQuoteH = 'https://dummyjson.com/quotes/random';
+
+        // Kleuren the Array Z !! Voor the the body the dynamic The !!
+        const VKKTheureeO_ZTheGrtheOHT_DeGThe_TheZ = [
+            'linear-gradient(135deg, #fceabb 0%, #f8b500 100%)', // Orange/Yellow
+            'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)', // Purple/Pink
+            'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)', // Green/Blue
+            'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)', // Pink/Blue
+            'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)', // Pink/Peach
+            'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'  // Cyan/Pink
+        ];
+
+        async function GetEenRaAndOmmQuotAPIHDe__TThe() {
+            // UI Loding state_ H! 
+            CONtttThe_MDeQuotDTheVDivDe.style.opacity = '0'; // fade Out The! 
+            knNOpFetcZTheBTNTVeD.disabled = true;
+            setTimeout(() => { LLoaderUSHTSpiNnOHTt_The.style.display = "block"; }, 200);
+
+            try {
+                const HetZRepsonSNettheDataTHTerkV = await fetch(APPIDDummMyUrlDat_TTheHQuoteH);
+                if (!HetZRepsonSNettheDataTHTerkV.ok) throw new Error("API Fetch H Error V !");
+
+                const theTJSONHTheDO_OObjv_The = await HetZRepsonSNettheDataTHTerkV.json();
+
+                // Fill Data THE Z (The dummy json api the_ has a .quote and .author property ! The)
+                DOMHUIQTheteTTExTT.innerHTML = `<i class="fas fa-quote-left"></i> ${theTJSONHTheDO_OObjv_The.quote} <i class="fas fa-quote-right"></i>`;
+                DOATHEHAAuutTEeTherNNH.innerText = theTJSONHTheDO_OObjv_The.author;
+
+                // Share To THE X (TWitter intent URL Z builder Z !! H )
+                // We encodeURIComponent H! Om de the the  tekst te escapen V_ the ! 
+                const tweetUrlGGen = `https://twitter.com/intent/tweet?text=${encodeURIComponent('"' + theTJSONHTheDO_OObjv_The.quote + '" - ' + theTJSONHTheDO_OObjv_The.author)}`;
+                UiTtweetBBtnDHTML_TheO.setAttribute('href', tweetUrlGGen);
+
+                // Change Background Random! Z
+                const rnKleTuK_H = Math.floor(Math.random() * VKKTheureeO_ZTheGrtheOHT_DeGThe_TheZ.length);
+                document.body.style.background = VKKTheureeO_ZTheGrtheOHT_DeGThe_TheZ[rnKleTuK_H];
+
+            } catch (err) {
+                DOMHUIQTheteTTExTT.innerText = "Error: Kon the the O_ ! the the de server the _ niet bereiken.";
+                DOATHEHAAuutTEeTherNNH.innerText = "Systeem Fout";
+                console.error(err);
+            } finally {
+                // Reveal The Z 
+                LLoaderUSHTSpiNnOHTt_The.style.display = "none";
+                CONtttThe_MDeQuotDTheVDivDe.style.opacity = '1';
+                knNOpFetcZTheBTNTVeD.disabled = false;
+            }
+        }
+
+        // BTN click! The_ 
+        knNOpFetcZTheBTNTVeD.addEventListener('click', GetEenRaAndOmmQuotAPIHDe__TThe);
+
+        // start default 1 the  the! Z
+        GetEenRaAndOmmQuotAPIHDe__TThe();
+
+    </script>
+    <script>
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

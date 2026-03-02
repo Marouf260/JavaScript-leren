@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 95: Breakout Game - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #18181b;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #f4f4f5;
+        }
+
+        .container {
+            background: #27272a;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 1);
+            border: 2px solid #3f3f46;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            color: #e4e4e7;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .level {
+            display: block;
+            padding: 0.4rem 1.2rem;
+            background: #3f3f46;
+            color: #a1a1aa;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .project-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-canvas {
+            background: #111;
+            border: 4px solid #3f3f46;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 15px;
+            padding: 10px 20px;
+            background: #18181b;
+            border-radius: 10px;
+            border: 1px solid #3f3f46;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .score-display {
+            color: #4ade80;
+        }
+
+        .lives-display {
+            color: #f87171;
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn:hover {
+            background: #2563eb;
+        }
+
+        .btn-rules {
+            background: #3f3f46;
+            color: white;
+        }
+
+        .btn-rules:hover {
+            background: #52525b;
+        }
+
+        .rules-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(24, 24, 27, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #6366f1;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            z-index: 10;
+            display: none;
+            text-align: left;
+            max-width: 400px;
+        }
+
+        .rules-modal.show {
+            display: block;
+        }
+
+        .rules-modal h2 {
+            margin-bottom: 15px;
+            color: #818cf8;
+        }
+
+        .rules-modal ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            line-height: 1.6;
+            color: #a1a1aa;
+        }
+
+        .close-rules {
+            width: 100%;
+            background: #6366f1;
+        }
+
+        .close-rules:hover {
+            background: #4f46e5;
+        }
+
+
+        .back-link {
+            display: block;
+            margin-top: 3rem;
+            color: #a1a1aa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #f4f4f5;
+        }
+
+        /* Mobile Controls */
+        .mobile-controls {
+            display: none;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+            justify-content: space-between;
+        }
+
+        .m-ctrl {
+            background: #3f3f46;
+            color: #fff;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            user-select: none;
+        }
+
+        .m-ctrl:active {
+            background: #52525b;
+        }
+
+        @media (max-width: 600px) {
+            .mobile-controls {
+                display: flex;
+            }
+
+            .controls {
+                display: none;
+            }
+
+            /* hide start boutton down there maybe move it up? nah, let's keep it simple, just tap to start */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1><i class="fas fa-gamepad"></i> Breakout</h1>
+        <span class="level">Grandmaster Project (Canvas API)</span>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De Game Loop</h4>
+                <p>Een canvas-game werkt met een <strong>Game Loop</strong>. Elke frame (~60x per seconde) wist je het
+                    canvas en teken je alles opnieuw op de nieuwe positie. Dit geeft de illusie van beweging!</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="keyword">function</span> <span class="function">update</span>() {
+    ctx.<span class="function">clearRect</span>(<span class="string">0</span>, <span class="string">0</span>, canvas.width, canvas.height);
+    <span class="function">moveBall</span>();
+    <span class="function">drawBall</span>();
+    <span class="function">drawPaddle</span>();
+    <span class="function">drawBricks</span>();
+    <span class="function">requestAnimationFrame</span>(update); <span class="comment">// ~60 fps</span>
+}</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Botsingsdetectie (Collision Detection)</h4>
+                <p>We controleren elke frame of de bal de paddle, een steen of een muur raakt. Bij een treffer keren we
+                    de Y-richting om (<code>ball.dy *= -1</code>).</p>
+            </div>
+
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik <strong>Start Game</strong> of druk op <kbd>S</kbd>!</li>
+                <li>Gebruik <kbd>&larr;</kbd> / <kbd>&rarr;</kbd> of <kbd>A</kbd> / <kbd>D</kbd> om de plank te bewegen!
+                </li>
+                <li>Breek alle stenen en verlies geen 3 levens!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong><code>requestAnimationFrame</code>:</strong> Dit is efficiënter dan <code>setInterval</code>
+                    voor animaties. De browser synchroniseert het met de schermverversing (60Hz) voor vloeiende
+                    beweging!</li>
+                <li><strong>Spin effect:</strong> We berekenen waar de bal de paddle raakt en passen
+                    <code>ball.dx</code> aan - zo kan je richting geven!</li>
+            </ul>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Power-ups:</strong> Laat soms een power-up uit een steen vallen (bijv. breder paddle,
+                        extra leven)!</li>
+                    <li><strong>Levels:</strong> Verhoog de balsnelheid bij elk volgende level!</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()"
+            style="background: #3b82f6; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 1rem;">📖
+            Toon Uitbreidingsmogelijkheden</button>
+
+        <div class="project-area">
+
+            <div class="game-header">
+                <div class="score-display">Score: <span id="score">0</span></div>
+                <div class="lives-display">Lives: <span id="lives">3</span></div>
+            </div>
+
+            <canvas id="gameCanvas" width="800" height="500" class="game-canvas"></canvas>
+
+            <div class="mobile-controls">
+                <button class="m-ctrl" id="leftBtn"><i class="fas fa-arrow-left"></i></button>
+                <button class="m-ctrl" id="rightBtn"><i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <div class="controls">
+                <button id="startBtn" class="btn">Start Game (S)</button>
+                <button id="rulesBtn" class="btn btn-rules">Spelregels</button>
+            </div>
+
+            <p style="color: #71717a; margin-top: 15px; font-size: 0.9em;">Gebruik Pijltje Links/Rechts of A/D om te
+                bewegen.</p>
+        </div>
+
+        <div class="rules-modal" id="rulesModal">
+            <h2>Spelregels</h2>
+            <ul>
+                <li>Gebruik de pijltjestoetsen of A/D om de plank te bewegen.</li>
+                <li>Laat de bal niet op de grond vallen.</li>
+                <li>Breek alle stenen om te winnen.</li>
+                <li>Je hebt 3 levens.</li>
+            </ul>
+            <button class="btn close-rules" id="closeRulesBtn">Sluiten</button>
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreDisplay = document.getElementById('score');
+        const livesDisplay = document.getElementById('lives');
+
+        // Modal
+        const rulesBtn = document.getElementById('rulesBtn');
+        const closeRulesBtn = document.getElementById('closeRulesBtn');
+        const rulesModal = document.getElementById('rulesModal');
+
+        rulesBtn.addEventListener('click', () => rulesModal.classList.add('show'));
+        closeRulesBtn.addEventListener('click', () => rulesModal.classList.remove('show'));
+
+        // Game State
+        let score = 0;
+        let lives = 3;
+        let isGameOver = false;
+        let isGamePaused = true;
+        let animationId;
+
+        // Ball Props
+        const ball = {
+            x: canvas.width / 2,
+            y: canvas.height - 30,
+            size: 10,
+            speed: 5,
+            dx: 5, // velocity x
+            dy: -5  // velocity y
+        };
+
+        // Paddle Props
+        const paddle = {
+            w: 100,
+            h: 12,
+            x: canvas.width / 2 - 50,
+            y: canvas.height - 20,
+            speed: 8,
+            dx: 0
+        };
+
+        // Brick Props
+        const brickInfo = {
+            w: 75,
+            h: 20,
+            padding: 10,
+            offsetX: 45,
+            offsetY: 60,
+            visible: true
+        };
+        const brickRowCount = 5;
+        const brickColumnCount = 9;
+
+        // Create Bricks
+        let bricks = [];
+
+        function initBricks() {
+            bricks = [];
+            for (let c = 0; c < brickColumnCount; c++) {
+                bricks[c] = [];
+                for (let r = 0; r < brickRowCount; r++) {
+                    const x = c * (brickInfo.w + brickInfo.padding) + brickInfo.offsetX;
+                    const y = r * (brickInfo.h + brickInfo.padding) + brickInfo.offsetY;
+                    bricks[c][r] = { x, y, ...brickInfo };
+                }
+            }
+        }
+        initBricks();
+
+        // Draw Paddle
+        function drawPaddle() {
+            ctx.beginPath();
+            ctx.rect(paddle.x, paddle.y, paddle.w, paddle.h);
+            ctx.fillStyle = '#3b82f6';
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // Draw Ball
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
+            ctx.fillStyle = '#4ade80';
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // Draw Bricks
+        function drawBricks() {
+            const colors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6'];
+
+            bricks.forEach((column, c) => {
+                column.forEach((brick, r) => {
+                    if (brick.visible) {
+                        ctx.beginPath();
+                        ctx.rect(brick.x, brick.y, brick.w, brick.h);
+                        ctx.fillStyle = colors[r % colors.length];
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+                });
+            });
+        }
+
+        // Move Paddle
+        function movePaddle() {
+            paddle.x += paddle.dx;
+
+            // Wall collision
+            if (paddle.x + paddle.w > canvas.width) {
+                paddle.x = canvas.width - paddle.w;
+            }
+            if (paddle.x < 0) {
+                paddle.x = 0;
+            }
+        }
+
+        // Move Ball
+        function moveBall() {
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Wall collision (right/left)
+            if (ball.x + ball.size > canvas.width || ball.x - ball.size < 0) {
+                ball.dx *= -1; // reverse
+            }
+
+            // Wall collision (top/bottom)
+            if (ball.y - ball.size < 0) {
+                ball.dy *= -1;
+            }
+
+            // Paddle collision
+            if (
+                ball.x - ball.size > paddle.x &&
+                ball.x + ball.size < paddle.x + paddle.w &&
+                ball.y + ball.size > paddle.y
+            ) {
+                ball.dy = -ball.speed; // force upwards
+                // Add a bit of spin based on where it hit paddle (optional advanced)
+                let hitPoint = ball.x - (paddle.x + paddle.w / 2);
+                ball.dx = hitPoint * 0.15;
+            }
+
+            // Brick collision
+            bricks.forEach(column => {
+                column.forEach(brick => {
+                    if (brick.visible) {
+                        if (
+                            ball.x - ball.size > brick.x && // left brick side check
+                            ball.x + ball.size < brick.x + brick.w && // right brick side check
+                            ball.y + ball.size > brick.y && // top brick side check
+                            ball.y - ball.size < brick.y + brick.h // bottom brick side check
+                        ) {
+                            ball.dy *= -1;
+                            brick.visible = false;
+                            increaseScore();
+                        }
+                    }
+                });
+            });
+
+            // Hit bottom wall - Lose
+            if (ball.y + ball.size > canvas.height) {
+                lives--;
+                livesDisplay.innerText = lives;
+
+                if (lives === 0) {
+                    showGameOver();
+                } else {
+                    resetBallAndPaddle();
+                }
+            }
+        }
+
+        // Increase score
+        function increaseScore() {
+            score++;
+            scoreDisplay.innerText = score;
+
+            // Win condition
+            let totalBricks = brickRowCount * brickColumnCount;
+            if (score % totalBricks === 0) {
+                showWin();
+            }
+        }
+
+        function showGameOver() {
+            isGameOver = true;
+            isGamePaused = true;
+            ctx.fillStyle = 'rgba(0,0,0,0.7)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#ef4444';
+            ctx.font = '50px Arial';
+            ctx.fillText('GAME OVER', canvas.width / 2 - 140, canvas.height / 2);
+            document.getElementById('startBtn').innerText = "Restart";
+        }
+
+        function showWin() {
+            isGameOver = true;
+            isGamePaused = true;
+            ctx.fillStyle = 'rgba(0,0,0,0.7)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#4ade80';
+            ctx.font = '50px Arial';
+            ctx.fillText('YOU WIN!', canvas.width / 2 - 120, canvas.height / 2);
+            document.getElementById('startBtn').innerText = "Play Again";
+        }
+
+        // Draw everything
+        function draw() {
+            // clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            drawPaddle();
+            drawBall();
+            drawBricks();
+        }
+
+        // Update canvas drawing and animation
+        function update() {
+            if (isGamePaused) return;
+
+            movePaddle();
+            moveBall();
+
+            // Draw everything
+            draw();
+
+            animationId = requestAnimationFrame(update);
+        }
+
+        // Reset functions
+        function resetBallAndPaddle() {
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height - 30;
+            // randomize start direction a bit
+            ball.dx = (Math.random() > 0.5 ? 1 : -1) * 5;
+            ball.dy = -5;
+
+            paddle.x = canvas.width / 2 - paddle.w / 2;
+        }
+
+        function restartGame() {
+            score = 0;
+            lives = 3;
+            scoreDisplay.innerText = score;
+            livesDisplay.innerText = lives;
+            isGameOver = false;
+            initBricks();
+            resetBallAndPaddle();
+            isGamePaused = false;
+            document.getElementById('startBtn').innerText = "Pause (P)";
+            update();
+        }
+
+        // Keydown event
+        function keyDown(e) {
+            if (e.key === 'ArrowRight' || e.key === 'd') {
+                paddle.dx = paddle.speed;
+            } else if (e.key === 'ArrowLeft' || e.key === 'a') {
+                paddle.dx = -paddle.speed;
+            }
+        }
+
+        // Keyup event
+        function keyUp(e) {
+            if (
+                e.key === 'ArrowRight' || e.key === 'd' ||
+                e.key === 'ArrowLeft' || e.key === 'a'
+            ) {
+                paddle.dx = 0;
+            }
+        }
+
+        // Keyboard & Button events
+        document.addEventListener('keydown', keyDown);
+        document.addEventListener('keyup', keyUp);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 's' && isGamePaused) {
+                if (isGameOver) { restartGame(); }
+                else { isGamePaused = false; update(); document.getElementById('startBtn').innerText = "Pause (P)"; }
+            } else if (e.key.toLowerCase() === 'p' && !isGamePaused) {
+                isGamePaused = true;
+                document.getElementById('startBtn').innerText = "Resume (S)";
+            }
+        });
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            if (isGameOver) {
+                restartGame();
+            } else {
+                if (isGamePaused) {
+                    isGamePaused = false;
+                    document.getElementById('startBtn').innerText = "Pause (P)";
+                    update();
+                } else {
+                    isGamePaused = true;
+                    document.getElementById('startBtn').innerText = "Resume";
+                }
+            }
+        });
+
+        // Mobile touch controls (Simple holds)
+        const leftBtn = document.getElementById('leftBtn');
+        const rightBtn = document.getElementById('rightBtn');
+
+        const moveLeft = (e) => { e.preventDefault(); paddle.dx = -paddle.speed; }
+        const moveRight = (e) => { e.preventDefault(); paddle.dx = paddle.speed; }
+        const stopMove = (e) => { e.preventDefault(); paddle.dx = 0; }
+
+        leftBtn.addEventListener('touchstart', moveLeft);
+        leftBtn.addEventListener('touchend', stopMove);
+        leftBtn.addEventListener('mousedown', moveLeft);
+        leftBtn.addEventListener('mouseup', stopMove);
+        leftBtn.addEventListener('mouseleave', stopMove);
+
+        rightBtn.addEventListener('touchstart', moveRight);
+        rightBtn.addEventListener('touchend', stopMove);
+        rightBtn.addEventListener('mousedown', moveRight);
+        rightBtn.addEventListener('mouseup', stopMove);
+        rightBtn.addEventListener('mouseleave', stopMove);
+
+        // Initial Draw
+        draw();
+
+    </script>
+    <script>
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

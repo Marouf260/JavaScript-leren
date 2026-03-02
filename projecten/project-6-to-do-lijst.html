@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 6: To-Do Lijst - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #FFF3CD;
+            color: #856404;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 6: To-Do Lijst</h1>
+        <span class="level">Intermediate</span>
+        <p class="description">Maak een to-do lijst waar je items kunt toevoegen en verwijderen.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je een complete interactieve applicatie te bouwen. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>Complexe DOM structuren maken met meerdere elementen</li>
+                <li>Event listeners toevoegen aan dynamisch gemaakte elementen</li>
+                <li>Elementen verwijderen met remove()</li>
+                <li>Checkbox state gebruiken om styling te wijzigen</li>
+                <li>Functies organiseren voor herbruikbare code</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>element.remove()</strong> - Verwijdert een element volledig uit de DOM</li>
+                <li><strong>checkbox.checked</strong> - Boolean eigenschap die aangeeft of checkbox aangevinkt is</li>
+                <li><strong>cssText</strong> - Eigenschap om meerdere CSS styles tegelijk in te stellen</li>
+                <li><strong>Functies</strong> - Herbruikbare code blokken die je kunt aanroepen</li>
+                <li><strong>Event delegation</strong> - Event listeners op parent elementen voor dynamische kinderen</li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: Elementen selecteren en functie maken</h4>
+                <p>Selecteer elementen en maak een functie voor het toevoegen:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> input = document.<span class="function">getElementById</span>(<span class="string">'todo-input'</span>);
+<span class="keyword">const</span> addBtn = document.<span class="function">getElementById</span>(<span class="string">'todo-add'</span>);
+<span class="keyword">const</span> todoList = document.<span class="function">getElementById</span>(<span class="string">'todo-list'</span>);
+
+<span class="keyword">function</span> <span class="function">voegTodoToe</span>() {
+    <span class="comment">// Functie logica</span>
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Door een functie te maken kunnen we de logica herbruikbaar maken voor zowel klik als Enter toets.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: Li element maken met styling</h4>
+                <p>Maak een li element en stel styling in:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> li = document.<span class="function">createElement</span>(<span class="string">'li'</span>);
+li.style.cssText = <span class="string">'display: flex; align-items: center; padding: 0.5rem; margin: 0.5rem 0; background: #f0f0f0; border-radius: 4px;'</span>;</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>cssText</code> stelt meerdere CSS eigenschappen tegelijk in. Flexbox zorgt voor horizontale layout.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Checkbox maken en event listener</h4>
+                <p>Maak checkbox en luister naar change events:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> checkbox = document.<span class="function">createElement</span>(<span class="string">'input'</span>);
+checkbox.type = <span class="string">'checkbox'</span>;
+checkbox.<span class="function">addEventListener</span>(<span class="string">'change'</span>, <span class="keyword">function</span>() {
+    span.style.textDecoration = <span class="keyword">this</span>.checked ? <span class="string">'line-through'</span> : <span class="string">'none'</span>;
+    span.style.opacity = <span class="keyword">this</span>.checked ? <span class="string">'0.5'</span> : <span class="string">'1'</span>;
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> De ternary operator (<code>? :</code>) is een korte if/else. <code>this</code> verwijst naar het checkbox element.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 4: Verwijder knop maken</h4>
+                <p>Maak verwijder knop met remove() functionaliteit:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> deleteBtn = document.<span class="function">createElement</span>(<span class="string">'button'</span>);
+deleteBtn.textContent = <span class="string">'Verwijder'</span>;
+deleteBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    li.remove();
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>remove()</code> verwijdert het element en alle kinderen uit de DOM.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 5: Elementen samenvoegen</h4>
+                <p>Voeg alle elementen toe aan de li en li aan de lijst:</p>
+                <div class="code-example">
+                    <pre>li.<span class="function">appendChild</span>(checkbox);
+li.<span class="function">appendChild</span>(span);
+li.<span class="function">appendChild</span>(deleteBtn);
+todoList.<span class="function">appendChild</span>(li);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We bouwen de structuur op van binnen naar buiten: eerst kinderen aan li, dan li aan lijst.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="keyword">const</span> input = document.<span class="function">getElementById</span>(<span class="string">'todo-input'</span>);
+<span class="keyword">const</span> addBtn = document.<span class="function">getElementById</span>(<span class="string">'todo-add'</span>);
+<span class="keyword">const</span> todoList = document.<span class="function">getElementById</span>(<span class="string">'todo-list'</span>);
+
+<span class="keyword">function</span> <span class="function">voegTodoToe</span>() {
+    <span class="keyword">if</span> (input.value.trim() === <span class="string">''</span>) <span class="keyword">return</span>;
+    
+    <span class="keyword">const</span> li = document.<span class="function">createElement</span>(<span class="string">'li'</span>);
+    li.style.cssText = <span class="string">'display: flex; align-items: center; padding: 0.5rem; margin: 0.5rem 0; background: #f0f0f0; border-radius: 4px;'</span>;
+    
+    <span class="keyword">const</span> checkbox = document.<span class="function">createElement</span>(<span class="string">'input'</span>);
+    checkbox.type = <span class="string">'checkbox'</span>;
+    checkbox.style.marginRight = <span class="string">'0.5rem'</span>;
+    
+    <span class="keyword">const</span> span = document.<span class="function">createElement</span>(<span class="string">'span'</span>);
+    span.textContent = input.value;
+    span.style.flex = <span class="string">'1'</span>;
+    
+    <span class="keyword">const</span> deleteBtn = document.<span class="function">createElement</span>(<span class="string">'button'</span>);
+    deleteBtn.textContent = <span class="string">'Verwijder'</span>;
+    deleteBtn.style.cssText = <span class="string">'background: #e74c3c; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;'</span>;
+    
+    checkbox.<span class="function">addEventListener</span>(<span class="string">'change'</span>, <span class="keyword">function</span>() {
+        span.style.textDecoration = <span class="keyword">this</span>.checked ? <span class="string">'line-through'</span> : <span class="string">'none'</span>;
+        span.style.opacity = <span class="keyword">this</span>.checked ? <span class="string">'0.5'</span> : <span class="string">'1'</span>;
+    });
+    
+    deleteBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+        li.remove();
+    });
+    
+    li.<span class="function">appendChild</span>(checkbox);
+    li.<span class="function">appendChild</span>(span);
+    li.<span class="function">appendChild</span>(deleteBtn);
+    todoList.<span class="function">appendChild</span>(li);
+    
+    input.value = <span class="string">''</span>;
+}
+
+addBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, voegTodoToe);
+input.<span class="function">addEventListener</span>(<span class="string">'keypress'</span>, <span class="keyword">function</span>(e) {
+    <span class="keyword">if</span> (e.key === <span class="string">'Enter'</span>) <span class="function">voegTodoToe</span>();
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Maak een functie voegTodoToe() voor herbruikbare logica</li>
+                <li>Maak li element met flexbox styling</li>
+                <li>Maak checkbox met change event listener</li>
+                <li>Maak span voor tekst met flex: 1</li>
+                <li>Maak verwijder knop met remove() functionaliteit</li>
+                <li>Voeg alle elementen toe aan li en li aan lijst</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Functies:</strong> Gebruik functies om code herbruikbaar te maken en te organiseren</li>
+                <li><strong>Ternary operator:</strong> <code>condition ? value1 : value2</code> is korter dan if/else voor simpele waarden</li>
+                <li><strong>this keyword:</strong> In event listeners verwijst <code>this</code> naar het element dat het event heeft getriggerd</li>
+                <li><strong>remove() vs removeChild():</strong> <code>remove()</code> is moderner en eenvoudiger dan <code>parent.removeChild(child)</code></li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten elementen toe te voegen aan DOM</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Elementen bestaan maar zijn niet zichtbaar</span>
+<span class="keyword">const</span> li = document.<span class="function">createElement</span>(<span class="string">'li'</span>);
+<span class="keyword">const</span> checkbox = document.<span class="function">createElement</span>(<span class="string">'input'</span>);
+<span class="comment">// Vergeet appendChild!</span>
+
+<span class="comment">// ✅ GOED - Voeg elementen toe</span>
+li.<span class="function">appendChild</span>(checkbox);
+todoList.<span class="function">appendChild</span>(li);</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Verkeerde volgorde van appendChild</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Probeert kinderen toe te voegen voordat li bestaat</span>
+todoList.<span class="function">appendChild</span>(li);
+li.<span class="function">appendChild</span>(checkbox); <span class="comment">// Kan werken maar is verwarrend</span>
+
+<span class="comment">// ✅ GOED - Bouw eerst structuur, voeg dan toe</span>
+li.<span class="function">appendChild</span>(checkbox);
+li.<span class="function">appendChild</span>(span);
+todoList.<span class="function">appendChild</span>(li);</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Vergeten input type te zetten</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Standaard input type is 'text'</span>
+<span class="keyword">const</span> checkbox = document.<span class="function">createElement</span>(<span class="string">'input'</span>);
+<span class="comment">// Vergeet checkbox.type = 'checkbox'!</span>
+
+<span class="comment">// ✅ GOED - Zet type expliciet</span>
+<span class="keyword">const</span> checkbox = document.<span class="function">createElement</span>(<span class="string">'input'</span>);
+checkbox.type = <span class="string">'checkbox'</span>;</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Prioriteiten:</strong> Voeg prioriteit levels toe (hoog, medium, laag) met kleuren</li>
+                    <li><strong>Deadlines:</strong> Voeg datum selectie toe voor deadlines</li>
+                    <li><strong>Filteren:</strong> Filter todos op basis van completed status</li>
+                    <li><strong>LocalStorage:</strong> Bewaar todos zodat ze behouden blijven</li>
+                    <li><strong>Edit functionaliteit:</strong> Laat gebruikers todos bewerken door erop te klikken</li>
+                    <li><strong>Drag & drop:</strong> Herorden todos door ze te slepen</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: LocalStorage</h4>
+                <div class="code-example">
+                    <pre><span class="comment">// Bewaar todos</span>
+<span class="keyword">function</span> <span class="function">bewaarTodos</span>() {
+    <span class="keyword">const</span> todos = Array.from(todoList.children).map(li => ({
+        tekst: li.querySelector('span').textContent,
+        completed: li.querySelector('input').checked
+    }));
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+<span class="comment">// Laad todos bij pagina load</span>
+<span class="keyword">function</span> <span class="function">laadTodos</span>() {
+    <span class="keyword">const</span> todos = JSON.parse(localStorage.getItem('todos') || <span class="string">'[]'</span>);
+    todos.forEach(todo => {
+        <span class="comment">// Voeg todo toe...</span>
+    });
+}</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <input type="text" id="todo-input" placeholder="Nieuwe taak..." style="padding: 0.5rem; width: 250px; margin-right: 0.5rem;">
+            <button id="todo-add" class="demo-btn">Voeg Toe</button>
+            <ul id="todo-list" style="margin-top: 1rem; list-style: none; padding: 0;"></ul>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const input = document.getElementById('todo-input');
+        const addBtn = document.getElementById('todo-add');
+        const todoList = document.getElementById('todo-list');
+
+        function voegTodoToe() {
+            if (input.value.trim() === '') return;
+            
+            const li = document.createElement('li');
+            li.style.cssText = 'display: flex; align-items: center; padding: 0.5rem; margin: 0.5rem 0; background: #f0f0f0; border-radius: 4px;';
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.style.marginRight = '0.5rem';
+            
+            const span = document.createElement('span');
+            span.textContent = input.value;
+            span.style.flex = '1';
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Verwijder';
+            deleteBtn.style.cssText = 'background: #e74c3c; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;';
+            
+            checkbox.addEventListener('change', function() {
+                span.style.textDecoration = this.checked ? 'line-through' : 'none';
+                span.style.opacity = this.checked ? '0.5' : '1';
+            });
+            
+            deleteBtn.addEventListener('click', function() {
+                li.remove();
+            });
+            
+            li.appendChild(checkbox);
+            li.appendChild(span);
+            li.appendChild(deleteBtn);
+            todoList.appendChild(li);
+            
+            input.value = '';
+        }
+
+        addBtn.addEventListener('click', voegTodoToe);
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') voegTodoToe();
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 40: Custom Select Dropdown - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #cce5ff;
+            color: #004085;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+        .step-by-step {
+            background: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            color: #383d41;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #555;
+        }
+
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Setup Area */
+        .project-area {
+            background: #fff;
+            border-radius: 12px;
+            padding: 4rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            border: 2px dashed #667eea;
+        }
+
+        .select-menu {
+            width: 320px;
+            position: relative;
+        }
+
+        .select-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 55px;
+            background: white;
+            padding: 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ddd;
+            transition: 0.3s;
+        }
+
+        .select-btn span {
+            color: #333;
+        }
+
+        .select-btn i {
+            font-style: normal;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .select-menu.active .select-btn {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .select-menu.active .select-btn i {
+            transform: rotate(-180deg);
+        }
+
+        .options {
+            position: absolute;
+            top: 110%;
+            padding: 10px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            border: 1px solid #ddd;
+
+            /* Animatie verbergen ipv display node want fade out */
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: 0.3s ease;
+            z-index: 10;
+        }
+
+        .select-menu.active .options {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 2px;
+            transition: 0.2s;
+        }
+
+        .option:last-child {
+            margin-bottom: 0;
+        }
+
+        .option:hover {
+            background: #f0f4ff;
+        }
+
+        .option.selected {
+            background: #667eea;
+            color: white;
+        }
+
+        .option.selected .option-text {
+            color: white;
+        }
+
+        .option.selected i {
+            color: white;
+        }
+
+        .option i {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            font-style: normal;
+        }
+
+        .option-text {
+            font-size: 1rem;
+            color: #333;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project 40: Custom Select Dropdown</h1>
+        <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
+        <p class="description">Vervang de generieke browser <code>&lt;select&gt;</code> box door een op maat gemaakte,
+            styling-vriendelijke UI dropdown.</p>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+
+            <div class="step">
+                <h4>Stap 1: De HTML Structuur</h4>
+                <p>We bouwen de 'select' na met gewone <code>&lt;div&gt;</code> en <code>&lt;ul&gt;</code> elementen.
+                    Hierdoor hebben we volledige vrijheid over de CSS styling, in tegenstelling tot de standaard
+                    browser-gebonden <code>&lt;select&gt;</code> lijst.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">&lt;!-- De hoofd knop die de geselecteerde waarde toont --&gt;</span>
+&lt;div class="select-btn" id="select-btn"&gt;
+    &lt;span id="s-text"&gt;Selecteer je Social Media&lt;/span&gt;
+    &lt;i&gt;⬇️&lt;/i&gt;
+&lt;/div&gt;
+
+<span class="comment">&lt;!-- Het dropdown menu (standaard onzichtbaar via CSS opacity: 0) --&gt;</span>
+&lt;ul class="options"&gt;
+    &lt;li class="option"&gt;...&lt;/li&gt;
+&lt;/ul&gt;</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 2: Openen en Sluiten</h4>
+                <p>Als we op de hoofdknop klikken, willen we het menu tonen of verbergen (togglen). Ook handelen we de
+                    kliks op de individuele opties direct af.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Toggle het CSS 'active' class (toont dropdown & draait pijltje)</span>
+selectBtn.addEventListener(<span class="string">'click'</span>, () => {
+    selectMenu.classList.<span class="function">toggle</span>(<span class="string">'active'</span>);
+});
+
+<span class="comment">// Voor elke lay-out optie in het lijstje...</span>
+options.<span class="function">forEach</span>(option => {
+    option.addEventListener(<span class="string">'click'</span>, () => {
+        <span class="comment">// 1. Haal de tekst op uit de span in deze li</span>
+        <span class="keyword">let</span> geselecteerdeTekst = option.<span class="function">querySelector</span>(<span class="string">'.option-text'</span>).innerText;
+        <span class="comment">// 2. Plak tekst in de hoofdknop!</span>
+        hoofdKnopSpantag.innerText = geselecteerdeTekst;
+        <span class="comment">// 3. Klap menu dicht!</span>
+        selectMenu.classList.<span class="function">remove</span>(<span class="string">'active'</span>);
+    });
+});</pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: CSS Class Toggling (Optioneel: Highlights)</h4>
+                <p>Naast de tekst vervangen, wil je vaak in de UI laten zien 'dit item in de lijst is the active
+                    selection'. Dat doen we door CSS classes zoals <code>.selected</code> te togglen.</p>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// Verwijder eerst van ALLE opties de 'selected' class </span>
+options.<span class="function">forEach</span>(opt => opt.classList.<span class="function">remove</span>(<span class="string">'selected'</span>));
+
+<span class="comment">// Voeg daarna toe aan de specifieke optie waarop geklikt is! </span>
+option.classList.<span class="function">add</span>(<span class="string">'selected'</span>);</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Buiten de Dropdown Sluiten)</h3>
+            <pre><span class="comment">// 🎯 PRO-TIP: De gebruiker verwacht dat een dropdown dichtgaat als hij/zij ergens ANDERS klikt.</span>
+
+<span class="comment">// Luister naar ELKE muis-klik op het complete document</span>
+document.<span class="function">addEventListener</span>(<span class="string">'click'</span>, (event) => {
+    <span class="comment">// Als doel van de "click" NIET in ons "-custom-select-" element zit...</span>
+    <span class="keyword">if</span> (!selectMenu.<span class="function">contains</span>(event.target)) {
+        <span class="comment">// Klap de dropdown in!</span>
+        selectMenu.classList.<span class="function">remove</span>(<span class="string">'active'</span>);
+    }
+});</pre>
+        </div>
+
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Jouw Opdracht:</h3>
+            <ul>
+                <li>Klik op "Selecteer je Social Media" in het witte vak.</li>
+                <li>Kies een optie en zie hoe deze de waarde aanneemt en het menu sluit.</li>
+                <li>Open het menu nog eens, en klik vervolgens op een willekeurige zin *buiten* the Select Box
+                    (bijvoorbeeld ergens in deze tekst). Hierdoor klapt hij netjes dicht!</li>
+            </ul>
+        </div>
+
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>Verborgen Inputs:</strong> Als je deze custom select wilt gebruiken in een ECHT formulier
+                    dat naar een server verzonden wordt, moet je er een onzichtbare input aan toevoegen. Maak een
+                    <code>&lt;input type="hidden" name="social"&gt;</code> en werk in Javascript telkens diens
+                    <code>value</code> bij als de gebruiker een item kiest. Clicks alleen worden niet meegestuurd in
+                    formulieren!</li>
+            </ul>
+        </div>
+
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Event Bubbling</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ LET OP - De 'outside-click' listener reageert op elke klik in het document. Verzeker jezelf ervan dat je klik op de select knop niet dubbel triggert via Event Bubbling! In dit specifieke script lost de `contains` techniek dat elegant voor je op. Als je echter met `stopPropagation()` werkt kan dat de the outside-click listener mogelijk breken!</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <ul>
+                    <li><strong>Voeg een Zoekbalk toe:</strong> Als je een hele lange lijst met keuzes hebt (zoals alle
+                        landen ter wereld), voeg dan een <code>&lt;input type="text"&gt;</code> toe in het menu om er
+                        doorheen te kunnen zoeken (zoals je deed in Project 39!).</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+
+        <!-- Demo Area -->
+        <div class="project-area">
+
+            <div class="select-menu" id="custom-select">
+                <div class="select-btn" id="select-btn">
+                    <span id="s-text">Selecteer je Social Media</span>
+                    <i>⬇️</i>
+                </div>
+
+                <!-- Het Menu Zelf -->
+                <ul class="options">
+                    <li class="option" data-val="Instagram">
+                        <i>📸</i>
+                        <span class="option-text">Instagram</span>
+                    </li>
+                    <li class="option" data-val="Twitter">
+                        <i>🐦</i>
+                        <span class="option-text">Twitter (X)</span>
+                    </li>
+                    <li class="option" data-val="LinkedIn">
+                        <i>💼</i>
+                        <span class="option-text">LinkedIn</span>
+                    </li>
+                    <li class="option" data-val="TikTok">
+                        <i>🎵</i>
+                        <span class="option-text">TikTok</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const selectMenu = document.getElementById('custom-select');
+        const selectBtn = document.getElementById('select-btn');
+        const options = document.querySelectorAll('.option');
+        const sText = document.getElementById('s-text');
+
+        // Toggle dropdown openen en sluiten op knop press
+        selectBtn.addEventListener('click', () => {
+            selectMenu.classList.toggle('active');
+        });
+
+        // Click on List Items
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                // 1. the value ophalen en text vernieuwen in button
+                let selectedOption = option.querySelector('.option-text').innerText;
+                sText.innerText = selectedOption;
+
+                // 2. Select CSS classes correct opgeven
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+
+                // 3. menu DICHTKLAPPEN door active er af the ritsen
+                selectMenu.classList.remove('active');
+            });
+        });
+
+        // The Magic! "Outside click" to close menu.
+        document.addEventListener('click', (e) => {
+            if (!selectMenu.contains(e.target)) {
+                selectMenu.classList.remove('active');
+            }
+        });
+
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 11: Image Slider - DOM Projecten</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #FFE5B4;
+            color: #CC6600;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .project-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .explanation h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .concepts {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .concepts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .concepts ul {
+            margin-left: 1.5rem;
+            color: #0c5460;
+        }
+        
+        .concepts li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .tips {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tips h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+        
+        .tips ul {
+            margin-left: 1.5rem;
+            color: #155724;
+        }
+        
+        .tips li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-by-step h3 {
+            color: #721c24;
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(114, 28, 36, 0.2);
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #721c24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: #721c24;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .expand-btn:hover {
+            background: #5568d3;
+        }
+        
+        .expandable {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .expandable.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project 11: Image Slider</h1>
+        <span class="level">Advanced</span>
+        <p class="description">Maak een image slider met vorige/volgende knoppen.</p>
+        
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je werken met arrays, animaties en timing functies. Je leert:</p>
+            <ul style="margin-left: 1.5rem; color: #856404;">
+                <li>Arrays gebruiken om meerdere images op te slaan</li>
+                <li>setTimeout gebruiken voor animatie timing</li>
+                <li>CSS transitions gebruiken voor smooth effecten</li>
+                <li>Modulo operator voor cyclische navigatie</li>
+                <li>Functies maken voor herbruikbare code</li>
+            </ul>
+        </div>
+        
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>setTimeout()</strong> - Voert code uit na een vertraging (in milliseconden)</li>
+                <li><strong>CSS transitions</strong> - Animaties tussen CSS waarden</li>
+                <li><strong>opacity</strong> - CSS eigenschap voor transparantie (0-1)</li>
+                <li><strong>Modulo met negatieve getallen</strong> - (index - 1 + length) % length voor achteruit</li>
+                <li><strong>Arrow functions</strong> - Korte functie syntax: <code>() => {}</code></li>
+            </ul>
+        </div>
+        
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            
+            <div class="step">
+                <h4>Stap 1: Array met images en state</h4>
+                <p>Maak array met image URLs en index variabele:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> images = [
+    <span class="string">'https://via.placeholder.com/500x300/3498db/ffffff?text=Image+1'</span>,
+    <span class="string">'https://via.placeholder.com/500x300/e74c3c/ffffff?text=Image+2'</span>,
+    <span class="string">'https://via.placeholder.com/500x300/2ecc71/ffffff?text=Image+3'</span>,
+    <span class="string">'https://via.placeholder.com/500x300/f39c12/ffffff?text=Image+4'</span>
+];
+<span class="keyword">let</span> currentIndex = <span class="string">0</span>;</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Array bevat alle image URLs. currentIndex houdt bij welke image momenteel getoond wordt.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 2: showImage functie met fade effect</h4>
+                <p>Maak functie die image toont met fade animatie:</p>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">showImage</span>(index) {
+    img.style.opacity = <span class="string">'0'</span>;
+    <span class="function">setTimeout</span>(() => {
+        img.src = images[index];
+        img.style.opacity = <span class="string">'1'</span>;
+    }, <span class="string">200</span>);
+    img.style.transition = <span class="string">'opacity 0.3s'</span>;
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Eerst fade out (opacity 0), wacht 200ms, verander src, dan fade in. Transition zorgt voor smooth animatie.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 3: Vorige knop met modulo</h4>
+                <p>Gebruik modulo voor cyclische navigatie achteruit:</p>
+                <div class="code-example">
+                    <pre>prevBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    currentIndex = (currentIndex - <span class="string">1</span> + images.length) % images.length;
+    <span class="function">showImage</span>(currentIndex);
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> <code>(currentIndex - 1 + images.length)</code> zorgt dat negatieve getallen positief worden voordat modulo wordt toegepast.</p>
+            </div>
+            
+            <div class="step">
+                <h4>Stap 4: Volgende knop</h4>
+                <p>Gebruik normale modulo voor vooruit navigatie:</p>
+                <div class="code-example">
+                    <pre>nextBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    currentIndex = (currentIndex + <span class="string">1</span>) % images.length;
+    <span class="function">showImage</span>(currentIndex);
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Bij laatste image (index 3) wordt <code>(3 + 1) % 4 = 0</code>, dus gaat terug naar eerste.</p>
+            </div>
+        </div>
+        
+        <!-- Code Voorbeeld -->
+        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+            <pre><span class="keyword">const</span> images = [
+    <span class="string">'https://via.placeholder.com/500x300/3498db/ffffff?text=Image+1'</span>,
+    <span class="string">'https://via.placeholder.com/500x300/e74c3c/ffffff?text=Image+2'</span>,
+    <span class="string">'https://via.placeholder.com/500x300/2ecc71/ffffff?text=Image+3'</span>,
+    <span class="string">'https://via.placeholder.com/500x300/f39c12/ffffff?text=Image+4'</span>
+];
+<span class="keyword">let</span> currentIndex = <span class="string">0</span>;
+<span class="keyword">const</span> img = document.<span class="function">getElementById</span>(<span class="string">'slider-image'</span>);
+<span class="keyword">const</span> prevBtn = document.<span class="function">getElementById</span>(<span class="string">'prev-btn'</span>);
+<span class="keyword">const</span> nextBtn = document.<span class="function">getElementById</span>(<span class="string">'next-btn'</span>);
+
+<span class="keyword">function</span> <span class="function">showImage</span>(index) {
+    img.style.opacity = <span class="string">'0'</span>;
+    <span class="function">setTimeout</span>(() => {
+        img.src = images[index];
+        img.style.opacity = <span class="string">'1'</span>;
+    }, <span class="string">200</span>);
+    img.style.transition = <span class="string">'opacity 0.3s'</span>;
+}
+
+prevBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    currentIndex = (currentIndex - <span class="string">1</span> + images.length) % images.length;
+    <span class="function">showImage</span>(currentIndex);
+});
+
+nextBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    currentIndex = (currentIndex + <span class="string">1</span>) % images.length;
+    <span class="function">showImage</span>(currentIndex);
+});</pre>
+        </div>
+        
+        <!-- Instructies -->
+        <div class="instructions">
+            <h3>✅ Instructies:</h3>
+            <ul>
+                <li>Maak array met image URLs</li>
+                <li>Maak currentIndex variabele voor state</li>
+                <li>Maak showImage functie met fade animatie</li>
+                <li>Gebruik setTimeout voor timing</li>
+                <li>Gebruik modulo voor cyclische navigatie</li>
+            </ul>
+        </div>
+        
+        <!-- Tips -->
+        <div class="tips">
+            <h3>💡 Tips & Tricks</h3>
+            <ul>
+                <li><strong>setTimeout timing:</strong> 200ms is goed voor fade, pas aan naar voorkeur</li>
+                <li><strong>Transition:</strong> Zet transition op element, niet in setTimeout</li>
+                <li><strong>Modulo uitleg:</strong> <code>(index - 1 + length) % length</code> werkt voor negatieve getallen</li>
+                <li><strong>Preload images:</strong> Preload images voor snellere transitions</li>
+            </ul>
+        </div>
+        
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: #f8d7da;">
+            <h3>⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step">
+                <h4>Fout 1: Vergeten transition te zetten</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Geen animatie, abrupte wijziging</span>
+img.style.opacity = <span class="string">'0'</span>;
+img.src = images[index]; <span class="comment">// Vergeet transition!</span>
+
+<span class="comment">// ✅ GOED - Zet transition</span>
+img.style.transition = <span class="string">'opacity 0.3s'</span>;
+img.style.opacity = <span class="string">'0'</span>;</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 2: Verkeerde modulo voor achteruit</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Negatieve modulo werkt niet zoals verwacht</span>
+currentIndex = (currentIndex - <span class="string">1</span>) % images.length; <span class="comment">// Bij 0 wordt -1!</span>
+
+<span class="comment">// ✅ GOED - Voeg length toe voor positief resultaat</span>
+currentIndex = (currentIndex - <span class="string">1</span> + images.length) % images.length;</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Fout 3: Vergeten src te wijzigen</h4>
+                <div class="code-example" style="background: #fff;">
+                    <pre><span class="comment">// ❌ FOUT - Alleen opacity wijzigt, image blijft hetzelfde</span>
+img.style.opacity = <span class="string">'1'</span>; <span class="comment">// Vergeet img.src!</span>
+
+<span class="comment">// ✅ GOED - Wijzig src in setTimeout</span>
+<span class="function">setTimeout</span>(() => {
+    img.src = images[index];
+    img.style.opacity = <span class="string">'1'</span>;
+}, <span class="string">200</span>);</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uitbreidingen -->
+        <div class="expandable" id="expansions">
+            <div class="tips">
+                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+                <p>Probeer deze uitdagingen om je vaardigheden te verbeteren:</p>
+                <ul>
+                    <li><strong>Dots indicator:</strong> Voeg dots toe die huidige image tonen</li>
+                    <li><strong>Auto-play:</strong> Laat slider automatisch doorlopen</li>
+                    <li><strong>Keyboard navigatie:</strong> Gebruik pijltjestoetsen</li>
+                    <li><strong>Touch gestures:</strong> Voeg swipe functionaliteit toe</li>
+                    <li><strong>Thumbnail gallery:</strong> Voeg kleine thumbnails toe onder slider</li>
+                </ul>
+                
+                <h4 style="margin-top: 1rem;">Voorbeeld: Auto-play</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">let</span> autoPlayInterval;
+
+<span class="keyword">function</span> <span class="function">startAutoPlay</span>() {
+    autoPlayInterval = <span class="function">setInterval</span>(() => {
+        currentIndex = (currentIndex + <span class="string">1</span>) % images.length;
+        <span class="function">showImage</span>(currentIndex);
+    }, <span class="string">3000</span>); <span class="comment">// Elke 3 seconden</span>
+}
+
+<span class="keyword">function</span> <span class="function">stopAutoPlay</span>() {
+    <span class="function">clearInterval</span>(autoPlayInterval);
+}
+
+<span class="function">startAutoPlay</span>();</pre>
+                </div>
+            </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        
+        <div class="project-area">
+            <div id="slider-container" style="position: relative; width: 100%; max-width: 500px; margin: 0 auto;">
+                <img id="slider-image" src="https://via.placeholder.com/500x300/3498db/ffffff?text=Image+1" style="width: 100%; border-radius: 8px;">
+                <button id="prev-btn" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">❮</button>
+                <button id="next-btn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">❯</button>
+            </div>
+        </div>
+        
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+    </div>
+
+    <script>
+        const images = [
+            'https://via.placeholder.com/500x300/3498db/ffffff?text=Image+1',
+            'https://via.placeholder.com/500x300/e74c3c/ffffff?text=Image+2',
+            'https://via.placeholder.com/500x300/2ecc71/ffffff?text=Image+3',
+            'https://via.placeholder.com/500x300/f39c12/ffffff?text=Image+4'
+        ];
+        let currentIndex = 0;
+        const img = document.getElementById('slider-image');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function showImage(index) {
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = images[index];
+                img.style.opacity = '1';
+            }, 200);
+            img.style.transition = 'opacity 0.3s';
+        }
+
+        prevBtn.addEventListener('click', function() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showImage(currentIndex);
+        });
+
+        nextBtn.addEventListener('click', function() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        });
+        
+        // Functie voor uitbreidingen toggle
+        function toggleExpansions() {
+            const expansions = document.getElementById('expansions');
+            const btn = event.target;
+            if (expansions.classList.contains('show')) {
+                expansions.classList.remove('show');
+                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            } else {
+                expansions.classList.add('show');
+                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+            }
+        }
+    </script>
+</body>
+</html>
