@@ -11,6 +11,12 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Highlight.js syntax highlighting -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <!-- CodeMirror editor -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
 </head>
 
 <body>
@@ -27,8 +33,8 @@
                 <li><a href="#advanced">Geavanceerd</a></li>
                 <li><a href="#dom-section">DOM</a></li>
                 <li><a href="#examples">Voorbeelden</a></li>
-                <li><a href="#projects">Projecten</a></li>
                 <li><a href="#exercises">Oefeningen</a></li>
+                <li><a href="#projects">Projecten</a></li>
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -451,46 +457,92 @@ element.addEventListener('click', function(event) {
         <div class="container">
             <h2 class="section-title">Oefeningen</h2>
             <div class="exercises-grid">
+
                 <div class="exercise-card">
-                    <h3>Oefening 1: Variabelen</h3>
-                    <p>Maak drie variabelen: naam (string), leeftijd (number), en isStudent (boolean).</p>
-                    <div class="code-editor">
-                        <textarea id="exercise1" placeholder="Schrijf je code hier...">// Je code hier
+                    <div class="exercise-header">
+                        <div class="exercise-badge">01</div>
+                        <div>
+                            <h3>Oefening 1: Variabelen</h3>
+                            <p>Maak drie variabelen: naam (string), leeftijd (number), en isStudent (boolean).</p>
+                        </div>
+                    </div>
+                    <div class="code-editor-wrap">
+                        <div class="editor-titlebar">
+                            <div class="editor-dots"><span></span><span></span><span></span></div>
+                            <span class="editor-filename">oefening1.js</span>
+                            <span class="editor-lang-badge">JS</span>
+                        </div>
+                        <textarea id="exercise1">// Je code hier
 let naam = 
 let leeftijd = 
 let isStudent = 
 
 console.log(naam, leeftijd, isStudent);</textarea>
+                        <div class="editor-footer">
+                            <div class="editor-status"><span class="status-dot"></span> Ready</div>
+                            <div class="editor-cursor-info" id="cursor-info-1">Ln 1, Col 1</div>
+                        </div>
                     </div>
-                    <button class="btn-run" onclick="runExercise(1)">▶ Run Code</button>
+                    <button class="btn-run" onclick="runExercise(1)">▶&nbsp; Run Code</button>
                     <div class="output" id="output1"></div>
                 </div>
+
                 <div class="exercise-card">
-                    <h3>Oefening 2: Functions</h3>
-                    <p>Maak een functie die twee getallen optelt en het resultaat teruggeeft.</p>
-                    <div class="code-editor">
-                        <textarea id="exercise2" placeholder="Schrijf je code hier...">// Maak een functie genaamd 'optellen'
+                    <div class="exercise-header">
+                        <div class="exercise-badge">02</div>
+                        <div>
+                            <h3>Oefening 2: Functions</h3>
+                            <p>Maak een functie die twee getallen optelt en het resultaat teruggeeft.</p>
+                        </div>
+                    </div>
+                    <div class="code-editor-wrap">
+                        <div class="editor-titlebar">
+                            <div class="editor-dots"><span></span><span></span><span></span></div>
+                            <span class="editor-filename">oefening2.js</span>
+                            <span class="editor-lang-badge">JS</span>
+                        </div>
+                        <textarea id="exercise2">// Maak een functie genaamd 'optellen'
 function optellen(a, b) {
     // Je code hier
 }
 
 console.log(optellen(5, 3)); // Moet 8 uitprinten</textarea>
+                        <div class="editor-footer">
+                            <div class="editor-status"><span class="status-dot"></span> Ready</div>
+                            <div class="editor-cursor-info" id="cursor-info-2">Ln 1, Col 1</div>
+                        </div>
                     </div>
-                    <button class="btn-run" onclick="runExercise(2)">▶ Run Code</button>
+                    <button class="btn-run" onclick="runExercise(2)">▶&nbsp; Run Code</button>
                     <div class="output" id="output2"></div>
                 </div>
+
                 <div class="exercise-card">
-                    <h3>Oefening 3: Loops</h3>
-                    <p>Gebruik een for loop om de getallen 1 tot 10 uit te printen.</p>
-                    <div class="code-editor">
-                        <textarea id="exercise3" placeholder="Schrijf je code hier...">// Gebruik een for loop
+                    <div class="exercise-header">
+                        <div class="exercise-badge">03</div>
+                        <div>
+                            <h3>Oefening 3: Loops</h3>
+                            <p>Gebruik een for loop om de getallen 1 tot 10 uit te printen.</p>
+                        </div>
+                    </div>
+                    <div class="code-editor-wrap">
+                        <div class="editor-titlebar">
+                            <div class="editor-dots"><span></span><span></span><span></span></div>
+                            <span class="editor-filename">oefening3.js</span>
+                            <span class="editor-lang-badge">JS</span>
+                        </div>
+                        <textarea id="exercise3">// Gebruik een for loop
 for (let i = 1; i <= 10; i++) {
     // Je code hier
 }</textarea>
+                        <div class="editor-footer">
+                            <div class="editor-status"><span class="status-dot"></span> Ready</div>
+                            <div class="editor-cursor-info" id="cursor-info-3">Ln 1, Col 1</div>
+                        </div>
                     </div>
-                    <button class="btn-run" onclick="runExercise(3)">▶ Run Code</button>
+                    <button class="btn-run" onclick="runExercise(3)">▶&nbsp; Run Code</button>
                     <div class="output" id="output3"></div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -734,12 +786,12 @@ for (let i = 1; i <= 10; i++) {
                     <div class="project-header">
                         <span class="project-number">21</span>
                         <span class="project-level expert"
-                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Master</span>
                     </div>
                     <h3>Weer Applicatie</h3>
                     <p>Bouw een prachtige weer app met dynamische glassmorphism achtergronden en api ophalen.</p>
                     <a href="projecten/project-21-weer-app.html" class="btn-project"
-                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
                 </div>
 
@@ -747,12 +799,12 @@ for (let i = 1; i <= 10; i++) {
                     <div class="project-header">
                         <span class="project-number">22</span>
                         <span class="project-level expert"
-                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Master</span>
                     </div>
                     <h3>Neumorphic Rekenmachine</h3>
                     <p>Maak een geavanceerde calculator met een indrukwekkend neumorphic design patroon.</p>
                     <a href="projecten/project-22-rekenmachine.html" class="btn-project"
-                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
                 </div>
 
@@ -760,12 +812,12 @@ for (let i = 1; i <= 10; i++) {
                     <div class="project-header">
                         <span class="project-number">23</span>
                         <span class="project-level expert"
-                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Master</span>
                     </div>
                     <h3>Quiz Applicatie</h3>
                     <p>Een interactieve quiz met vloeiende animaties, timer en een mooi resultaten dashboard.</p>
                     <a href="projecten/project-23-quiz-applicatie.html" class="btn-project"
-                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
                 </div>
 
@@ -773,12 +825,12 @@ for (let i = 1; i <= 10; i++) {
                     <div class="project-header">
                         <span class="project-number">24</span>
                         <span class="project-level expert"
-                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Master</span>
                     </div>
                     <h3>Recepten Zoeker</h3>
                     <p>Een uitgebreide receptenzoeker met mooie kaarten-UI, dynamisch filteren en animaties.</p>
                     <a href="projecten/project-24-recepten-zoeker.html" class="btn-project"
-                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
                 </div>
 
@@ -786,12 +838,12 @@ for (let i = 1; i <= 10; i++) {
                     <div class="project-header">
                         <span class="project-number">25</span>
                         <span class="project-level expert"
-                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Master</span>
                     </div>
                     <h3>Uitgaven Tracker</h3>
                     <p>Beheer je budget met een gestroomlijnde UI, vloeiende updates en interactieve elementen.</p>
                     <a href="projecten/project-25-uitgaven-tracker.html" class="btn-project"
-                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
                 </div>
 
@@ -799,12 +851,12 @@ for (let i = 1; i <= 10; i++) {
                     <div class="project-header">
                         <span class="project-number">26</span>
                         <span class="project-level expert"
-                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Master</span>
                     </div>
                     <h3>Muziek Speler</h3>
                     <p>Een adembenemende muziekspeler interface met levendige album art en vloeiende controls.</p>
                     <a href="projecten/project-26-muziek-speler.html" class="btn-project"
-                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
                 </div>
 
@@ -812,12 +864,12 @@ for (let i = 1; i <= 10; i++) {
                     <div class="project-header">
                         <span class="project-number">27</span>
                         <span class="project-level expert"
-                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Master</span>
                     </div>
                     <h3>Typ Snelheid Test</h3>
                     <p>Test je WPM met realtime feedback via een high-end, cyber-geïnspireerde neon interface.</p>
                     <a href="projecten/project-27-typ-snelheid-test.html" class="btn-project"
-                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
                 </div>
 
@@ -825,13 +877,13 @@ for (let i = 1; i <= 10; i++) {
                     <div class="project-header">
                         <span class="project-number">28</span>
                         <span class="project-level expert"
-                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Master</span>
                     </div>
                     <h3>3D Geheugenspel</h3>
-                    <p>Een memory card game met verbluffende 3D flip-animaties en een responsief en kleurrijk design.
+                    <p>Een memory card game met verbluffende 3D flip-animaties and een responsief en kleurrijk design.
                     </p>
                     <a href="projecten/project-28-geheugenspel.html" class="btn-project"
-                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
                 </div>
 
@@ -839,12 +891,12 @@ for (let i = 1; i <= 10; i++) {
                     <div class="project-header">
                         <span class="project-number">29</span>
                         <span class="project-level expert"
-                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Master</span>
                     </div>
                     <h3>E-commerce Cart</h3>
                     <p>Bouw een prachtige webshop interface met een elegante side-cart en smooth overgangen.</p>
                     <a href="projecten/project-29-ecommerce-winkelwagen.html" class="btn-project"
-                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
                 </div>
 
@@ -852,12 +904,12 @@ for (let i = 1; i <= 10; i++) {
                     <div class="project-header">
                         <span class="project-number">30</span>
                         <span class="project-level expert"
-                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B);">Master</span>
+                            style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Master</span>
                     </div>
                     <h3>Data Dashboard</h3>
                     <p>Een state-of-the-art dashboard met geanimeerde statistieken en donkere modus thema.</p>
                     <a href="projecten/project-30-dashboard-grafieken.html" class="btn-project"
-                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none;">Start
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
                 </div>
 
@@ -869,8 +921,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
                     </div>
-                    <h3>Project 31</h3>
-                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <h3>Parallax Scrolling</h3>
+                    <p>Creëer diepte op je pagina met interactieve parallax-scrolling effecten.</p>
                     <a href="projecten/project-31.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
@@ -881,8 +933,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
                     </div>
-                    <h3>Project 32</h3>
-                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <h3>Custom Video Player</h3>
+                    <p>Bouw je eigen video interface met custom controls en progress bar.</p>
                     <a href="projecten/project-32.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
@@ -893,8 +945,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
                     </div>
-                    <h3>Project 33</h3>
-                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <h3>3D Tilt Hover Kaarten</h3>
+                    <p>Maak moderne kaarten die meebewegen met de muiscursor.</p>
                     <a href="projecten/project-33.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
@@ -905,8 +957,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
                     </div>
-                    <h3>Project 34</h3>
-                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <h3>Multi-Step Formulier</h3>
+                    <p>Verdeel een lang formulier in overzichtelijke, geanimeerde stappen.</p>
                     <a href="projecten/project-34.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
@@ -917,8 +969,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
                     </div>
-                    <h3>Project 35</h3>
-                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <h3>Circular Progress</h3>
+                    <p>Visualiseer voortgang met een geanimeerde cirkelvormige indicator.</p>
                     <a href="projecten/project-35.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
@@ -929,8 +981,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
                     </div>
-                    <h3>Project 36</h3>
-                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <h3>Wachtwoord Sterkte Meter</h3>
+                    <p>Geef real-time feedback op de veiligheid van een gekozen wachtwoord.</p>
                     <a href="projecten/project-36.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
@@ -941,8 +993,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
                     </div>
-                    <h3>Project 37</h3>
-                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <h3>Kanban Board</h3>
+                    <p>Beheer taken in kolommen met drag-and-drop functionaliteit.</p>
                     <a href="projecten/project-37.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
@@ -953,8 +1005,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
                     </div>
-                    <h3>Project 38</h3>
-                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <h3>Toast Notificaties</h3>
+                    <p>Toon kleine, tijdelijke meldingen rechtsboven in je scherm.</p>
                     <a href="projecten/project-38.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
@@ -965,8 +1017,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
                     </div>
-                    <h3>Project 39</h3>
-                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <h3>Zoek Autocomplete</h3>
+                    <p>Geef suggesties terwijl je typt in een zoekveld met filter logica.</p>
                     <a href="projecten/project-39.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
@@ -977,8 +1029,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white; border: none;">Advanced</span>
                     </div>
-                    <h3>Project 40</h3>
-                    <p>Geavanceerde DOM & CSS Animaties.</p>
+                    <h3>Custom Select Dropdown</h3>
+                    <p>Maak een volledig aanpasbaar keuzemenu met CSS en JS styling.</p>
                     <a href="projecten/project-40.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #FF6B6B, #C0392B); border: none; color: white;">Start
                         Project</a>
@@ -990,8 +1042,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
                             Logic</span>
                     </div>
-                    <h3>Project 41</h3>
-                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <h3>Wachtwoord Generator</h3>
+                    <p>Genereer veilige wachtwoorden met aanpasbare criteria en lengte.</p>
                     <a href="projecten/project-41.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
                         Project</a>
@@ -1003,8 +1055,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
                             Logic</span>
                     </div>
-                    <h3>Project 42</h3>
-                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <h3>RegEx Highlighter</h3>
+                    <p>Visualiseer en test RegEx patronen in real-time op tekst input.</p>
                     <a href="projecten/project-42.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
                         Project</a>
@@ -1016,8 +1068,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
                             Logic</span>
                     </div>
-                    <h3>Project 43</h3>
-                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <h3>Sorteer Visualizer</h3>
+                    <p>Zie hoe algoritmes zoals Bubble Sort data ordenen met animaties.</p>
                     <a href="projecten/project-43.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
                         Project</a>
@@ -1029,8 +1081,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
                             Logic</span>
                     </div>
-                    <h3>Project 44</h3>
-                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <h3>Stopwatch & Laps</h3>
+                    <p>Meet tijd met uiterste precisie en sla rondetijden direct op.</p>
                     <a href="projecten/project-44.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
                         Project</a>
@@ -1042,8 +1094,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
                             Logic</span>
                     </div>
-                    <h3>Project 45</h3>
-                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <h3>Tekst Analyse Tool</h3>
+                    <p>Analyseer tekststatistieken zoals woordenaantal, leestijd en letterfrequentie.</p>
                     <a href="projecten/project-45.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
                         Project</a>
@@ -1055,8 +1107,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
                             Logic</span>
                     </div>
-                    <h3>Project 46</h3>
-                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <h3>Quote & Color Generator</h3>
+                    <p>Genereer willekeurige quotes en bijpassende kleurencombinaties.</p>
                     <a href="projecten/project-46.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
                         Project</a>
@@ -1068,8 +1120,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
                             Logic</span>
                     </div>
-                    <h3>Project 47</h3>
-                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <h3>Valuta Omrekenaar (Mock API)</h3>
+                    <p>Reken verschillende valuta om met gesimuleerde wisselkoersen.</p>
                     <a href="projecten/project-47.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
                         Project</a>
@@ -1081,8 +1133,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
                             Logic</span>
                     </div>
-                    <h3>Project 48</h3>
-                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <h3>Simpele Markdown Previewer</h3>
+                    <p>Zet simpele Markdown syntaxis real-time om in HTML elementen.</p>
                     <a href="projecten/project-48.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
                         Project</a>
@@ -1094,8 +1146,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
                             Logic</span>
                     </div>
-                    <h3>Project 49</h3>
-                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <h3>Notitie App (Local Storage)</h3>
+                    <p>Sla notities lokaal op in je browser zodat ze bewaard blijven.</p>
                     <a href="projecten/project-49.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
                         Project</a>
@@ -1107,8 +1159,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none;">Data
                             Logic</span>
                     </div>
-                    <h3>Project 50</h3>
-                    <p>Werken met complexe arrays, logica en algoritmes.</p>
+                    <h3>Interactieve Paginering</h3>
+                    <p>Navigeer door grote datasets met een dynamisch pagineringssysteem.</p>
                     <a href="projecten/project-50.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white;">Start
                         Project</a>
@@ -1120,8 +1172,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
                             Dev</span>
                     </div>
-                    <h3>Project 51</h3>
-                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <h3>Boter, Kaas en Eieren</h3>
+                    <p>De klassieke Tic-Tac-Toe game met win-logica en resetfunctie.</p>
                     <a href="projecten/project-51.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
                         Project</a>
@@ -1133,8 +1185,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
                             Dev</span>
                     </div>
-                    <h3>Project 52</h3>
-                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <h3>Memory Card Game</h3>
+                    <p>Train je geheugen door alle paren te vinden in dit interactieve kaartspel.</p>
                     <a href="projecten/project-52.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
                         Project</a>
@@ -1146,8 +1198,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
                             Dev</span>
                     </div>
-                    <h3>Project 53</h3>
-                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <h3>Reactie Timer</h3>
+                    <p>Test je reflexen met deze nauwkeurige reactiesnelheid tester.</p>
                     <a href="projecten/project-53.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
                         Project</a>
@@ -1159,8 +1211,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
                             Dev</span>
                     </div>
-                    <h3>Project 54</h3>
-                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <h3>Typing Speed Test</h3>
+                    <p>Meet je woorden per minuut (WPM) met deze real-time type-tester.</p>
                     <a href="projecten/project-54.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
                         Project</a>
@@ -1172,8 +1224,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
                             Dev</span>
                     </div>
-                    <h3>Project 55</h3>
-                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <h3>Snake (DOM Grid)</h3>
+                    <p>Bestuur de slang en verzamel voedsel in dit raster-gebaseerde spel.</p>
                     <a href="projecten/project-55.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
                         Project</a>
@@ -1185,8 +1237,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
                             Dev</span>
                     </div>
-                    <h3>Project 56</h3>
-                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <h3>Whack-a-Mole</h3>
+                    <p>Sla de mollen zo snel mogelijk neer in dit klassieke arcade-spel.</p>
                     <a href="projecten/project-56.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
                         Project</a>
@@ -1198,8 +1250,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
                             Dev</span>
                     </div>
-                    <h3>Project 57</h3>
-                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <h3>Steen, Papier, Schaar</h3>
+                    <p>Speel tegen de computer in dit strategische keuzespel.</p>
                     <a href="projecten/project-57.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
                         Project</a>
@@ -1211,8 +1263,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
                             Dev</span>
                     </div>
-                    <h3>Project 58</h3>
-                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <h3>Flappy Bird (DOM)</h3>
+                    <p>Vlieg door obstakels met gravity-logica opgebouwd in de DOM.</p>
                     <a href="projecten/project-58.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
                         Project</a>
@@ -1224,8 +1276,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
                             Dev</span>
                     </div>
-                    <h3>Project 59</h3>
-                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <h3>Vier op een Rij</h3>
+                    <p>Klassieke Connect Four met een slimme winst-check algoritme.</p>
                     <a href="projecten/project-59.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
                         Project</a>
@@ -1237,8 +1289,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #8b5cf6, #5b21b6); color: white; border: none;">Game
                             Dev</span>
                     </div>
-                    <h3>Project 60</h3>
-                    <p>Ontwikkel een game met pure Web API's.</p>
+                    <h3>2048 Game</h3>
+                    <p>Schuif tegels en combineer getallen om het legendarische getal 2048 te bereiken.</p>
                     <a href="projecten/project-60.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #8b5cf6, #5b21b6); border: none; color: white;">Start
                         Project</a>
@@ -1249,8 +1301,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
                     </div>
-                    <h3>Project 61</h3>
-                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <h3>Drag & Drop Kanban</h3>
+                    <p>Beheer je taken met een interactief sleep-en-neerzet Kanban bord.</p>
                     <a href="projecten/project-61.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
                         Project</a>
@@ -1261,8 +1313,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
                     </div>
-                    <h3>Project 62</h3>
-                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <h3>Live Markdown Previewer</h3>
+                    <p>Typ Markdown en zie direct het resultaat in gerenderde HTML.</p>
                     <a href="projecten/project-62.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
                         Project</a>
@@ -1273,8 +1325,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
                     </div>
-                    <h3>Project 63</h3>
-                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <h3>Pomodoro Timer</h3>
+                    <p>Verbeter je productiviteit met een aanpasbare focus-timer.</p>
                     <a href="projecten/project-63.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
                         Project</a>
@@ -1285,8 +1337,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
                     </div>
-                    <h3>Project 64</h3>
-                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <h3>Weer App (Fetch API)</h3>
+                    <p>Bekijk het actuele weer voor elke stad met live data.</p>
                     <a href="projecten/project-64.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
                         Project</a>
@@ -1297,8 +1349,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
                     </div>
-                    <h3>Project 65</h3>
-                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <h3>Password Strength Meter</h3>
+                    <p>Controleer hoe veilig je wachtwoord is met live visuele feedback.</p>
                     <a href="projecten/project-65.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
                         Project</a>
@@ -1309,8 +1361,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
                     </div>
-                    <h3>Project 66</h3>
-                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <h3>BMI Calculator</h3>
+                    <p>Bereken je Body Mass Index met een modern en simpel interface.</p>
                     <a href="projecten/project-66.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
                         Project</a>
@@ -1321,8 +1373,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
                     </div>
-                    <h3>Project 67</h3>
-                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <h3>Expense Tracker</h3>
+                    <p>Hou je inkomsten en uitgaven bij met een dynamische balansmeter.</p>
                     <a href="projecten/project-67.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
                         Project</a>
@@ -1333,8 +1385,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
                     </div>
-                    <h3>Project 68</h3>
-                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <h3>Stopwatch</h3>
+                    <p>Nauwkeurige tijdmeting met ronde-functionaliteit en reset.</p>
                     <a href="projecten/project-68.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
                         Project</a>
@@ -1345,8 +1397,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
                     </div>
-                    <h3>Project 69</h3>
-                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <h3>Muziek Speler</h3>
+                    <p>Speel audio bestanden af met een moderne afspeellijst en bediening.</p>
                     <a href="projecten/project-69.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
                         Project</a>
@@ -1357,8 +1409,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #f59e0b, #b45309); color: white; border: none;">Utilities</span>
                     </div>
-                    <h3>Project 70</h3>
-                    <p>Handige tools zoals timers en lijstjesbouwer.</p>
+                    <h3>Tekst naar Spraak</h3>
+                    <p>Zet getypte tekst om in gesproken woorden via de Speech Synthesis API.</p>
                     <a href="projecten/project-70.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #f59e0b, #b45309); border: none; color: white;">Start
                         Project</a>
@@ -1370,8 +1422,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 71</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Random Joke Generator</h3>
+                    <p>Haal grappen op van een publieke API en toon ze met stijl.</p>
                     <a href="projecten/project-71.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1383,8 +1435,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 72</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Quote Generator</h3>
+                    <p>Wisselende inspirerende quotes met een druk op de knop.</p>
                     <a href="projecten/project-72.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1396,8 +1448,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 73</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Random Dog API</h3>
+                    <p>Toon willekeurige hondenafbeeldingen via een externe API.</p>
                     <a href="projecten/project-73.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1409,8 +1461,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 74</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>GitHub User Finder</h3>
+                    <p>Zoek GitHub profielen en toon statistieken van gebruikers.</p>
                     <a href="projecten/project-74.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1422,8 +1474,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 75</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Pokédex API</h3>
+                    <p>Zoek en bekijk alle Pokémon met gedetailleerde statistieken.</p>
                     <a href="projecten/project-75.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1435,8 +1487,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 76</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Landen Info App</h3>
+                    <p>Vind demografische en geografische informatie over elk land.</p>
                     <a href="projecten/project-76.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1448,8 +1500,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 77</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Crypto Prijs Tracker</h3>
+                    <p>Real-time prijzen van de populairste cryptocurrencies.</p>
                     <a href="projecten/project-77.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1461,8 +1513,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 78</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Movie Search App</h3>
+                    <p>Zoek naar films en bekijk trailers en beoordelingen.</p>
                     <a href="projecten/project-78.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1474,8 +1526,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 79</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Advice Generator</h3>
+                    <p>Ontvang wijsheid en advies via een externe API aanroep.</p>
                     <a href="projecten/project-79.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1487,8 +1539,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 80</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>ISS Tracker</h3>
+                    <p>Volg het International Space Station live op een interactieve kaart.</p>
                     <a href="projecten/project-80.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1500,8 +1552,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 81</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Geolocation Finder</h3>
+                    <p>Vind je exactecoördinaten op de wereldkaart met de Geolocation API.</p>
                     <a href="projecten/project-81.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1513,8 +1565,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 82</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Tilt Tracker</h3>
+                    <p>Monitor de fysieke stand van je apparaat met Device Orientation events.</p>
                     <a href="projecten/project-82.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1526,8 +1578,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 83</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Voice Studio Pro</h3>
+                    <p>Live spraakherkenning en transcriptie met de Web Speech API.</p>
                     <a href="projecten/project-83.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1539,8 +1591,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 84</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Native Bridge Studio</h3>
+                    <p>Deel content direct naar andere apps met de Web Share API navigator.</p>
                     <a href="projecten/project-84.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1552,8 +1604,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 85</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Scroll Scène Studio</h3>
+                    <p>Geavanceerde scroll animaties met Intersection Observer logica.</p>
                     <a href="projecten/project-85.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1565,8 +1617,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 86</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Performance Analytics Pro</h3>
+                    <p>Analyseer de laadsnelheid en runtime performance met de Performance API.</p>
                     <a href="projecten/project-86.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1578,8 +1630,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 87</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Smart Media Studio</h3>
+                    <p>Beheer Picture-in-Picture en media notificaties via de Media Session API.</p>
                     <a href="projecten/project-87.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1591,8 +1643,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 88</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Cloudless Vault</h3>
+                    <p>Sla grote hoeveelheden data veilig op in de browser met IndexedDB.</p>
                     <a href="projecten/project-88.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1604,8 +1656,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 89</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Copy Master Pro</h3>
+                    <p>Asynchrone klembord interactie en permissie management.</p>
                     <a href="projecten/project-89.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1617,8 +1669,8 @@ for (let i = 1; i <= 10; i++) {
                             style="background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; border: none;">API
                             Master</span>
                     </div>
-                    <h3>Project 90</h3>
-                    <p>Fetch API, Promises en Async/Await.</p>
+                    <h3>Hardware Control Center</h3>
+                    <p>Monitor batterijstatus, netwerkverbinding en browser-omgeving live.</p>
                     <a href="projecten/project-90.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #0ea5e9, #0369a1); border: none; color: white;">Start
                         Project</a>
@@ -1629,8 +1681,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
                     </div>
-                    <h3>Project 91</h3>
-                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <h3>Typing Master Pro</h3>
+                    <p>Train je typevaardigheid met real-time WPM berekening en string analyse.</p>
                     <a href="projecten/project-91.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
                         Project</a>
@@ -1641,8 +1693,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
                     </div>
-                    <h3>Project 92</h3>
-                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <h3>Emoji Memory Pro</h3>
+                    <p>Een high-end geheugenspel met 3D transformaties en state-lock logica.</p>
                     <a href="projecten/project-92.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
                         Project</a>
@@ -1653,8 +1705,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
                     </div>
-                    <h3>Project 93</h3>
-                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <h3>Canvas Studio Pro</h3>
+                    <p>Bouw een professioneel tekenprogramma met pixel-coördinaten en export opties.</p>
                     <a href="projecten/project-93.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
                         Project</a>
@@ -1665,8 +1717,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
                     </div>
-                    <h3>Project 94</h3>
-                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <h3>Piano Pro Studio</h3>
+                    <p>Genereer geluid met de Web Audio API, ADSR envelopes en synthesizers.</p>
                     <a href="projecten/project-94.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
                         Project</a>
@@ -1677,8 +1729,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
                     </div>
-                    <h3>Project 95</h3>
-                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <h3>Neon Breakout</h3>
+                    <p>Een snelle arcade game met collision detection en physics engines.</p>
                     <a href="projecten/project-95.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
                         Project</a>
@@ -1689,8 +1741,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
                     </div>
-                    <h3>Project 96</h3>
-                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <h3>Studio Code Pro</h3>
+                    <p>Een live code editor met CodeMirror en een beveiligde iframe sandbox.</p>
                     <a href="projecten/project-96.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
                         Project</a>
@@ -1701,8 +1753,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
                     </div>
-                    <h3>Project 97</h3>
-                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <h3>Markdown Writer Pro</h3>
+                    <p>Parse Markdown naar HTML met Regex en exporteer bestanden via de Blob API.</p>
                     <a href="projecten/project-97.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
                         Project</a>
@@ -1713,8 +1765,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
                     </div>
-                    <h3>Project 98</h3>
-                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <h3>Neon Flappy</h3>
+                    <p>Simuleer zwaartekracht en collision math in een verslavende vlieg-game.</p>
                     <a href="projecten/project-98.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
                         Project</a>
@@ -1725,8 +1777,8 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
                     </div>
-                    <h3>Project 99</h3>
-                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <h3>Cinema Player Pro</h3>
+                    <p>Bouw een luxe video speler interface met de HTMLMediaElement API.</p>
                     <a href="projecten/project-99.html" class="btn-project"
                         style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
                         Project</a>
@@ -1737,11 +1789,11 @@ for (let i = 1; i <= 10; i++) {
                         <span class="project-level expert"
                             style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;">Grandmaster</span>
                     </div>
-                    <h3>Project 100</h3>
-                    <p>Een fantastisch nieuw project om je DOM vaardigheden te testen.</p>
+                    <h3>Quantum Void</h3>
+                    <p>De ultieme finale: een high-performance particle simulatie met vector fysica.</p>
                     <a href="projecten/project-100.html" class="btn-project"
-                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Start
-                        Project</a>
+                        style="text-decoration: none; display: block; text-align: center; background: linear-gradient(135deg, #10b981, #059669); border: none; color: white;">Missie
+                        Voltooid</a>
                 </div>
             </div>
         </div>
@@ -1760,10 +1812,13 @@ for (let i = 1; i <= 10; i++) {
         <div class="container">
             <h2 class="section-title">JavaScript Playground</h2>
             <div class="playground-container">
-                <div class="playground-editor">
-                    <div class="editor-header">
-                        <span>JavaScript Code</span>
-                        <button class="btn-clear" onclick="clearPlayground()">Clear</button>
+                <div class="playground-editor code-editor-wrap">
+                    <div class="editor-titlebar">
+                        <div class="editor-dots"><span></span><span></span><span></span></div>
+                        <span class="editor-filename">playground.js</span>
+                        <span class="editor-lang-badge">JavaScript</span>
+                        <button class="btn-clear" onclick="clearPlayground()"
+                            style="margin-left: 2rem; position: relative; z-index: 10;">Clear</button>
                     </div>
                     <textarea id="playground-code"
                         placeholder="Schrijf je JavaScript code hier en klik op 'Run' om het uit te voeren...">// Welkom bij de JavaScript Playground!
@@ -1777,6 +1832,10 @@ function telOp(a, b) {
 }
 
 console.log("5 + 3 =", telOp(5, 3));</textarea>
+                    <div class="editor-footer">
+                        <div class="editor-status"><span class="status-dot"></span> Ready</div>
+                        <div class="editor-cursor-info" id="cursor-info-playground">Ln 1, Col 1</div>
+                    </div>
                 </div>
                 <div class="playground-output">
                     <div class="output-header">Output</div>
@@ -1802,8 +1861,178 @@ console.log("5 + 3 =", telOp(5, 3));</textarea>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
     <script src="script.js"></script>
+    <!-- Premium Footer Section -->
+    <div class="footer-cta-outer">
+        <div class="container footer-cta-bar">
+            <div class="cta-left">
+                <span class="cta-icon">🚀</span>
+                <div class="cta-text">
+                    <span class="cta-title">Klaar om JavaScript te leren?</span>
+                    <span class="cta-subtitle">Start vandaag gratis — geen account nodig.</span>
+                </div>
+            </div>
+            <a href="#projects" class="btn-cta-premium">Begin Nu <span class="arrow">›</span></a>
+        </div>
+    </div>
+
+    <footer class="main-footer-premium">
+        <div class="container footer-main-grid">
+            <!-- Brand Column -->
+            <div class="footer-column brand-info">
+                <div class="footer-logo-wrap">
+                    <div class="footer-js-logo">JS</div>
+                    <div class="footer-brand-text">
+                        <span class="brand-name">Leer JavaScript</span>
+                        <span class="brand-version">v2026</span>
+                    </div>
+                </div>
+                <p class="brand-description">
+                    Van <strong>beginner</strong> tot <strong>expert</strong> — de complete interactieve JavaScript
+                    leergids voor iedereen. 100% gratis & open source.
+                </p>
+                <div class="footer-stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-num">100</span>
+                        <span class="stat-label">PROJECTEN</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">50+</span>
+                        <span class="stat-label">OEFENINGEN</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">∞</span>
+                        <span class="stat-label">GRATIS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inhoud Column -->
+            <div class="footer-column">
+                <h4 class="footer-title"><span class="dot blue"></span>INHOUD</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">→ Home</a></li>
+                    <li><a href="#basics">→ JavaScript Basis</a></li>
+                    <li><a href="#advanced">→ Geavanceerd</a></li>
+                    <li><a href="#projects">→ DOM Manipulatie</a></li>
+                    <li><a href="#">→ Voorbeelden</a></li>
+                    <li><a href="#">→ Oefeningen</a></li>
+                </ul>
+            </div>
+
+            <!-- Projecten Column -->
+            <div class="footer-column">
+                <h4 class="footer-title"><span class="dot green"></span>PROJECTEN</h4>
+                <ul class="footer-links project-categories">
+                    <li><a href="#projects">→ Alle 100 Projecten</a></li>
+                    <li><a href="#projects"><span class="status-dot green"></span> Beginner (1-20)</a></li>
+                    <li><a href="#projects"><span class="status-dot yellow"></span> Intermediate (21-50)</a></li>
+                    <li><a href="#projects"><span class="status-dot red"></span> Advanced (51-70)</a></li>
+                    <li><a href="#projects"><span class="status-dot cyan"></span> API Master (71-90)</a></li>
+                    <li><a href="#projects"><span class="status-dot purple"></span> Grandmaster (91-100)</a></li>
+                </ul>
+            </div>
+
+            <!-- Developer Card Column -->
+            <div class="footer-column dev-card-col">
+                <h4 class="footer-title"><span class="dot pink"></span>DEVELOPER</h4>
+                <div class="developer-card-premium">
+                    <div class="dev-header">
+                        <div class="dev-avatar">MM</div>
+                        <div class="dev-info">
+                            <span class="dev-name">Marouf Masri</span>
+                            <span class="dev-role">Student Full-stack Developer</span>
+                        </div>
+                    </div>
+                    <p class="dev-bio">
+                        Gepassioneerd over webdevelopment, onderwijs en het bouwen van mooie gebruikerservaringen.
+                    </p>
+                    <a href="https://marouf260.github.io/Portfolio/" class="btn-dev-portfolio">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                        Bekijk Portfolio <span class="external-icon">↗</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom Bar -->
+        <div class="footer-bottom-premium">
+            <div class="container bottom-flex-premium">
+                <div class="bottom-left">
+                    &copy; 2026 <strong>Leer JavaScript</strong> — Gratis & Open Source
+                </div>
+                <div class="bottom-center">
+                    Gemaakt met <span class="heart">❤️</span> voor studenten
+                </div>
+                <a href="#home" class="btn-scroll-top">
+                    <span class="arrow-up">^</span> Top
+                </a>
+            </div>
+        </div>
+    </footer>
+
     <script>
+        // === Syntax Highlighting ===
+        if (typeof hljs !== 'undefined') {
+            document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());
+        }
+
+        // === CodeMirror Editors ===
+        window.cmEditors = {};
+
+        function updateCursorState(cm, id) {
+            const pos = cm.getCursor();
+            const el = document.getElementById('cursor-info-' + id);
+            if (el) {
+                el.textContent = `Ln ${pos.line + 1}, Col ${pos.ch + 1}`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof CodeMirror === 'undefined') return;
+
+            const commonOptions = {
+                mode: 'javascript',
+                theme: 'dracula',
+                lineNumbers: true,
+                matchBrackets: true,
+                autoCloseBrackets: true,
+                styleActiveLine: true,
+                indentUnit: 4,
+                tabSize: 4,
+                lineWrapping: false,
+                extraKeys: { Tab: cm => cm.execCommand('indentMore') }
+            };
+
+            // Exercises
+            [1, 2, 3].forEach(n => {
+                const ta = document.getElementById('exercise' + n);
+                if (!ta) return;
+                const editor = CodeMirror.fromTextArea(ta, commonOptions);
+                window.cmEditors[n] = editor;
+                editor.setSize('100%', 220);
+                editor.on('cursorActivity', () => updateCursorState(editor, n));
+            });
+
+            // Playground
+            const pgTa = document.getElementById('playground-code');
+            if (pgTa) {
+                const pgEditor = CodeMirror.fromTextArea(pgTa, commonOptions);
+                window.cmEditors.playground = pgEditor;
+                pgEditor.setSize('100%', 350);
+                pgEditor.on('cursorActivity', () => updateCursorState(pgEditor, 'playground'));
+            }
+        });
+
         // === Hero Particles ===
         (function createParticles() {
             const container = document.getElementById('hero-particles');

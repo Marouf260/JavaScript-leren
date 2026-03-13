@@ -499,11 +499,15 @@ function switchTab(tabName) {
                 <div class="code-header">
                     <span class="code-title">${example.title} Code</span>
                 </div>
-                <pre><code>${example.code}</code></pre>
+                <pre><code class="language-javascript">${example.code}</code></pre>
             </div>
             <button class="btn btn-primary" onclick="runExampleTopic('${tabName}', 'tab-output')">▶ Run Code</button>
             <div id="tab-output" class="output" style="margin-top: 1rem;"></div>
         `;
+        // Re-apply syntax highlighting on dynamically injected code
+        if (typeof hljs !== 'undefined') {
+            exampleContent.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block));
+        }
     }
 }
 
@@ -514,7 +518,12 @@ function runExercise(exerciseNum) {
 
     if (!textarea || !output) return;
 
-    const code = textarea.value;
+    // Check if CodeMirror editor exists globally (defined in index.html)
+    let code = textarea.value;
+    if (window.cmEditors && window.cmEditors[exerciseNum]) {
+        code = window.cmEditors[exerciseNum].getValue();
+    }
+
     output.innerHTML = '';
     output.className = 'output';
 
@@ -569,7 +578,10 @@ function runExercise(exerciseNum) {
 
 // Playground Functions
 function runPlayground() {
-    const code = document.getElementById('playground-code').value;
+    let code = document.getElementById('playground-code').value;
+    if (window.cmEditors && window.cmEditors.playground) {
+        code = window.cmEditors.playground.getValue();
+    }
     const output = document.getElementById('playground-output');
 
     output.innerHTML = '';
@@ -601,7 +613,11 @@ function runPlayground() {
 }
 
 function clearPlayground() {
-    document.getElementById('playground-code').value = '';
+    if (window.cmEditors && window.cmEditors.playground) {
+        window.cmEditors.playground.setValue('');
+    } else {
+        document.getElementById('playground-code').value = '';
+    }
     document.getElementById('playground-output').innerHTML = '';
 }
 
@@ -662,7 +678,7 @@ function runDOMExample(type) {
             newDemoText.textContent = 'Styling toegepast!';
             break;
 
-        case 'create':
+        case 'create': {
             const newElement = document.createElement('div');
             newElement.textContent = 'Nieuw element gemaakt!';
             newElement.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
@@ -672,6 +688,7 @@ function runDOMExample(type) {
             newElement.style.marginTop = '1rem';
             demoContainer.appendChild(newElement);
             break;
+        }
 
         case 'remove':
             newDemoBtn.addEventListener('click', function () {
@@ -680,7 +697,7 @@ function runDOMExample(type) {
             newDemoBtn.textContent = 'Klik om te verwijderen';
             break;
 
-        case 'traverse':
+        case 'traverse': {
             newDemoText.textContent = 'Parent: ' + demoContainer.parentElement.tagName;
             const info = document.createElement('div');
             info.textContent = 'Children: ' + demoContainer.children.length;
@@ -690,8 +707,9 @@ function runDOMExample(type) {
             info.style.borderRadius = '4px';
             demoContainer.appendChild(info);
             break;
+        }
 
-        case 'forms':
+        case 'forms': {
             const form = document.createElement('form');
             form.style.marginTop = '1rem';
             const input = document.createElement('input');
@@ -707,6 +725,7 @@ function runDOMExample(type) {
             form.appendChild(input);
             demoContainer.appendChild(form);
             break;
+        }
 
         case 'delegation':
             demoContainer.innerHTML = '<div class="demo-item" style="padding: 1rem; margin: 0.5rem; background: #f0f0f0; border-radius: 4px; cursor: pointer;">Item 1</div><div class="demo-item" style="padding: 1rem; margin: 0.5rem; background: #f0f0f0; border-radius: 4px; cursor: pointer;">Item 2</div><div class="demo-item" style="padding: 1rem; margin: 0.5rem; background: #f0f0f0; border-radius: 4px; cursor: pointer;">Item 3</div>';
@@ -719,6 +738,9 @@ function runDOMExample(type) {
             });
             break;
     }
+
+    // Scroll to the demo area
+    demoContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // Project Data

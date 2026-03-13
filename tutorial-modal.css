@@ -1,0 +1,281 @@
+/* =========================================================================
+   Global Tutorial Modal Styling (Projects 60-100)
+   ========================================================================= */
+
+:root {
+    --modal-primary: #F7DF1E;
+    --modal-primary-hover: #E2CB10;
+    --modal-secondary: #1a1a24;
+    --modal-bg: rgba(15, 23, 42, 0.85);
+    --modal-content-bg: rgba(30, 41, 59, 0.95);
+    --modal-border: rgba(255, 255, 255, 0.1);
+    --modal-text: #e2e8f0;
+}
+
+.tutorial-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--modal-primary) 0%, var(--modal-primary-hover) 100%);
+    color: var(--modal-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px rgba(247, 223, 30, 0.4);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s;
+    font-size: 1.2rem;
+}
+
+.tutorial-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(247, 223, 30, 0.5);
+}
+
+.tutorial-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--modal-bg);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.tutorial-modal .modal-content {
+    background: var(--modal-content-bg);
+    max-width: 800px;
+    width: 100%;
+    padding: 3rem;
+    border-radius: 24px;
+    border: 1px solid var(--modal-border);
+    text-align: left;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    max-height: 85vh;
+    overflow-y: auto;
+    color: var(--modal-text);
+}
+
+/* Custom Scrollbar for Modal */
+.tutorial-modal .modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tutorial-modal .modal-content::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 10px;
+}
+
+.tutorial-modal .modal-content::-webkit-scrollbar-thumb {
+    background: var(--modal-primary);
+    border-radius: 10px;
+}
+
+.tutorial-modal .modal-content::-webkit-scrollbar-thumb:hover {
+    background: var(--modal-primary-hover);
+}
+
+.tutorial-modal h3 {
+    color: #38bdf8;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.tutorial-modal .instructions,
+.tutorial-modal .tips {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 14px;
+    margin-bottom: 2rem;
+}
+
+.tutorial-modal .instructions h3,
+.tutorial-modal .tips h3 {
+    color: #f7df1e;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tutorial-modal .explanation {
+    background: rgba(255, 243, 205, 0.1);
+    border-left: 4px solid #ffc107;
+    padding: 1.5rem;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.tutorial-modal .explanation h3 {
+    color: #ffc107;
+    margin-bottom: 1rem;
+}
+
+.tutorial-modal .explanation p {
+    color: #cbd5e1;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.tutorial-modal .concepts {
+    background: rgba(209, 236, 241, 0.1);
+    border-left: 4px solid #17a2b8;
+    padding: 1.5rem;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.tutorial-modal .concepts h3 {
+    color: #17a2b8;
+    margin-bottom: 1rem;
+}
+
+.tutorial-modal .step-by-step {
+    margin: 0 auto 1.5rem auto;
+    padding: 2rem;
+    border-radius: 14px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    text-align: left;
+}
+
+.tutorial-modal .step-by-step h3 {
+    color: #f87171;
+    margin-bottom: 1.5rem;
+}
+
+.tutorial-modal ul {
+    margin-left: 1.5rem;
+    color: #cbd5e1;
+}
+
+.tutorial-modal li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+/* Tutorial Steps Styling */
+.tutorial-modal .step {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+}
+
+.tutorial-modal .step h4 {
+    color: #38bdf8;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.tutorial-modal .step p {
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.tutorial-modal .code-example {
+    background: #0f172a;
+    padding: 1.2rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+}
+
+.tutorial-modal .code-example pre {
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    line-height: 1.5;
+}
+
+/* Syntax Highlighting */
+.tutorial-modal .keyword {
+    color: #ff7b72;
+}
+
+.tutorial-modal .string {
+    color: #a5d6ff;
+}
+
+.tutorial-modal .function {
+    color: #d2a8ff;
+}
+
+.tutorial-modal .comment {
+    color: #8b949e;
+    font-style: italic;
+}
+
+.tutorial-modal .expand-btn {
+    background: transparent;
+    color: #f7df1e;
+    border: 2px solid #f7df1e;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.tutorial-modal .expand-btn:hover {
+    background: #f7df1e;
+    color: #000;
+    box-shadow: 0 0 15px rgba(247, 223, 30, 0.4);
+}
+
+.tutorial-modal .expandable {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    padding: 0 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.tutorial-modal .expandable.show {
+    max-height: 2000px;
+    padding: 2rem;
+    transition: max-height 0.8s ease-in, padding 0.3s;
+}
+
+.tutorial-modal .btn-primary {
+    background: linear-gradient(135deg, var(--modal-primary) 0%, #ffe600 100%);
+    color: #1a1a24;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 700;
+    margin-top: 1.5rem;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tutorial-modal .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(247, 223, 30, 0.4);
+}
