@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 46: Quote Generator - DOM Projecten</title>
+    <title>Project 46: Quote & Color Generator - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -12,32 +12,33 @@
             box-sizing: border-box;
         }
 
-        /* Transition op body background! */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #667eea;
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            transition: background 0.8s ease-in-out;
+            color: #f8fafc;
+            transition: background-color 0.5s ease;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
-            padding: 2rem;
+            padding: 2.5rem;
             max-width: 800px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            transition: 0.8s color;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         h1 {
+            color: #f8fafc;
             margin-bottom: 0.5rem;
             text-align: center;
         }
@@ -45,8 +46,8 @@
         .level {
             display: inline-block;
             padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -54,149 +55,248 @@
         }
 
         .description {
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
             text-align: center;
         }
 
-        /* Quote Area */
-        .quote-box {
-            width: 100%;
-            max-width: 600px;
-            padding: 2.5rem;
-            background: #f8fafc;
-            border-radius: 12px;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-
-        .quote-text {
-            font-size: 1.8rem;
-            font-weight: 500;
-            text-align: center;
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
-            line-height: 1.5;
-            z-index: 2;
-            transition: 0.8s color, 0.4s opacity;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            width: 100%;
         }
 
-        .quote-author {
-            font-size: 1.1rem;
-            font-style: italic;
-            align-self: flex-end;
-            z-index: 2;
-            transition: 0.8s color, 0.4s opacity;
+        .explanation {
+            border-left: 4px solid #f59e0b;
         }
 
-        /* Enorme Grijze quote mark icons in de achtergrond */
-        .fa-quote-left {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            font-size: 4rem;
-            color: rgba(0, 0, 0, 0.05);
-            font-family: serif;
+        .concepts {
+            border-left: 4px solid #0ea5e9;
         }
 
-        .btn-gen {
-            margin-top: 2rem;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            background: #667eea;
-            transition: background 0.8s, transform 0.2s;
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
         }
 
-        .btn-gen:hover {
-            transform: scale(1.05);
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+            width: 100%;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 2rem;
-            color: #667eea;
+            margin-top: 1rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
-            transition: color 0.8s;
+        }
+
+        /* Quote Area */
+        .quote-container {
+            width: 100%;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid #334155;
+            position: relative;
+            text-align: center;
+        }
+
+        #quote-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #f8fafc;
+            margin-bottom: 1.5rem;
+            display: block;
+            transition: opacity 0.3s;
+        }
+
+        #quote-author {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .btn-gen {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-gen:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-gen:active {
+            transform: translateY(0);
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
 
-<body id="body-bg">
-    <div class="container" id="title-color">
+<body>
+    <div class="container">
         <h1>Project 46: Quote & Color Generator</h1>
-        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">Data
-            Logic</span>
-        <p class="description">Maak een Data-Array applicatie, die niet alleen de tekst verandert op klik, maar op een
-            slimme manier ook the thema UI the kleuren!</p>
+        <span class="level">Data Logic</span>
+        <p class="description">Genereer willekeurige quotes en verander de achtergrondkleur van de pagina voor een
+            dynamische ervaring.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>Het willekeurig selecteren van data uit arrays.</li>
+                <li>Het manipuleren van CSS styles (zoals <code>backgroundColor</code>) via JavaScript.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>Math.random()</strong> – Gebruikt om een willekeurig getal tussen 0 en 1 te genereren.</li>
+                <li><strong>Math.floor()</strong> – Om getallen af te ronden naar het dichtstbijzijnde gehele getal
+                    (indexen).</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: De Data Array's (Onze "Database")</h4>
-                <p>Voordat we een API (externe server) aanroepen, leren we werken met lokale "hardcoded" Arrays. De
-                    quotes staan in een Array met <em>Objecten</em> (zodat we tekst en auteur bijeen kunnen houden!), en
-                    de kleuren in een simpele Array met tekstkleurencodes.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Een Array gevuld met Object {} Datapunten</span>
-<span class="keyword">const</span> quotes = [
-    { quote: <span class="string">"Geloof in jezelf!"</span>, author: <span class="string">"- Mij"</span> },
-    { quote: <span class="string">"Tijd is geld."</span>, author: <span class="string">"- Benjamin Franklin"</span> }
-];
-
-<span class="keyword">const</span> colors = [ <span class="string">'#ef4444'</span>, <span class="string">'#10b981'</span>, <span class="string">'#f59e0b'</span> ];</pre>
+                <h4>Stap 1: Data Voorbereiden</h4>
+                <p>Maak arrays met diverse quotes en bijbehorende hex-kleurcodes.</p>
+                <div class="code-example">
+                    <pre>const quotes = [{ text: "...", author: "..." }, ...];
+const colors = ["#0f172a", "#3b82f6", ...];</pre>
                 </div>
             </div>
-
             <div class="step">
-                <h4>Stap 2: Randomizers (De Magische Index)</h4>
-                <p>Net als bij Project 18, gebruiken we `Math.random()`. Maar in plaats van een simpel getal, gebruiken
-                    we de uitkomst als het <strong>Index Cyfer</strong> om iets uit Array te "trekken".
-                    <code>Array[1] = item Twee!</code></p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Kies een random index nummer gerelateerd aan de array-lengte!</span>
-<span class="keyword">let</span> willekeurigNummer = Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * quotes.length);
-
-<span class="comment">// Prik die quote eruit en geef hem aan de UI the door</span>
-<span class="keyword">const</span> theRandomQuoteObj = quotes[willekeurigNummer];
-
-quoteText.innerText = theRandomQuoteObj.quote;</pre>
+                <h4>Stap 2: Willekeurige Index Kiezen</h4>
+                <p>Bereken een index binnen de grenzen van de array-lengte.</p>
+                <div class="code-example">
+                    <pre>const index = Math.floor(Math.random() * quotes.length);</pre>
                 </div>
             </div>
-
             <div class="step">
-                <h4>Stap 3: Het "Thema" Systeem</h4>
-                <p>Een coole applicatie voelt the "verbonden". Door niet alleen the element the the veranderden the qua
-                    tekst, maar ook de CSS The the the the body en the the buttons te The THE veranderen naar de random
-                    gekozen Array kleur... the ontstaat the een "Theme Generator" the the illusie the the! THE!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Ook the the kleur Array the The heeft the de magische the the de randomizer index the geknald!</span>
-<span class="keyword">const</span> ranColor = colors[Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * colors.length)];
-
-<span class="comment">// Update de CSS van Meerdere elementen!</span>
-bodyBg.style.background = ranColor;
-quoteBtn.style.background = ranColor;
-quoteText.style.color = ranColor;</pre>
+                <h4>Stap 3: UI Updaten</h4>
+                <p>Pas de tekst en de achtergrondkleur van de body aan.</p>
+                <div class="code-example">
+                    <pre>document.body.style.backgroundColor = colors[index];
+quoteElement.innerText = quotes[index].text;</pre>
                 </div>
             </div>
         </div>
 
+        <!-- Code Voorbeeld -->
+        <div class="code-example">
+            <h3>💻 De Generator Functie</h3>
+            <pre>function generate() {
+    const randomIdx = Math.floor(Math.random() * quotes.length);
+    const selected = quotes[randomIdx];
+    
+    // Smooth transition
+    quoteBox.style.opacity = 0;
+    
+    setTimeout(() => {
+        document.body.style.backgroundColor = colors[randomIdx];
+        textEl.innerText = selected.text;
+        authorEl.innerText = "- " + selected.author;
+        quoteBox.style.opacity = 1;
+    }, 300);
+}</pre>
+        </div>
+
         <!-- Instructies -->
         <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
+            <h3>✅ Instructies:</h3>
             <ul>
-                <li>Klik op "Nieuwe Quote" the de the logica in actie the zien! The</li>
-                <li>Merk de opacity the transition the fade the the fades in The out op (dit gebeurt d.m.v.
-                    <code>setTimeout()</code> 400ms CSS transitions the CSS). </li>
+                <li>Klik op de knop 'Nieuwe Quote' om een nieuwe combinatie te genereren.</li>
+                <li>De achtergrondkleur verandert mee met de sfeer van de quote.</li>
             </ul>
         </div>
 
@@ -204,126 +304,84 @@ quoteText.style.color = ranColor;</pre>
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong>The Timeout Trick:</strong> De Tekst verandert pas NADAT The The CSS Opacity = 0 heeft the
-                    behaald. Daarna the the update Javascript the DOM, en zet The opacity = 1. Daardoor the the voelt
-                    the de inwisseling the the strak The the the the the the the the "Fade In/Out".</li>
+                <li><strong>Contrast:</strong> Let op dat de tekstkleur leesbaar blijft bij donkere of lichte
+                    achtergronden.</li>
             </ul>
         </div>
 
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Hardcoded "Color" index</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - Maak the the The fout The The door The Array-lengte The the The de de te verzinnen. the the the The The The the the "Ik the the de de the heb 5 the kleuren The the dus * 5". Dit gaat fout zodra the the de de meer The the toevoegt The the de The code the The de !</span>
-Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * <span class="string">5</span>);
-
-<span class="comment">// OPLOSSING: Gebruik ALTIJD de the flexibele `.length` The property!</span>
-Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * quotes.length);</pre>
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: Index buiten bereik</h4>
+                <p style="color: #f87171;">Zonder <code>Math.floor</code> krijg je decimalen, wat geen geldige
+                    array-index is.</p>
+                <div class="code-example">
+                    <pre>let idx = Math.random() * arr.length; // Fout: bijv. 2.45
+let idx = Math.floor(Math.random() * arr.length); // Goed: 2</pre>
                 </div>
             </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Share na Twitter The (X) knop:</strong> the the de The href the The genereren the van
-                        een HTML The link <code>https://twitter.com/intent/tweet?text=QUOTE</code> The the the The
-                        JavaScript DOM The manipulatie!</li>
-                    <li><strong>Voorkom the the de 2 the keer The the de de De Zelfde Quote the The:</strong> Soms the
-                        Gooit The <code>Math.random</code> The 2x the The de de zelfde output the er the The The na
-                        elkaar The uit the the ! Sla the the index The The van de the vorige The The "theRandomQuoteObj"
-                        The the the in the The een de globale <code>let</code> the Variabele the op the, The the The the
-                        de vergelijk The ! the The Trek net the zo lang the de Niewe RandomThe, The the the The the the
-                        the totdat the hij niet The maten the! The the The! </li>
+                    <li><strong>Social Media:</strong> Voeg een 'Deel op Twitter' knop toe die de huidige quote
+                        doorstuurt.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
-        <div class="quote-box">
-            <span class="fa-quote-left">"</span>
-            <div class="quote-text" id="quote-text">De geest the is als een parachute. Hij the the functoneert het the
-                het the het best the the wanneer het open is.</div>
-            <div class="quote-author" id="quote-author">- Frank Zappa</div>
+        <div class="quote-container" id="quote-box">
+            <span id="quote-text">"Klik op de knop om inspiratie op te doen."</span>
+            <span id="quote-author"></span>
         </div>
 
         <button class="btn-gen" id="new-quote-btn">Nieuwe Quote</button>
 
-        <a href="../index.html#projects" class="back-link" id="link-color">← Terug naar Projecten</a>
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
+        const quotes = [
+            { text: "De enige manier om geweldig werk te doen, is door te houden van wat je doet.", author: "Steve Jobs" },
+            { text: "Verandering is de enige constante in het leven.", author: "Heraclitus" },
+            { text: "Het lijkt altijd onmogelijk totdat het gedaan is.", author: "Nelson Mandela" },
+            { text: "Succes is niet definitief, falen is niet fataal: het is de moed om door te gaan die telt.", author: "Winston Churchill" },
+            { text: "Wees de verandering die je in de wereld wilt zien.", author: "Mahatma Gandhi" },
+            { text: "Kennis is macht.", author: "Francis Bacon" }
+        ];
+
+        const colors = [
+            "#1e293b", "#0f172a", "#1e1b4b", "#064e3b", "#450a0a", "#422006"
+        ];
+
+        const quoteBox = document.getElementById('quote-box');
         const quoteText = document.getElementById('quote-text');
         const quoteAuthor = document.getElementById('quote-author');
-        const quoteBtn = document.getElementById('new-quote-btn');
-        const bodyBg = document.getElementById('body-bg');
-        const titleColor = document.getElementById('title-color');
-        const linkColor = document.getElementById('link-color');
+        const newQuoteBtn = document.getElementById('new-quote-btn');
 
-        // Geïsoleerde "local API" the array
-        const quotes = [
-            { quote: "Software development is 10% schrijven en 90% the the the the the the over the het schrijven.", author: "- The Internet" },
-            { quote: "Ik loop langzaam, the the the the the maar the loop the ik nooi the the the the achteruit.", author: "- Abraham Lincoln" },
-            { quote: "Ondanks the alles vind is het leven the the the the nog the the the the steeds best the aardig.", author: "- Anne Frank" },
-            { quote: "The Only Way to Do Great the Work is to Love What The You Do.", author: "- Steve Jobs" },
-            { quote: "Simplicity the is the the the the ultimate the the the sophistication.", author: "- Leonardo da Vinci" },
-            { quote: "De mens the wordt the the the niet beloond The The om wat The the hij kan The the the the maar The The the the The om The wat The hij the the The The the doet The met The the the wat the The hij the kan.", author: "- Picasso" },
-            { quote: "Code is like humor. The When the the the you have The the the The the the the The The the to The the the the The the The explain it, The the the The the the The the The it’s bad.", author: "- Cory House" }
-        ];
+        function generateQuote() {
+            const index = Math.floor(Math.random() * quotes.length);
+            const selection = quotes[index];
 
-        // The UI kleurenpallete (The Array!)
-        const colors = [
-            '#ef4444', // Red
-            '#f59e0b', // Orange (Geel the)
-            '#10b981', // Green
-            '#3b82f6', // Blue
-            '#8b5cf6', // Purple
-            '#14b8a6', // Teal
-            '#ec4899', // Pink
-            '#334155'  // Slate dark
-        ];
-
-        quoteBtn.addEventListener('click', TheGenerateRandomThe);
-
-        function TheGenerateRandomThe() {
-            // Animatie the opacity transition trigger
-            quoteText.style.opacity = 0;
-            quoteAuthor.style.opacity = 0;
+            quoteBox.style.opacity = 0;
 
             setTimeout(() => {
-                // 1. Math.random logic the arrays!
-                const theRandomQuoteObj = quotes[Math.floor(Math.random() * quotes.length)];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
-                // 2. The teksten inwisselen
-                quoteText.innerText = theRandomQuoteObj.quote;
-                quoteAuthor.innerText = theRandomQuoteObj.author;
-
-                // 3. The the the Kleur THE The Inwisselen op the the ALL elements! (The DOM Manipulation Power!)
-                bodyBg.style.background = randomColor;
-                quoteBtn.style.background = randomColor;
-                titleColor.style.color = randomColor;
-                linkColor.style.color = randomColor;
-                quoteText.style.color = randomColor;
-
-                // fade them back in
-                quoteText.style.opacity = 1;
-                quoteAuthor.style.opacity = 1;
-
-            }, 400); // the exact the time needed the for the fadeout (see CSS 0.4s)
+                document.body.style.backgroundColor = colors[index];
+                quoteText.innerText = `"${selection.text}"`;
+                quoteAuthor.innerText = "- " + selection.author;
+                quoteBox.style.opacity = 1;
+            }, 300);
         }
 
-        // Run On load
-        TheGenerateRandomThe();
+        newQuoteBtn.addEventListener('click', generateQuote);
 
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
             const expansions = document.getElementById('expansions');
             const btn = event.target;

@@ -14,25 +14,27 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
             padding: 2rem;
             max-width: 800px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
         }
 
@@ -48,7 +50,7 @@
         }
 
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
         }
@@ -59,38 +61,45 @@
         .instructions,
         .tips {
             padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
         }
 
         .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            border-left: 4px solid #f59e0b;
         }
 
         .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
+            border-left: 4px solid #0ea5e9;
         }
 
         .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
+            border-left: 4px solid #94a3b8;
         }
 
         .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
+            border-left: 4px solid #3b82f6;
         }
 
         .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            border-left: 4px solid #10b981;
+        }
+
+        .explanation h3,
+        .concepts h3,
+        .step-by-step h3,
+        .instructions h3,
+        .tips h3,
+        .explanation h4,
+        .concepts h4,
+        .step-by-step h4,
+        .instructions h4,
+        .tips h4 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
         }
 
         h3 {
@@ -103,7 +112,7 @@
         }
 
         .code-example {
-            background: #282c34;
+            background: #0f172a;
             color: #abb2bf;
             padding: 1.5rem;
             border-radius: 8px;
@@ -111,6 +120,7 @@
             overflow-x: auto;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            border: 1px solid #334155;
         }
 
         .code-example .keyword {
@@ -128,7 +138,7 @@
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #667eea;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
         }
@@ -194,6 +204,32 @@
             font-size: 1.1rem;
             color: #ddd;
         }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 
@@ -201,91 +237,101 @@
     <div class="container">
         <h1>Project 31: Parallax Scrolling</h1>
         <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
-        <p class="description">Maak een adembenemend Parallax effect waarbij de achtergrond sneller of langzamer scrolt
-            dan de voorgrond.</p>
+        <p class="description">Creëer een indrukwekkend diepte-effect waarbij de verschillende lagen van de pagina met
+            verschillende snelheden scrollen.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>De scroll‑positie van een element of venster uitlezen met <code>scrollTop</code> en
+                    <code>scrollY</code>
+                </li>
+                <li>Met <code>transform: translateY()</code> een achtergrond en voorgrond op verschillende snelheden
+                    laten bewegen</li>
+                <li>Een vloeiende parallax‑animatie maken zonder dat de pagina langzaam wordt</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>scrollTop / scrollY</strong> – geven aan hoeveel er naar beneden is gescrold (in pixels)
+                </li>
+                <li><strong>Parallax effect</strong> – achtergrondlagen bewegen langzamer dan de inhoud ervoor waardoor
+                    diepte ontstaat</li>
+                <li><strong>CSS <code>transform</code></strong> – met <code>translateY()</code> schuif je elementen
+                    soepel omhoog of omlaag</li>
+                <li><strong><code>requestAnimationFrame</code></strong> – manier om animaties performant te tekenen in
+                    plaats van alles direct in het scroll‑event te doen</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: De Scroll Listener</h4>
-                <p>We binden een <code>addEventListener('scroll')</code> aan het element waarin we scrollen. In ons
-                    geval is dat het containerblok. Elke keer als de muis scrolt of je op een touchscreen swipet, wordt
-                    deze logica afgevuurd!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Vang ELKE scroll-beweging op in het frame </span>
-scrollArea.addEventListener(<span class="string">'scroll'</span>, () => {
-    <span class="comment">// 1. Lees de huidige top-positie pixel</span>
-    <span class="keyword">const</span> scrollPos = scrollArea.scrollTop;
-    <span class="comment">// 2. Start met de DOM transformaties (zie stap 2)</span>
+                <h4>Stap 1: Scroll‑event gebruiken</h4>
+                <p>Voeg een scroll‑listener toe op het element dat moet reageren (in dit voorbeeld de scrollbare
+                    container):</p>
+                <div class="code-example">
+                    <pre>scrollArea.addEventListener('scroll', function() {
+    const offset = scrollArea.scrollTop;
+    // hier komt je animatielogica
 });</pre>
                 </div>
-                <p><strong>Uitleg:</strong> <code>scrollTop</code> is een fantastische property. Het vertelt ons in pure
-                    <em>getallen (pixels)</em> hoeveel het specifieke element naar beneden is gescrold. Bij de start
-                    (bovenaan het frame) is dit exact <code>0</code>.</p>
             </div>
-
             <div class="step">
-                <h4>Stap 2: De Achtergrond Vertragen</h4>
-                <p>Een "Parallax" effect onstaat als de achtergrond <em>trager</em> beweegt dan het perspectief van de
-                    voorgrond (onze witte boxen). We gebruiken CSS Transform om de achtergrond naar beneden (Y-as) te
-                    schuiven, gebaseerd op een wiskundig getal kleiner dan 1.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// De achtergrond scrolt SLECHTS de helft van de snelheid (0.5x) </span>
-<span class="comment">// mee naar beneden ten opzichte van onze echte scroll-positie.</span>
-pBg.style.transform = <span class="string">`translateY(${scrollPos * 0.5}px)`</span>;</pre>
+                <h4>Stap 2: Achtergrond langzamer laten bewegen</h4>
+                <p>Gebruik de scroll‑waarde om de achtergrond minder snel te verplaatsen dan de inhoud:</p>
+                <div class="code-example">
+                    <pre>pBg.style.transform = `translateY(${scrollPos * 0.5}px)`;</pre>
                 </div>
-                <p><strong>Uitleg:</strong> In modern JavaScript is <code>style.transform = ...</code> veel beter en
-                    sneller (qua prestaties) voor de browser elementen vergeleken met het live aanpassen van
-                    <code>style.top</code> of <code>margin</code>-waardes! Het activeert hardware-acceleratie op de
-                    processor van je computer (GPU compositing).</p>
+                <p><strong>Uitleg:</strong> omdat we met <code>0.5</code> vermenigvuldigen, beweegt de achtergrond maar
+                    half zo snel als je scrolt.</p>
             </div>
-
             <div class="step">
-                <h4>Stap 3: Diepte met Meerdere Snelheden</h4>
-                <p>Niet alleen de achtergrond hoeft mee te doen aan Parallax! Om een magisch 3D perspectief te schetsen,
-                    pakken we alle individuele voorgrond-boxjes ("Zwevende elementen") met
-                    <code>querySelectorAll()</code>, en geven ze elk een ANDERE <code>translateY</code> factor in de
-                    for-loop!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre>pBoxes.<span class="function">forEach</span>((box, index) => {
-    <span class="comment">// De index is 0, 1, 2 etc. De scroll factor verandert the uniek per box!</span>
-    <span class="keyword">const</span> speed = <span class="string">0.1</span> * (index + <span class="string">1</span>); 
-    
-    <span class="comment">// Verplaats de box the the Y the as the  </span>
-    box.style.transform = <span class="string">`translateY(${scrollPos * speed}px)`</span>;
+                <h4>Stap 3: Voorgrond‑boxen een eigen snelheid geven</h4>
+                <p>Laat de tekstboxen met een andere factor meebewegen zodat er extra diepte ontstaat:</p>
+                <div class="code-example">
+                    <pre>pBoxes.forEach((box, index) =&gt; {
+    const speed = 0.1 * (index + 1);
+    box.style.transform = `translateY(${scrollPos * speed}px)`;
 });</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Het the resultaat? De bovenste box beweegt in verhouding veel trager
-                    <code>(0x)</code> dan de onderste box in the array <code>(bijv 0.3x)</code>. Dit the creëert eenthe
-                    prachtig visueel the zwaartekracht "zweef" effect the the op thethe ons the the dashboard-scherm
-                    the.</p>
+                <p><strong>Uitleg:</strong> elke box krijgt een iets andere snelheid; hoe hoger de index, hoe sterker de
+                    beweging.</p>
             </div>
         </div>
 
         <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Template Literals Ter Heringering)</h3>
-            <pre><span class="comment">// Ter herhaling: in moderne JavaScript gebruiken we backticks (`) </span>
-<span class="comment">// om CSS pixel waardes super smooth in een string the stoppen the!</span>
-pBg.style.transform = <span class="string">`translateY(${scrollPos * 0.5}px)`</span>;
+        <div class="code-example">
+            <h3>💻 Scroll optimaliseren met requestAnimationFrame</h3>
+            <pre>let ticking = false;
 
-<span class="comment">// ❌ De Ouderwetse the "Plus the" the  Methode(Veel the The  moeilijker the lezen)the :theThe </span>
-<span class="comment">// pBg.style.transform = "translateY(" + (scrollPos * 0.5) + "px)";</span></pre>
+window.addEventListener('scroll', function() {
+  if (!ticking) {
+    window.requestAnimationFrame(function() {
+      let offset = window.scrollY;
+      cloudLayer.style.transform = `translateY(${offset * -0.2}px)`;
+      mountainLayer.style.transform = `translateY(${offset * 0.4}px)`;
+      ticking = false;
+    });
+    ticking = true;
+  }
+});</pre>
         </div>
 
         <!-- Instructies -->
         <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
+            <h3>✅ Instructies</h3>
             <ul>
-                <li>Ga naar het donkere vak (project inframe) hieronder en <strong>scroll naar the the thethe beneden
-                        (the the met je the muiswiel the the of door the sleuren thethe)</strong> .the the the</li>
-                <li>Let op hoe de idyllische bergachtergrond LAAAAAANZAMERthe the the the thethe the the the meescrolt
-                    the the the dan <i>thethethe the voorgrond the the theThe tekstbalken! the the </i></li>
-                <li>Zie the hoe the the the dit the the the THEthe het beroemde 3D Parallax "the the "the The "thethe
-                    the thediepte" the the effect the the the the the thethe The op de page visualseert! the The thethe
-                    the thethe theThe the The . the The</li>
+                <li>Scroll in de demo‑container omlaag en omhoog om het parallax‑effect te zien.</li>
+                <li>Let op hoe de achtergrond langzamer beweegt dan de tekstboxen ervoor.</li>
+                <li>Experimenteer met de snelheidsfactoren in de JavaScript‑code om het effect aan te passen.</li>
             </ul>
         </div>
 
@@ -293,51 +339,49 @@ pBg.style.transform = <span class="string">`translateY(${scrollPos * 0.5}px)`</s
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong><code>translate3d</code> the vs the <code>translateY</code>:</strong> Als The the je TheThe
-                    the je theThe the the Thethethe animations Nog theTheThe the vloeiender the (Thezeker the THE The
-                    THE op oudere The the The the then mobiele theirthe telefoons Thethe ) the wilt thei The Maken
-                    theThe TheThe theThe, the kun THE je the <code>transform = translate3d(0, pixels, 0)</code> the
-                    gebruiken! the The Door the THEThe een X the Y en theThe deThe The 'thethe THE zThethe the the'
-                    Thethe asthe The te thevermeldenthethe intheThe code the ,theThe thethe the the forceerThe theTheTHE
-                    THETHEje TheThe the the browser then the THE om their Thede The 3D in -built the videokaart the GPU
-                    chip The IPV Thethe THE cpu the thete laten ThetheTheThe thegebruiken the the !the The the the the }
-                </li>
+                <li><strong>Beperk werk in het scroll‑event:</strong> gebruik <code>requestAnimationFrame</code> of een
+                    simpele vlag (zoals <code>ticking</code>) zodat je niet tientallen keren per seconde zware code
+                    draait.</li>
+                <li><strong>Grote achtergronden:</strong> zorg dat de achtergrond hoger is dan het zichtbare gebied
+                    zodat je niet “uit” de afbeelding scrolt.</li>
             </ul>
         </div>
 
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: thethe <code>scroll</code> Events the The zijnthe theThe THE HEEL Zwaar</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - De scroll THE lTheistener the Vuurt Thethe Soms wel The theirthe The 80xthe THE PER The TheThethe thethe SECONDE  the the thethe the THETheaf! Thethe.The the the the The PlaaTHE atstheiThe thehier the thei The thethe The NOITTheThe theirThe the een zware the the Thethe dataTheb asethet call of the aThe THE API The FETCHtheThe the The , TheThe the Then want the da  The de the the theirn thethe jethTheThe webstitheThe The heel the The hartthentheThe gannnthe the hapenrn The (Lagthe thetheThe theThe )the ! The thethethe thetheThe  Zware the thei codetThe The thmoet the THE THE altijd The Thethe a Theuit theThe scroll the the The loopsthei getThethe The wordenthe, The andThe oof aThe The 'ThThethedebounced' Thethe (theTheThe gelockt ) the wdorde!The ntheThe </span></pre>
+        <!-- Veelvoorkomende fouten -->
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: Achtergrond is te klein</h4>
+                <p style="color: #f87171;">Als je achtergrond maar 100vh hoog is, kun je er bij een sterk
+                    parallax‑effect “langs” scrollen en zie je een lege achtergrond.</p>
+                <div class="code-example">
+                    <pre>/* Te klein voor sterk parallax-effect */
+height: 100vh;
+
+/* Beter: extra hoogte of combinatie met scale() */
+min-height: 150vh;</pre>
                 </div>
             </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar the the the voor the theThe MEER!? Probeer dit the THE the toe te The Thethe voegen: The the
-                </p>
                 <ul>
-                    <li><strong>Voeg The TheThe theThe <code>OpacityThe</code> the toe the Thethe aThetheanthe the the
-                            ThetheThe JS <code>scrollPos</code> parameter the :</strong> MA a the k thetthe The thethe
-                        the scirpt THE nog ig ntersThethessanrtTheTher the dThetheoorTheThe THE niet the alleen the de
-                        tde the they-as The the i the te veranderenthe, nmaar The ookeThe thete the spelethen mrThe
-                        mmThe et n the CSS eigeschapo theThe The <code>theThe opacitthe y</code> TheThe .The
-                        TheBijvoorelthethe:Thethethe <code>box.style.opacity = 1 - (scrollPos / 1000)</code> The ( The
-                        hoethe the theverr The jesccrotTheTheltthe Thethe , hooo dtThe the oorTzichtigerTheThe he t
-                        wordtThethe The ht).tthe ) } </li>
+                    <li><strong>Mousemove‑parallax:</strong> laat lagen reageren op de positie van de muis in plaats van
+                        scrollen.</li>
+                    <li><strong>Meerdere lagen:</strong> voeg extra voorgrond‑ en achtergrondlagen toe met elk hun eigen
+                        snelheid.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
+
         <div class="project-area" id="scroll-area">
             <div class="parallax-wrapper">
                 <div class="parallax-bg" id="p-bg"></div>

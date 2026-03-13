@@ -4,8 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 99: Custom Video Player - DOM Projecten</title>
+    <title>Project 99: Cinema Player Pro - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        :root {
+            --primary: #e11d48;
+            --primary-glow: rgba(225, 29, 72, 0.4);
+            --bg: #0b0e14;
+            --card-bg: #131720;
+            --text-main: #f1f5f9;
+            --text-dim: #cbd5e1;
+            --border: #1e242f;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,84 +29,84 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #000;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            color: #f8fafc;
+            padding: 2.5rem;
+        }
+
+        .container {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 3rem;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            text-align: center;
         }
 
         h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
             margin-bottom: 0.5rem;
-            color: #f1f5f9;
-            font-size: 2.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
+            letter-spacing: -1px;
         }
 
-        .level {
-            display: block;
+        .tag {
+            display: inline-block;
             padding: 0.4rem 1.2rem;
-            background: #334155;
-            color: #cbd5e1;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 900;
-            margin-bottom: 2rem;
+            background: rgba(225, 29, 72, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(225, 29, 72, 0.2);
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            width: max-content;
-            margin-left: auto;
-            margin-right: auto;
+            letter-spacing: 1px;
+            margin-bottom: 2.5rem;
         }
 
-        /* Video Player Container */
-        .player-container {
+        /* Cinema Player */
+        .player-box {
             position: relative;
-            max-width: 900px;
             width: 100%;
-            border-radius: 12px;
+            max-width: 800px;
+            margin: 0 auto 35px;
+            background: #000;
+            border-radius: 20px;
             overflow: hidden;
-            background: #111;
-            box-shadow: 0 25px 50px -12px rgba(255, 255, 255, 0.1);
-            border: 1px solid #333;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
         }
 
         video {
             width: 100%;
             display: block;
-            cursor: pointer;
         }
 
-        /* Controls Hover Area */
-        .controls-container {
+        .controls {
             position: absolute;
             bottom: 0;
             left: 0;
-            right: 0;
+            width: 100%;
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
-            padding: 20px 20px 10px 20px;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
             opacity: 0;
+            transition: 0.3s;
         }
 
-        .player-container:hover .controls-container,
-        .player-container.paused .controls-container {
-            transform: translateY(0);
+        .player-box:hover .controls {
             opacity: 1;
         }
 
-        /* Progress Bar */
         .progress-bar {
             width: 100%;
             height: 6px;
@@ -100,410 +116,228 @@
             position: relative;
         }
 
-        .progress-filled {
+        .progress-fill {
             height: 100%;
-            background: #ef4444;
-            /* YouTube Red */
-            border-radius: 3px;
+            background: var(--primary);
             width: 0%;
-            position: relative;
+            border-radius: 3px;
+            box-shadow: 0 0 10px var(--primary-glow);
         }
 
-        .progress-filled::after {
-            content: '';
-            position: absolute;
-            right: -6px;
-            top: -3px;
-            width: 12px;
-            height: 12px;
-            background: #ef4444;
-            border-radius: 50%;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .progress-bar:hover .progress-filled::after {
-            opacity: 1;
-        }
-
-
-        /* Buttons Area */
-        .buttons-area {
+        .control-buttons {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .left-controls,
-        .right-controls {
+        .left-controls {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
 
-        button {
+        .btn-ctrl {
             background: none;
             border: none;
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: color 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
+            transition: 0.2s;
         }
 
-        button:hover {
-            color: #ef4444;
+        .btn-ctrl:hover {
+            color: var(--primary);
+            transform: scale(1.1);
         }
 
         .time-display {
-            font-size: 0.9rem;
-            color: #ccc;
-            user-select: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dim);
         }
 
-        /* Volume Slider */
-        .volume-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        /* Pedagogical Info */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .tips {
+            padding: 2.5rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            margin-top: 3rem;
+            text-align: left;
         }
 
-        input[type=range] {
-            -webkit-appearance: none;
-            width: 80px;
-            background: rgba(255, 255, 255, 0.2);
-            height: 4px;
-            border-radius: 2px;
-            cursor: pointer;
-            outline: none;
+        .explanation {
+            border-left: 5px solid var(--primary);
         }
 
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: white;
-            cursor: pointer;
+        .concepts {
+            border-left: 5px solid #0ea5e9;
         }
 
-        .play-indicator {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(1.5);
-            font-size: 4rem;
-            color: rgba(255, 255, 255, 0.7);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            font-weight: 800;
         }
 
-        .play-indicator.animate {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.8;
+            color: var(--text-dim);
+        }
+
+        .code-example {
+            background: #000;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono';
+            margin: 20px 0;
+            border: 1px solid var(--border);
+            color: #abb2bf;
         }
 
         .back-link {
             display: block;
             margin-top: 3rem;
-            color: #64748b;
+            color: var(--primary);
+            font-weight: 800;
             text-decoration: none;
-            font-weight: 600;
-        }
-
-        .back-link:hover {
-            color: #f8fafc;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
+    <div class="container">
+        <h1>Cinema Player Pro</h1>
+        <span class="tag">HTMLMediaElement API</span>
 
-    <div>
-        <h1><i class="fas fa-play-circle"></i> Custom Video Player</h1>
-        <span class="level">Grandmaster Project (Media API)</span>
+        <p style="color: var(--text-dim); margin-bottom: 2.5rem; line-height: 1.6;">Bouw een luxe video-ervaring. Leer
+            hoe je de native browser controls vervangt door je eigen aangepaste Media API logica.</p>
 
-        <!-- Tutorial Section -->
-        <div class="step-by-step" style="text-align: left; margin: 0 auto 1.5rem auto; max-width: 900px; width: 100%;">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
-            <div class="step">
-                <h4>Stap 1: HTML Video Element Aansturen</h4>
-                <p>We gebruiken het native <code>&lt;video&gt;</code> element en sturen het aan via JavaScript. Het
-                    video element heeft ingebouwde methoden en events.</p>
-                <div class="code-example" style="background: #1a1a2e; color: #e0e0e0;">
-                    <pre><span style="color:#64b5f6">// Afspelen/Pauzeren</span>
-video.<span style="color:#81c784">play</span>();
-video.<span style="color:#81c784">pause</span>();
-
-<span style="color:#64b5f6">// Luister naar voortgang</span>
-video.<span style="color:#81c784">addEventListener</span>(<span style="color:#a5d6a7">'timeupdate'</span>, () =&gt; {
-    <span style="color:#64b5f6">const</span> pct = (video.currentTime / video.duration) * 100;
-    progressBar.style.width = pct + <span style="color:#a5d6a7">'%'</span>;
-});</pre>
+        <div class="player-box" id="player">
+            <video id="video">
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                    type="video/mp4">
+            </video>
+            <div class="controls">
+                <div class="progress-bar" id="progressArea">
+                    <div class="progress-fill" id="progressFill"></div>
                 </div>
-            </div>
-            <div class="step">
-                <h4>Stap 2: Picture in Picture &amp; Fullscreen</h4>
-                <p>Moderne browser APIs: <code>video.requestPictureInPicture()</code> voor PiP en
-                    <code>element.requestFullscreen()</code> voor volledig scherm. Dit zijn <strong>async</strong>
-                    functies!</p>
+                <div class="control-buttons">
+                    <div class="left-controls">
+                        <button class="btn-ctrl" id="playBtn"><i class="fas fa-play"></i></button>
+                        <button class="btn-ctrl" id="stopBtn"><i class="fas fa-stop"></i></button>
+                        <span class="time-display" id="time">00:00 / 00:00</span>
+                    </div>
+                    <div class="right-controls">
+                        <button class="btn-ctrl" id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="tips" style="max-width: 900px; width: 100%; margin: 0 auto 1rem auto; text-align: left;">
-            <h3>✅ Jouw Opdracht</h3>
+        <!-- Info Panels -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Het <code>video</code> element in HTML is extreem krachtig maar vaak lelijk. Je leert hoe je 'onder de
+                motorkap' kijkt.</p>
             <ul>
-                <li>Klik op de video of de Play-knop om af te spelen!</li>
-                <li>Probeer de afspeelsnelheid te wijzigen (1x → 1.5x → 2x → 0.5x)!</li>
-                <li>Test de Picture-in-Picture knop rechtsonder!</li>
+                <li><strong>Media State:</strong> Controleren of video gepauzeerd is via <code>video.paused</code>.</li>
+                <li><strong>Event Orchestration:</strong> Reageren op <code>timeupdate</code> om de progressbar te
+                    animeren.</li>
+                <li><strong>Fullscreen API:</strong> Het correct aanvragen van browser-brede weergave.</li>
             </ul>
         </div>
 
-        <div class="expandable" id="expansions" style="max-width: 900px; width: 100%; margin: 0 auto;">
-            <div class="tips" style="text-align: left;">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <ul>
-                    <li><strong>Subtitels:</strong> Gebruik het <code>&lt;track&gt;</code> element met een VTT-bestand
-                        voor ondertiteling!</li>
-                    <li><strong>Playlist:</strong> Maak een array van video-URLs en voeg Volgende/Vorige knoppen toe!
-                    </li>
-                </ul>
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Metadata:</strong> Hoe je de totale duur (duration) ophaalt zodra de video geladen is.</li>
+                <li><strong>Seeking:</strong> De <code>currentTime</code> property aanpassen om vooruit of achteruit te
+                    spoelen.</li>
+                <li><strong>Calculated Progress:</strong> Math gebruiken om de percentage-breedte van de voortgangsbalk
+                    te bepalen.</li>
+            </ul>
+        </div>
+
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-stap: Progress Logic</h3>
+            <div class="code-example">
+                <pre><span style="color: #5c6370">// Bereken voortgang</span>
+<span style="color: #61afef">const</span> percent = (video.currentTime / video.duration) * <span style="color: #d19a66">100</span>;
+progressBar.style.width = <span style="color: #98c379">`\${percent}%`</span>;</pre>
             </div>
         </div>
-        <button onclick="toggleExpansions()"
-            style="display: block; margin: 1rem auto 1.5rem auto; background: #334155; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">📖
-            Toon Uitbreidingsmogelijkheden</button>
+
+        <a href="../index.html#projects" class="back-link">← Terug naar Dashboard</a>
     </div>
-
-    <!-- Container -->
-    <div class="player-container paused" id="playerContainer">
-
-        <!-- Video Element -->
-        <video id="video" src="https://www.w3schools.com/html/mov_bbb.mp4" playsinline></video>
-
-        <i class="fas fa-play play-indicator" id="playIndicator"></i>
-
-        <!-- Controls -->
-        <div class="controls-container">
-            <!-- Progress -->
-            <div class="progress-bar" id="progressBar">
-                <div class="progress-filled" id="progressFilled"></div>
-            </div>
-
-            <div class="buttons-area">
-                <div class="left-controls">
-                    <button id="playBtn" title="Play/Pause"><i class="fas fa-play"></i></button>
-
-                    <div class="volume-container">
-                        <button id="muteBtn" title="Mute"><i class="fas fa-volume-up"></i></button>
-                        <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1">
-                    </div>
-
-                    <div class="time-display">
-                        <span id="currentTime">00:00</span> / <span id="durationTime">00:00</span>
-                    </div>
-                </div>
-
-                <div class="right-controls">
-                    <button id="speedBtn" title="Afspeelsnelheid">1x</button>
-                    <button id="pipBtn" title="Picture in Picture"><i class="fas fa-images"></i></button>
-                    <button id="fullscreenBtn" title="Volledig scherm"><i class="fas fa-expand"></i></button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
 
     <script>
-        const playerContainer = document.getElementById('playerContainer');
         const video = document.getElementById('video');
-
         const playBtn = document.getElementById('playBtn');
-        const playIndicator = document.getElementById('playIndicator');
-        const muteBtn = document.getElementById('muteBtn');
-        const volumeSlider = document.getElementById('volumeSlider');
-
-        const currentTimeEl = document.getElementById('currentTime');
-        const durationTimeEl = document.getElementById('durationTime');
-        const progressBar = document.getElementById('progressBar');
-        const progressFilled = document.getElementById('progressFilled');
-
-        const speedBtn = document.getElementById('speedBtn');
-        const pipBtn = document.getElementById('pipBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const timeDisplay = document.getElementById('time');
+        const progressFill = document.getElementById('progressFill');
+        const progressArea = document.getElementById('progressArea');
         const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const player = document.getElementById('player');
 
-        // Play / Pause Logic
         function togglePlay() {
             if (video.paused) {
                 video.play();
                 playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                playerContainer.classList.remove('paused');
             } else {
                 video.pause();
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                playerContainer.classList.add('paused');
             }
-            // Animate Center Icon
-            playIndicator.innerHTML = video.paused ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
-            playIndicator.classList.add('animate');
-            setTimeout(() => playIndicator.classList.remove('animate'), 300);
+        }
+
+        function stopVideo() {
+            video.currentTime = 0;
+            video.pause();
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+
+        function updateProgress() {
+            const percent = (video.currentTime / video.duration) * 100;
+            progressFill.style.width = `${percent}%`;
+
+            // Tijdsweergave
+            let curMin = Math.floor(video.currentTime / 60);
+            let curSec = Math.floor(video.currentTime % 60);
+            let durMin = Math.floor(video.duration / 60) || 0;
+            let durSec = Math.floor(video.duration % 60) || 0;
+
+            timeDisplay.textContent = `${pad(curMin)}:${pad(curSec)} / ${pad(durMin)}:${pad(durSec)}`;
+        }
+
+        function pad(n) { return n < 10 ? '0' + n : n; }
+
+        function setProgress(e) {
+            const width = progressArea.clientWidth;
+            const clickX = e.offsetX;
+            const duration = video.duration;
+            video.currentTime = (clickX / width) * duration;
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                player.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
         }
 
         playBtn.addEventListener('click', togglePlay);
         video.addEventListener('click', togglePlay);
+        stopBtn.addEventListener('click', stopVideo);
+        video.addEventListener('timeupdate', updateProgress);
+        progressArea.addEventListener('click', setProgress);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
 
-        // Volume Logic
-        function updateVolume() {
-            video.volume = volumeSlider.value;
-            updateVolumeIcon();
-        }
-
-        function updateVolumeIcon() {
-            if (video.volume === 0 || video.muted) {
-                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            } else if (video.volume < 0.5) {
-                muteBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
-            } else {
-                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-            }
-        }
-
-        function toggleMute() {
-            video.muted = !video.muted;
-            if (video.muted) {
-                volumeSlider.value = 0;
-            } else {
-                volumeSlider.value = video.volume > 0 ? video.volume : 1;
-                video.volume = volumeSlider.value;
-            }
-            updateVolumeIcon();
-        }
-
-        volumeSlider.addEventListener('input', updateVolume);
-        muteBtn.addEventListener('click', toggleMute);
-
-
-        // Format Time Helper
-        function formatTime(seconds) {
-            let m = Math.floor(seconds / 60);
-            let s = Math.floor(seconds % 60);
-            m = m >= 10 ? m : '0' + m;
-            s = s >= 10 ? s : '0' + s;
-            return m + ':' + s;
-        }
-
-        // Update Progress and Time
-        video.addEventListener('loadedmetadata', () => {
-            durationTimeEl.textContent = formatTime(video.duration);
-        });
-
-        video.addEventListener('timeupdate', () => {
-            currentTimeEl.textContent = formatTime(video.currentTime);
-            const percent = (video.currentTime / video.duration) * 100;
-            progressFilled.style.width = `${percent}%`;
-        });
-
-        // Scrub Progress Bar
-        function scrub(e) {
-            const scrubTime = (e.offsetX / progressBar.offsetWidth) * video.duration;
-            video.currentTime = scrubTime;
-        }
-
-        let mousedown = false;
-        progressBar.addEventListener('click', scrub);
-        progressBar.addEventListener('mousemove', (e) => mousedown && scrub(e));
-        progressBar.addEventListener('mousedown', () => mousedown = true);
-        progressBar.addEventListener('mouseup', () => mousedown = false);
-
-        // Playback Speed
-        speedBtn.addEventListener('click', () => {
-            let speed = video.playbackRate;
-            if (speed === 1) speed = 1.5;
-            else if (speed === 1.5) speed = 2;
-            else if (speed === 2) speed = 0.5;
-            else speed = 1;
-
-            video.playbackRate = speed;
-            speedBtn.innerText = speed + 'x';
-        });
-
-        // Picture in Picture
-        pipBtn.addEventListener('click', async () => {
-            try {
-                if (video !== document.pictureInPictureElement) {
-                    await video.requestPictureInPicture();
-                } else {
-                    await document.exitPictureInPicture();
-                }
-            } catch (error) {
-                console.error('PiP error:', error);
-            }
-        });
-
-        // Fullscreen
-        fullscreenBtn.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                if (playerContainer.requestFullscreen) {
-                    playerContainer.requestFullscreen();
-                } else if (playerContainer.webkitRequestFullscreen) { /* Safari */
-                    playerContainer.webkitRequestFullscreen();
-                } else if (playerContainer.msRequestFullscreen) { /* IE11 */
-                    playerContainer.msRequestFullscreen();
-                }
-                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) { /* Safari */
-                    document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) { /* IE11 */
-                    document.msExitFullscreen();
-                }
-                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
-            }
-        });
-
-        // Update Icon on ESC exit
-        document.addEventListener('fullscreenchange', () => {
-            if (!document.fullscreenElement) {
-                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
-            }
-        });
-
-        // Keyboard accessibility
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space') {
-                e.preventDefault();
-                togglePlay();
-            }
-            if (e.code === 'ArrowRight') {
-                video.currentTime += 5;
-            }
-            if (e.code === 'ArrowLeft') {
-                video.currentTime -= 5;
-            }
-        });
-
-    </script>
-    <script>
-        function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
-            const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
-        }
     </script>
 </body>
 

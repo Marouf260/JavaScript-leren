@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 65: Wachtwoord Generator - DOM Projecten</title>
+    <title>Project 65: Password Strength Meter - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -14,51 +14,163 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            color: white;
+            color: #f8fafc;
         }
 
         .container {
             background: #1e293b;
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 2.5rem;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
+            color: #f8fafc;
             margin-bottom: 0.5rem;
             text-align: center;
-            font-size: 1.8rem;
         }
 
         .level {
             display: block;
-            padding: 0.25rem 0.75rem;
-            background: rgba(59, 130, 246, 0.2);
-            color: #60a5fa;
+            width: fit-content;
+            margin: 0 auto 1.5rem;
+            padding: 0.25rem 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 2rem;
-            width: max-content;
-            margin-left: auto;
-            margin-right: auto;
-            border: 1px solid rgba(59, 130, 246, 0.4);
         }
 
-        /* THE APP CSS _T */
-        .wZ_Result_HOutPBoxTVH {
-            background: rgba(15, 23, 42, 0.6);
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* App Layout */
+        .project-area {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #334155;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .result-container {
+            background: #1e293b;
             border-radius: 8px;
-            padding: 20px;
+            padding: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #334155;
+        }
+
+        #password-output {
+            font-size: 1.4rem;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            color: #10b981;
+            font-weight: 700;
+            word-break: break-all;
+            letter-spacing: 2px;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .copy-btn:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            transition: border-color 0.2s;
+        }
+
+        .control-group:hover {
+            border-color: #475569;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        input[type=range] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: #3b82f6;
+            height: 6px;
+            background: #334155;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .option-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: #cbd5e1;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .option-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #f8fafc;
+        }
+
+        .option-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: #10b981;
+            cursor: pointer;
+        }
+
+        .strength-panel {
+            background: #1e293b;
+            padding: 15px 20px;
+            border-radius: 8px;
             margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
@@ -66,170 +178,202 @@
             border: 1px solid #334155;
         }
 
-        #OuThtDDe_HZWachTwoordG_TheTekstH {
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            font-family: 'Courier New', Courier, monospace;
-            word-break: break-all;
-            color: #10b981;
-            font-weight: bold;
-            flex: 1;
+        .strength-label {
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            letter-spacing: 1px;
         }
 
-        .btnCTheopyBtnM_H {
+        .strength-val {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #f8fafc;
+            text-transform: uppercase;
+        }
+
+        .strength-bars {
+            display: flex;
+            gap: 6px;
+        }
+
+        .bar {
+            width: 12px;
+            height: 24px;
+            border: 2px solid #334155;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* Strength Levels dynamic coloring */
+        .lvl-weak .bar:nth-child(1) {
+            background: #ef4444;
+            border-color: #ef4444;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+        }
+
+        .lvl-medium .bar:nth-child(1),
+        .lvl-medium .bar:nth-child(2) {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+        }
+
+        .lvl-strong .bar:nth-child(1),
+        .lvl-strong .bar:nth-child(2),
+        .lvl-strong .bar:nth-child(3) {
+            background: #10b981;
+            border-color: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+
+        .lvl-secure .bar {
+            background: #10b981;
+            border-color: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+        }
+
+        .lvl-secure .strength-val {
+            color: #10b981;
+        }
+
+        .btn-generate {
+            width: 100%;
+            padding: 16px;
             background: #3b82f6;
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-        }
-
-        .btnCTheopyBtnM_H:hover {
-            background: #2563eb;
-            transform: scale(1.05);
-        }
-
-        .sliderTheContZ_oT_H_TheH_ {
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px;
             border-radius: 8px;
-        }
-
-        .MTheTThelDataLengthH_H {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: #cbd5e1;
-        }
-
-        /* Custom_ The Slider CSS */
-        input[type=range] {
-            width: 100%;
-            cursor: pointer;
-            accent-color: #3b82f6;
-        }
-
-        .oTTheH_TogglesGrpHDeThe {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px;
-            border-radius: 8px;
-        }
-
-        .DTheHh_TheCHkBT_T_LabeZO {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            color: #cbd5e1;
+            font-weight: 800;
             font-size: 1.1rem;
-        }
-
-        .DTheHh_TheCHkBT_T_LabeZO input {
-            width: 20px;
-            height: 20px;
             cursor: pointer;
-            accent-color: #10b981;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 0 #1d4ed8;
         }
 
-        /* Strength ZThe_ UI The_ ! */
-        .THeTheSterkteMZH_TheMTRHThat {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #0f172a;
+        .btn-generate:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-generate:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #1d4ed8;
+        }
+
+        /* Tutorial Style */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
             border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
             border: 1px solid #334155;
         }
 
-        .VTheTTkZThatSteVTVTeTThe_TheTextHData {
-            text-transform: uppercase;
-            font-weight: bold;
-            color: #94a3b8;
+        .code-example .keyword {
+            color: #c678dd;
         }
 
-        .SGeT_MeterTheBalBZT_V_H {
-            display: flex;
-            gap: 5px;
+        .code-example .string {
+            color: #98c379;
         }
 
-        .STheTZHTheBalkjeOThe {
-            width: 12px;
-            height: 25px;
-            border: 2px solid #e2e8f0;
-            border-radius: 2px;
+        .code-example .function {
+            color: #61afef;
         }
 
-        /* Kleuren the the_ !! *Z */
-        .mStr-zwak .STheTZHTheBalkjeOThe:nth-child(1) {
-            background: #ef4444;
-            border-color: #ef4444;
+        .code-example .variable {
+            color: #e5c07b;
         }
 
-        .mStr-gemiddeld .STheTZHTheBalkjeOThe:nth-child(1),
-        .mStr-gemiddeld .STheTZHTheBalkjeOThe:nth-child(2) {
-            background: #eab308;
-            border-color: #eab308;
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
         }
 
-        .mStr-sterk .STheTZHTheBalkjeOThe:nth-child(1),
-        .mStr-sterk .STheTZHTheBalkjeOThe:nth-child(2),
-        .mStr-sterk .STheTZHTheBalkjeOThe:nth-child(3),
-        .mStr-sterk .STheTZHTheBalkjeOThe:nth-child(4) {
-            background: #10b981;
-            border-color: #10b981;
-        }
-
-        .btn-GGeneERTEThThKHTHT_H {
+        .expand-btn {
+            display: block;
             width: 100%;
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 18px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
             border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 0 #059669;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
         }
 
-        .btn-GGeneERTEThThKHTHT_H:active {
-            transform: translateY(4px);
-            box-shadow: 0 0 0 transparent;
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .btn-GGeneERTEThThKHTHT_H:hover {
-            background: #059669;
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
         }
 
         .back-link {
-            display: block;
-            margin-top: 2rem;
-            color: #94a3b8;
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
-            text-align: center;
-        }
-
-        .back-link:hover {
-            color: white;
         }
     </style>
 </head>
@@ -237,256 +381,270 @@
 <body>
     <div class="container">
         <h1>Wachtwoord Generator</h1>
-        <span class="level">Utility Apps</span>
+        <span class="level">Security Utility</span>
+        <p class="description">Genereer onkraakbare wachtwoorden lokaal in je browser. Leer werken met Strings als
+            Arrays, Input-sliders, state management, en de moderne klembord API.</p>
+
+        <!-- Project Area -->
+        <div class="project-area">
+            <div class="result-container">
+                <div id="password-output">P4$5W0rD!</div>
+                <button class="copy-btn" id="copy-btn" title="Kopieer">Kopieer</button>
+            </div>
+
+            <div class="control-group">
+                <div class="label-row">
+                    <span>Karakter Lengte</span>
+                    <span id="length-val" style="color: #3b82f6; font-size: 1.2rem;">12</span>
+                </div>
+                <input type="range" id="length-slider" min="6" max="32" value="12">
+            </div>
+
+            <div class="options-list">
+                <label class="option-item">
+                    Hoofdletters (A-Z)
+                    <input type="checkbox" id="check-upper" checked>
+                </label>
+                <label class="option-item">
+                    Kleine letters (a-z)
+                    <input type="checkbox" id="check-lower" checked>
+                </label>
+                <label class="option-item">
+                    Getallen (0-9)
+                    <input type="checkbox" id="check-nums" checked>
+                </label>
+                <label class="option-item">
+                    Symbolen (!@#$%)
+                    <input type="checkbox" id="check-syms">
+                </label>
+            </div>
+
+            <div class="strength-panel">
+                <span class="strength-label">Sterkte:</span>
+                <div id="strength-display" class="lvl-medium" style="display: flex; align-items: center; gap: 15px;">
+                    <span class="strength-val" id="strength-text">Gemiddeld</span>
+                    <div class="strength-bars">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-generate" id="generate-btn">Genereer Wachtwoord</button>
+        </div>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Het coderen van een utility tool vereist robuuste logica. In dit project ontdek je:</p>
+            <ul>
+                <li><strong>String Concatenation:</strong> Het samenvoegen (vastplakken) van tekstblokken op basis van
+                    welke "Checkboxes" Vinkjes hebben the The de the array the the <code>+=</code> The string building.
+                </li>
+                <li><strong>Math.random() The Magic:</strong> the Hoe we onvoorspelbare indexen The the The the
+                    berekenen.</li>
+                <li><strong>Conditional CSS The States:</strong> Het evalueren van The de The The de slider vs
+                    checkboxes the criteria the The The the om vervolgens via JavaScript the de parent-container te the
+                    voorzien van the the class <code>.lvl-strong</code> the The The the of <code>.lvl-weak</code>.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Strings als The Arrays:</strong> Wist je dat The the the je the the the the the een letter
+                    kunt "pakken" uitthe een zin? The the <code>const the abc = "xyz"; console.log(abc[1])</code> print
+                    the the the The <code>"y"</code>! Een the string The In the the the The de memory the The is
+                    eigenlijk the een the the the reeks the the iterabele the karakters.</li>
+                <li><strong>Dynamic Evaluatie:</strong> We The berekenen de the "Score" van The het The the the The
+                    password. Is de the lengte > 16 én zijn The the er The minimaal the 4 the The vinkjes The
+                    geslecteerd? Boom! Dan roepen we The de "Niveau 4: the Veilig" the status The uit.</li>
+                <li><strong>Clipboard the API:</strong> Geen the The oude <code>document.execCommand('copy')</code> the
+                    the the the meer the The (die the the is deprecated). The We the besturen the the The de The
+                    computer klembord via The moderne The the the <code>navigator.clipboard.writeText(pw)</code> the
+                    Promises.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: De "Char" Strings Maken</h4>
-                <p>Voordat we een <code>random</code> wachtwoord the kunnen Maken_, The moeten_ we EERST_ weten uit_
-                    WELKE the the _karakters The the we_ Mogen the_ the KIEZEN! H The. We slaan the het _ daarom_
-                    The_the op _! in the 4_ The losse the strings _! The _</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// 4 Mogelijke The_ the the The string_ the Data_!</span>
-<span class="keyword">const</span> GTheCCharSDeGLettersTHoO_GDat_T = <span class="string">'ABCDEFGHIJKLMNOPQRSTUVWXYZ'</span>;
-<span class="keyword">const</span> DDZKLeCnh_GChar_sL_TheTT = <span class="string">'abcdefghijklmnopqrstuvwxyz'</span>;
-<span class="keyword">const</span> ZGG_CNumTheTaaleenDatHGCharV = <span class="string">'0123456789'</span>;
-<span class="keyword">const</span> TheGSymSyYVCC_HDataZVTheSyms = <span class="string">'!@#$%^&*()_+~|}{[]:;?><,./-='</span>;</pre>
+                <h4>Stap 1: De "Pool" (Zwembad) the the Maken</h4>
+                <p>Kijk naar The de the the checkboxes. The Welke The zijn "checked"? We The bouwen the The de The de
+                    'pool' The the The the The of the karakters.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">let</span> pool = <span class="string">''</span>;
+<span class="comment">// Plak de karakters the The erachter als The the de checkbox The "Vinkje" the the the checked is</span>
+<span class="keyword">if</span> (upperCheck.checked) pool += <span class="string">'ABCDEF...'</span>;
+<span class="keyword">if</span> (lowerCheck.checked) pool += <span class="string">'abcdef...'</span>;
+<span class="keyword">if</span> (numsCheck.checked)  pool += <span class="string">'12345...'</span>;</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: Gekozen the the the Karakters Samenvoegen_ The </h4>
-                <p>We_ the _The_ maken the the een the lege_ string _ aan_The_. En we the Checken_ The_ the then Welke
-                    the `checkbox`_ er _`checked`_The_ THE is_. Is the The hij the _The_The AAN? Dan the Plakken the de
-                    string_ the er the _bij_. </p>
-            </div>
+                <h4>Stap 2: The Random The the Loop</h4>
+                <p>Lees The the the the de Slider waarde the the the The The the the uit. Draai net The The zolang the
+                    als the dat getal the The the the the the (bijv. 12 The the keer). The the The the Pak The The The
+                    uit de the The pool The the index The The een the Willekeurig the The the The The The the letter!
+                </p>
+                <div class="code-example">
+                    <pre><span class="keyword">let</span> password = <span class="string">''</span>;
+<span class="keyword">const</span> length = <span class="function">parseInt</span>(slider.value);
 
-            <div class="step">
-                <h4>Stap 3: Het "FOR_ LOOP"_ the the generator Z The </h4>
-                <p>We The_ lopen nu_ x the keer the _(op _basis van _de The the_ slider) _een _the the loop_. _Elke the
-                    The keer _The_ Pakken the The_The the _We the 1_ WILLEKEURIG_ karakter the The _uit de
-                    _SamenGevoegde_ String !!_</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// THE FOR LOOP RANDOM !! ZThe  Z ! </span>
-<span class="keyword">for</span> (<span class="keyword">let</span> TheIHT_TheLOppDetaTZNumZThatHeT = <span class="string">0</span>; TheIHT_TheLOppDetaTZNumZThatHeT &lt; _length_; TheIHT_TheLOppDetaTZNumZThatHeT++) {
-    <span class="comment">// the Kies _ 1 the random The_ The data Getal Tussen 0 the_ en the _The LENGTE_ VAN DE the the STRING !!_ Z </span>
-    <span class="keyword">const</span> ran_Idx = Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * TDeZPotentieleCharSGDeDatakKDataGDeArr.length);
-    TDeGeBGeZnerWeDeZWWtheTTTheHThe_String += TDeZPotentieleCharSGDeDatakKDataGDeArr[ran_Idx];
+<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="string">0</span>; i < length; i++) {
+    <span class="comment">// random The float * The lengte van The The the the string The -> Floor -> Index the the the the the the The getal</span>
+    <span class="keyword">const</span> randomInx = Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * pool.length);
+    password += pool[randomInx];
 }</pre>
                 </div>
             </div>
+
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Speel the met The de the Slider The! _the_ </li>
-                <li>Zet _the De the_ Checkboxes_ The! the the the Aan the_ enThe _Uit The_ en Druk_ op_ the The_ the
-                    Genereer the THEW_! </li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>Strength ui! the the the:</strong> the The In The de HTML the the heb je de The custom
-                    `BTherekEenDeZTSterkTheHDeWWDATavAndUpdaTheTheUIHThe_` The! _ De check_ The is Super_The simpel The
-                    _Z_: Tel hoeveel Checkboxes The AAN The Staan The! (4 the = ! the The_ sterk, _ the 2= the gemiddeld
-                    ) </li>
-            </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Lege Z_The StringO the The ! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je Alle_ checkboxes THE UIT de V THE zet the_ ! </span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_ the! een Empty the Check Z ! `if (TDeZPotentieleCharSGDeDatakKDataGDeArr.length === 0)` the _the dan_ The return _! _the Je kan Immers THE Geen the M_The Random_ Z Nummer The Picken in the_ the een LEGE the The String! _ </span></pre>
-                </div>
-            </div>
-        </div>
-
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Voorkom the! Gelijkende_ The the_ karakters! !! The The The The! </strong> the the
-                        thethe the THE the Bouw The een Checkbox_ The ! `Vermijd the l, The1, O The, the 0 ` the_ the
-                        _OM_ De_ Gelijkende karakters the The The UI_ the TheT _The !! OpeN! The _ . _The !. THE </li>
+                    <li><strong>Guaranteed Characters:</strong> Heb je The een The wachtwoord The eis the "Vereist the
+                        The minstens the 1 The getal The en 1 the teken"? De The the huidige loop the the The the kan
+                        The the the per the toeval the The 12 the the letters generen The the The zonder in the de
+                        <code>syms</code> the The pool te vallen. Best practice The voeg The handmatig the the 1 the
+                        symbool The index the the toe The uit the de The opties The en the The the
+                        <code>shuffle()</code> the array The!</li>
+                    <li><strong>Woord Wachtwoorden The (XKCD):</strong> Soms the The the zijn
+                        "BatterijPaardNietjesCorrect" the sterker The en the veel The The makkelijker the The The The
+                        The The te onthouden dan the <code>$k3!lD*0</code>. Voeg een "Array" van 1000 the the woorden
+                        The The en the genereer The The zinnen the in the the the de plaats.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
-        <div class="wZ_Result_HOutPBoxTVH">
-            <div id="OuThtDDe_HZWachTwoordG_TheTekstH">P4$5W0rD!</div>
-            <button class="btnCTheopyBtnM_H" id="KKnnP_Copiee_rbtnG_H_" title="Kopieer C">
-                📋
-            </button>
-        </div>
-
-        <div class="sliderTheContZ_oT_H_TheH_">
-            <div class="MTheTThelDataLengthH_H">
-                <span>Karakter Lengte</span>
-                <span id="TDa_THtUIOZD_ALengteO__TxtT" style="color: #10b981; font-size: 1.2rem;">12</span>
-            </div>
-            <input type="range" id="ZRaDeOTheB_SilderSNumK_HT" min="6" max="32" value="12">
-        </div>
-
-        <div class="oTTheH_TogglesGrpHDeThe">
-            <label class="DTheHh_TheCHkBT_T_LabeZO">
-                Inclusief Hoofdletters (A-Z)
-                <input type="checkbox" id="Tchk_HoHofdlOOHTZT" checked>
-            </label>
-            <label class="DTheHh_TheCHkBT_T_LabeZO">
-                Inclusief Kleine O Letters (a-z)
-                <input type="checkbox" id="TchkK_Zleen_etTHOOTZ" checked>
-            </label>
-            <label class="DTheHh_TheCHkBT_T_LabeZO">
-                InclusiefZ_ Getallen (0-9)
-                <input type="checkbox" id="TGgeZTalenK_ChOOkThe_H" checked>
-            </label>
-            <label class="DTheHh_TheCHkBT_T_LabeZO">
-                Inclusief the Symbolen_ (!@#)
-                <input type="checkbox" id="TKC_SymbolOTheChkBOXT">
-            </label>
-        </div>
-
-        <div class="THeTheSterkteMZH_TheMTRHThat">
-            <span class="VTheTTkZThatSteVTVTeTThe_TheTextHData" id="TThe_SteRkT_eTextStr_The_H">Gemiddeld</span>
-            <div class="SGeT_MeterTheBalBZT_V_H mStr-gemiddeld" id="StTTT_UIBalkeZTheJSHHTML_Div_Z_DTheDeThe">
-                <div class="STheTZHTheBalkjeOThe"></div>
-                <div class="STheTZHTheBalkjeOThe"></div>
-                <div class="STheTZHTheBalkjeOThe"></div>
-                <div class="STheTZHTheBalkjeOThe"></div>
-            </div>
-        </div>
-
-        <button class="btn-GGeneERTEThThKHTHT_H" id="KKnopTGGeGeZneThe_rRBTHTV_">Genereer Wachtwoord →</button>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Extra Uitdagingen</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const THEOUI_UItVTheTexDT = document.getElementById('OuThtDDe_HZWachTwoordG_TheTekstH');
-        const BTZN_cCOpihETTheBTn = document.getElementById('KKnnP_Copiee_rbtnG_H_');
+        const output = document.getElementById('password-output');
+        const lengthSlider = document.getElementById('length-slider');
+        const lengthVal = document.getElementById('length-val');
+        const generateBtn = document.getElementById('generate-btn');
+        const copyBtn = document.getElementById('copy-btn');
 
-        const SLIThe_TLeNGTHE_HT_SL = document.getElementById('ZRaDeOTheB_SilderSNumK_HT');
-        const UThe_LLengTheTTextTVZData = document.getElementById('TDa_THtUIOZD_ALengteO__TxtT');
+        const upperCheck = document.getElementById('check-upper');
+        const lowerCheck = document.getElementById('check-lower');
+        const numsCheck = document.getElementById('check-nums');
+        const symsCheck = document.getElementById('check-syms');
 
-        const ch_kHoHFDLettersDeThe = document.getElementById('Tchk_HoHofdlOOHTZT');
-        const cthe_HkleinneLeettH_D = document.getElementById('TchkK_Zleen_etTHOOTZ');
-        const ZThCGe_TheC_Gtall_H_en = document.getElementById('TGgeZTalenK_ChOOkThe_H');
-        const TTheSy_ChH_TbolZT = document.getElementById('TKC_SymbolOTheChkBOXT');
+        const strText = document.getElementById('strength-text');
+        const strDisplay = document.getElementById('strength-display');
 
-        const BBtnGnGe_ReneHBtnDeTheGTheZ = document.getElementById('KKnopTGGeGeZneThe_rRBTHTV_');
-        const TUITheSS_TxtStrDeKHT__SteDataDeThe = document.getElementById('TThe_SteRkT_eTextStr_The_H');
-        const SSUiMeterDiv_SBalTheDe = document.getElementById('StTTT_UIBalkeZTheJSHHTML_Div_Z_DTheDeThe');
+        // Onze ruwe data dictionary The
+        const CHARS = {
+            upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            lower: 'abcdefghijklmnopqrstuvwxyz',
+            nums: '0123456789',
+            syms: '!@#$%^&*()_+~|}{[]:;?><,./-='
+        };
 
-        // CHARACTER DATA STIRNGS !
-        const GTheCCharSDeGLettersTHoO_GDat_T = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const DDZKLeCnh_GChar_sL_TheTT = 'abcdefghijklmnopqrstuvwxyz';
-        const ZGG_CNumTheTaaleenDatHGCharV = '0123456789';
-        const TheGSymSyYVCC_HDataZVTheSyms = '!@#$%^&*()_+~|}{[]:;?><,./-=';
+        function generate() {
+            let pool = '';
 
-        // Update lengte UI Text H !! The 
-        SLIThe_TLeNGTHE_HT_SL.addEventListener('input', (e) => {
-            UThe_LLengTheTTextTVZData.innerText = e.target.value;
-        });
+            // Controleer state van the checkboxes The 
+            if (upperCheck.checked) pool += CHARS.upper;
+            if (lowerCheck.checked) pool += CHARS.lower;
+            if (numsCheck.checked) pool += CHARS.nums;
+            if (symsCheck.checked) pool += CHARS.syms;
 
-        // Genereer de MAIN STRING !! H !! 
-        function GenDeWWWeerLogicGeDataVThe() {
-            const _G_ZLenGHTH_O__TVaNumO_GDeThe = parseInt(SLIThe_TLeNGTHE_HT_SL.value);
-
-            let TDeZPotentieleCharSGDeDatakKDataGDeArr = '';
-            let TDeGeBGeZnerWeDeZWWtheTTTheHThe_String = ''; // de output string
-
-            // The Z Bouw_ the DE ALLOWED CHARS String _The! H !! Z 
-            if (ch_kHoHFDLettersDeThe.checked) TDeZPotentieleCharSGDeDatakKDataGDeArr += GTheCCharSDeGLettersTHoO_GDat_T;
-            if (cthe_HkleinneLeettH_D.checked) TDeZPotentieleCharSGDeDatakKDataGDeArr += DDZKLeCnh_GChar_sL_TheTT;
-            if (ZThCGe_TheC_Gtall_H_en.checked) TDeZPotentieleCharSGDeDatakKDataGDeArr += ZGG_CNumTheTaaleenDatHGCharV;
-            if (TTheSy_ChH_TbolZT.checked) TDeZPotentieleCharSGDeDatakKDataGDeArr += TheGSymSyYVCC_HDataZVTheSyms;
-
-            if (TDeZPotentieleCharSGDeDatakKDataGDeArr.length === 0) {
-                THEOUI_UItVTheTexDT.innerText = "Kies 1 optie!";
+            // Failsafe: the The als the user the The alles the The the uit vinkt the
+            if (!pool) {
+                output.innerText = '⚠️ Kies ten minste 1 the optie!';
+                output.style.color = "#ef4444";
                 return;
             }
+            output.style.color = "#10b981";
 
-            // THE FOR LOOP RANDOM !! ZThe  Z ! 
-            for (let TheIHT_TheLOppDetaTZNumZThatHeT = 0; TheIHT_TheLOppDetaTZNumZThatHeT < _G_ZLenGHTH_O__TVaNumO_GDeThe; TheIHT_TheLOppDetaTZNumZThatHeT++) {
-                const TheRnRndINTheHInd_ZZDeDataVTheVarHNumRndT = Math.floor(Math.random() * TDeZPotentieleCharSGDeDatakKDataGDeArr.length);
-                TDeGeBGeZnerWeDeZWWtheTTTheHThe_String += TDeZPotentieleCharSGDeDatakKDataGDeArr[TheRnRndINTheHInd_ZZDeDataVTheVarHNumRndT];
+            let password = '';
+            const length = parseInt(lengthSlider.value);
+
+            // Loop en Randomize
+            for (let i = 0; i < length; i++) {
+                password += pool[Math.floor(Math.random() * pool.length)];
             }
 
-            THEOUI_UItVTheTexDT.innerText = TDeGeBGeZnerWeDeZWWtheTTTheHThe_String;
-
-            BTherekEenDeZTSterkTheHDeWWDATavAndUpdaTheTheUIHThe_();
+            output.innerText = password;
+            checkStrength();
         }
 
-        function BTherekEenDeZTSterkTheHDeWWDATavAndUpdaTheTheUIHThe_() {
-            let ThTCountChkVTheHCheckZZz = 0;
-            if (ch_kHoHFDLettersDeThe.checked) ThTCountChkVTheHCheckZZz++;
-            if (cthe_HkleinneLeettH_D.checked) ThTCountChkVTheHCheckZZz++;
-            if (ZThCGe_TheC_Gtall_H_en.checked) ThTCountChkVTheHCheckZZz++;
-            if (TTheSy_ChH_TbolZT.checked) ThTCountChkVTheHCheckZZz++;
+        function checkStrength() {
+            let points = 0; // Checkboxes active
+            if (upperCheck.checked) points++;
+            if (lowerCheck.checked) points++;
+            if (numsCheck.checked) points++;
+            if (symsCheck.checked) points++;
 
-            const V_KTheTheLengkTHV = parseInt(SLIThe_TLeNGTHE_HT_SL.value);
+            const length = parseInt(lengthSlider.value);
 
-            // Simpel strength H Check The_! Z 
-            if (ThTCountChkVTheHCheckZZz >= 3 && V_KTheTheLengkTHV >= 12) {
-                TUITheSS_TxtStrDeKHT__SteDataDeThe.innerText = "Sterk";
-                SSUiMeterDiv_SBalTheDe.className = "SGeT_MeterTheBalBZT_V_H mStr-sterk";
-            } else if (ThTCountChkVTheHCheckZZz >= 2 && V_KTheTheLengkTHV >= 8) {
-                TUITheSS_TxtStrDeKHT__SteDataDeThe.innerText = "Gemiddeld";
-                SSUiMeterDiv_SBalTheDe.className = "SGeT_MeterTheBalBZT_V_H mStr-gemiddeld";
+            // Sterkte Formulieren logica The
+            if (length >= 16 && points >= 4) {
+                strText.innerText = 'Onkraakbaar';
+                strDisplay.className = 'lvl-secure';
+            } else if (length >= 12 && points >= 3) {
+                strText.innerText = 'Erg Sterk';
+                strDisplay.className = 'lvl-strong';
+            } else if (length >= 8 && points >= 2) {
+                strText.innerText = 'Gemiddeld';
+                strDisplay.className = 'lvl-medium';
             } else {
-                TUITheSS_TxtStrDeKHT__SteDataDeThe.innerText = "Zwak!";
-                SSUiMeterDiv_SBalTheDe.className = "SGeT_MeterTheBalBZT_V_H mStr-zwak";
+                strText.innerText = 'Zwak';
+                strDisplay.className = 'lvl-weak';
             }
         }
 
-        // --- BUTTONS / EVENTS  The THE !Z ---
-        BBtnGnGe_ReneHBtnDeTheGTheZ.addEventListener('click', GenDeWWWeerLogicGeDataVThe);
+        // Live slider updates
+        lengthSlider.addEventListener('input', (e) => {
+            lengthVal.innerText = e.target.value;
+            // The Update live while sliding The (Feels more native!)
+            generate();
+        });
 
-        BTZN_cCOpihETTheBTn.addEventListener('click', () => {
-            const TTheS_ZStringDHDaHWWH = THEOUI_UItVTheTexDT.innerText;
-            if (TTheS_ZStringDHDaHWWH === "Kies 1 optie!") return;
+        generateBtn.addEventListener('click', generate);
 
-            navigator.clipboard.writeText(TTheS_ZStringDHDaHWWH).then(() => {
-                BTZN_cCOpihETTheBTn.innerText = "✅";
-                setTimeout(() => BTZN_cCOpihETTheBTn.innerText = "📋", 2000);
+        // Klembord code!
+        copyBtn.addEventListener('click', () => {
+            const pw = output.innerText;
+            if (!pw || pw.includes('⚠️')) return;
+
+            navigator.clipboard.writeText(pw).then(() => {
+                const text = copyBtn.innerText;
+                copyBtn.innerText = 'Gekopieerd! ✅';
+                copyBtn.style.color = "#10b981";
+                copyBtn.style.borderColor = "#10b981";
+
+                setTimeout(() => {
+                    copyBtn.innerText = text;
+                    copyBtn.style.color = "#3b82f6";
+                    copyBtn.style.borderColor = "#3b82f6";
+                }, 2000);
             });
         });
 
-        // init !
-        GenDeWWWeerLogicGeDataVThe();
-
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
+            const exp = document.getElementById('expansions');
             const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Extra Uitdagingen' : '📖 Toon Extra Uitdagingen';
         }
+
+        // Initialiseer met 1 ww the direct al 
+        generate();
     </script>
 </body>
 

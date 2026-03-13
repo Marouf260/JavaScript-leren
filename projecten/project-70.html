@@ -14,41 +14,37 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #111827 0%, #312e81 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            color: #f3f4f6;
+            color: #f8fafc;
         }
 
         .container {
-            background: #1f2937;
+            background: #1e293b;
             border-radius: 16px;
             padding: 2.5rem;
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            border: 1px solid #374151;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #f9fafb;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
             text-align: center;
             font-size: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
         }
 
         .level {
             display: block;
             padding: 0.25rem 0.75rem;
-            background: rgba(99, 102, 241, 0.2);
-            color: #818cf8;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -57,18 +53,16 @@
             margin-left: auto;
             margin-right: auto;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        /* APP CSS H_T */
         textarea {
             width: 100%;
             height: 150px;
-            background: #374151;
-            border: 2px solid #4b5563;
+            background: #0f172a;
+            border: 2px solid #334155;
             border-radius: 12px;
             padding: 15px;
-            color: #f9fafb;
+            color: #f8fafc;
             font-size: 1.1rem;
             resize: none;
             outline: none;
@@ -76,29 +70,34 @@
             font-family: inherit;
             margin-bottom: 20px;
             line-height: 1.5;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         textarea:focus {
-            border-color: #6366f1;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+            border-color: #3b82f6;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 0 10px rgba(59, 130, 246, 0.2);
         }
 
-        .oUIOptiesGridTHZ {
+        .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             margin-bottom: 30px;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #334155;
         }
 
-        .oUIOptiesGridTHZ .DeZkGroepInputH {
+        .input-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
-        .DeZkGroepInputH label {
-            font-size: 0.9rem;
-            color: #9ca3af;
+        .input-group label {
+            font-size: 0.85rem;
+            color: #cbd5e1;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -109,442 +108,397 @@
         select {
             width: 100%;
             padding: 12px;
-            background: #374151;
-            border: 2px solid #4b5563;
-            color: #f9fafb;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #f8fafc;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             cursor: pointer;
-            appearance: none;
+            transition: border-color 0.2s;
         }
 
         select:focus {
-            border-color: #6366f1;
+            border-color: #3b82f6;
         }
 
-        /* Range sliders */
         input[type=range] {
-            -webkit-appearance: none;
             width: 100%;
             height: 6px;
-            background: #4b5563;
+            background: #1e293b;
             border-radius: 3px;
             outline: none;
-            margin-top: 10px;
             cursor: pointer;
+            accent-color: #3b82f6;
         }
 
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 18px;
-            width: 18px;
-            background: #6366f1;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
-        }
-
-        input[type=range]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-        }
-
-        .BtnKHoopSTartSpp_H {
+        .btn-speak {
             width: 100%;
-            background: #6366f1;
+            background: #3b82f6;
             color: white;
             border: none;
             padding: 18px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            font-size: 1.1rem;
+            font-weight: 800;
             border-radius: 12px;
             cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            transition: all 0.2s;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 4px 0 #4338ca;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
 
-        .BtnKHoopSTartSpp_H:active {
-            transform: translateY(4px);
-            box-shadow: 0 0 0 transparent;
+        .btn-speak:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
         }
 
-        .BtnKHoopSTartSpp_H:hover {
-            background: #4f46e5;
-        }
-
-        /* Stop btn alternatief _! */
-        .BtnKHoopSTartSpp_H.IsAanTSp_H_Reken_Z {
+        .btn-speak.speaking {
             background: #ef4444;
-            box-shadow: 0 4px 0 #b91c1c;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+            animation: pulse 1.5s infinite;
         }
 
-        .BtnKHoopSTartSpp_H.IsAanTSp_H_Reken_Z:hover {
-            background: #dc2626;
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(239, 68, 68, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
         }
 
-
-        .VUiBalkBoven_A_Waarsch {
-            background: rgba(239, 68, 68, 0.2);
-            color: #fca5a5;
-            padding: 15px;
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
             border-radius: 8px;
-            border-left: 4px solid #ef4444;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+            margin-top: 3rem;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
             font-size: 0.9rem;
-            margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .variable {
+            color: #e5c07b;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
             display: none;
         }
 
-        /* Animation waves Z ! */
-        .HDe__A_niG_WavesH {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            height: 30px;
-            opacity: 0;
-            transition: 0.3s;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 10px;
-        }
-
-        .HDe__A_niG_WavesH.Z_Z_AcTifeHThe {
-            opacity: 1;
-        }
-
-        .S_DDeBalkGolfH_DThe {
-            width: 4px;
-            height: 10px;
-            background: #6366f1;
-            border-radius: 2px;
-            animation: GGolfZAni 1s ease-in-out infinite;
-        }
-
-        .S_DDeBalkGolfH_DThe:nth-child(2) {
-            animation-delay: 0.2s;
-            background: #8b5cf6;
-        }
-
-        .S_DDeBalkGolfH_DThe:nth-child(3) {
-            animation-delay: 0.4s;
-            background: #d946ef;
-        }
-
-        .S_DDeBalkGolfH_DThe:nth-child(4) {
-            animation-delay: 0.6s;
-            background: #f43f5e;
-        }
-
-        @keyframes GGolfZAni {
-
-            0%,
-            100% {
-                height: 10px;
-            }
-
-            50% {
-                height: 30px;
-            }
+        .expandable.show {
+            display: block;
         }
 
         .back-link {
-            display: block;
-            margin-top: 2rem;
-            color: #9ca3af;
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
             text-align: center;
-            transition: 0.2s;
-        }
-
-        .back-link:hover {
-            color: white;
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>🎙️ Tekst naar Spraak API</h1>
-        <span class="level">Utility Apps</span>
+        <h1>🎙️ Native Synthesizer API</h1>
+        <span class="level">Web Accessibility API</span>
+
+        <div class="project-area">
+            <textarea id="text-input"
+                placeholder="Typ hier je tekst...">Welkom the The bij The the project 70. Wist The the je dat the Javascript een the geniale, ingebouwde Native the the the Robot-stem functionaliteit The the heeft the in de The browser?</textarea>
+
+            <div class="options-grid">
+                <div class="input-group" style="grid-column: span 2;">
+                    <label>Systeem Stem <span id="voices-count" style="color: #60a5fa;">(laden...)</span></label>
+                    <select id="voice-select"></select>
+                </div>
+
+                <div class="input-group">
+                    <label>Snelheid <span id="rate-value" style="color: #3b82f6;">1.0</span></label>
+                    <input type="range" id="rate-slider" min="0.5" max="2" value="1" step="0.1">
+                </div>
+
+                <div class="input-group">
+                    <label>Toonhoogte <span id="pitch-value" style="color: #3b82f6;">1.0</span></label>
+                    <input type="range" id="pitch-slider" min="0" max="2" value="1" step="0.1">
+                </div>
+            </div>
+
+            <button class="btn-speak" id="speak-btn">Genereer the Spraak</button>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 De The Web the Speech The API</h3>
+            <p>Elke The the the the moderne the the The browser the the heeeft de the
+                <code>Web The the Speech API</code> the The ingebouwd. Met the The The these the classes The The the the
+                The Kun The the the the The you text omtoveren in audio The The (Text-To-Speech = the The TTS), The
+                <b>The the the ZONDER dat the je the the internetThe the / the The netwerk-verkeer The the nodig hebt!
+                    The </b>the </p>
+            <ul>
+                <li><strong>speechSynthesis:</strong> De controller. Je the commandocentrum the the (Start, The Pauzeer,
+                    Annuleer).</li>
+                <li><strong>SpeechSynthesisUtterance:</strong> The the Het "berichtThe the ". The Dit is the the the The
+                    een the the Klasse the The The The the wrapper the voor The jouw The Data (de the The The the Text
+                    The STRING, Volume, SnelheidThe The the theThe The , enz).</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Asynchroon Stemmen Laden</h3>
+            <p>Omdat the the Mircrosoft The Windows/Google The OS The The The The their The The eigen the The The the
+                stemmen the 'injects' the the the in de The browserthe the the The The (en The The Mac the The OS The
+                the the The their the The the eigen The applethe siri stemmen The ), The The laad the the Javascript de
+                stemmen <b>Asynchroon.</b> The </p>
 
             <div class="step">
-                <h4>Stap 1: De <code>SpeechSynthesis</code> API</h4>
-                <p>Moderne the browsers_ The_ hebben al een ingebouwde the _ Text-to-Speech ! the_ Hier the_ The _maken
-                    the we_ gebruik MTheThe van the_ de_ The <code>window.speechSynthesis</code> _! </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
-<span class="keyword">const</span> ZSS_ZSynthDOMDaaT_A_PThe_TTheI = window.speechSynthesis;
+                <h4>1: The the Event The of The the Array the the The Check the</h4>
+                <p>We luisteren the The The The The The the naar the het <code>voiceschanged</code> The the The The the
+                    event the The The The om the The te weten the WANNEER the the de stemmen The in het the the
+                    <code>getVoices()</code> The The array The zitten the .</p>
+                <div class="code-example">
+                    <pre><span class="keyword">let</span> voices = []; <span class="comment">// The initial The State The the</span>
 
-<span class="comment">// De Array  met alle the _the Gevonden The Stemmen </span>
-<span class="keyword">let</span> stemmenThe_L = ZSS_ZSynthDOMDaaT_A_PThe_TTheI.<span class="function">getVoices</span>();</pre>
+<span class="comment">// The the The Als  de stemmen loaded zien The the triggering</span>
+window.speechSynthesis.onvoiceschanged = () => {
+    voices = window.speechSynthesis.<span class="function">getVoices</span>();
+    
+    <span class="comment">// Vul  die the the the the the HTML dropdown...</span>
+    <span class="function">populateVoiceList</span>(); 
+};</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: Het <code>Utterance</code> Object Maken! </h4>
-                <p>Om _ the De the the computer the the The the the iets The _ te the The_! Laten_ the_ Zeggen, _ Maken
-                    we EEN The The_ The _! <code>SpeechSynthesisUtterance</code> The ! We _ _the ! the the geven the the
-                    Text , de _ Pitch_, en the the_ de Rate The_ MEE The_ The THE ! _ </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// 1. Bouw The the de Utterance ZThe  Z ! </span>
-<span class="keyword">const</span> DDHTextThe = <span class="keyword">new</span> <span class="function">SpeechSynthesisUtterance</span>(<span class="string">"Hallo Vriend!"</span>);
-
-<span class="comment">// 2. the Config THE _ </span>
-DDHTextThe.rate = <span class="string">1.5</span>; <span class="comment">// 1.5x DDe Snelheid__!_ </span>
-DDHTextThe.pitch = <span class="string">2</span>;  <span class="comment">// the the Hooge Stem M_!_ </span>
-
-<span class="comment">// 3. SPREEK! THE_The</span>
-ZSS_ZSynthDOMDaaT_A_PThe_TTheI.<span class="function">speak</span>(DDHTextThe);</pre>
+                <h4>2: Cellen the the the en Vuren The the</h4>
+                <p>De actual the spraak code the is extreem simpel! the The Je The defineert het the The Message the the
+                    The Object the <code>Utterance</code> The the The The The the The the en The je vuurt The hetthe the
+                    the in The The The the de global the <code>speechSynthesis.speak()</code> the functionThe the the
+                    The the the the The .</p>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">speak</span>() {
+    <span class="comment">// The Data The the</span>
+    <span class="keyword">const</span> msg = <span class="keyword">new</span> <span class="function">SpeechSynthesisUtterance</span>(textInput.value);
+    
+    <span class="comment">// The The Configuratiethe the</span>
+    msg.voice = voices[voiceSelect.value];
+    msg.rate = <span class="string">1.5</span>; <span class="comment">// the the Snellerthe</span>
+    
+    <span class="comment">// GO The the The! The</span>
+    window.speechSynthesis.<span class="function">speak</span>(msg);
+}</pre>
                 </div>
             </div>
 
-            <div class="step">
-                <h4>Stap 3: Events _! </h4>
-                <p>We_ the _The_ Kunnen _ aan the The <code>Utterance</code> the_ events the koppelen, the_ zo the
-                    _kunnen the__The_ we The de ! _The_the _animatie The_ the Starten _The ! The (<code>onstart</code>)
-                    the _En _ Stoppen _ the The!_ (<code>onend</code>)! </p>
-            </div>
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Typ the_ een the_ tekst _in! _the_ </li>
-                <li>Verander De the_ The Stem _ The! the the the(naar The! _ Bv English of_ Google_ NL!) _ the </li>
-                <li>Speel The_ met The! de_ the_ Snelheid the ! </li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>Chrome the Bug_the:</strong> the The In The de JS The zie je the_ The ! The _ dat de de_ the
-                    <code>getVoices()</code> The_ IN the The _een ! the the <code>voiceschanged</code> The event
-                    LIstener _ the Staat! Dit_ THE ! The Is_ the the The_ omdat Chrome_ The_ The de stemmen ASYNC the
-                    INlaad_The! </li>
-            </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: de_ Lange The TexteN ! _ </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je hele TThe Lange Lappen Text the_ Erin THE _ Gooit_ kan THE de The Speech API the Halverwege The ! Stoppen  (Chrome memory bug!_)The </span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The thethe splits M _The De tekst in the chunks!! _ </span></pre>
-                </div>
-            </div>
-        </div>
-
-        <!-- Uitbreidingen -->
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Opletten The: Chrome restrictions</button>
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
-                <ul>
-                    <li><strong>Pauze the / Resume ! !! The The The The! </strong> the the thethe the THE the Bouw The
-                        DE V The_ the the the The_ Logica OM The_The Het! _ PAUZE (
-                        <code>window.speechSynthesis.pause()</code> ) en The!_ RESUMEthe! (
-                        <code>window.speechSynthesis.resume()</code>The!_ ) Mogelijk the the TE the!_ MAken THE !!_
-                    </li>
-                </ul>
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ the Auto-Play Policy Blocked the The the </h3>
+                <p>Er The was the the een tijd The dat websites TheThe theThe je The uit the the het the THE niets THE
+                    the Kondenthe the the The uitschelden of the praten the! BrowserThe sThe The (zoalsThe The The
+                    Chrome) The blokkerenthe the the The nu <code>speechSynthesis.speak()</code> tenzij the hetThe The
+                    <b> direct the gedreven wordt door een The menselijk event The (Zoals the een Muis Klik )! </b>the
+                </p>
+                <p>Dit noementtheTheThe we the The user-interactions restriction The ! Dit The zal een "the The The
+                    DOMExceptionThe the The NotAllowedErrorThe the " returnenthe The Als je dit probeert The via de The
+                    Console of de OnLoad without clicksThe .the </p>
             </div>
-        </div>
-
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- Waarschuwing (indien browser API Niet the onderstuent_!) -->
-        <div class="VUiBalkBoven_A_Waarsch" id="DeM_ZMsgErrMthe_">
-            Jouw browser ondersteunt helaas de SpeechSynthesis API niet.
-        </div>
-
-        <div class="HDe__A_niG_WavesH" id="GGlfUIA_AniMTDTheH">
-            <div class="S_DDeBalkGolfH_DThe"></div>
-            <div class="S_DDeBalkGolfH_DThe"></div>
-            <div class="S_DDeBalkGolfH_DThe"></div>
-            <div class="S_DDeBalkGolfH_DThe"></div>
-            <div class="S_DDeBalkGolfH_DThe"></div>
-        </div>
-
-        <!-- App Area -->
-        <div class="project-area">
-
-            <textarea id="OTextHTATVInvoerZTe"
-                placeholder="Typ of plak hier een tekst in om deze te laten voorlezen... (Bv: Hallo, hoe gaat het?)">Welkom bij project zeventig! Deze spraak API zit standaard al in je browser gebouwd.</textarea>
-
-            <div class="oUIOptiesGridTHZ">
-                <div class="DeZkGroepInputH" style="grid-column: span 2;">
-                    <label>Stem <span id="DeSTHTemTextNumHHUI" style="color: #6366f1;">- Lade...</span></label>
-                    <select id="UKSTHTTemmSeLEctV_T_Data_H"></select>
-                </div>
-
-                <div class="DeZkGroepInputH">
-                    <label>Snelheid <span id="TDa_THtUI_R_SnelH_T">1.0</span></label>
-                    <input type="range" id="ZR_H_RSneltheHh_ZTheSlider" min="0.5" max="2" value="1" step="0.1">
-                </div>
-
-                <div class="DeZkGroepInputH">
-                    <label>Toonhoogte (Pitch) <span id="TDa_THtUI_PTch_T">1.0</span></label>
-                    <input type="range" id="ZR_PPiTHT_ChSTheLTD" min="0" max="2" value="1" step="0.1">
-                </div>
-            </div>
-
-            <button class="BtnKHoopSTartSpp_H" id="ZUIKKn_RPlaySTopDataHDeT_Z">
-                <span>▶ Lees Voor</span>
-            </button>
-
         </div>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        // Check of the The de API V er_  is_
-        const TheTUiAARThe_MEsgErrV_ = document.getElementById('DeM_ZMsgErrMthe_');
+        const synthesizer = window.speechSynthesis;
+        const voiceSelect = document.getElementById('voice-select');
+        const textInput = document.getElementById('text-input');
+        const rateSlider = document.getElementById('rate-slider');
+        const pitchSlider = document.getElementById('pitch-slider');
+        const speakBtn = document.getElementById('speak-btn');
+        const rateValue = document.getElementById('rate-value');
+        const pitchValue = document.getElementById('pitch-value');
+        const voicesCount = document.getElementById('voices-count');
 
-        if (!('speechSynthesis' in window)) {
-            TheTUiAARThe_MEsgErrV_.style.display = "block";
-            document.querySelector('.project-area').style.opacity = "0.5";
-            document.querySelector('.project-area').style.pointerEvents = "none";
-        }
+        let voices = [];
 
-        // INIT DOM Nodees _Z
-        const ZSS_ZSynthDOMDaaT_A_PThe_TTheI = window.speechSynthesis;
+        function populateVoiceList() {
+            // Vraag Alle The The operating The The system The stemmen The The the op. 
+            voices = synthesizer.getVoices();
+            if (voices.length === 0) return;
 
-        const UIStmThe_SKiezerSHTL = document.getElementById('UKSTHTTemmSeLEctV_T_Data_H');
-        const UUITxtAA_DeDeinveHTexH = document.getElementById('OTextHTATVInvoerZTe');
-        const DeRTSneldDeH__TSliderVThe = document.getElementById('ZR_H_RSneltheHh_ZTheSlider');
-        const DTTheRehDePTci_hHSlDT = document.getElementById('ZR_PPiTHT_ChSTheLTD');
+            voiceSelect.innerHTML = ''; // Leeg de placeholder the the 
 
-        const BtZHoofDKnoOpThe = document.getElementById('ZUIKKn_RPlaySTopDataHDeT_Z');
-        const TUIBtnDeS_PnHDataLabel = BtZHoofDKnoOpThe.querySelector('span'); // de text in de knop O !
+            voices.forEach((voice, i) => {
+                const option = document.createElement('option');
+                // Format: The "Google Nederlands The (nl-NL)"
+                option.textContent = `${voice.name} (${voice.lang})`;
+                option.value = i;
 
-        // TExt Labels UI 
-        const LSlLTheSHNeldTeZTextH = document.getElementById('TDa_THtUI_R_SnelH_T');
-        const LPpPitchTextTheTVaLueHTLabel = document.getElementById('TDa_THtUI_PTch_T');
-        const nNUUiaA_nttalStem_HTheLAbelT = document.getElementById('DeSTHTemTextNumHHUI');
-        const THEG_GFGolfAniMUi = document.getElementById('GGlfUIA_AniMTDTheH');
-
-        let gGGlobalDeSTEMDataObjH_HTheAALr_RAY = [];
-
-        // 1. HAAL STEMMEN OP The _!_ (Dit is Async The the ! in browser the_ )
-        function V_HaAlDBesZCHSTTThemSmenOP_HT() {
-            gGGlobalDeSTEMDataObjH_HTheAALr_RAY = ZSS_ZSynthDOMDaaT_A_PThe_TTheI.getVoices();
-
-            if (gGGlobalDeSTEMDataObjH_HTheAALr_RAY.length === 0) return; // nog the NIetT gelaTDen V! _ 
-
-            UIStmThe_SKiezerSHTL.innerHTML = ''; // CHlear LTheTheZ
-
-            gGGlobalDeSTEMDataObjH_HTheAALr_RAY.forEach((oTStemObjv_Z, ZTTheINtheHNum_) => {
-                const O_OppHTioNDOM_V_The = document.createElement('option');
-                O_OppHTioNDOM_V_The.textContent = `${oTStemObjv_Z.name} (${oTStemObjv_Z.lang})`;
-                O_OppHTioNDOM_V_The.value = ZTTheINtheHNum_; // the Z_ Save_! index number ZThe 
-
-                // Select_ default NL as first if The_ exist  (ZThe_ Google Nederlands  etc)!
-                if (oTStemObjv_Z.lang.includes('nl') && oTStemObjv_Z.default) {
-                    O_OppHTioNDOM_V_The.selected = true;
+                // Slim the foefjeThe The The : als er 'nl' the in The de taal code The the The staat, The selecteer hem The the The The the als in The default list!the 
+                if (voice.lang.includes('nl')) {
+                    option.selected = true;
                 }
-                UIStmThe_SKiezerSHTL.appendChild(O_OppHTioNDOM_V_The);
-            });
 
-            nNUUiaA_nttalStem_HTheLAbelT.innerText = `(${gGGlobalDeSTEMDataObjH_HTheAALr_RAY.length} beschikbaar)`;
+                voiceSelect.appendChild(option);
+            });
+            voicesCount.innerText = `(${voices.length} geladen)`;
         }
 
-        // TRIGGER ON DATA The V O LOAD ! The_ _ V  (Cruciaal voor the Chrome! The_ )
-        // Omdat getVoices() the async_ THE Z is, the triggert The_ de the api een EVENT_! The zodra de stemmen T in the geladen _Z ! zijn
-        ZSS_ZSynthDOMDaaT_A_PThe_TTheI.addEventListener('voiceschanged', V_HaAlDBesZCHSTTThemSmenOP_HT);
-        V_HaAlDBesZCHSTTThemSmenOP_HT(); // Also the  fire the ! direct V _ just in The case HT !!
+        // De listener the ! Omdat windows/mac the de stemmen laadt the 
+        if (synthesizer.onvoiceschanged !== undefined) {
+            synthesizer.onvoiceschanged = populateVoiceList;
+        }
 
+        // Firefox laadt ze soms WEL the direct, the dus the We the fire the the it the also once manuallyThe the The !
+        populateVoiceList();
 
-        // 2 DE MAIN SPRAAK_ THE ! LOGICA ! 
-        function TSSpReEeTkDTextLogicDataVThe_Z() {
-            // Als er al gepraat The ! word_ The stop !!
-            if (ZSS_ZSynthDOMDaaT_A_PThe_TTheI.speaking) {
-                ZSS_ZSynthDOMDaaT_A_PThe_TTheI.cancel(); // STop het The Z!
-                DeR_TSeTheUiVWeeerStnND_DataT_RTH();
+        function speak() {
+            // Safety The check: The Thethe The Als we AL praten, the The the de klik annuleert The de  robot data the 
+            if (synthesizer.speaking) {
+                synthesizer.cancel();
+                resetUI();
                 return;
             }
 
-            const VTeTDTheXTextGThZ = UUITxtAA_DeDeinveHTexH.value;
-            // Als veldThe LTheeeg The Is! 
-            if (VTeTDTheXTextGThZ.trim() === '') return;
+            const text = textInput.value;
+            if (text === '') return;
 
-            // BUILD THe The Utterance_ API objectH ! (Z_! THE H_ )
-            const DU_Ut_THThTDataSP_RrakOTheZ = new SpeechSynthesisUtterance(VTeTDTheXTextGThZ);
+            // Het "Message" object! 
+            const utterance = new SpeechSynthesisUtterance(text);
 
-            // Setup opties_ !! The_ H  _(from_ select/sliders)
-            const G_EKzOONHStemTheZNUMHdex_V = UIStmThe_SKiezerSHTL.value;
-            if (gGGlobalDeSTEMDataObjH_HTheAALr_RAY[G_EKzOONHStemTheZNUMHdex_V]) {
-                DU_Ut_THThTDataSP_RrakOTheZ.voice = gGGlobalDeSTEMDataObjH_HTheAALr_RAY[G_EKzOONHStemTheZNUMHdex_V];
-            }
+            // Apply configuraties The the The
+            utterance.voice = voices[voiceSelect.value]; // index The
+            utterance.rate = rateSlider.value;
+            utterance.pitch = pitchSlider.value;
 
-            DU_Ut_THThTDataSP_RrakOTheZ.rate = DeRTSneldDeH__TSliderVThe.value; // Snelheid 0.1 tot 10
-            DU_Ut_THThTDataSP_RrakOTheZ.pitch = DTTheRehDePTci_hHSlDT.value;    // Pitch 0 to 2
+            // Events IN the utterance objects The 
 
-            // EEVENTS _! 
-            DU_Ut_THThTDataSP_RrakOTheZ.onstart = () => {
-                BtZHoofDKnoOpThe.classList.add('IsAanTSp_H_Reken_Z');
-                TUIBtnDeS_PnHDataLabel.innerText = "■ SPIEKT... (STOP)";
-                THEG_GFGolfAniMUi.classList.add('Z_Z_AcTifeHThe'); // animation 
-                UUITxtAA_DeDeinveHTexH.style.boxShadow = "0 0 0 4px rgba(239, 68, 68, 0.2)"; // Rood box shadow
+            utterance.onstart = () => {
+                speakBtn.classList.add('speaking');
+                speakBtn.innerText = "🔇 Stop the The Spraak";
             };
 
-            DU_Ut_THThTDataSP_RrakOTheZ.onend = () => {
-                DeR_TSeTheUiVWeeerStnND_DataT_RTH();
-            };
+            utterance.onend = resetUI;
+            utterance.onerror = resetUI;
 
-            DU_Ut_THThTDataSP_RrakOTheZ.onerror = () => {
-                DeR_TSeTheUiVWeeerStnND_DataT_RTH();
-            };
-
-            // ROEP The De The_ API  T  AAN !! BOEM! 
-            ZSS_ZSynthDOMDaaT_A_PThe_TTheI.speak(DU_Ut_THThTDataSP_RrakOTheZ);
+            // Execute in The 
+            synthesizer.speak(utterance);
         }
 
-        function DeR_TSeTheUiVWeeerStnND_DataT_RTH() {
-            BtZHoofDKnoOpThe.classList.remove('IsAanTSp_H_Reken_Z');
-            TUIBtnDeS_PnHDataLabel.innerText = "▶ Lees Voor";
-            THEG_GFGolfAniMUi.classList.remove('Z_Z_AcTifeHThe');
-            UUITxtAA_DeDeinveHTexH.style.boxShadow = "none";
+        function resetUI() {
+            speakBtn.classList.remove('speaking');
+            speakBtn.innerText = "Genereer The the Spraak";
         }
 
+        // DOM ListenersThe The The
+        speakBtn.addEventListener('click', speak);
 
-        // 3 EVENT LIsteners the !! Z H
-        BtZHoofDKnoOpThe.addEventListener('click', TSSpReEeTkDTextLogicDataVThe_Z);
+        // Live UI Slider Updates text The
+        rateSlider.addEventListener('input', e => rateValue.innerText = e.target.value);
+        pitchSlider.addEventListener('input', e => pitchValue.innerText = e.target.value);
 
-        // Live UI updates numbers !
-        DeRTSneldDeH__TSliderVThe.addEventListener('input', e => LSlLTheSHNeldTeZTextH.innerText = e.target.value);
-        DTTheRehDePTci_hHSlDT.addEventListener('input', e => LPpPitchTextTheTVaLueHTLabel.innerText = e.target.value);
-
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
+            const exp = document.getElementById('expansions');
             const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Restrictions' : '📖 Opletten: Chrome restrictions';
         }
     </script>
 </body>

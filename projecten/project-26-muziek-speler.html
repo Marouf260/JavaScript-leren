@@ -5,7 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 26: Muziek Speler - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #ec4899;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --player-bg: rgba(15, 23, 42, 0.6);
+            --player-border: rgba(255, 255, 255, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,104 +33,138 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-        }
-
-        .container {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .description {
-            color: #666;
-            margin-bottom: 2rem;
             line-height: 1.6;
         }
 
+        .container {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.025em;
+        }
+
+        .level {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        /* General UI Elements */
         .explanation,
         .concepts,
         .step-by-step,
         .instructions,
         .tips {
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
-        }
-
-        .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
-        }
-
-        .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
-        }
-
-        .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
-        }
-
-        .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 18px;
+            margin-bottom: 2rem;
         }
 
         h3 {
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-main);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
         }
 
         ul {
             margin-left: 1.5rem;
             line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .code-example {
-            background: #282c34;
-            color: #abb2bf;
+            background: #0f172a;
+            border: 1px solid var(--glass-border);
             padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
+            border-radius: 14px;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #e2e8f0;
             overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
         }
 
         .code-example .keyword {
@@ -125,28 +179,77 @@
             color: #61afef;
         }
 
-        .back-link {
-            display: inline-block;
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
             margin-top: 1rem;
-            color: #667eea;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .expandable {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .expandable.show {
+            max-height: 2000px;
+            transition: max-height 0.8s ease-in;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
         }
 
         /* Music Player Project Area */
         .project-area {
-            background: linear-gradient(135deg, #1e1e24 0%, #292930 100%);
-            border-radius: 12px;
-            padding: 3rem 1rem;
+            background: url('https://images.unsplash.com/photo-1614149162883-504ce4d13909?w=800&q=80') center/cover;
+            border-radius: 20px;
+            padding: 4rem 1.5rem;
             margin-bottom: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid #1db954;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.6);
+            min-height: 450px;
         }
 
         .player-container {
-            background: #1c1c1c;
+            background: var(--player-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--player-border);
             border-radius: 30px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
             width: 100%;
@@ -154,13 +257,15 @@
             padding: 30px 20px;
             text-align: center;
             color: white;
+            position: relative;
+            z-index: 10;
         }
 
         .cover-wrapper {
             position: relative;
-            margin: 0 auto 20px;
-            width: 160px;
-            height: 160px;
+            margin: 0 auto 25px;
+            width: 180px;
+            height: 180px;
         }
 
         .cover-image {
@@ -168,10 +273,11 @@
             height: 100%;
             object-fit: cover;
             border-radius: 50%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 8px solid #282828;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border: 8px solid rgba(15, 23, 42, 0.8);
             transform-origin: center;
             animation-play-state: paused;
+            transition: all 0.3s ease;
         }
 
         .cover-image.play {
@@ -182,12 +288,13 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 25px;
-            height: 25px;
-            background: #1c1c1c;
+            width: 30px;
+            height: 30px;
+            background: rgba(15, 23, 42, 0.9);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            border: 2px solid #333;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
         }
 
         @keyframes rotate {
@@ -201,32 +308,36 @@
         }
 
         .song-info {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .song-title {
-            font-size: 1.2rem;
-            font-weight: bold;
+            font-size: 1.3rem;
+            font-weight: 800;
             margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.02em;
         }
 
         .song-artist {
-            color: #888;
-            font-size: 0.8rem;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .progress-container {
-            background: #333;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 5px;
             cursor: pointer;
             height: 6px;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             position: relative;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .progress {
-            background: #1db954;
+            background: var(--primary);
             border-radius: 5px;
             height: 100%;
             width: 0%;
@@ -237,204 +348,211 @@
         .progress::after {
             content: '';
             position: absolute;
-            right: -5px;
-            top: -3px;
-            width: 12px;
-            height: 12px;
-            background: #fff;
+            right: -6px;
+            top: -4px;
+            width: 14px;
+            height: 14px;
+            
             border-radius: 50%;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.6);
+            transition: transform 0.2s;
+        }
+
+        .progress-container:hover .progress::after {
+            transform: scale(1.2);
         }
 
         .controls {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
         }
 
         .btn-ctrl {
             background: none;
             border: none;
-            color: #fff;
-            font-size: 1.2rem;
+            color: #cbd5e1;
+            font-size: 1.3rem;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s;
             outline: none;
-        }
-
-        .btn-ctrl:hover {
-            color: #1db954;
-        }
-
-        .btn-play {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #1db954;
-            font-size: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.3s;
+        }
+
+        .btn-ctrl:hover {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .btn-play {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--primary);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
             color: white;
-            padding-left: 3px;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+            text-align: center;
         }
 
-        .btn-play.playing {
-            padding-left: 0;
-        }
-
-        /* center pause icon */
         .btn-play:hover {
-            background: #1ed760;
-            transform: scale(1.05);
+            background: var(--primary-hover);
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 15px 25px rgba(99, 102, 241, 0.4);
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Project 26: Muziek Speler</h1>
-        <span class="level">Master</span>
-        <p class="description">Bouw een muziekspeler met draaiende platen covers, een voortgangsbalk en play/pauze
-            commando's.</p>
+        <header>
+            <h1>Project 26: Muziek Speler</h1>
+            <span class="level">Master</span>
+            <p class="description">Bouw een muziekspeler met draaiende platen covers, een voortgangsbalk en play/pauze
+                commando's.</p>
+        </header>
+
+
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>De native HTML5 Audio API integreren met JavaScript.</li>
+                <li>Afspeelbalken (progress bars) vloeiend binden aan de werkelijke speel-tijd.</li>
+                <li>CSS-animaties slim pauzeren en laten meebewegen op basis van JavaScript functionaliteiten.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>audio.play() / pause()</strong> - De ingebouwde JavaScript-methodes om media af te laten
+                    spelen vanuit de browser.</li>
+                <li><strong>timeupdate Event</strong> - Een speciaal media event dat hoogfrequent activeert in de
+                    browser als de muziek loopt; onmisbaar voor het tekenen van laadbalken.</li>
+                <li><strong>Class toggles</strong> - Het switchen van the Play / Pause icoon door styling-classes heen
+                    en weer te verplaatsen.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: De Audio API</h4>
-                <p>Browsers hebben een ingebouwde speler voor geluid. Dit zit in de <code>&lt;audio&gt;</code> tag in je
-                    HTML, of je kan zoiets direct in JS maken met <code>new Audio()</code>.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> audio = document.<span class="function">getElementById</span>(<span class="string">'audio'</span>);
-
-<span class="keyword">if</span> (isPlaying) {
-    audio.<span class="function">pause</span>();
-} <span class="keyword">else</span> {
-    audio.<span class="function">play</span>();
+                <h4>Stap 1: Functionaliteiten koppelen aan de controller</h4>
+                <p>Een opgeslagen <code>&lt;audio&gt;</code> element kun je in Javascript bereiken en manipuleren met de
+                    `play()` of `pause()` API.</p>
+                <div class="code-example">
+                    <pre>const audio = document.getElementById('audio');
+function playSong() {
+    musicContainer.classList.add('play');
+    audio.play();
 }</pre>
                 </div>
-                <p><strong>Uitleg:</strong> We roepen letterlijk <code>.play()</code> of <code>.pause()</code> aan op
-                    het DOM element! De browser regelt de rest.</p>
             </div>
-
             <div class="step">
-                <h4>Stap 2: De Voortgangsbalk (Tijd Updaten)</h4>
-                <p>Terwijl de muziek speelt, zendt het <code>audio</code> element constant het <code>timeupdate</code>
-                    event uit. Hiermee kunnen we een visuele balk vullen.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">function</span> <span class="function">updateProgress</span>(e) {
-    <span class="keyword">const</span> { duration, currentTime } = e.srcElement;
-    <span class="keyword">const</span> progressPercent = (currentTime / duration) * <span class="string">100</span>;
-    
-    progress.style.width = <span class="string">`${progressPercent}%`</span>;
+                <h4>Stap 2: Tijd en voortgangsbalk bijwerken</h4>
+                <p>Door telkens rekensommen toe te passen tussen de verstreken speelduur en de bestandsgrootte kunnen we
+                    een breedte (width) in percent (%) vormen voor de balk.</p>
+                <div class="code-example">
+                    <pre>function updateProgress(e) {
+    const { duration, currentTime } = e.srcElement;
+    const progressPercent = (currentTime / duration) * 100;
+    progress.style.width = `${progressPercent}%`;
 }</pre>
                 </div>
-                <p><strong>Uitleg:</strong> We berekenen de verstreken tijd t.o.v. de totale duur (uit het event
-                    properties), vertalen dat naar een percentage (0 tot 100) en passen daarmee de CSS
-                    <code>width</code> stapsgewijs aan.</p>
             </div>
-
             <div class="step">
-                <h4>Stap 3: De Klikbare Tijdlijn (Skippen)</h4>
-                <p>Wanneer de gebruiker op een willekeurig punt op de lange balk tikt, spoelt de audio door naar dat
-                    moment.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">function</span> <span class="function">setProgress</span>(e) {
-    <span class="keyword">const</span> width = <span class="keyword">this</span>.clientWidth;
-    <span class="keyword">const</span> clickX = e.offsetX;
-    
-    audio.currentTime = (clickX / width) * audio.duration;
-}</pre>
-                </div>
-                <p><strong>Uitleg:</strong> Als de balk 100px breed is, en je klikt op 50px (<code>offsetX</code>), dan
-                    zit je op exact 50%. We vertellen de <code>audio.currentTime</code> te springen naar de helft van de
-                    <code>duration</code> (totale tracklengte).</p>
-            </div>
-        </div>
-
-        <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Visuele Muziek Synchronisatie)</h3>
-            <pre><span class="comment">// Als we op 'Play' klikken wekken we ook de interface tot leven.</span>
-<span class="keyword">function</span> <span class="function">togglePlay</span>() {
-    <span class="keyword">if</span> (isPlaying) {
-        audio.<span class="function">pause</span>();
-        playBtn.innerText = <span class="string">'▶'</span>;
-        cover.classList.<span class="function">remove</span>(<span class="string">'play'</span>); <span class="comment">// Stop de CD-animatie</span>
-    } <span class="keyword">else</span> {
-        audio.<span class="function">play</span>();
-        playBtn.innerText = <span class="string">'⏸'</span>;
-        cover.classList.<span class="function">add</span>(<span class="string">'play'</span>); <span class="comment">// Start de 360-graden draai-animatie</span>
+                <h4>Stap 3: Navigeren door de tracks</h4>
+                <p>Om vloeiend nummers over te slaan springen we door een opgevraagde Data-Array d.m.v. incrementele
+                    waardes als `songIndex++`.</p>
+                <div class="code-example">
+                    <pre>function nextSong() {
+    songIndex++;
+    if(songIndex &gt; songs.length - 1) {
+        songIndex = 0;
     }
-    isPlaying = !isPlaying;
+    loadSong(songs[songIndex]);
+    playSong();
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="code-example" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="color: #f8fafc; margin-bottom: 1rem;">💻 Vrij klikken op de voortgangsbalk</h3>
+            <pre>function setProgress(e) {
+    const width = this.clientWidth;
+    const clickX = e.offsetX;
+    const duration = audio.duration;
+
+    audio.currentTime = (clickX / width) * duration;
 }</pre>
         </div>
 
-        <!-- Instructies -->
         <div class="instructions">
             <h3>✅ Jouw Opdracht:</h3>
             <ul>
-                <li>Druk in de demo op de grote afspeelknop. Het liedje zal meteen afspelen (en de LP / cover image zal
-                    theatraal ronddraaien!).</li>
-                <li>Druk op "volgende" voor een andere titel (in deze demo blijft het audiosample hetzelfde bestand,
-                    maar reset de timer naar het begin).</li>
-                <li>Klik ergens op de grijze tijdlijn balk om in een vingerknip door het muziekstuk te skippen.</li>
+                <li>Gebruik de actieve interface knoppen om tracks op te starten en over te hevelen naar andere tunes.
+                </li>
+                <li>Klik willekeurig ergens in de breedte van de witte trackline; neem waar hoe JavaScript feilloos door
+                    de audiosporen heen reist.</li>
             </ul>
         </div>
 
-        <!-- Tips -->
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong>Muis-locatie <code>e.offsetX</code>:</strong> In muis events is <code>offsetX</code>
-                    relatief aan het blok waar je op klikte. Het vertelt je de muis positie <strong>binnen in</strong>
-                    de div, wat ideaal is voor berekeningen van o.a. balken en sliders.</li>
-                <li><strong>CORS & URL-Restricties:</strong> In JS is het vaak verboden om media van <strong>andere
-                        sites/domeinen</strong> met JS te bedienen om copyright en beveiligingsredenen (CORS). Voeg
-                    <code>crossorigin="anonymous"</code> toe aan je <code>&lt;audio&gt;</code> of
-                    <code>&lt;img&gt;</code> tag in je HTML om permissie te forceren op openbare servers!</li>
+                <li><strong>Automatisch doorgaan:</strong> Maak het net zoals Spotify en plak een
+                    <code>audio.addEventListener('ended', nextSong)</code> achterin de file zodat je de handen niet
+                    vuilmaakt aan next-buttons drukken.</li>
             </ul>
         </div>
 
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Vroegtijdige start (<code>NaN</code> of Not a Number duration)</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ FOUT - Als het zware audiobestand in de 1e milliseconde nog moet laden, is duration nul! Delen door nul crasht rekenformules.</span>
-const progressPercent = (currentTime / duration) * 100;
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: Verdwalen in de the 'this' the context </h4>
+                <p style="color: #f87171;">Omdat we `.clientWidth` vereist achten binnen ons eigen custom Event,
+                    verifiëren moderne developers te dikwijls op basis van Arrow Functions (<code>() =></code>) wat ten
+                    koste kan gaan de verlangde reference binnen ons specifiek domein. Houd dus je hoofd hier koel op.
+                </p>
+                <div class="code-example">
+                    <pre>progressContainer.addEventListener('click', (e) =&gt; {
+   // Binnen array syntax veranderen scope en is 'this' zojuist global-window geworden!
+});
 
-<span class="comment">// ✅ GOED - Verzeker dat je weel hoelang het nummer daadwerkelijk is (voorkom een fatale crash).</span>
-// Een simpele 'return' sluit de functie direct The af the vroege stadium.
-if (!duration) return;</pre>
+progressContainer.addEventListener('click', function(e) {
+   // Zonder 'arrow' the method referentie grijpt 'this' het progressContainer-element feilloos aan.
+});</pre>
                 </div>
             </div>
         </div>
 
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor meer? Probeer dit toe te voegen in eigen projecten:</p>
+            <div class="tips" style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1);">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingsmogelijkheden</h3>
                 <ul>
-                    <li><strong>Volume Regelaar:</strong> Voeg een input slider (<code>type="range"</code>) toe die je
-                        koppelt aan de <code>audio.volume</code> (van 0.0 tot 1.0) eigenschap!</li>
-                    <li><strong>Echte Playlist:</strong> Voeg verschillende MP3 URL's toe aan de array in JS.</li>
-                    <li><strong>Mooie Tijd Formattering:</strong> Toon naast of the op de the The balk the de voortgang
-                        als getallen (bijv. <code>02:45 / 03:00</code>) the The (gebruik hier the een wiskundige the
-                        formule the <code>Math.floor(currentTime / 60)</code> voor minuten).</li>
+                    <li><strong>Integreer een volumeknop:</strong> Gebruik een `input range`-element binnen in de
+                        controls list te om the <code>volume</code> op the `audio`-component van waarde in the schalen.
+                    </li>
+                    <li><strong>Afspeellijst presentie:</strong> Laat niet the enkel de titels opduiken bij wisselingen,
+                        bouw eventueel in dat het de gehele HTML side-bar index aftekent.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
             <div class="player-container">
                 <div class="cover-wrapper">
@@ -453,9 +571,9 @@ if (!duration) return;</pre>
                 </div>
 
                 <div class="controls">
-                    <button class="btn-ctrl" id="prev">⏮</button>
-                    <button class="btn-ctrl btn-play" id="play">▶</button>
-                    <button class="btn-ctrl" id="next">⏭</button>
+                    <button class="btn-ctrl" id="prev"><i class="fas fa-backward-step"></i></button>
+                    <button class="btn-ctrl btn-play" id="play"><i class="fas fa-play"></i></button>
+                    <button class="btn-ctrl" id="next"><i class="fas fa-forward-step"></i></button>
                 </div>
             </div>
         </div>
@@ -464,7 +582,7 @@ if (!duration) return;</pre>
         <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
             crossorigin="anonymous"></audio>
 
-        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+        <a href="../index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Terug naar Projecten</a>
     </div>
 
     <script>
@@ -481,12 +599,12 @@ if (!duration) return;</pre>
         function togglePlay() {
             if (isPlaying) {
                 audio.pause();
-                playBtn.innerText = '▶';
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
                 playBtn.classList.remove('playing');
                 cover.classList.remove('play');
             } else {
                 audio.play().catch(e => console.log("Kan niet laden o.w.v CORS cross-site (Normaal in een project, maar theorie klopt)"));
-                playBtn.innerText = '⏸';
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
                 playBtn.classList.add('playing');
                 cover.classList.add('play');
             }

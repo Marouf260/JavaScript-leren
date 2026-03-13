@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 82: Device Orientation API - DOM Projecten</title>
+    <title>Project 82: Tilt Tracker - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -13,388 +13,446 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 2.5rem;
             color: #f8fafc;
-            overflow: hidden;
-            /* stop bg scrolling during tilt ! */
+            overflow-x: hidden;
         }
 
         .container {
             background: #1e293b;
-            border-radius: 16px;
-            padding: 2.5rem;
-            max-width: 600px;
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 700px;
             width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             border: 1px solid #334155;
             text-align: center;
-            z-index: 10;
-            position: relative;
         }
 
         h1 {
             color: #f8fafc;
             margin-bottom: 0.5rem;
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
         }
 
         .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: rgba(56, 189, 248, 0.2);
-            color: #38bdf8;
-            border-radius: 20px;
+            display: block;
+            width: max-content;
+            margin: 0 auto 2.5rem;
+            padding: 0.35rem 1.2rem;
+            background: linear-gradient(135deg, #ec4899, #be185d);
+            color: white;
+            border-radius: 30px;
             font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* APP CSS H_T */
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
         .project-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            perspective: 1000px;
-            /* V! 3d! */
-        }
-
-        .KkaH_TheUarT_VDriDeH {
-            width: 250px;
-            height: 350px;
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            background: #0f172a;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+            padding: 3rem 2rem;
+            margin: 1.5rem 0 2.5rem 0;
+            border: 1px solid #334155;
+            perspective: 1000px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .tilt-card {
+            width: 220px;
+            height: 320px;
+            background: linear-gradient(135deg, #ec4899 0%, #6366f1 100%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            position: relative;
+            font-size: 6rem;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
             transition: transform 0.1s ease-out;
-            /* smooth_the!_H*/
             transform-style: preserve-3d;
-            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
         }
 
-        /* 3D THE THE EFFECT V H !! (pop out) */
-        .KkaH_TheUarT_VDriDeH h2 {
-            font-size: 2.5rem;
+        .tilt-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .tilt-card::after {
+            content: 'GYRO 3D';
+            position: absolute;
+            bottom: 25px;
+            font-size: 0.9rem;
             font-weight: 900;
-            color: white;
-            text-shadow: 2px 5px 10px rgba(0, 0, 0, 0.4);
-            transform: translateZ(50px);
-            /* V! the v ! THE ! out of the ! _The Z! card */
-        }
-
-        .KkaH_TheUarT_VDriDeH p {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.6);
             transform: translateZ(30px);
-            margin-top: 10px;
-            font-weight: bold;
+            letter-spacing: 2px;
         }
 
-        .DDDatHTeeIG_R_iV_O {
-            width: 100%;
+        .data-grid {
+            margin-top: 40px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            background: #0f172a;
-            padding: 20px;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .data-item {
+            background: #1e293b;
+            padding: 15px;
             border-radius: 12px;
+            border: 1px solid #334155;
+            transition: border-color 0.3s ease;
+        }
+
+        .data-item:hover {
+            border-color: #ec4899;
+        }
+
+        .label {
+            display: block;
+            font-size: 0.7rem;
+            color: #cbd5e1;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .val {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #ec4899;
+            font-family: 'Courier New', monospace;
+        }
+
+        .ios-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-bottom: 25px;
+            display: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s;
+        }
+
+        .ios-btn:hover {
+            background: #059669;
+            transform: scale(1.05);
+        }
+
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+            margin-top: 4rem;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
             border: 1px solid #334155;
         }
 
-        .vVva_TThA_HllTueHTData {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .code-example .keyword {
+            color: #c678dd;
         }
 
-        .vVva_TThA_HllTueHTData span {
-            font-size: 0.8rem;
-            color: #64748b;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+        .code-example .function {
+            color: #61afef;
         }
 
-        .vVva_TThA_HllTueHTData div {
-            font-size: 1.5rem;
-            color: #38bdf8;
-            font-weight: 900;
-            font-family: monospace;
+        .code-example .string {
+            color: #98c379;
         }
 
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
 
-        .BBTNSTTtAA_rrtIOMnTVDeTPhone {
-            background: #22c55e;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
-            margin-bottom: 20px;
-            display: none;
-            /* Tonen D V The ! als we on ios zijn Z (heeft _ the button _ The nodig) !*/
+        .expand-btn {
+            display: block;
             width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
         }
 
-        .BBTNSTTtAA_rrtIOMnTVDeTPhone:hover {
-            background: #16a34a;
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 2rem;
-            color: #38bdf8;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
             text-align: center;
-        }
-
-        /* THE Bg THE THE G_Lowe R */
-        .GgloOweHTV_VzBG_O {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(15, 23, 42, 0) 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 1;
-            pointer-events: none;
-            transition: 0.1s;
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
-
-    <div class="GgloOweHTV_VzBG_O" id="BBGTheG_lloOWDOMT__V"></div>
-
     <div class="container">
-        <h1>Device Orientation API</h1>
-        <span class="level">Advanced APIs</span>
-        <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5;">Beweeg je
-            <strong>telefoon</strong> 📱 om de the 3D the V_ the ! THE kaart te roteren! <br>(Werkt the the! The_ alleen
-            op mobiel_ Z! of met devtools sensors The_O!).
-        </p>
+        <h1>Tilt Tracker 3D</h1>
+        <span class="level">DeviceOrientation API</span>
+        <p class="description">Verander je smartphone in een controller. Leer hoe je gyroscoop-data uitleest, 3D CSS
+            transforms toepast en complexe permissie-flows voor moderne mobiele browsers beheert.</p>
+
+        <div class="project-area">
+            <button class="ios-btn" id="ios-btn">Activeer Sensoren (iOS) 🔓</button>
+            <div class="tilt-card" id="card">📱</div>
+
+            <div class="data-grid">
+                <div class="data-item">
+                    <span class="label">Alpha (z)</span>
+                    <div class="val" id="a">0°</div>
+                </div>
+                <div class="data-item">
+                    <span class="label">Beta (x)</span>
+                    <div class="val" id="b">0°</div>
+                </div>
+                <div class="data-item">
+                    <span class="label">Gamma (y)</span>
+                    <div class="val" id="g">0°</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Moderne mobiele apparaten zitten vol sensoren. In dit project ontsluiten we de
+                <strong>DeviceOrientation</strong> API voor interactieve 3D interfaces.</p>
+            <ul>
+                <li><strong>Spatial Data:</strong> Begrijpen van de 3 assen (Alpha, Beta, Gamma) van een apparaat in de
+                    ruimte.</li>
+                <li><strong>Hardware Security:</strong> Waarom iOS en moderne Android browsers een expliciete
+                    gebruikers-actie (click) vereisen om sensoren te openen.</li>
+                <li><strong>Preserving 3D:</strong> Gebruik van <code>transform-style: preserve-3d</code> om elementen
+                    echt diepte te geven.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Alpha, Beta, Gamma:</strong> De wiskundige hoeken van rotatie rond de Z, X en Y assen.</li>
+                <li><strong>Gimbal Lock:</strong> Waarom sensoren soms 'in de war' raken als je het apparaat recht
+                    omhoog houdt.</li>
+                <li><strong>Smoothing:</strong> Het beperken (clamping) van waarden om UI-flakkering te voorkomen.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: De Gyroscoop Logica</h3>
 
             <div class="step">
-                <h4>Stap 1: Het DeviceOrientation Event</h4>
-                <p>Moderne the_ the <strong>Smartphones</strong>_ the hebben_! een the_ the the gyroscoop_ (Gyroscope)
-                    V_ <code>Ingebouwd!</code>. We_ the kunnen_ the _ luisteren_ the naar the
-                    <code>deviceorientation</code> Events_ in JavaScript. </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
-<span class="function">window</span>.<span class="function">addEventListener</span>(<span class="string">'deviceorientation'</span>, (event) =&gt; {
-    <span class="keyword">const</span> alpha = event.alpha; <span class="comment">// Z-as (Kompasrichting)</span>
-    <span class="keyword">const</span> beta = event.beta;   <span class="comment">// X-as (Kantelen voor/achter)</span>
-    <span class="keyword">const</span> gamma = event.gamma; <span class="comment">// Y-as (Kantelen links/rechts)</span>
-});</pre>
+                <h4>1: Het Permission Model</h4>
+                <p>Moderne browsers vereisen toestemming. Zonder deze check blijft je code op 0 staan.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">if</span> (DeviceOrientationEvent.<span class="function">requestPermission</span>) {
+    <span class="keyword">const</span> res = <span class="keyword">await</span> DeviceOrientationEvent.<span class="function">requestPermission</span>();
+    <span class="keyword">if</span> (res === <span class="string">'granted'</span>) { <span class="comment">/* Start luisteren */</span> }
+}</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: iOS 13+ Permissies!</h4>
-                <p>Apple_ the Heeft_ "Request Permission" _the the Nodig Voor_ Safari! The! Je_ The moet een_ the V
-                    <code>Knop</code>_ the the Maken. the Pas The! the Na_ een the <strong>User Interaction</strong> The
-                    the _Mag the_ the the the Browser_ <code>Toestemming</code> the the_ Vragen_ the! de the_
-                    gyroscoop_! the te Lezen._ </p>
-            </div>
-
-        </div>
-
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Dit the_ Werkt_ the_ Niet Op Je_The! PC _the! Open The ! Deze the Pagina_ <strong>Op je
-                        Mobiel!</strong> of_ The_ Gebruik The de Chrome DevTools (Sensors tab)_ ! </li>
-                <li>Als The! Je the _ Een_ iPhone the_ Hebt, the! Klik <strong>"Start Gyroscoop"</strong>!_ </li>
-                <li>Houd The_ The the!_ Je the the the_ Telefoon the Vast en_ the Beweeg! The the! En the Zie_! De the_!
-                    the the the the_ the Kaart 3D the the Meedraaien!_ </li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong><code>rotateX / rotateY</code> :</strong> the The IN The de CSS The zie je the_ The ! The _
-                    dat we the! met Javascript de <code>style.transform = rotateX(..) rotateY(..)</code> Maken! Dit The_
-                    Voegt the 3D the_ <strong>Diepte</strong> The the toe! the! </li>
-                <li><strong><code>perspective</code> :</strong> the Om in CSS_ the 3D_ the te The THE ! Zien, the_ the
-                    Moet the ! de <code>Container</code> (De project-area)_ een the_ the _
-                    <code>perspective: 1000px;</code> the _(Of the_ vergelijkbaar)._ Hebben._ Zonder Dit _ Blijft de
-                    The_ boel _the plat!_</li>
-            </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: de_ <code>Localhost</code>_ the Requirement_! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Net als_ the Gelocation the the the the Z_ the the The_ the the the  Werkt theThe ook dit the_ Vaak the the _ALLeen! the The op HTTPS of the_ Localhost The !.  </span>
-<span class="comment">// OPLOSSING THE THE : the the The The thethe Gebruik the_ Je the VS code Live server The !! the Of the the Host_ _ het the the online the ! the the_!  </span></pre>
+                <h4>2: CSS 3D Mapping</h4>
+                <p>We koppelen de <code>beta</code> hoek aan de X-as en de <code>gamma</code> hoek aan de Y-as voor een
+                    tilt-effect.</p>
+                <div class="code-example">
+                    <pre>card.style.transform = <span class="string">`rotateX(${beta}deg) rotateY(${gamma}deg)`</span>;</pre>
                 </div>
             </div>
+
         </div>
 
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
                 <ul>
-                    <li><strong>Waterpas App!_! </strong> the the THE the Kijk The in the De The _ the_ Gebruik The !
-                        Dit The ! Om ! een_ the the_ the "Waterpas" the_ ! app te!_ Maken_! the_ Teken the_ THE!
-                        <code>Een Lijn</code> the en_ Laat Deze the <code>Groen</code> The the _worden Als The ! _ Gamma
-                        & Beta The!_ Beide 0 The ! the! zijn_! ! the! </li>
+                    <li><strong>Mixing Orientations:</strong> Sommige browsers wisselen Alpha en Gamma om als je je
+                        scherm draait (Portrait vs Landscape).</li>
+                    <li><strong>Coordinate Overload:</strong> Sensoren vuren tot wel 60 keer per seconde. Doe geen zware
+                        berekeningen direct in de event listener.</li>
+                    <li><strong>HTTPS Required:</strong> Net als de Geolocation API, werkt dit NOOIT op een onbeveiligde
+                        <code>http</code> verbinding.</li>
+                </ul>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>Parallax Background:</strong> Beweeg de achtergrond van de pagina mee in tegengestelde
+                        richting voor een diepte-effect.</li>
+                    <li><strong>Shake to Reset:</strong> Gebruik de <code>DeviceMotionEvent</code> (versnellingsmeter)
+                        om een 'shake' te detecteren die de kaart reset.</li>
+                    <li><strong>Leveler App:</strong> Maak een waterpas-functionaliteit die precies 0 graden aangeeft
+                        als de tafel recht staat.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
-        <div class="project-area">
-
-            <button class="BBTNSTTtAA_rrtIOMnTVDeTPhone" id="Bbn__PeErHOmISSIONTPhoneTH">
-                Start Gyroscoop (iOS!)
-            </button>
-
-            <div class="KkaH_TheUarT_VDriDeH" id="uUDrD3VThekKa_AaRtvO">
-                <h2>O_O</h2>
-                <p>Hello 3D!</p>
-            </div>
-
-            <div class="DDDatHTeeIG_R_iV_O">
-                <div class="vVva_TThA_HllTueHTData">
-                    <span>Alpha (z)</span>
-                    <div id="VTAlHTpH_Te_AaText">0°</div>
-                </div>
-                <div class="vVva_TThA_HllTueHTData">
-                    <span>Beta (x)</span>
-                    <div id="vVBeaHTaatTextTDthe_aVD">0°</div>
-                </div>
-                <div class="vVva_TThA_HllTueHTData">
-                    <span>Gamma (y)</span>
-                    <div id="GDaTHGMM_AaTexoTvt">0°</div>
-                </div>
-            </div>
-
-        </div>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Fouten & Uitbreidingen</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const VKKArRtThEDTheDOMT3TDD = document.getElementById('uUDrD3VThekKa_AaRtvO');
-        const BBGeGlloWe_THTVMDOTheM_ = document.getElementById('BBGTheG_lloOWDOMT__V');
+        const card = document.getElementById('card');
+        const aDisp = document.getElementById('a');
+        const bDisp = document.getElementById('b');
+        const gDisp = document.getElementById('g');
+        const iosBtn = document.getElementById('ios-btn');
 
-        const UIuTTxAHTLpPAhA_vThe = document.getElementById('VTAlHTpH_Te_AaText');
-        const UThevITDBetTxxtDaTt = document.getElementById('vVBeaHTaatTextTDthe_aVD');
-        const DOMUTexrTTHvOGammVTheA = document.getElementById('GDaTHGMM_AaTexoTvt');
+        // Check voor de moderne iOS permissie-call
+        const needsPermission = typeof DeviceOrientationEvent !== 'undefined' &&
+            typeof DeviceOrientationEvent.requestPermission === 'function';
 
-        const BiHbtnN_iIOS_PPerMIsS = document.getElementById('Bbn__PeErHOmISSIONTPhoneTH');
-
-        // CHECK VOOR IOS 13+! THE (DeviceOrientationEvent vereist  _ THE_The de the  een_ _ click / permission the _ H The ! prompt op IOS!) ! 
-        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-            BiHbtnN_iIOS_PPerMIsS.style.display = "block"; // toont The Z The 
-        }
-
-        // De Handler! THE Z! 
-        function VHHandThel_OrinEToHnatITeon_ADataTV(e__TEveeNTDTheHhTDatZobj__HDe) {
-            // 1 HAal the THE values_ the THE UIT het the_ EVENT! The  !_
-            const AThAlPpaHZ = e__TEveeNTDTheHhTDatZobj__HDe.alpha; // Z as The  (kompas_ H The_) [0, 360]
-            const BBThBtea_hV = e__TEveeNTDTheHhTDatZobj__HDe.beta;   // X as _ The_ (kantel vooruit/achter)_ ZV [-180, 180]
-            const GGaV_TaammTTmMaTH_A_a = e__TEveeNTDTheHhTDatZobj__HDe.gamma; // Y as The H  The_Z(kantel the _ V links/rechts) [-90, 90]
-
-            if (AThAlPpaHZ === null) return; // NiET THE OP MOBIEL ! of The ! HThe Geen sensor The_V!_ 
-
-            // 2 FORMAT TEXT THE MThe_ !
-            UIuTTxAHTLpPAhA_vThe.innerText = `${Math.round(AThAlPpaHZ)}°`;
-            UThevITDBetTxxtDaTt.innerText = `${Math.round(BBThBtea_hV)}°`;
-            DOMUTexrTTHvOGammVTheA.innerText = `${Math.round(GGaV_TaammTTmMaTH_A_a)}°`;
-
-            // 3 BEREKEN DE_ 3D! _ CSS _THE ROTATION THE ! ! V
-            // CSS rotateX() The O the T draait ! OM_ de X As, THE Dus we the V_ gebruiken the _ BETA !! H O
-            // CSS rotateY() _THE  The draait O !  OM The De_ the Y as_ Zthe, vThe Dus _we  H! gebruiken The! GAMMA !! V
-
-            // The De limiten  voorkomen the dat ie the the ! V doordraaid (flipv_ ) The
-            let TXXRoTaATevT__ThH__VdThegO_v = BBThBtea_hV;
-            let YYY__GTRRotoATheVGvDEg_HTe_v = GGaV_TaammTTmMaTH_A_a;
-
-            // V_ Beperk _de kanteling !Z tot max_ The 40_ The the graden voor the O visual the kaart !H_ O effect ! ! 
-            if (TXXRoTaATevT__ThH__VdThegO_v > 40) TXXRoTaATevT__ThH__VdThegO_v = 40;
-            if (TXXRoTaATevT__ThH__VdThegO_v < -40) TXXRoTaATevT__ThH__VdThegO_v = -40;
-            if (YYY__GTRRotoATheVGvDEg_HTe_v > 40) YYY__GTRRotoATheVGvDEg_HTe_v = 40;
-            if (YYY__GTRRotoATheVGvDEg_HTe_v < -40) YYY__GTRRotoATheVGvDEg_HTe_v = -40;
-
-            // NOTE: bij The CSS! H V_ The rotateX the the  kantelt VThe positief_ omlaag! (Telefoon beta The ! the positief is achteruit O_ vThe The! ofz TheO?) THE
-            // The Dus THE VThe! the we the !_ mutiplieren the met The the V -1 V(soms) voor t the the goeie the _ V_ the effect the! ! 
-
-            // Z_! De ! Magie:
-            VKKArRtThEDTheDOMT3TDD.style.transform = `rotateX(${-TXXRoTaATevT__ThH__VdThegO_v}deg) rotateY(${YYY__GTRRotoATheVGvDEg_HTe_v}deg)`;
-
-            // 4 THE THE ZBG THE effect verplaatsen V H !! O_ (optioneel H !_ )
-            BBGeGlloWe_THTVMDOTheM_.style.transform = `translate(calc(-50% + ${YYY__GTRRotoATheVGvDEg_HTe_v * 5}px), calc(-50% + ${TXXRoTaATevT__ThH__VdThegO_v * 5}px))`;
-        }
-
-        // IOS_ the V THE The! THE PERMISSION THE THE BUTTON Z_ O!
-        if (BiHbtnN_iIOS_PPerMIsS) {
-            BiHbtnN_iIOS_PPerMIsS.addEventListener('click', () => {
-                DeviceOrientationEvent.requestPermission()
-                    .then(reVSp_OSNeE_OThe => {
-                        if (reVSp_OSNeE_OThe === 'granted') {
-                            // THE GO ! the ! _ V 
-                            window.addEventListener('deviceorientation', VHHandThel_OrinEToHnatITeon_ADataTV);
-                            BiHbtnN_iIOS_PPerMIsS.style.display = "none"; // Hide The_ KNoppie_The!
-                        } else {
-                            alert("The permission The _ the was the denied V_ THE ! H Z !");
-                        }
-                    })
-                    .catch(console.error);
+        if (needsPermission) {
+            iosBtn.style.display = 'inline-block';
+            iosBtn.addEventListener('click', async () => {
+                try {
+                    const response = await DeviceOrientationEvent.requestPermission();
+                    if (response === 'granted') {
+                        window.addEventListener('deviceorientation', handleOrientation);
+                        iosBtn.style.display = 'none';
+                    }
+                } catch (err) {
+                    console.error("Permissie geweigerd:", err);
+                    alert("Toegang tot sensoren is vereist voor dit project.");
+                }
             });
         } else {
-            // Android H_ the_ Windows, of oude IOS the Z_ (Geen H  button H! the t! _ nodig _ ! _! THE! THE  Z)
-            window.addEventListener('deviceorientation', VHHandThel_OrinEToHnatITeon_ADataTV);
+            // Android of Desktop (Chrome DevTools emulatie)
+            window.addEventListener('deviceorientation', handleOrientation);
         }
 
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
+        function handleOrientation(event) {
+            // Alpha: rotatie rond Z-as (kompas), Beta: X-as (kantel voor/achter), Gamma: Y-as (kantel links/rechts)
+            const alpha = event.alpha;
+            const beta = event.beta;
+            const gamma = event.gamma;
+
+            // Sommige browsers vuren een event met null-waarden
+            if (alpha === null || beta === null || gamma === null) return;
+
+            // UI Updaten
+            aDisp.innerText = `${Math.round(alpha)}°`;
+            bDisp.innerText = `${Math.round(beta)}°`;
+            gDisp.innerText = `${Math.round(gamma)}°`;
+
+            // Clamping: we beperken de rotatie tot 45 graden voor een softe UX
+            const rotateX = Math.max(-45, Math.min(45, beta));
+            const rotateY = Math.max(-45, Math.min(45, gamma));
+
+            // We draaien de X-as om voor een natuurlijke 'voorover' beweging
+            card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
+            const exp = document.getElementById('expansions');
             const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
         }
     </script>
 </body>

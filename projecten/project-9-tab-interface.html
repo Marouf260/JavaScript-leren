@@ -13,7 +13,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -22,7 +22,7 @@
         }
         
         .container {
-            background: white;
+            background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px;
             border-radius: 12px;
             padding: 2rem;
             max-width: 600px;
@@ -31,15 +31,15 @@
         }
         
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
         }
         
         .level {
             display: inline-block;
             padding: 0.25rem 0.75rem;
-            background: #FFF3CD;
-            color: #856404;
+background: rgba(255, 193, 7, 0.1);
+            color: #fef3c7;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -47,13 +47,13 @@
         }
         
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
         }
         
         .project-area {
-            background: #f8f9fa;
+            
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -83,7 +83,7 @@
         }
         
         .instructions {
-            background: #e3f2fd;
+            background: rgba(33, 150, 243, 0.1);
             border-left: 4px solid #2196F3;
             padding: 1rem;
             border-radius: 4px;
@@ -91,13 +91,13 @@
         }
         
         .instructions h3 {
-            color: #1976D2;
+            color: #90caf9;
             margin-bottom: 0.5rem;
         }
         
         .instructions ul {
             margin-left: 1.5rem;
-            color: #555;
+            color: #cbd5e1;
         }
         
         .instructions li {
@@ -117,7 +117,7 @@
         }
         
         .explanation {
-            background: #fff3cd;
+background: rgba(255, 193, 7, 0.1);
             border-left: 4px solid #ffc107;
             padding: 1.5rem;
             border-radius: 4px;
@@ -125,12 +125,12 @@
         }
         
         .explanation h3 {
-            color: #856404;
+            color: #fef3c7;
             margin-bottom: 1rem;
         }
         
         .explanation p {
-            color: #856404;
+            color: #fef3c7;
             line-height: 1.8;
             margin-bottom: 1rem;
         }
@@ -168,7 +168,7 @@
         }
         
         .concepts {
-            background: #d1ecf1;
+            background: rgba(23, 162, 184, 0.1);
             border-left: 4px solid #17a2b8;
             padding: 1.5rem;
             border-radius: 4px;
@@ -176,13 +176,13 @@
         }
         
         .concepts h3 {
-            color: #0c5460;
+            color: #80deea;
             margin-bottom: 1rem;
         }
         
         .concepts ul {
             margin-left: 1.5rem;
-            color: #0c5460;
+            color: #80deea;
         }
         
         .concepts li {
@@ -191,7 +191,7 @@
         }
         
         .tips {
-            background: #d4edda;
+            background: rgba(40, 167, 69, 0.1);
             border-left: 4px solid #28a745;
             padding: 1.5rem;
             border-radius: 4px;
@@ -199,13 +199,13 @@
         }
         
         .tips h3 {
-            color: #155724;
+            color: #a5d6a7;
             margin-bottom: 1rem;
         }
         
         .tips ul {
             margin-left: 1.5rem;
-            color: #155724;
+            color: #a5d6a7;
         }
         
         .tips li {
@@ -213,7 +213,7 @@
         }
         
         .step-by-step {
-            background: #f8d7da;
+            background: rgba(220, 53, 69, 0.1);
             border-left: 4px solid #dc3545;
             padding: 1.5rem;
             border-radius: 4px;
@@ -221,7 +221,7 @@
         }
         
         .step-by-step h3 {
-            color: #721c24;
+            color: #f8f1f1;
             margin-bottom: 1rem;
         }
         
@@ -236,12 +236,12 @@
         }
         
         .step h4 {
-            color: #721c24;
+            color: #f8f1f1;
             margin-bottom: 0.5rem;
         }
         
         .step p {
-            color: #721c24;
+            color: #f8f1f1;
             line-height: 1.6;
             margin-bottom: 0.5rem;
         }
@@ -281,7 +281,7 @@
         <div class="explanation">
             <h3>📚 Wat ga je leren?</h3>
             <p>In dit project leer je werken met data attributen en complexe state management. Je leert:</p>
-            <ul style="margin-left: 1.5rem; color: #856404;">
+            <ul style="margin-left: 1.5rem; color: #fef3c7;">
                 <li>data-* attributen gebruiken om elementen te koppelen</li>
                 <li>classList gebruiken om classes toe te voegen/verwijderen</li>
                 <li>Template literals gebruiken voor dynamische selectors</li>
@@ -360,8 +360,8 @@ content.style.display = <span class="string">'block'</span>;</pre>
         </div>
         
         <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+        <div class="code-example" style="border: 2px solid #667eea;">
+            <h3 style="color: #f8fafc; margin-bottom: 1rem;">💻 Complete Code</h3>
             <pre><span class="keyword">const</span> tabBtns = document.<span class="function">querySelectorAll</span>(<span class="string">'.tab-btn'</span>);
 <span class="keyword">const</span> tabContents = document.<span class="function">querySelectorAll</span>(<span class="string">'.tab-content'</span>);
 
@@ -415,11 +415,11 @@ tabBtns.<span class="function">forEach</span>(btn => {
         </div>
         
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
+        <div class="step-by-step" style="background: rgba(220, 53, 69, 0.1);">
             <h3>⚠️ Veelvoorkomende Fouten</h3>
             <div class="step">
                 <h4>Fout 1: Verkeerde data attribuut naam</h4>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - dataset.tabId bestaat niet</span>
 <span class="keyword">const</span> tabId = <span class="keyword">this</span>.dataset.tabId; <span class="comment">// data-tab-id wordt tabId</span>
 
@@ -429,7 +429,7 @@ tabBtns.<span class="function">forEach</span>(btn => {
             </div>
             <div class="step">
                 <h4>Fout 2: Vergeten alle andere te resetten</h4>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - Meerdere tabs kunnen actief zijn</span>
 <span class="keyword">this</span>.classList.<span class="function">add</span>(<span class="string">'active'</span>); <span class="comment">// Vergeet andere te verwijderen</span>
 
@@ -440,7 +440,7 @@ tabBtns.<span class="function">forEach</span>(b => b.classList.<span class="func
             </div>
             <div class="step">
                 <h4>Fout 3: Verkeerde template literal syntax</h4>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - Gewone string, variabele wordt niet geïnterpreteerd</span>
 <span class="keyword">const</span> content = document.<span class="function">querySelector</span>(<span class="string">'[data-content="tabId"]'</span>);
 
@@ -484,8 +484,8 @@ tabBtns.<span class="function">forEach</span>(b => b.classList.<span class="func
         <div class="project-area">
             <div class="tabs">
                 <button class="tab-btn active" data-tab="1" style="padding: 0.5rem 1rem; margin-right: 0.5rem; border: none; background: #667eea; color: white; border-radius: 4px; cursor: pointer;">Tab 1</button>
-                <button class="tab-btn" data-tab="2" style="padding: 0.5rem 1rem; margin-right: 0.5rem; border: none; background: #ccc; color: #333; border-radius: 4px; cursor: pointer;">Tab 2</button>
-                <button class="tab-btn" data-tab="3" style="padding: 0.5rem 1rem; margin-right: 0.5rem; border: none; background: #ccc; color: #333; border-radius: 4px; cursor: pointer;">Tab 3</button>
+                <button class="tab-btn" data-tab="2" style="padding: 0.5rem 1rem; margin-right: 0.5rem; border: none; background: #ccc; color: #f8fafc; border-radius: 4px; cursor: pointer;">Tab 2</button>
+                <button class="tab-btn" data-tab="3" style="padding: 0.5rem 1rem; margin-right: 0.5rem; border: none; background: #ccc; color: #f8fafc; border-radius: 4px; cursor: pointer;">Tab 3</button>
             </div>
             <div class="tab-content active" data-content="1" style="padding: 1rem; border: 1px solid #ddd; margin-top: 0.5rem;">Inhoud van Tab 1</div>
             <div class="tab-content" data-content="2" style="padding: 1rem; border: 1px solid #ddd; margin-top: 0.5rem; display: none;">Inhoud van Tab 2</div>

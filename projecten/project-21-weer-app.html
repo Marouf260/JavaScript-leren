@@ -5,7 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 21: Weer Applicatie - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome for better icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #ec4899;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --weather-bg: rgba(255, 255, 255, 0.05);
+            --weather-border: rgba(255, 255, 255, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,319 +34,332 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            line-height: 1.6;
         }
 
         .container {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 800px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 900px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
         }
 
         h1 {
-            color: #333;
+            font-size: 2.5rem;
+            font-weight: 800;
             margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.025em;
         }
 
         .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
         }
 
         .description {
-            color: #666;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* General UI Elements */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 18px;
             margin-bottom: 2rem;
-            line-height: 1.6;
         }
 
-        .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .explanation h3 {
-            color: #856404;
-            margin-bottom: 1rem;
-        }
-
-        .explanation p,
-        .explanation ul {
-            color: #856404;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .concepts h3 {
-            color: #0c5460;
-            margin-bottom: 1rem;
-        }
-
-        .concepts ul {
-            margin-left: 1.5rem;
-            color: #0c5460;
-            line-height: 1.6;
-        }
-
-        .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .step-by-step h3 {
-            color: #383d41;
-            margin-bottom: 1rem;
-        }
-
-        .step {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .step h4 {
-            color: #383d41;
-            margin-bottom: 0.5rem;
-        }
-
-        .step p {
-            color: #383d41;
-            line-height: 1.6;
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-main);
         }
 
         .code-example {
-            background: #282c34;
-            color: #abb2bf;
+            background: #0f172a;
+            border: 1px solid var(--glass-border);
             padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
+            border-radius: 14px;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #e2e8f0;
             overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-        }
-
-        .code-example .keyword {
-            color: #c678dd;
-        }
-
-        .code-example .string {
-            color: #98c379;
-        }
-
-        .code-example .comment {
-            color: #5c6370;
-        }
-
-        .code-example .function {
-            color: #61afef;
-        }
-
-        .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .instructions h3 {
-            color: #1976D2;
-            margin-bottom: 0.5rem;
-        }
-
-        .instructions ul {
-            margin-left: 1.5rem;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .tips h3 {
-            color: #155724;
-            margin-bottom: 1rem;
-        }
-
-        .tips ul {
-            margin-left: 1.5rem;
-            color: #155724;
-            line-height: 1.6;
         }
 
         .expand-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
             cursor: pointer;
+            width: 100%;
             margin-top: 1rem;
-            font-weight: 600;
+            font-weight: 700;
+            transition: all 0.2s;
         }
 
         .expand-btn:hover {
-            background: #5568d3;
+            background: var(--primary);
+            color: white;
         }
 
         .expandable {
-            display: none;
-            margin-top: 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
         }
 
         .expandable.show {
-            display: block;
+            max-height: 2000px;
+            transition: max-height 0.8s ease-in;
         }
 
         .back-link {
-            display: inline-block;
-            margin-top: 1rem;
-            color: #667eea;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
+            transition: color 0.3s;
         }
 
         .back-link:hover {
-            text-decoration: underline;
+            color: var(--primary);
         }
 
         /* Project Demo Area specific styles */
         .project-area {
             background: url('https://images.unsplash.com/photo-1501691223387-dd0500403074?w=800&q=80') center/cover;
-            border-radius: 12px;
-            padding: 3rem 1rem;
+            border-radius: 20px;
+            padding: 3rem 1.5rem;
             margin-bottom: 2rem;
-            min-height: 400px;
+            min-height: 450px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
         }
 
         .weather-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 2rem;
+            background: var(--weather-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--weather-border);
+            border-radius: 24px;
+            padding: 2.5rem;
             width: 100%;
-            max-width: 350px;
+            max-width: 400px;
             text-align: center;
             color: white;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .weather-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .weather-card:hover {
+            transform: translateY(-5px);
         }
 
         .search {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 99px;
+            padding: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .search:focus-within {
+            background: rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
         }
 
         .search input {
             border: none;
             outline: none;
-            padding: 0.8rem 1.2rem;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.7);
-            color: #333;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            color: white;
             font-size: 1rem;
-            width: 70%;
-            transition: 0.3s;
+            width: 100%;
+            font-family: inherit;
         }
 
-        .search input:focus {
-            background: rgba(255, 255, 255, 0.9);
+        .search input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .search button {
             border: none;
             outline: none;
-            background: white;
-            color: #333;
+            background: var(--primary);
+            color: white;
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            margin-left: 10px;
+            width: 40px;
+            height: 40px;
+            margin-left: 0.5rem;
             cursor: pointer;
-            transition: 0.3s;
-            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
         }
 
         .search button:hover {
-            background: #eee;
+            background: var(--primary-hover);
             transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        .weather {
+            transition: all 0.3s;
         }
 
         .weather.loading {
-            display: none;
+            opacity: 0.5;
+            filter: blur(2px);
+            pointer-events: none;
         }
 
         .city {
             font-size: 2rem;
-            font-weight: 500;
-            margin-bottom: 0px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            letter-spacing: -0.025em;
         }
 
         .temp {
-            font-size: 4rem;
-            font-weight: bold;
-            margin: 10px 0;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin: 0.5rem 0;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(180deg, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
         }
 
         .description-weather {
             text-transform: capitalize;
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            color: #e2e8f0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .details {
             display: flex;
             justify-content: space-around;
-            font-size: 0.9rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .col {
+        .details .col {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
+        }
+
+        .details-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+            color: #93c5fd;
+        }
+
+        .details-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .details-label {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
     </style>
 </head>
@@ -339,11 +373,12 @@
         <!-- Uitleg Sectie -->
         <div class="explanation">
             <h3>📚 Wat ga je leren?</h3>
-            <p>In dit project combineren we moderne UI technieken met data ophalen (simulatie). Je leert hoe je:</p>
+            <p>In dit project combineren we moderne UI-technieken met het dynamisch ophalen van data (gesimuleerd). Je
+                leert hoe je:</p>
             <ul style="margin-left: 1.5rem;">
                 <li>Een <strong>Glassmorphism</strong> effect maakt met CSS (backdrop-filter)</li>
                 <li>Functies bouwt om input van de gebruiker te verwerken</li>
-                <li>Simulatie API requests maakt om weersgegevens op te halen</li>
+                <li>API-requests simuleert om weersgegevens op te halen</li>
                 <li>De DOM dynamisch bijwerkt met de opgehaalde data</li>
             </ul>
         </div>
@@ -352,11 +387,12 @@
         <div class="concepts">
             <h3>🎯 Belangrijke Concepten</h3>
             <ul>
-                <li><strong>backdrop-filter: blur()</strong> - Creëert het matglazen effect voor moderne UIs</li>
+                <li><strong>backdrop-filter: blur()</strong> - Creëert het matglazen effect voor moderne interface
+                    ontwerpen.</li>
                 <li><strong>Async/Await patronen</strong> - Begrijpen hoe je data in de toekomst ophaalt (hier
-                    gesimuleerd)</li>
+                    gesimuleerd).</li>
                 <li><strong>Object Destructuring</strong> - Makkelijker waarden uit objecten halen (bijv.
-                    <code>const { temp } = weersData;</code>)
+                    <code>const { temp } = weersData;</code>).
                 </li>
             </ul>
         </div>
@@ -369,7 +405,7 @@
                 <h4>Stap 1: HTML Elementen Selecteren</h4>
                 <p>Nadat we de strakke CSS hebben gedefinieerd, halen we de benodigde elementen op in JS om ze later te
                     updaten.</p>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="keyword">const</span> searchBtn = document.<span class="function">querySelector</span>(<span class="string">'.search-btn'</span>);
 <span class="keyword">const</span> searchBar = document.<span class="function">querySelector</span>(<span class="string">'.search-bar'</span>);</pre>
                 </div>
@@ -381,7 +417,7 @@
                 <h4>Stap 2: Zoekfunctionaliteit toevoegen</h4>
                 <p>We binden een <code>click</code> event aan de zoekknop en een <code>keyup</code> (Enter) event aan
                     het invoerveld.</p>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre>searchBtn.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span> () {
     weatherObj.<span class="function">search</span>();
 });
@@ -396,9 +432,10 @@ searchBar.<span class="function">addEventListener</span>(<span class="string">'k
 
             <div class="step">
                 <h4>Stap 3: Mock Data ophalen en tonen</h4>
-                <p>Omdat we hier geen echte API-sleutel vereisen, maken we een "nep" database (Object) van steden. Als
-                    de stad gevonden is, updaten we de elementen.</p>
-                <div class="code-example" style="background: #fff;">
+                <p>Omdat we hier geen echte API-sleutel vereisen, maken we zelf een "nep-database" (Object) met steden.
+                    Als
+                    de stad gevonden is, updaten we de betreffende elementen.</p>
+                <div class="code-example" >
                     <pre><span class="keyword">const</span> mockData = {
     <span class="string">'amsterdam'</span>: { temp: <span class="string">18</span>, desc: <span class="string">'Licht bewolkt'</span>, hum: <span class="string">65</span>, wind: <span class="string">12</span> }
 };
@@ -409,14 +446,14 @@ searchBar.<span class="function">addEventListener</span>(<span class="string">'k
     document.<span class="function">querySelector</span>(<span class="string">'.temp'</span>).innerText = data.temp + <span class="string">"°C"</span>;
 }</pre>
                 </div>
-                <p><strong>Uitleg:</strong> We simuleren een database en we halen de juiste data op met de
+                <p><strong>Uitleg:</strong> We simuleren een database en halen de juiste data op via de zogenaamde
                     bracket-notatie: <code>object[key]</code>.</p>
             </div>
         </div>
 
         <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code (JS Object Structuur)</h3>
+        <div class="code-example" style="border: 2px solid #667eea;">
+            <h3 style="color: #f8fafc; margin-bottom: 1rem;">💻 Complete Code (JS Object Structuur)</h3>
             <pre><span class="keyword">const</span> weatherObj = {
     mockData: {
         <span class="string">'amsterdam'</span>: { temp: <span class="string">18</span>, desc: <span class="string">'Licht bewolkt'</span>, hum: <span class="string">65</span>, wind: <span class="string">12</span> },
@@ -456,21 +493,22 @@ searchBar.<span class="function">addEventListener</span>(<span class="string">'k
             <h3>💡 Tips & Tricks</h3>
             <ul>
                 <li><strong>Waarom Object-georiënteerd?</strong> Door functies en data in <code>weatherObj</code> te
-                    groeperen, hou je de globale scope schoon en code overzichtelijk.</li>
-                <li><strong>toLowerCase():</strong> Zoekopdrachten moeten case-insensitive zijn (bijv. "AmsterDam").
+                    groeperen, houd je de globale scope schoon en de code overzichtelijk.</li>
+                <li><strong>toLowerCase():</strong> Zoekopdrachten moeten hoofdletterongevoelig (case-insensitive) zijn
+                    (bijv. "AmsterDam").
                     Door de invoer om te zetten naar kleine letters via <code>toLowerCase()</code> voorkom je
                     zoekfouten.</li>
-                <li><strong>Echte API:</strong> Ooit klaar om een échte API te gebruiken? Vervang de mock-data door een
-                    <code>fetch()</code> call (zoals we doen in eerdere/latere projecten!).</li>
+                <li><strong>Echte API:</strong> Ben je eraan toe om een échte API te gebruiken? Vervang de mock-data dan
+                    door een <code>fetch()</code>-call (zoals in eerdere/latere projecten!).</li>
             </ul>
         </div>
 
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
+        <div class="step-by-step" style="background: rgba(220, 53, 69, 0.1);">
             <h3>⚠️ Veelvoorkomende Fouten</h3>
             <div class="step">
                 <h4>Fout 1: "Enter" niet herkennen</h4>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - Verwacht een 'keyCode' die deprecated is</span>
 searchBar.addEventListener('keyup', function (event) {
     if (event.keyCode === 13) { ... }
@@ -483,8 +521,8 @@ searchBar.addEventListener('keyup', function (event) {
                 </div>
             </div>
             <div class="step">
-                <h4>Fout 2: Hoofdlettergevoeligheid The</h4>
-                <div class="code-example" style="background: #fff;">
+                <h4>Fout 2: Hoofdlettergevoeligheid</h4>
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - Als de gebruiker "AmsTERdam" typt, matcht dit niet.</span>
 const data = this.mockData[city];
 
@@ -498,7 +536,7 @@ const data = this.mockData[city.toLowerCase()];</pre>
         <div class="expandable" id="expansions">
             <div class="tips">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor meer? Probeer dit toe te voegen:</p>
+                <p>Klaar voor meer? Probeer deze functies toe te voegen:</p>
                 <ul>
                     <li><strong>Achtergrond wijzigen:</strong> Verander de achtergrondafbeelding op basis van het
                         weertype (mist, zon, regen).</li>
@@ -519,7 +557,7 @@ const data = this.mockData[city.toLowerCase()];</pre>
             <div class="weather-card">
                 <div class="search">
                     <input type="text" class="search-bar" placeholder="Zoek stad (bijv. Amsterdam)">
-                    <button class="search-btn">🔍</button>
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
                 </div>
                 <div class="weather loading">
                     <h2 class="city">Weer in -</h2>
@@ -527,19 +565,27 @@ const data = this.mockData[city.toLowerCase()];</pre>
                     <div class="description-weather">-----</div>
                     <div class="details">
                         <div class="col">
-                            <span>💧 <span class="humidity">--%</span> vocht</span>
+                            <i class="fas fa-droplet details-icon"></i>
+                            <span class="details-value humidity">--%</span>
+                            <span class="details-label">Luchtvochtigheid</span>
                         </div>
                         <div class="col">
-                            <span>💨 <span class="wind">-- km/u</span> wind</span>
+                            <i class="fas fa-wind details-icon" style="color: #cbd5e1;"></i>
+                            <span class="details-value wind">-- km/u</span>
+                            <span class="details-label">Windsnelheid</span>
                         </div>
                     </div>
                 </div>
-                <div class="error-msg" style="display: none; color: #ffeb3b; margin-top: 10px;">Stad niet gevonden in
-                    mock data.</div>
+                <div class="error-msg"
+                    style="display: none; color: #f87171; margin-top: 1rem; font-weight: 500; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);">
+                    <i class="fas fa-exclamation-circle"
+                        style="margin-bottom: 0.5rem; font-size: 1.5rem; display: block;"></i>
+                    Stad niet gevonden in mock data.
+                </div>
             </div>
         </div>
 
-        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+        <a href="../index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Terug naar Projecten</a>
     </div>
 
     <script>

@@ -13,7 +13,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -22,7 +22,7 @@
         }
         
         .container {
-            background: white;
+            background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px;
             border-radius: 12px;
             padding: 2rem;
             max-width: 600px;
@@ -31,15 +31,15 @@
         }
         
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
         }
         
         .level {
             display: inline-block;
             padding: 0.25rem 0.75rem;
-            background: #D4EDDA;
-            color: #155724;
+            background: rgba(40, 167, 69, 0.1);
+            color: #a5d6a7;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -47,13 +47,13 @@
         }
         
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
         }
         
         .project-area {
-            background: #f8f9fa;
+            
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -83,7 +83,7 @@
         }
         
         .instructions {
-            background: #e3f2fd;
+            background: rgba(33, 150, 243, 0.1);
             border-left: 4px solid #2196F3;
             padding: 1rem;
             border-radius: 4px;
@@ -91,13 +91,13 @@
         }
         
         .instructions h3 {
-            color: #1976D2;
+            color: #90caf9;
             margin-bottom: 0.5rem;
         }
         
         .instructions ul {
             margin-left: 1.5rem;
-            color: #555;
+            color: #cbd5e1;
         }
         
         .instructions li {
@@ -117,7 +117,7 @@
         }
         
         .explanation {
-            background: #fff3cd;
+background: rgba(255, 193, 7, 0.1);
             border-left: 4px solid #ffc107;
             padding: 1.5rem;
             border-radius: 4px;
@@ -125,12 +125,12 @@
         }
         
         .explanation h3 {
-            color: #856404;
+            color: #fef3c7;
             margin-bottom: 1rem;
         }
         
         .explanation p {
-            color: #856404;
+            color: #fef3c7;
             line-height: 1.8;
             margin-bottom: 1rem;
         }
@@ -168,7 +168,7 @@
         }
         
         .concepts {
-            background: #d1ecf1;
+            background: rgba(23, 162, 184, 0.1);
             border-left: 4px solid #17a2b8;
             padding: 1.5rem;
             border-radius: 4px;
@@ -176,13 +176,13 @@
         }
         
         .concepts h3 {
-            color: #0c5460;
+            color: #80deea;
             margin-bottom: 1rem;
         }
         
         .concepts ul {
             margin-left: 1.5rem;
-            color: #0c5460;
+            color: #80deea;
         }
         
         .concepts li {
@@ -191,7 +191,7 @@
         }
         
         .tips {
-            background: #d4edda;
+            background: rgba(40, 167, 69, 0.1);
             border-left: 4px solid #28a745;
             padding: 1.5rem;
             border-radius: 4px;
@@ -199,13 +199,13 @@
         }
         
         .tips h3 {
-            color: #155724;
+            color: #a5d6a7;
             margin-bottom: 1rem;
         }
         
         .tips ul {
             margin-left: 1.5rem;
-            color: #155724;
+            color: #a5d6a7;
         }
         
         .tips li {
@@ -213,7 +213,7 @@
         }
         
         .step-by-step {
-            background: #f8d7da;
+            background: rgba(220, 53, 69, 0.1);
             border-left: 4px solid #dc3545;
             padding: 1.5rem;
             border-radius: 4px;
@@ -221,7 +221,7 @@
         }
         
         .step-by-step h3 {
-            color: #721c24;
+            color: #f8f1f1;
             margin-bottom: 1rem;
         }
         
@@ -236,12 +236,12 @@
         }
         
         .step h4 {
-            color: #721c24;
+            color: #f8f1f1;
             margin-bottom: 0.5rem;
         }
         
         .step p {
-            color: #721c24;
+            color: #f8f1f1;
             line-height: 1.6;
             margin-bottom: 0.5rem;
         }
@@ -281,7 +281,7 @@
         <div class="explanation">
             <h3>📚 Wat ga je leren?</h3>
             <p>In dit project leer je hoe je elementen dynamisch kunt tonen en verbergen. Je leert:</p>
-            <ul style="margin-left: 1.5rem; color: #856404;">
+            <ul style="margin-left: 1.5rem; color: #fef3c7;">
                 <li>De display CSS eigenschap gebruiken om zichtbaarheid te controleren</li>
                 <li>Boolean variabelen gebruiken om state bij te houden</li>
                 <li>Conditional logic (if/else) toepassen</li>
@@ -344,8 +344,8 @@
         </div>
         
         <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+        <div class="code-example" style="border: 2px solid #667eea;">
+            <h3 style="color: #f8fafc; margin-bottom: 1rem;">💻 Complete Code</h3>
             <pre><span class="comment">// Stap 1: Selecteer elementen</span>
 <span class="keyword">const</span> box = document.<span class="function">getElementById</span>(<span class="string">'toggle-box'</span>);
 <span class="keyword">const</span> knop = document.<span class="function">getElementById</span>(<span class="string">'toggle-btn'</span>);
@@ -390,11 +390,11 @@ knop.<span class="function">addEventListener</span>(<span class="string">'click'
         </div>
         
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
+        <div class="step-by-step" style="background: rgba(220, 53, 69, 0.1);">
             <h3>⚠️ Veelvoorkomende Fouten</h3>
             <div class="step">
                 <h4>Fout 1: Vergeten state bij te werken</h4>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - State wordt niet geüpdatet, werkt maar één keer</span>
 <span class="keyword">if</span> (isZichtbaar) {
     box.style.display = <span class="string">'none'</span>;
@@ -409,7 +409,7 @@ isZichtbaar = !isZichtbaar;</pre>
             </div>
             <div class="step">
                 <h4>Fout 2: Verkeerde display waarde</h4>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - 'hidden' is geen geldige display waarde</span>
 box.style.display = <span class="string">'hidden'</span>; <span class="comment">// Werkt niet!</span>
 
@@ -420,7 +420,7 @@ box.style.display = <span class="string">'block'</span>; <span class="comment">/
             </div>
             <div class="step">
                 <h4>Fout 3: Vergeten display type te specificeren</h4>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - Element wordt niet getoond als het inline was</span>
 box.style.display = <span class="string">''</span>; <span class="comment">// Lege string werkt niet</span>
 
@@ -461,7 +461,7 @@ knop.<span class="function">addEventListener</span>(<span class="string">'click'
         
         <!-- Demo Area -->
         <div class="project-area">
-            <h3 style="margin-bottom: 1rem; color: #333;">🎮 Probeer het zelf:</h3>
+            <h3 style="margin-bottom: 1rem; color: #f8fafc;">🎮 Probeer het zelf:</h3>
             <div id="toggle-box" style="width: 200px; height: 100px; background: #3498db; border-radius: 8px; margin: 1rem 0;">Ik ben zichtbaar!</div>
             <button id="toggle-btn" class="demo-btn">Verberg/Toon</button>
         </div>

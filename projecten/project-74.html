@@ -14,112 +14,111 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #24292e 0%, #1b1f23 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            color: #c9d1d9;
+            padding: 2.5rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: #0d1117;
-            border-radius: 12px;
-            padding: 2.5rem;
-            max-width: 650px;
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 750px;
             width: 100%;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-            border: 1px solid #30363d;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #c9d1d9;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
             text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            font-size: 2.2rem;
         }
 
         .level {
             display: block;
-            padding: 0.25rem 0.75rem;
-            background: rgba(88, 166, 255, 0.2);
-            color: #58a6ff;
-            border-radius: 20px;
+            padding: 0.3rem 1rem;
+            background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+            color: white;
+            border-radius: 30px;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 2rem;
             width: max-content;
             margin-left: auto;
             margin-right: auto;
+            text-transform: uppercase;
         }
 
-        /* THE APP CSS _T */
-        .project-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-align: center;
+            font-size: 0.95rem;
         }
 
-        .ZOek__FormTHGitHub_H {
+        .search-form {
             width: 100%;
             display: flex;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 30px;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 8px;
+            border-radius: 16px;
+            border: 1px solid #334155;
         }
 
-        .ZOek__FormTHGitHub_H input {
+        .search-form input {
             flex: 1;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #30363d;
-            background: #161b22;
-            color: #c9d1d9;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: none;
+            background: transparent;
+            color: #f8fafc;
             font-size: 1.1rem;
             outline: none;
-            transition: 0.2s;
         }
 
-        .ZOek__FormTHGitHub_H input:focus {
-            border-color: #58a6ff;
-            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
-        }
-
-        .ZOek__FormTHGitHub_H button {
+        .search-form button {
             background: #238636;
             color: white;
             border: none;
-            padding: 0 25px;
-            border-radius: 8px;
-            font-weight: bold;
+            padding: 0 30px;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
-            transition: 0.2s;
-            font-size: 1.1rem;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
 
-        .ZOek__FormTHGitHub_H button:hover {
+        .search-form button:hover {
             background: #2ea043;
+            transform: translateY(-1px);
         }
 
-        /* DE GITHUB KAART !! Z */
-        .KkGarTtHubUIUserTh {
+        .user-card {
             width: 100%;
-            background: #161b22;
-            border-radius: 12px;
-            padding: 25px;
-            border: 1px solid #30363d;
+            background: #0f172a;
+            border-radius: 16px;
+            padding: 35px;
+            border: 1px solid #334155;
             display: none;
-            /* starts hidden The*/
-            animation: FaadinTheZTop 0.4s ease;
+            text-align: left;
+            animation: slideUp 0.4s ease-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes FaadinTheZTop {
+        @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(20px);
             }
 
             to {
@@ -128,419 +127,412 @@
             }
         }
 
-        .DeRRowHoofdProfielThe {
+        .profile-header {
             display: flex;
-            gap: 20px;
+            gap: 30px;
             align-items: flex-start;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        .AtaAvaTarGtiImgH {
-            width: 120px;
-            height: 120px;
+        .avatar {
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            border: 4px solid #30363d;
+            border: 4px solid #334155;
             object-fit: cover;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
         }
 
-        .InffoGttiHubKDataDe {
+        .profile-info {
             flex: 1;
         }
 
-        .NaaMHubGGZThe {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #c9d1d9;
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #f8fafc;
             margin-bottom: 5px;
         }
 
-        .NaaMHubGGZThe a {
-            color: #58a6ff;
+        .username-link {
+            color: #3b82f6;
             text-decoration: none;
             font-size: 1.1rem;
             display: block;
-            margin-top: 5px;
+            margin-bottom: 15px;
+            font-weight: 500;
         }
 
-        .NaaMHubGGZThe a:hover {
+        .username-link:hover {
             text-decoration: underline;
         }
 
-        .BoiOGGitTh {
-            font-size: 1rem;
-            color: #8b949e;
-            margin-bottom: 20px;
-            line-height: 1.5;
+        .profile-bio {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            line-height: 1.6;
         }
 
-        .KkaARrtStatTheGitG_H {
-            display: flex;
-            justify-content: space-between;
-            background: #0d1117;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #30363d;
-            margin-bottom: 20px;
+        .stats-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #334155;
         }
 
-        .IteMStatTheGitH {
+        .stat-item {
             text-align: center;
         }
 
-        .IteMStatTheGitH span {
+        .stat-item span {
             display: block;
             font-size: 0.8rem;
-            color: #8b949e;
+            color: #94a3b8;
             text-transform: uppercase;
+            font-weight: 800;
             margin-bottom: 5px;
-            font-weight: bold;
+            letter-spacing: 0.5px;
         }
 
-        .IteMStatTheGitH div {
-            font-size: 1.5rem;
-            color: #c9d1d9;
-            font-weight: bold;
+        .stat-item div {
+            font-size: 1.6rem;
+            color: #f8fafc;
+            font-weight: 800;
         }
 
-        .LInksInfoGridHubV {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .IT_mLLInkGitHD {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #8b949e;
-            font-size: 0.95rem;
-        }
-
-        .IT_mLLInkGitHD i {
-            width: 20px;
-            text-align: center;
-            color: #c9d1d9;
-        }
-
-        .IT_mLLInkGitHD a {
-            color: #8b949e;
-            text-decoration: none;
-        }
-
-        .IT_mLLInkGitHD a:hover {
-            color: #58a6ff;
-            text-decoration: underline;
-        }
-
-        /* Loader & Err */
-        .LddLaderGitSpinTh {
+        .loader {
             display: none;
-            width: 40px;
-            height: 40px;
-            border: 4px solid #30363d;
-            border-top-color: #58a6ff;
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #3b82f6;
             border-radius: 50%;
-            animation: spinGitV 1s linear infinite;
-            margin: 30px auto;
+            animation: spin 0.8s linear infinite;
+            margin: 40px auto;
         }
 
-        @keyframes spinGitV {
+        @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
 
-        .ErrmesGITTThe {
-            color: #ff7b72;
-            background: rgba(255, 123, 114, 0.1);
-            padding: 15px;
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
             border-radius: 8px;
-            border: 1px solid rgba(255, 123, 114, 0.4);
-            display: none;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+            margin-top: 3rem;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            display: block;
             width: 100%;
-            text-align: center;
-            font-weight: bold;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 2rem;
-            color: #58a6ff;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
-        }
-
-        .back-link:hover {
-            color: #79c0ff;
+            text-align: center;
+            width: 100%;
         }
     </style>
-    <!-- Z_The Icons for links!_ The -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
-        <h1><i class="fab fa-github"></i> GitHub Finder</h1>
-        <span class="level">API & Fetch</span>
+        <h1>GitHub User Finder</h1>
+        <span class="level">RESTful API Architecture</span>
+        <p class="description">Bouw een professionele interface die communiceert met de officiële GitHub API. Leer hoe
+            je gebruikersdata ophaalt, verwerkt en fouten zoals '404 Not Found' opvangt.</p>
+
+        <div class="project-area">
+            <form class="search-form" id="search-form">
+                <input type="text" id="search-input" placeholder="Zoek een GitHub username..." required
+                    autocomplete="off">
+                <button type="submit">Zoek Profile</button>
+            </form>
+
+            <div class="loader" id="loader"></div>
+
+            <div class="user-card" id="user-card">
+                <div class="profile-header">
+                    <img src="" alt="Avatar" class="avatar" id="avatar">
+                    <div class="profile-info">
+                        <div class="profile-name" id="name-display">Naam</div>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="username-link"
+                            id="username-link">@username</a>
+                        <p class="profile-bio" id="profile-bio">Deze developer heeft nog geen bio toegevoegd.</p>
+                    </div>
+                </div>
+
+                <div class="stats-box">
+                    <div class="stat-item">
+                        <span>Repositories</span>
+                        <div id="repos-count">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <span>Followers</span>
+                        <div id="followers-count">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <span>Following</span>
+                        <div id="following-count">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>GitHub biedt een van de meest gedetailleerde APIs ter wereld. In dit project leer je hoe je deze data
+                structureert voor een eindgebruiker.</p>
+            <ul>
+                <li><strong>Dynamic Endpoint Construction:</strong> Hoe je variabelen (usernames) veilig in een URL
+                    injecteert.</li>
+                <li><strong>Destructuring JSON:</strong> Het effectief uitlezen van specifieke eigenschappen uit een
+                    groot API-antwoord.</li>
+                <li><strong>Form Handling:</strong> Het voorkomen van de standaard pagina-refresh bij het indienen van
+                    een zoekopdracht.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Template Literals:</strong> Gebruik van backticks <code>`...`</code> om variabelen direct in
+                    snaren te plaatsen (Interpolatie).</li>
+                <li><strong>Response Handling:</strong> Controleren op <code>response.ok</code>. APIs sturen soms
+                    succesvol een antwoord terug om te zeggen dat ze iets <i>niet</i> hebben gevonden.</li>
+                <li><strong>Asynchrone Functies:</strong> Gebruik van <code>try...catch...finally</code> voor een
+                    robuuste netwerk-logica.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: De GitHub Fetch</h3>
 
             <div class="step">
-                <h4>Stap 1: Gebruikers Ophalen!</h4>
-                <p>We_ the the de The gebruiken de `GitHub API` om_ the! the Gebruikers_ details The (Naam,_ Bio, the
-                    Repos, the the_ etc) the! OP te_ The the! Halen. We the_ the the _geven de_ The `username` THE ! mee
-                    the the_! in the!_ De_ <code>URL</code>!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
-<span class="keyword">const</span> UUrlGGithUBAPITh_The = <span class="string">'https://api.github.com/users/'</span>;
-<span class="keyword">const</span> THetZNetRResOPTHH = <span class="keyword">await</span> <span class="function">fetch</span>(UUrlGGithUBAPITh_The + NNamTGegebRthTheSThe);
-<span class="keyword">const</span> TheDatJSONOGtiHbDObj = <span class="keyword">await</span> THetZNetRResOPTHH.<span class="function">json</span>();</pre>
+                <h4>1: De variabelen in de URL</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> username = <span class="string">'octocat'</span>;
+<span class="keyword">const</span> url = <span class="string">`https://api.github.com/users/${username}`</span>;
+<span class="comment">// De browser vervangt ${username} door 'octocat'</span></pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: API the 404_ Errors !</h4>
-                <p>Wat_ the the _ALS de_ The the Gebruiker the The NIET_ Bestaat? The! _ Dan__ geeft the_ the API
-                    <code>404 Not Found</code>_ TERug! The <code>fetch</code>_ The! the the Gooit the_ geen_ the the
-                    `Catch` error the ! the HierVoor!The _ <strong>Wij</strong> moeten the the zelf! the The
-                    <code>response.ok</code> of <code>response.status === 404</code> THE! the The! Checken!</p>
-            </div>
-
-        </div>
-
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Typ the_ Een V Bekende the GitHub _The Naam! (Bv: `bradtraversy` of `wesbos` of_ `defunkt`) </li>
-                <li>Druk the_ OP the "Zoek" The! the </li>
-                <li>Zoek The_ The the!_ Iemand the the Die The_ <strong>Niet the!_</strong> Bestaat! Om de the! the
-                    Error The Te Zien! </li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>The Default Fallbacks :</strong> the The API! the geeft The The the _vaak the NULL_! The the
-                    The Of _ The empty_! The strings _ terug The_ the Als_ the _een the_! the User _ The geen The `bio`
-                    the of_ The `twitter` The heeft_. In The the_ de The JS the _Zie _ The! Je_ Dat we the! the `||`
-                    (OR) The THE ! gebruiken_. _ (Bv: `location || 'Onbekend'`)._ </li>
-            </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: de_ <code>rate_limit</code>_ the Error_! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je de `GitHub API` Te the VAakThe ! the _Aanroept (Bv 60x the!_ per UurThe) Krijg je the!_ een `403 Rate Limit`_ HTTP the The status!!! TheThe </span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The thethe Als the je_ The Meer_ wilt testen the_ Moet Je The! The_ een The API_ key_ The Meesturen !  _ </span></pre>
+                <h4>2: Foutafhandeling (De 404)</h4>
+                <p>Als een gebruiker niet bestaat, stuurt GitHub een status code 404. We vangen dit op met een
+                    <code>throw</code>.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> response = <span class="keyword">await</span> <span class="function">fetch</span>(url);
+<span class="keyword">if</span> (!response.ok) {
+    <span class="keyword">throw new</span> <span class="function">Error</span>(<span class="string">'Gebruiker niet gevonden'</span>);
+}</pre>
                 </div>
             </div>
+
         </div>
 
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
                 <ul>
-                    <li><strong>Laatste The_ Repos! !! The The The The! </strong> the the thethe the THE the Bouw The DE
-                        V The_ the the the The_ Logica OM The_The the Ook The De The THE_ Laatste the 5 THE !
-                        Repositories the van the de the !! The _ gebruiker the the Op te Halen_!_ en_ The_ The_ the
-                        Onder _ de Kaart The!_ Te Tonen_!!!_ </li>
+                    <li><strong>API Rate Limits:</strong> GitHub staat slechts 60 verzoeken per uur toe voor
+                        niet-ingelogde gebruikers. Als je te snel klikt, krijg je een 403 error.</li>
+                    <li><strong>Lege Velden:</strong> Zoeken op een lege snaar. Gebruik altijd <code>.trim()</code> en
+                        een simpele <code>if(username)</code> check.</li>
+                </ul>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>Recent Repos:</strong> Haal ook de laatste 5 repositories op van de gebruiker via
+                        <code>/repos?sort=created</code>.</li>
+                    <li><strong>Dark/Light Toggle:</strong> Voeg een knop toe om het thema van de card te veranderen.
+                    </li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
-        <div class="project-area">
-
-            <form class="ZOek__FormTHGitHub_H" id="FfFormZoekGitTheH">
-                <input type="text" id="IiINputTTheZNameGGit"
-                    placeholder="Zoek een GitHub username (bv. bradtraversy)..." required autocomplete="off">
-                <button type="submit">Zoek</button>
-            </form>
-
-            <div class="LddLaderGitSpinTh" id="LLTheLoadTGitV_Ui"></div>
-            <div class="ErrmesGITTThe" id="mEsGsTheErroRGTVT">Gebruiker niet gevonden! 🤷‍♂️</div>
-
-            <!-- V De Kaart Z! _ -->
-            <div class="KkGarTtHubUIUserTh" id="uIiDeHubGKaartV_The">
-
-                <div class="DeRRowHoofdProfielThe">
-                    <img src="" alt="Avatar" class="AtaAvaTarGtiImgH" id="UuAvartTheIMGeTHTDOM">
-                    <div class="InffoGttiHubKDataDe">
-                        <div class="NaaMHubGGZThe" id="Ui_vN_aNaTheMTextV">Naam
-                            <a href="#" target="_blank" id="UIa_LnikTTheNaamUserTV_TheH">@username</a>
-                        </div>
-                        <p class="BoiOGGitTh" id="UUuiZBiOGTTXTv_Th">Bio komt hier te staan als The! die_The bestaat O !
-                        </p>
-                    </div>
-                </div>
-
-                <div class="KkaARrtStatTheGitG_H">
-                    <div class="IteMStatTheGitH">
-                        <span>Repos</span>
-                        <div id="uUiiR_ReepoT_SNumTheV">0</div>
-                    </div>
-                    <div class="IteMStatTheGitH">
-                        <span>Followers</span>
-                        <div id="UUFOOLLeOwTheSNumZTv">0</div>
-                    </div>
-                    <div class="IteMStatTheGitH">
-                        <span>Following</span>
-                        <div id="UUiZFLwingTheNUMVO__H">0</div>
-                    </div>
-                </div>
-
-                <div class="LInksInfoGridHubV">
-                    <div class="IT_mLLInkGitHD">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span id="UilOcoDaTextVTHO_TheH">Onbekend</span>
-                    </div>
-                    <div class="IT_mLLInkGitHD">
-                        <i class="fab fa-twitter"></i>
-                        <span id="UiTTwTheitDataTxt_VZ">Onbekend</span>
-                    </div>
-                    <div class="IT_mLLInkGitHD">
-                        <i class="fas fa-link"></i>
-                        <a href="#" target="_blank" id="UIllO_LinkBlogDTheTVZ">Blog / Website</a>
-                    </div>
-                    <div class="IT_mLLInkGitHD">
-                        <i class="fas fa-building"></i>
-                        <span id="uCOmmPanyTextHDataZ">Onbekend</span>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Fouten & Uitbreidingen</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const THEG_FormGIHT_ = document.getElementById('FfFormZoekGitTheH');
-        const DIZInPputNameT = document.getElementById('IiINputTTheZNameGGit');
+        const searchForm = document.getElementById('search-form');
+        const searchInput = document.getElementById('search-input');
+        const userCard = document.getElementById('user-card');
+        const loader = document.getElementById('loader');
 
-        const ODeErrMestZ = document.getElementById('mEsGsTheErroRGTVT');
-        const ULloaderGGiTTV = document.getElementById('LLTheLoadTGitV_Ui');
-        const DEHKaaRtTHEO_ZDOMT = document.getElementById('uIiDeHubGKaartV_The');
+        // Card elementen
+        const avatar = document.getElementById('avatar');
+        const nameDisplay = document.getElementById('name-display');
+        const usernameLink = document.getElementById('username-link');
+        const bio = document.getElementById('profile-bio');
+        const reposCount = document.getElementById('repos-count');
+        const followersCount = document.getElementById('followers-count');
+        const followingCount = document.getElementById('following-count');
 
-        // UI DOM NODES The !
-        const AvvAImageDaTTheT = document.getElementById('UuAvartTheIMGeTHTDOM');
-        const TheDNNaamTVTxtZO = document.getElementById('Ui_vN_aNaTheMTextV');
-        const UULLinkBNavGTHe = document.getElementById('UIa_LnikTTheNaamUserTV_TheH');
-        const TBBiyoTextDTh = document.getElementById('UUuiZBiOGTTXTv_Th');
-
-        const RRpeposTVNTTheData = document.getElementById('uUiiR_ReepoT_SNumTheV');
-        const FOTheLLNumDThO = document.getElementById('UUFOOLLeOwTheSNumZTv');
-        const FLowingNTTheDataZ = document.getElementById('UUiZFLwingTheNUMVO__H');
-
-        const LOOCTheDataVTxO = document.getElementById('UilOcoDaTextVTHO_TheH');
-        const TTWThterHDatTheV = document.getElementById('UiTTwTheitDataTxt_VZ');
-        const BlOo_GlInkHDataThe = document.getElementById('UIllO_LinkBlogDTheTVZ');
-        const COMpH_OnyhDeDaTTV = document.getElementById('uCOmmPanyTextHDataZ');
-
-        const UUrlGGithUBAPITh_The = 'https://api.github.com/users/';
-
-        async function F_HHaAalTheGebruikTTheGIHubVOP(NNamTGegebRthTheSThe) {
-            // Reset UI
-            ODeErrMestZ.style.display = "none";
-            DEHKaaRtTHEO_ZDOMT.style.display = "none";
-            ULloaderGGiTTV.style.display = "block";
+        async function fetchUser(username) {
+            // UI reset
+            userCard.style.display = 'none';
+            loader.style.display = 'block';
 
             try {
-                const THetZNetRResOPTHH = await fetch(UUrlGGithUBAPITh_The + NNamTGegebRthTheSThe);
+                const response = await fetch(`https://api.github.com/users/${username}`);
 
-                if (!THetZNetRResOPTHH.ok) {
-                    if (THetZNetRResOPTHH.status === 404) {
-                        throw new Error("Gebruiker Niet Gevonden 404_!");
-                    }
-                    throw new Error("GtiHub API _ Error_ H!");
+                if (response.status === 404) {
+                    throw new Error('Gebruiker bestaat niet');
                 }
 
-                const TheDatJSONOGtiHbDObj = await THetZNetRResOPTHH.json();
-
-                // Vul Kaart in! The
-                AvvAImageDaTTheT.src = TheDatJSONOGtiHbDObj.avatar_url;
-
-                // TRick: als THE naam leeg is_Z _gebruik_ H de login naam ! H The !!
-                TheDNNaamTVTxtZO.childNodes[0].nodeValue = TheDatJSONOGtiHbDObj.name || TheDatJSONOGtiHbDObj.login + " ";
-
-                UULLinkBNavGTHe.innerText = `@${TheDatJSONOGtiHbDObj.login}`;
-                UULLinkBNavGTHe.href = TheDatJSONOGtiHbDObj.html_url;
-
-                TBBiyoTextDTh.innerText = TheDatJSONOGtiHbDObj.bio ? TheDatJSONOGtiHbDObj.bio : "Dit the profile _!_The_Heeft geen Bio Beschrijving.. Z";
-
-                RRpeposTVNTTheData.innerText = TheDatJSONOGtiHbDObj.public_repos;
-                FOTheLLNumDThO.innerText = TheDatJSONOGtiHbDObj.followers;
-                FLowingNTTheDataZ.innerText = TheDatJSONOGtiHbDObj.following;
-
-                LOOCTheDataVTxO.innerText = TheDatJSONOGtiHbDObj.location || 'Onbekend';
-
-                // Ttwitter the The!
-                if (TheDatJSONOGtiHbDObj.twitter_username) {
-                    TTWThterHDatTheV.innerHTML = `<a href="https://twitter.com/${TheDatJSONOGtiHbDObj.twitter_username}" target="_blank">@${TheDatJSONOGtiHbDObj.twitter_username}</a>`;
-                } else {
-                    TTWThterHDatTheV.innerText = 'Niet the gekoppeld';
+                if (!response.ok) {
+                    throw new Error('Er ging iets mis bij GitHub');
                 }
 
-                // Blog link H
-                if (TheDatJSONOGtiHbDObj.blog) {
-                    // soms is http the missing! H
-                    const VBlogUrlT__KThe = TheDatJSONOGtiHbDObj.blog.startsWith('http') ? TheDatJSONOGtiHbDObj.blog : `https://${TheDatJSONOGtiHbDObj.blog}`;
-                    BlOo_GlInkHDataThe.href = VBlogUrlT__KThe;
-                    BlOo_GlInkHDataThe.innerText = TheDatJSONOGtiHbDObj.blog;
-                } else {
-                    BlOo_GlInkHDataThe.href = "#";
-                    BlOo_GlInkHDataThe.innerText = "Geen the website_Z";
-                }
+                const data = await response.json();
+                renderProfile(data);
 
-                COMpH_OnyhDeDaTTV.innerText = TheDatJSONOGtiHbDObj.company || 'Onbekend';
-
-                // Show the KAART THE!!
-                ULloaderGGiTTV.style.display = "none";
-                DEHKaaRtTHEO_ZDOMT.style.display = "block";
-
-            } catch (DeEErrDaTAhT_OTheMSG) {
-                ULloaderGGiTTV.style.display = "none";
-                ODeErrMestZ.style.display = "block";
-                console.error(DeEErrDaTAhT_OTheMSG);
+            } catch (err) {
+                alert(err.message);
+                console.error(err);
+            } finally {
+                loader.style.display = 'none';
             }
         }
 
-        THEG_FormGIHT_.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const UIZeZOocHNaaamTThe = DIZInPputNameT.value.trim();
-            if (UIZeZOocHNaaamTThe) {
-                F_HHaAalTheGebruikTTheGIHubVOP(UIZeZOocHNaaamTThe);
-                DIZInPputNameT.value = "";
+        function renderProfile(user) {
+            // Data injecteren in de DOM
+            avatar.src = user.avatar_url;
+            nameDisplay.innerText = user.name || user.login;
+            usernameLink.innerText = `@${user.login}`;
+            usernameLink.href = user.html_url;
+            bio.innerText = user.bio || "Deze gebruiker heeft nog geen bio toegevoegd.";
+            reposCount.innerText = user.public_repos;
+            followersCount.innerText = user.followers;
+            followingCount.innerText = user.following;
+
+            // Card tonen
+            userCard.style.display = 'block';
+        }
+
+        // Event Listeners
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Voorkom pagina refresh
+            const username = searchInput.value.trim();
+            if (username) {
+                fetchUser(username);
+                // searchInput.value = ''; // Optioneel: leegmaken na zoekopdracht
             }
         });
 
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
+            const exp = document.getElementById('expansions');
             const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
         }
     </script>
 </body>

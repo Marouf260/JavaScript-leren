@@ -4,8 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 97: Markdown Previewer - DOM Projecten</title>
+    <title>Project 97: Markdown Writer Pro - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --border: #334155;
+            --primary: #38bdf8;
+            --primary-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-dim: #cbd5e1;
+            --accent: #10b981;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,441 +31,457 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #18181b;
-            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 2rem;
-            color: #f4f4f5;
+            overflow: hidden;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        h1 {
-            margin-bottom: 0.5rem;
-            color: #e4e4e7;
-            font-size: 2.5rem;
+        header {
+            height: 70px;
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 100;
+        }
+
+        .brand {
+            font-weight: 800;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .brand i {
+            color: var(--primary);
+        }
+
+        .toolbar {
+            display: flex;
             gap: 15px;
         }
 
-        .level {
-            display: inline-block;
-            padding: 0.4rem 1.2rem;
-            background: #3f3f46;
-            color: #a1a1aa;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .app-container {
+        .btn-action {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
             display: flex;
-            width: 100%;
-            max-width: 1400px;
-            height: calc(100vh - 200px);
-            background: #27272a;
-            border-radius: 12px;
-            border: 1px solid #3f3f46;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 1);
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .panel {
+        .btn-action:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+        }
+
+        .btn-action.primary {
+            background: var(--primary);
+            color: var(--bg);
+            border: none;
+        }
+
+        .btn-action.primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Editor Layout */
+        .pane {
             flex: 1;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
-        .editor-panel {
-            border-right: 2px solid #3f3f46;
-        }
-
-        .panel-header {
-            background: #18181b;
-            padding: 15px 20px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #d4d4d8;
-            border-bottom: 1px solid #3f3f46;
+        .pane-header {
+            height: 45px;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            padding: 0 25px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
 
-        textarea {
+        #editor {
             flex: 1;
-            background: #1e1e24;
-            color: #e4e4e7;
+            width: 100%;
+            background: transparent;
             border: none;
-            padding: 20px;
-            font-family: 'Courier New', Courier, monospace;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
             font-size: 16px;
-            line-height: 1.5;
+            line-height: 1.6;
+            padding: 40px;
             resize: none;
             outline: none;
         }
 
-        textarea:focus {
-            background: #111;
-        }
-
-        .preview-area {
+        #preview {
             flex: 1;
-            background: #fff;
-            color: #1a1a1a;
-            padding: 30px;
+            padding: 40px;
             overflow-y: auto;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.1);
+            border-left: 2px solid var(--border);
+            line-height: 1.7;
         }
 
-        /* Markdown Styles */
-        .preview-area h1,
-        .preview-area h2,
-        .preview-area h3 {
-            margin-bottom: 10px;
-            margin-top: 20px;
-            color: #111827;
+        /* Markdown Styles in Preview */
+        #preview h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
         }
 
-        .preview-area h1 {
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 5px;
+        #preview h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
         }
 
-        .preview-area p {
-            margin-bottom: 15px;
+        #preview h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.8rem;
         }
 
-        .preview-area ul,
-        .preview-area ol {
-            margin-bottom: 15px;
-            padding-left: 20px;
+        #preview p {
+            margin-bottom: 1rem;
+            color: #cbd5e1;
         }
 
-        .preview-area li {
-            margin-bottom: 5px;
-        }
-
-        .preview-area blockquote {
-            border-left: 4px solid #d1d5db;
-            padding-left: 15px;
-            color: #4b5563;
-            font-style: italic;
-            margin-bottom: 15px;
-        }
-
-        .preview-area code {
-            background: #f3f4f6;
-            padding: 2px 5px;
+        #preview code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
             border-radius: 4px;
-            font-family: monospace;
-            color: #e11d48;
+            font-family: 'JetBrains Mono';
+            color: var(--primary);
         }
 
-        .preview-area pre {
-            background: #1f2937;
-            color: #f8fafc;
-            padding: 15px;
-            border-radius: 8px;
+        #preview pre {
+            background: #000;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
             overflow-x: auto;
-            margin-bottom: 15px;
+            border: 1px solid var(--border);
         }
 
-        .preview-area pre code {
-            background: transparent;
-            color: inherit;
-            padding: 0;
-        }
-
-        .preview-area a {
-            color: #2563eb;
-            text-decoration: none;
-        }
-
-        .preview-area a:hover {
-            text-decoration: underline;
-        }
-
-        .preview-area img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-
-        .preview-area hr {
-            border: 0;
-            height: 1px;
-            background: #e5e7eb;
+        #preview blockquote {
+            border-left: 4px solid var(--primary);
+            padding-left: 20px;
+            color: var(--text-dim);
+            font-style: italic;
             margin: 20px 0;
         }
 
-        @media (max-width: 768px) {
-            .app-container {
-                flex-direction: column;
-                height: auto;
-                min-height: 800px;
-            }
+        #preview ul {
+            margin-left: 25px;
+            margin-bottom: 1rem;
+        }
 
-            .editor-panel {
-                border-right: none;
-                border-bottom: 2px solid #3f3f46;
-                height: 400px;
-                flex: none;
-            }
+        #preview a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        #preview a:hover {
+            text-decoration: underline;
+        }
+
+        /* Tutorial Overlays */
+        .tutorial-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.98);
+            z-index: 1000;
+            padding: 60px;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .tips {
+            padding: 2.5rem;
+            border-radius: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 5px solid #f59e0b;
+        }
+
+        .concepts {
+            border-left: 5px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 5px solid var(--primary);
+        }
+
+        h2.modal-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 900;
+        }
+
+        h3 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        ul.modal-list {
+            margin-left: 1.5rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .code-example {
+            background: #000;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono';
+            margin: 20px 0;
+            color: #d1d5db;
+        }
+
+        .btn-help {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            z-index: 500;
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 2rem;
-            color: #a1a1aa;
+            margin-top: 30px;
+            color: var(--primary);
+            font-weight: 800;
             text-decoration: none;
-            font-weight: 600;
-        }
-
-        .back-link:hover {
-            color: #f4f4f5;
-        }
-
-        button.action-btn {
-            background: #3b82f6;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
+            text-transform: uppercase;
             font-size: 0.8rem;
         }
-
-        button.action-btn:hover {
-            background: #2563eb;
-        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
+    <header>
+        <div class="brand"><i class="fas fa-feather"></i> WRITER PRO</div>
+        <div class="toolbar">
+            <button class="btn-action" onclick="clearEditor()"><i class="fas fa-trash-alt"></i> Clear</button>
+            <button class="btn-action" onclick="downloadMD()"><i class="fas fa-download"></i> Download .md</button>
+            <button class="btn-action primary" onclick="downloadHTML()"><i class="fas fa-file-code"></i> Save as
+                HTML</button>
+        </div>
+    </header>
 
-    <div class="header">
-        <h1><i class="fab fa-markdown"></i> Markdown Previewer</h1>
-        <span class="level">Grandmaster Project (Regex &amp; DOM)</span>
-
-        <!-- Tutorial Section -->
-        <div class="step-by-step" style="text-align: left; margin: 0 auto 1.5rem auto; max-width: 1200px; width: 100%;">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
-            <div class="step">
-                <h4>Stap 1: Markdown Parsen met Regex</h4>
-                <p>We bouwen een eigen Markdown parser met <strong>reguliere expressies (Regex)</strong>. Elk
-                    Markdown-patroon wordt naar HTML vervangen met <code>str.replace()</code>.</p>
-                <div class="code-example" style="background: #1e1e24; color: #d4d4d8;">
-                    <pre><span style="color:#569cd6">// ** tekst ** wordt dikgedrukt</span>
-html = html.<span style="color:#dcdcaa">replace</span>(/\*\*(.*?)\*\*/g, <span style="color:#ce9178">'&lt;strong&gt;$1&lt;/strong&gt;'</span>);
-
-<span style="color:#569cd6">// # Koptekst wordt h1</span>
-html = html.<span style="color:#dcdcaa">replace</span>(/^# (.*$)/gim, <span style="color:#ce9178">'&lt;h1&gt;$1&lt;/h1&gt;'</span>);</pre>
-                </div>
-            </div>
+    <main>
+        <div class="pane">
+            <div class="pane-header">Markdown Input</div>
+            <textarea id="editor" spellcheck="false" placeholder="# Begin met schrijven..."></textarea>
         </div>
 
-        <div class="tips" style="max-width: 1200px; width: 100%; margin: 0 auto 1rem auto; text-align: left;">
-            <h3>✅ Jouw Opdracht</h3>
-            <ul>
-                <li>Typ Markdown in het linkerpaneel en zie de live HTML-preview rechts!</li>
-                <li>Probeer koppen (<code>#</code> t/m <code>######</code>), **dikgedrukt**, *cursief* en lijsten!</li>
-            </ul>
+        <div class="pane">
+            <div class="pane-header">Live Preview</div>
+            <div id="preview"></div>
         </div>
+    </main>
 
-        <div class="expandable" id="expansions" style="max-width: 1200px; width: 100%; margin: 0 auto;">
-            <div class="tips" style="text-align: left;">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <ul>
-                    <li><strong>Tabel Support:</strong> Voeg Regex toe voor Markdown-tabellen
-                        (<code>| Col1 | Col2 |</code>)!</li>
-                    <li><strong>Export als HTML:</strong> Voeg een download-knop toe die de gegenereerde HTML downloadt
-                        als bestand!</li>
+    <div class="btn-help" onclick="toggleModal(true)"><i class="fas fa-book"></i></div>
+
+    <div class="tutorial-modal" id="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Markdown Writer Gids</h2>
+
+            <div class="explanation">
+                <h3>📚 Wat ga je leren?</h3>
+                <p>Je bouwt een krachtige tekstverwerker die Markdown-tekst in real-time omzet naar HTML.</p>
+                <ul class="modal-list">
+                    <li><strong>Regex Parsing:</strong> Patronen herkennen zoals `#` voor titels en `**` voor
+                        dikgedrukte tekst.</li>
+                    <li><strong>Text Ingestion:</strong> Hoe je input-events gebruikt voor onmiddellijke feedback.</li>
+                    <li><strong>Blob & File API:</strong> Browser-tekst exporteren als downloadbare bestanden.</li>
                 </ul>
             </div>
-        </div>
-        <button onclick="toggleExpansions()"
-            style="display: block; margin: 1rem auto; background: #3f3f46; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">📖
-            Toon Uitbreidingsmogelijkheden</button>
-    </div>
 
-    <div class="app-container">
-        <!-- Editor -->
-        <div class="panel editor-panel">
-            <div class="panel-header">
-                <span><i class="fas fa-edit"></i> Editor</span>
-                <button class="action-btn" id="clearBtn">Clear</button>
+            <div class="concepts">
+                <h3>🎯 Kernconcepten</h3>
+                <ul class="modal-list">
+                    <li><strong>String replacement:</strong> Gebruik van `.replace()` met globale flags (`/g`).</li>
+                    <li><strong>Markdown Syntax:</strong> Begrijpen hoe symbolen worden vertaald naar HTML tags.</li>
+                    <li><strong>DOM Sanitization:</strong> Waarom we voorzichtig moeten zijn met het injecteren van pure
+                        HTML.</li>
+                </ul>
             </div>
-            <textarea id="editor" placeholder="Typ hier je Markdown..."># Welkom bij de Markdown Previewer!
 
-Hier is een introductie tot Markdown syntax.
-
-## Tekst Opmaak
-Je kan tekst **dikgedrukt** maken, of *cursief*, of zelfs ***beide***.
-Doorstrepen doe je ~~zo~~.
-
-## Lijsten
-Ongeordende lijst:
-* Item 1
-* Item 2
-  * Sub-item A
-  * Sub-item B
-
-Geordende lijst:
-1. Eerste stap
-2. Tweede stap
-3. Derde stap
-
-## Links en Afbeeldingen
-[Bezoek GitHub](https://github.com)
-
-![Leuke Kat](https://placekitten.com/300/200)
-
-## Code
-Inline code ziet er zo uit: \`const = "Hallo";\`
-
-Codeblokken:
-\`\`\`javascript
-function zegHallo(naam) {
-  console.log("Hallo " + naam + "!");
-}
-zegHallo("Wereld");
-\`\`\`
-
-## Quotes
-> Dit is een blockquote.
-> Het is erg handig voor citaten.
-
----
-*Gemaakt met Regex in JavaScript.*
-</textarea>
-        </div>
-
-        <!-- Preview -->
-        <div class="panel">
-            <div class="panel-header">
-                <span><i class="fas fa-eye"></i> Preview</span>
+            <div class="step-by-step">
+                <h3>📝 Stap-voor-stap: De Parser</h3>
+                <p>We gebruiken reguliere expressies om patronen te vangen.</p>
+                <div class="code-example">
+                    <pre><span style="color: #61afef">function</span> <span style="color: #61afef">parseMarkdown</span>(text) {
+  <span style="color: #c678dd">return</span> text
+    .<span style="color: #61afef">replace</span>(<span style="color: #98c379">/^# (.*$)/gim</span>, <span style="color: #98c379">'&lt;h1&gt;$1&lt;/h1&gt;'</span>)
+    .<span style="color: #61afef">replace</span>(<span style="color: #98c379">/\*\*(.*)\*\*/gim</span>, <span style="color: #98c379">'&lt;b&gt;$1&lt;/b&gt;'</span>);
+}</pre>
+                </div>
             </div>
-            <div class="preview-area" id="preview"></div>
+
+            <div class="tips" style="border-left: 5px solid #10b981;">
+                <h3>🚀 Uitbreidingen</h3>
+                <ul class="modal-list">
+                    <li><strong>Syntax Highlighting:</strong> Voeg een bibliotheek als Prism.js toe voor code-blokken.
+                    </li>
+                    <li><strong>Word Counter:</strong> Toon live het aantal woorden en karakters onderaan de editor.
+                    </li>
+                    <li><strong>Dark/Light Mode:</strong> Laat de gebruiker het kleurenschema aanpassen.</li>
+                </ul>
+            </div>
+
+            <button class="btn-action primary" onclick="toggleModal(false)" style="width: 100%; height: 50px;">Sluit
+                Gids</button>
+            <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
         </div>
     </div>
-
-    <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
 
     <script>
         const editor = document.getElementById('editor');
         const preview = document.getElementById('preview');
-        const clearBtn = document.getElementById('clearBtn');
+        const modal = document.getElementById('modal');
 
-        // Simple Markdown Parser Function
-        function parseMarkdown(md) {
-            let html = md;
+        // Initiële content
+        editor.value = `# Welkom bij Writer Pro!
 
-            // 1. Escape HTML tags to prevent XSS (basic)
-            html = html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+Dit is een **Markdown** editor gebouwd met *pure JavaScript*.
 
-            // 2. Code blocks ```code```
-            html = html.replace(/\`\`\`(.*?)\s*\n([\s\S]*?)\`\`\`/g, '<pre><code class="language-$1">$2</code></pre>');
+### Features:
+1. Live Preview
+2. Regex Parsing
+3. Bestanden exporteren
 
-            // 3. Inline code `code`
-            html = html.replace(/\`([^\`]+)\`/g, '<code>$1</code>');
+> "Schrijven is makkelijk, je hoeft alleen maar de verkeerde woorden weg te halen."
 
-            // 4. Headers # Header
-            html = html.replace(/^###### (.*$)/gim, '<h6>$1</h6>');
-            html = html.replace(/^##### (.*$)/gim, '<h5>$1</h5>');
-            html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
-            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+\`\`\`javascript
+console.log("Dit is een code blok!");
+\`\`\`
 
-            // 5. Blockquotes > text
-            html = html.replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>');
+Probeer het zelf!`;
 
-            // 6. Bold & Italic ***text***, **text**, *text*
-            html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        function parseMarkdown(text) {
+            // Zeer eenvoudige maar effectieve Regex parser
+            let html = text
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+                .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>')
+                .replace(/\*(.*)\*/gim, '<i>$1</i>')
+                .replace(/!\[(.*?)\]\((.*?)\)/gim, "<img alt='$1' src='$2' />")
+                .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a>")
+                .replace(/\n\n/gim, '<br><br>');
 
-            // Strikethrough ~~text~~
-            html = html.replace(/\~\~(.*?)\~\~/g, '<del>$1</del>');
+            // Code blokken (simpel)
+            html = html.replace(/\`\`\`(.*?)\`\`\`/gs, '<pre><code>$1</code></pre>');
+            html = html.replace(/\`(.*?)\`/gim, '<code>$1</code>');
 
-            // 7. Images ![alt](url)
-            html = html.replace(/\!\[(.*?)\]\((.*?)\)/g, "<img alt='$1' src='$2' />");
-
-            // 8. Links [text](url)
-            html = html.replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
-
-            // 9. Horizontal Rule ---
-            html = html.replace(/^\s*---\s*$/gim, '<hr />');
-
-            // 10. Unordered Lists * item or - item
-            html = html.replace(/^\s*[\*\-] (.*)/gim, '<ul><li>$1</li></ul>');
-            // Merge adjacent ul tags
-            html = html.replace(/<\/ul>\n?<ul>/g, '');
-
-            // 11. Ordered Lists 1. item
-            html = html.replace(/^\s*\d+\. (.*)/gim, '<ol><li>$1</li></ol>');
-            // Merge adjacent ol tags
-            html = html.replace(/<\/ol>\n?<ol>/g, '');
-
-            // 12. Paragraphs (lines that don't start with a tag)
-            // Split by double newline to form paragraphs
-            const paragraphs = html.split(/\n\n+/);
-            const parsedParagraphs = paragraphs.map(p => {
-                // If it already starts with a block tag, don't wrap in <p>
-                if (p.match(/^(<h|<ul|<ol|<li|<blockquote|<pre|<hr)/i)) {
-                    return p;
-                } else if (p.trim().length > 0) {
-                    // replace single newlines with <br> inside paragraphs
-                    return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
-                }
-                return '';
-            });
-
-            return parsedParagraphs.join('\n');
+            return html.trim();
         }
 
         function updatePreview() {
-            const rawMarkdown = editor.value;
-            preview.innerHTML = parseMarkdown(rawMarkdown);
+            preview.innerHTML = parseMarkdown(editor.value);
         }
 
         editor.addEventListener('input', updatePreview);
 
-        clearBtn.addEventListener('click', () => {
-            editor.value = '';
-            updatePreview();
-            editor.focus();
-        });
+        function clearEditor() {
+            if (confirm('Weet je zeker dat je alles wilt wissen?')) {
+                editor.value = '';
+                updatePreview();
+            }
+        }
+
+        function downloadMD() {
+            const blob = new Blob([editor.value], { type: 'text/markdown' });
+            saveBlob(blob, 'mijn-document.md');
+        }
+
+        function downloadHTML() {
+            const fullHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head><style>body{font-family:sans-serif;padding:40px;line-height:1.6;}</style></head>
+                <body>${preview.innerHTML}</body>
+                </html>
+            `;
+            const blob = new Blob([fullHTML], { type: 'text/html' });
+            saveBlob(blob, 'mijn-document.html');
+        }
+
+        function saveBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function toggleModal(show) {
+            modal.style.display = show ? 'block' : 'none';
+        }
 
         // Init
         updatePreview();
-    </script>
-    <script>
-        function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
-            const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
-        }
     </script>
 </body>
 

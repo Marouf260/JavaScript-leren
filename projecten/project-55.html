@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 55: Snake (Grid DOM) - DOM Projecten</title>
+    <title>Project 55: Snake (DOM Grid) - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -14,43 +14,48 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
-            padding: 2rem;
+            padding: 2.5rem;
             max-width: 800px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
+            text-align: center;
         }
 
         .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            display: block;
+            width: fit-content;
+            margin: 0 auto 1.5rem;
+            padding: 0.25rem 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 1rem;
         }
 
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
+            text-align: center;
         }
 
         .explanation,
@@ -59,41 +64,35 @@
         .instructions,
         .tips {
             padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
         }
 
         .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            border-left: 4px solid #f59e0b;
         }
 
         .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
+            border-left: 4px solid #0ea5e9;
         }
 
         .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
+            border-left: 4px solid #94a3b8;
         }
 
         .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
+            border-left: 4px solid #3b82f6;
         }
 
         .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            border-left: 4px solid #10b981;
         }
 
         h3 {
+            color: #f8fafc;
             margin-bottom: 1rem;
         }
 
@@ -103,7 +102,7 @@
         }
 
         .code-example {
-            background: #282c34;
+            background: #0f172a;
             color: #abb2bf;
             padding: 1.5rem;
             border-radius: 8px;
@@ -111,6 +110,7 @@
             overflow-x: auto;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            border: 1px solid #334155;
         }
 
         .code-example .keyword {
@@ -128,431 +128,427 @@
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #667eea;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
         }
 
         /* Game Area */
         .project-area {
-            background: #1e293b;
+            background: #0f172a;
             border-radius: 12px;
             padding: 2rem;
-            margin-bottom: 2rem;
+            margin: 2rem 0;
+            border: 1px solid #334155;
             display: flex;
             flex-direction: column;
             align-items: center;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .score-board {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 15px;
             display: flex;
-            gap: 30px;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            font-size: 1.2rem;
+            background: #1e293b;
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            border: 1px solid #334155;
         }
 
-        /* 20x20 Grid! */
         .grid {
             display: grid;
             grid-template-columns: repeat(20, 20px);
             grid-template-rows: repeat(20, 20px);
             background: #0f172a;
-            border: 2px solid #475569;
+            border: 2px solid #334155;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
         .cell {
             width: 20px;
             height: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.02);
         }
 
-        /* Snake CSS */
         .snake-head {
             background: #10b981;
             border-radius: 4px;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            z-index: 2;
         }
 
         .snake-body {
             background: #34d399;
             border-radius: 2px;
+            opacity: 0.8;
         }
 
         .apple {
             background: #ef4444;
             border-radius: 50%;
-            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(0.8);
+                box-shadow: 0 0 5px rgba(239, 68, 68, 0.4);
+            }
+
+            to {
+                transform: scale(1);
+                box-shadow: 0 0 15px rgba(239, 68, 68, 0.8);
+            }
         }
 
         .controls {
-            margin-top: 20px;
+            margin-top: 25px;
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
 
         .btn-restart {
             background: #3b82f6;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 28px;
             border: none;
-            border-radius: 6px;
-            font-weight: bold;
+            border-radius: 8px;
+            font-weight: 800;
             cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 0 #2563eb;
+        }
+
+        .btn-restart:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #1d4ed8;
+        }
+
+        .btn-restart:active {
+            transform: translateY(2px);
+            box-shadow: 0 0 0 #1d4ed8;
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Project 55: Snake (DOM Grid Version)</h1>
-        <span class="level" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">Games</span>
-        <p class="description">Maak de klassieker Snake, zonder het ingewikkelde Canvas element the gebruiken! (Puur the
-            DOM render manipulatie the).</p>
+        <h1>Project 55: Snake (DOM Grid)</h1>
+        <span class="level">Advanced</span>
+        <p class="description">Bouw de klassieke Snake game en leer hoe je een complex coördinatensysteem en game-loop
+            beheert met JavaScript arrays en CSS Grid.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project bouw je een volledige 2D-game logica op gebaseerd op een raster (grid). Je gaat leren:</p>
+            <ul>
+                <li><strong>State Representation:</strong> Een fysieke slang vertalen naar een array van {x, y}
+                    coördinaten.</li>
+                <li><strong>Game Loop:</strong> Het creëren van de hartslag van een spel met <code>setInterval</code> om
+                    berekeningen periodiek uit te voeren.</li>
+                <li><strong>Grid Mapping:</strong> Het berekenen van een 1D index (in HTML) vanuit 2D coördinaten (in
+                    JavaScript).</li>
+                <li><strong>Array Manipulatie (unshift/pop):</strong> In plaats van de gehele slang te bewegen, voegen
+                    we enkel een nieuw "hoofd" toe vooraan de array en verwijderen we de "staart" aan het einde.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>1D naar 2D Mapping:</strong> Onze HTML heeft 400 losse "cell"-divs zonder structuur. Door de
+                    wiskundige formule <code>index = y * breedte + x</code> te gebruiken, kunnen we exact de juiste div
+                    selecteren via JavaScript.</li>
+                <li><strong>Reference Types vs Values:</strong> Het kopiëren van het hoofd van de slang met de spread
+                    operator (<code>{...snake[0]}</code>) zodat het origineel niet wordt overschreven voordat we
+                    berekeningen uitvoeren.</li>
+                <li><strong>Direction Vectors:</strong> De richting wordt opgeslagen als een "vector", bijvoorbeeld
+                    <code>{x: 0, y: -1}</code> betekent omhoog (0 op de x-as, -1 op de y-as).</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: Slang Array & Rendering</h4>
-                <p>We maken een DOM the raster theThe van 400 divjes (20x20) The en "verven" The de classes the The. De
-                    slang the the the the is in de the JavaScript The The the niks The the the the the the anders The
-                    the The dan the een The Array the The the the the met X the en the Y The the the the coordinaten!
-                    <code>[{x:1, y:5}, {x:1, y:4}]</code></p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// 1. The Slang the is een The array van the the 3 ObjectenZthe_The </span>
-<span class="keyword">let</span> slangZ_ArrayThe = [
-    { x: <span class="string">10</span>, y: <span class="string">10</span> }, <span class="comment">// Hoofd TheO</span>
-    { x: <span class="string">9</span>, y: <span class="string">10</span> },  <span class="comment">// the Body the TheO </span>
-    { x: <span class="string">8</span>, y: <span class="string">10</span> }   <span class="comment">// The the The Staart O The! </span>
-];
-
-<span class="comment">// 2. The the The Teken The de UI the door the the de data the The heen te The lopenZ! </span>
-slangZ_ArrayThe.<span class="function">forEach</span>((ThetheTheZstuk_jeS_The) => {
-    <span class="comment">// Kleur the The de div the THE op The The the X THE / Y coordinaten the THE _Z</span>
-    Grid_HtmlThe[ThetheTheZstuk_jeS_The.y][ThetheTheZstuk_jeS_The.x].classList.<span class="function">add</span>(<span class="string">'snake-body'</span>);
-});</pre>
+                <h4>Stap 1: De Slang Laten Bewegen</h4>
+                <p>De logica van bewegen is een slimme truc van array-manipulatie.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> head = { x: snake[<span class="string">0</span>].x + dir.x, y: snake[<span class="string">0</span>].y + dir.y };
+snake.<span class="function">unshift</span>(head); <span class="comment">// Nieuw hoofd vooraan</span>
+<span class="keyword">if</span> (!heeftAppelGegeten) {
+    snake.<span class="function">pop</span>(); <span class="comment">// Verwijder oude staart</span>
+}</pre>
                 </div>
+                <p><strong>Uitleg:</strong> We verplaatsen de slang niet echt div voor div. We voegen gewoon een nieuw
+                    hoofdje toe in de looprichting en hakken het laatste stukje staart eraf. Als er een appel is
+                    gegeten, hakken we de staart *niet* af, waardoor de slang automatisch langer wordt!</p>
             </div>
 
             <div class="step">
-                <h4>Stap 2: The the SlangThe The the theThe Laten The Lopen! </h4>
-                <p>The The The Een the the loopende the The the slang in the the The JS the the is the The een repetitie
-                    the the The van array-manipulatie! The the Bij een The The the stap the the voeg the The The de The
-                    the the the the the Code een the the The The nieuw the the the the the hoofd the the the of the the
-                    coordinaten array the The array the toe <code>(unshift)</code> the The en haalt het the The the de
-                    the The the The the the the The the tail_! start The The the the The weg the The
-                    _<code>(pop)</code>! </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">function</span> <span class="function">beweegSnakeData_()</span> {
-    <span class="comment">// 1_! the Kopieer the Huidige Hoofd Z </span>
-    <span class="keyword">const</span> huidigHoofdO = slangArray_O[<span class="string">0</span>];
-    
-    <span class="comment">// 2! the Berekent de de The Nieuwe The the_ The thethe X / Y Positie The }_  !</span>
-    <span class="keyword">const</span> Z_nieuwTheHoofd = {
-        x: huidigHoofdO.x + de_RichtingsTheX,
-        y: huidigHoofdO.y + de_RichtingsTheY,
-    };
+                <h4>Stap 2: Input Handling en Beperkingen</h4>
+                <p>We luisteren naar het toetsenbord, maar voorkomen dat de slang "keert" op zichzelf.</p>
+                <div class="code-example">
+                    <pre>window.<span class="function">addEventListener</span>(<span class="string">'keydown'</span>, e => {
+    <span class="keyword">if</span> (e.key === <span class="string">'ArrowUp'</span> && dir.y === <span class="string">0</span>) nextDir = { x: <span class="string">0</span>, y: -<span class="string">1</span> };
+});</pre>
+                </div>
+                <p><strong>Uitleg:</strong> De check <code>dir.y === 0</code> is cruciaal. Deze zegt: "We mogen alleen
+                    omlaag of omhoog draaien, als we op dit moment puur verticaal (links of rechts) aan het bewegen
+                    zijn." Dit voorkomt instante gameovers door achteruit te lopen.</p>
+            </div>
 
-    <span class="comment">// 3!. the The the the Plak _nieuwTheHoofd The Vooraan The de _the TheThethe The Array! </span>
-    slangArray_O.<span class="function">unshift</span>(Z_nieuwTheHoofd);
-
-    <span class="comment">// 4!. The the Als the the hij the NIET! The een the the appel at, The kap the staart er af TheThe Z_</span>
-    <span class="keyword">if</span> (!Thethethe_heeftTheDeTheAppelGesnoepTheZThe_) {
-        slangArray_O.<span class="function">pop</span>();
-    }
+            <div class="step">
+                <h4>Stap 3: Het Speelveld Updaten (Renderen)</h4>
+                <p>Aan het einde van elke interval (tick) tekenen we de nieuwe wereld.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">render</span>() {
+    <span class="comment">// Wis alles eerst</span>
+    [...grid.children].<span class="function">forEach</span>(c => c.className = <span class="string">'cell'</span>);
+    <span class="comment">// Teken appel</span>
+    <span class="function">getCell</span>(apple.x, apple.y).classList.<span class="function">add</span>(<span class="string">'apple'</span>);
+    <span class="comment">// Teken hele slang opnieuw</span>
+    snake.<span class="function">forEach</span>(segment => {
+        <span class="function">getCell</span>(segment.x, segment.y).classList.<span class="function">add</span>(<span class="string">'snake-body'</span>);
+    });
 }</pre>
                 </div>
             </div>
-
-            <div class="step">
-                <h4>Stap 3: the THE theThe the Game The The THE Loop THE (setInterval) </h4>
-                <p>Om The The de the The code The The van the THE stap 2 The the (<code>beweegSnakeData_()</code>)
-                    constant the The te The The THE the The The Thethe THE laten! ! the runnen THE , THEThe THE hebben
-                    The we THE een <code>setInterval()</code> The The the the! The 100MS The betekent The The dat the
-                    _the THE the de the the The slang TheThe the 10x The per THE the the seconde The the _the een THE
-                    vakje THE opschuift The !The THE the! </p>
-            </div>
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Gebruik de <strong>Pijltjestoetsen</strong> the om the the slang te besturen!</li>
-                <li>(of klik in het The spel venster the om de focus the te pakken The The Z!).</li>
-            </ul>
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: 1px solid rgba(239, 68, 68, 0.2);">
+                <h4 style="color: #fca5a5;">Fout: Dubbele inputs in één Tick</h4>
+                <p style="color: #f87171;">Als je toetsenbord direct <code>dir</code> (richting) wijzigt, kun je héél
+                    snel "Links" en dan "Omlaag" typen in de tijd van 1 game-tick. Hierdoor draai je de slang 180 graden
+                    de dood in. Oplossing: gebruik een <code>nextDir</code> buffer variabele die pas door het game
+                    mechanisme wordt toegepast op het moment van de game-tick.</p>
+            </div>
+            <div class="step" style="border-bottom: none; padding-bottom: 0;">
+                <h4 style="color: #fca5a5;">Fout: Appels spawnen OP de slang</h4>
+                <p style="color: #f87171;">Vaak worden nieuwe coördinaten voor het voedsel via een simpele
+                    <code>Math.random()</code> bepaald. Dit kan echter ín het lichaam van de slang vallen. Zorg altijd
+                    voor een while-loop met validation check (<code>snake.some(...)</code>) tijdens het spawnen.</p>
+            </div>
         </div>
 
         <!-- Tips -->
         <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
+            <h3>💡 Tips voor Studenten</h3>
             <ul>
-                <li><strong>Matrix the the Rendering The The the:</strong> the The In The de code The The the THE Zie
-                    the je The The the the theThe een 2D-array The the <code>Grid[Y][X]</code>The! . the THE Dit is the
-                    THE the handig Omdat The the The THE the de THE "Y" the of the The the hoogte The (the de the
-                    RijenTHE) de the *eerste* the the THE index THE the The forms_!. THE (eerst the de row the vinden
-                    the , the dan the column the !).!</li>
+                <li><strong>Prestaties (Performance):</strong> Deze manier van renderen (alle 400 div classes wissen en
+                    overschrijven) heet DOM re-painting. Voor deze game grootte okee, maar voor geavanceerde complexe
+                    berekeningen zoals bij project "Particles", kun je beter gebruikmaken van de Canvas Web API.</li>
+                <li><strong>Styling:</strong> Speel met <code>border-radius</code> (bijvoorbeeld ronde hoeken geven
+                    afhankelijk van de vector) op de specifieke cellen om de slang echt als slang te tonen!</li>
             </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Directe 180 THE the the the Graden U-Turn! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the speler The the de The THE the pijl-rechts the THE The the drukt, THE the mag The the de the The slang The THE the niet in 1 frame THE  naar the THE the LINKS the the THE The OMDRAAIEN the The  van THE  DOM the node THE !!! (The The the Dan THE eett thethe  hij The the the nm The The the THE the THE the The Zijn the _the The eigen THE lijf THE op!! The The ). </span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The thethe Onze the oplossing in de The code THE  is THE Door the te tracken the THE The The THE the the THE `lastInputZDataR_DeDirO_X === 1` the te the the _The!! The checken THE! Als dat the _1_ is TheThe , The dan the mag THE the input The vThe an The `ArrowLeft` the _GENEGEERD_ TheThe worden_._ ! THE The </span></pre>
-                </div>
-            </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Moeilijkheidsgraden! The The The The! </strong> the the thethe the THE the Bouw The THE
-                        the the een the MenuThe_the the The the! Iedere! The KEER The dat THE The dat The _the de the_
-                        speler "Hard" The Kiest THE is de The_the the the the The <code>setInterval(loopThe, 50)</code>
-                        the ! (The _the in The the Plaats the van the The 100themsThe! _the). Speel THE Snake The The op
-                        THE the BIZAR the the the the THE Snelle_ Snelheid!af The The. THE </li>
-                    <li><strong>Muren THE the TheThe _!</strong> The The the The the Render the_ een set the vaste
-                        <code>(x, y)</code> the the MURENThe! the (The <code>{x:5, y:5}</code>_the). Render de muren
-                        theThe the grijs_!. Als de THE the _ZNieuweHoofDthe_ x en y The the Htzelfde_ zijn! the (The The
-                        The then! the gameover)!_ The ! </li>
+                    <li><strong>Acceleratie:</strong> Probeer de snelheid via <code>setInterval</code> stapsgewijs 10ms
+                        sneller te zetten na elke gegeten appel. Tip: dit vereist het wissen via
+                        <code>clearInterval()</code> en opnieuw starten.</li>
+                    <li><strong>Muren doorbreken (Pacman stijl):</strong> Pas de collision-logica zo aan dat als speler
+                        de muur links passeert, de speler aan de rechterzijde verschijnt in plaats van the sterven
+                        (Wrapping around the grid).</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Extra Uitdagingen</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
-
             <div class="score-board">
-                <span>Score: <span id="s-score" style="color: #10b981;">0</span></span>
-                <span>High: <span id="s-high" style="color: #f59e0b;">0</span></span>
+                <span>Score: <span id="current-score" style="color: #10b981;">0</span></span>
+                <span>Beste: <span id="high-score" style="color: #f59e0b;">0</span></span>
             </div>
 
-            <div class="grid" id="game-board">
-                <!-- Javascript Renders 400 The Cells_Z Here -->
+            <div class="grid" id="game-grid">
+                <!-- Wordt door JS gevuld -->
             </div>
 
             <div class="controls">
-                <button class="btn-restart" onclick="StartRestartZLoopThe()">Herstart Spel</button>
+                <button class="btn-restart" id="start-btn">Nieuw Spel</button>
             </div>
-
         </div>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const THE_G_BoardHtmlDe = document.getElementById('game-board');
-        const THE_S_TextZUIZHtmlDe = document.getElementById('s-score');
-        const THE_HighS_ZTextZHtmlDe = document.getElementById('s-high');
+        const grid = document.getElementById('game-grid');
+        const scoreEl = document.getElementById('current-score');
+        const highEl = document.getElementById('high-score');
+        const startBtn = document.getElementById('start-btn');
 
-        // Grid Configuration ZThe
-        const GRID_R_WIDTHZ_THE_SIZE = 20;
-        const GRID_O_HEIGHTZ_THE_SIZEO = 20;
-        const GRID_TOThisZZO_ARRAY = []; // Stores the 400 div HTML Elements!
+        const SIZE = 20;
+        let snake = [];
+        let apple = { x: 5, y: 5 };
+        let dir = { x: 1, y: 0 };
+        let nextDir = { x: 1, y: 0 };
+        let score = 0;
+        let highScore = 0;
+        let gameActive = false;
+        let timer = null;
 
-        // Game STATE vars O
-        let The_SlangArr_PosO = [];
-        let ZThe_CurrentDirRichtingX = 1; // Start moving Right
-        let ZThe_CurrentDirRichtingY = 0;
-        let Appel_ZLocCoordO_Var = { x: 15, y: 10 }; // Initial Apple Location The Z 
-        let ScoreZZZTheVarV = 0;
-        let High_ZZ_ZThereV_ZTheZVar = 0;
-        let The_KlokDeTickerH_IntDeZ = null;
-        let GameOver_ZDeIs_T = false;
-        let lastInputZDataR_DeDirO_X = 1; // Bug fix to prevent 180 degree flip suicide The! Z
-        let lastInputZDataR_DeDirO_Y = 0;
-
-        // 1. the Build de 20x20 HTML DIV GRid and Push into CSS rendering loop The Z
-        function The_DeBouwenDeHtmlG_GGridTheZ_L() {
-            THE_G_BoardHtmlDe.innerHTML = "";
-            GRID_TOThisZZO_ARRAY.length = 0; // Empty the array JS !
-
-            for (let theY_asTheV = 0; theY_asTheV < GRID_O_HEIGHTZ_THE_SIZEO; theY_asTheV++) {
-                // To keep coordinate mapping easy we store array in array grid [y][x]
-                const the_O_DeRijGridThe = [];
-                for (let theX_asTheV = 0; theX_asTheV < GRID_R_WIDTHZ_THE_SIZE; theX_asTheV++) {
-                    const deH_CellDivNode_The_H = document.createElement('div');
-                    deH_CellDivNode_The_H.classList.add('cell');
-                    THE_G_BoardHtmlDe.appendChild(deH_CellDivNode_The_H);
-                    the_O_DeRijGridThe.push(deH_CellDivNode_The_H);
-                }
-                GRID_TOThisZZO_ARRAY.push(the_O_DeRijGridThe);
+        function createGrid() {
+            grid.innerHTML = '';
+            for (let i = 0; i < SIZE * SIZE; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                grid.appendChild(cell);
             }
         }
 
-        // 2 init the new fresh the data O O !!Z
-        function StartRestartZLoopThe() {
-            clearInterval(The_KlokDeTickerH_IntDeZ);
-            GameOver_ZDeIs_T = false;
-            ScoreZZZTheVarV = 0;
-            THE_S_TextZUIZHtmlDe.innerText = '0';
-
-            // Start met 3 blokjes in the middle Z!
-            The_SlangArr_PosO = [
-                { x: 10, y: 10 }, // Head
-                { x: 9, y: 10 },  // Body 1
-                { x: 8, y: 10 }   // Tail
-            ];
-
-            ZThe_CurrentDirRichtingX = 1;
-            ZThe_CurrentDirRichtingY = 0;
-            lastInputZDataR_DeDirO_X = 1;
-            lastInputZDataR_DeDirO_Y = 0;
-
-            GenereerTheNieuweDeAppelZTheZ();
-            The_KlokDeTickerH_IntDeZ = setInterval(The_RTheUpdateRenderGameLoopHThe, 100); // 100ms Speed Z_ !
+        function getCell(x, y) {
+            const index = y * SIZE + x;
+            return grid.children[index];
         }
 
-        // 3 Appels O 
-        function GenereerTheNieuweDeAppelZTheZ() {
-            let zOnGeldigGeTheVindenV = false;
-            let theRndO_TheXZ = 0;
-            let theRndO_TheYZ = 0;
-
-            while (!zOnGeldigGeTheVindenV) {
-                theRndO_TheXZ = Math.floor(Math.random() * GRID_R_WIDTHZ_THE_SIZE);
-                theRndO_TheYZ = Math.floor(Math.random() * GRID_O_HEIGHTZ_THE_SIZEO);
-
-                // Verify the apple did NOT fall ON top of the snake body array !! Z
-                const theOpZNaTheSnakeGevallenBoolZ_O = The_SlangArr_PosO.some(seg_O_M => seg_O_M.x === theRndO_TheXZ && seg_O_M.y === theRndO_TheYZ);
-
-                if (!theOpZNaTheSnakeGevallenBoolZ_O) zOnGeldigGeTheVindenV = true; // Safe!
+        function spawnApple() {
+            let valid = false;
+            while (!valid) {
+                apple = {
+                    x: Math.floor(Math.random() * SIZE),
+                    y: Math.floor(Math.random() * SIZE)
+                };
+                valid = !snake.some(s => s.x === apple.x && s.y === apple.y);
             }
-            Appel_ZLocCoordO_Var = { x: theRndO_TheXZ, y: theRndO_TheYZ };
         }
 
-        // 4 THE GAME LOOP
-        function The_RTheUpdateRenderGameLoopHThe() {
-            if (GameOver_ZDeIs_T) return;
+        function resetGame() {
+            clearInterval(timer);
+            snake = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }];
+            dir = { x: 1, y: 0 };
+            nextDir = { x: 1, y: 0 };
+            score = 0;
+            scoreEl.innerText = "0";
+            gameActive = true;
+            spawnApple();
+            timer = setInterval(step, 150);
+            render();
+        }
 
-            // Step 1: Logic Math Data Calculation (Moved the head Z!)
-            const V_DeOudeHoofdO = The_SlangArr_PosO[0];
-            const ZNieuwtheHoofdV = {
-                x: V_DeOudeHoofdO.x + ZThe_CurrentDirRichtingX,
-                y: V_DeOudeHoofdO.y + ZThe_CurrentDirRichtingY
-            };
+        function step() {
+            dir = nextDir;
+            const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
 
-            // Update safety variables the The (prevent instant 180 reverse suicide_ _)
-            lastInputZDataR_DeDirO_X = ZThe_CurrentDirRichtingX;
-            lastInputZDataR_DeDirO_Y = ZThe_CurrentDirRichtingY;
+            // Wall check
+            if (head.x < 0 || head.x >= SIZE || head.y < 0 || head.y >= SIZE) return gameOver();
 
-            // Step 2: WALL Collision Death the the Check_ !!_
-            if (
-                ZNieuwtheHoofdV.x < 0 || ZNieuwtheHoofdV.x >= GRID_R_WIDTHZ_THE_SIZE ||
-                ZNieuwtheHoofdV.y < 0 || ZNieuwtheHoofdV.y >= GRID_O_HEIGHTZ_THE_SIZEO
-            ) {
-                VerliesLogicGameDeath_ZV_();
-                return;
-            }
+            // Self check
+            if (snake.some(s => s.x === head.x && s.y === head.y)) return gameOver();
 
-            // Step 3: Self Collision Suicide The the check _ !!_
-            const VThe_OOpZzZzZThez_Z_Eigent_O_Staart_ZGeBeweegdH = The_SlangArr_PosO.some(seGZZvar_M_Var => seGZZvar_M_Var.x === ZNieuwtheHoofdV.x && seGZZvar_M_Var.y === ZNieuwtheHoofdV.y);
-            if (VThe_OOpZzZzZThez_Z_Eigent_O_Staart_ZGeBeweegdH) {
-                VerliesLogicGameDeath_ZV_();
-                return;
-            }
+            snake.unshift(head);
 
-            // Step 4: Add New Head to the Array O!
-            The_SlangArr_PosO.unshift(ZNieuwtheHoofdV);
-
-            // Step 5: Apple Eaten? of Z_ tail removing _O??
-            if (ZNieuwtheHoofdV.x === Appel_ZLocCoordO_Var.x && ZNieuwtheHoofdV.y === Appel_ZLocCoordO_Var.y) {
-                // ATE THE_ DE_ APPLE! -> 
-                // Do NOT the Pop The the tail! -> Snake Grew!
-                ScoreZZZTheVarV += 10;
-                THE_S_TextZUIZHtmlDe.innerText = ScoreZZZTheVarV;
-                GenereerTheNieuweDeAppelZTheZ(); // nieuwe_
+            if (head.x === apple.x && head.y === apple.y) {
+                score += 10;
+                scoreEl.innerText = score;
+                spawnApple();
             } else {
-                // Not the an the Apple _the The ! -> the  Move forward means tail is Z the Z GONE ! removed_ _ _ The_ (POP)
-                The_SlangArr_PosO.pop();
+                snake.pop();
             }
 
-            // Draw HTML again
-            VtheVerfTTheHTMLRenderZ_GridThe();
+            render();
         }
 
-        // 5 CSS Verven overThe_ Divjes Z_ html_ 
-        function VtheVerfTTheHTMLRenderZ_GridThe() {
-            // Clears alleThe CSS the of the alle Divjes The (Wissen that V ) _ _ 
-            for (let theY_asTheV = 0; theY_asTheV < GRID_O_HEIGHTZ_THE_SIZEO; theY_asTheV++) {
-                for (let theX_asTheV = 0; theX_asTheV < GRID_R_WIDTHZ_THE_SIZE; theX_asTheV++) {
-                    GRID_TOThisZZO_ARRAY[theY_asTheV][theX_asTheV].className = 'cell';
-                }
-            }
+        function render() {
+            // Clear cells
+            [...grid.children].forEach(c => c.className = 'cell');
 
-            // the The Verf APPLE O 
-            GRID_TOThisZZO_ARRAY[Appel_ZLocCoordO_Var.y][Appel_ZLocCoordO_Var.x].classList.add('apple');
+            // Draw apple
+            getCell(apple.x, apple.y).classList.add('apple');
 
-            // the The Verf Snake THE O 
-            The_SlangArr_PosO.forEach((SDeGeSegment_VO_DataZT_The, indeXHTHEZ_OfO) => {
-                if (indeXHTHEZ_OfO === 0) {
-                    GRID_TOThisZZO_ARRAY[SDeGeSegment_VO_DataZT_The.y][SDeGeSegment_VO_DataZT_The.x].classList.add('snake-head');
-                } else {
-                    GRID_TOThisZZO_ARRAY[SDeGeSegment_VO_DataZT_The.y][SDeGeSegment_VO_DataZT_The.x].classList.add('snake-body');
-                }
+            // Draw snake
+            snake.forEach((s, i) => {
+                const cell = getCell(s.x, s.y);
+                cell.classList.add(i === 0 ? 'snake-head' : 'snake-body');
             });
         }
 
-        function VerliesLogicGameDeath_ZV_() {
-            GameOver_ZDeIs_T = true;
-            clearInterval(The_KlokDeTickerH_IntDeZ);
-
-            if (ScoreZZZTheVarV > High_ZZ_ZThereV_ZTheZVar) {
-                High_ZZ_ZThereV_ZTheZVar = ScoreZZZTheVarV;
-                THE_HighS_ZTextZHtmlDe.innerText = High_ZZ_ZThereV_ZTheZVar;
+        function gameOver() {
+            gameActive = false;
+            clearInterval(timer);
+            if (score > highScore) {
+                highScore = score;
+                highEl.innerText = highScore;
             }
-            alert(`GameOver! Je The The O the score_ was ${ScoreZZZTheVarV}`);
+            alert(`Game Over! Score: ${score}`);
         }
 
-        // Keys Data binding!! Z 
-        document.addEventListener('keydown', (e) => {
-            if (GameOver_ZDeIs_T) return;
+        window.addEventListener('keydown', e => {
+            // Prevent scrolling on arrows
+            if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                e.preventDefault();
+            }
 
-            // the If currently The going the Right (1, 0) the we CANT the input Left (-1, 0) _ 
             switch (e.key) {
-                case 'ArrowUp':
-                    if (lastInputZDataR_DeDirO_Y !== 1) { ZThe_CurrentDirRichtingX = 0; ZThe_CurrentDirRichtingY = -1; e.preventDefault(); }
-                    break;
-                case 'ArrowDown':
-                    if (lastInputZDataR_DeDirO_Y !== -1) { ZThe_CurrentDirRichtingX = 0; ZThe_CurrentDirRichtingY = 1; e.preventDefault(); }
-                    break;
-                case 'ArrowLeft':
-                    if (lastInputZDataR_DeDirO_X !== 1) { ZThe_CurrentDirRichtingX = -1; ZThe_CurrentDirRichtingY = 0; e.preventDefault(); }
-                    break;
-                case 'ArrowRight':
-                    if (lastInputZDataR_DeDirO_X !== -1) { ZThe_CurrentDirRichtingX = 1; ZThe_CurrentDirRichtingY = 0; e.preventDefault(); }
-                    break;
+                case 'ArrowUp': if (dir.y === 0) nextDir = { x: 0, y: -1 }; break;
+                case 'ArrowDown': if (dir.y === 0) nextDir = { x: 0, y: 1 }; break;
+                case 'ArrowLeft': if (dir.x === 0) nextDir = { x: -1, y: 0 }; break;
+                case 'ArrowRight': if (dir.x === 0) nextDir = { x: 1, y: 0 }; break;
             }
         });
 
-        // INIT LOAD!
-        The_DeBouwenDeHtmlG_GGridTheZ_L();
-        StartRestartZLoopThe();
+        startBtn.addEventListener('click', resetGame);
 
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
+        createGrid();
+        resetGame();
+
         function toggleExpansions() {
             const expansions = document.getElementById('expansions');
             const btn = event.target;
             if (expansions.classList.contains('show')) {
                 expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+                btn.textContent = '📖 Toon Extra Uitdagingen';
             } else {
                 expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+                btn.textContent = '📖 Verberg Extra Uitdagingen';
             }
         }
     </script>

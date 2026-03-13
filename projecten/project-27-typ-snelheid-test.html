@@ -5,7 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 27: Typ Snelheid Test - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #ec4899;
+            --cyber-cyan: #0ff;
+            --cyber-magenta: #f0f;
+            --cyber-red: #ff0055;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --terminal-bg: rgba(11, 15, 25, 0.75);
+            --terminal-border: rgba(0, 255, 255, 0.3);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,104 +36,138 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-        }
-
-        .container {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .description {
-            color: #666;
-            margin-bottom: 2rem;
             line-height: 1.6;
         }
 
+        .container {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.025em;
+        }
+
+        .level {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        /* General UI Elements */
         .explanation,
         .concepts,
         .step-by-step,
         .instructions,
         .tips {
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
-        }
-
-        .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
-        }
-
-        .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
-        }
-
-        .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
-        }
-
-        .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 18px;
+            margin-bottom: 2rem;
         }
 
         h3 {
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-main);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
         }
 
         ul {
             margin-left: 1.5rem;
             line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .code-example {
-            background: #282c34;
-            color: #abb2bf;
+            background: #0f172a;
+            border: 1px solid var(--glass-border);
             padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
+            border-radius: 14px;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #e2e8f0;
             overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
         }
 
         .code-example .keyword {
@@ -125,38 +182,104 @@
             color: #61afef;
         }
 
-        .back-link {
-            display: inline-block;
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
             margin-top: 1rem;
-            color: #667eea;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .expandable {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .expandable.show {
+            max-height: 2000px;
+            transition: max-height 0.8s ease-in;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
         }
 
         /* Typing Test Area */
         .project-area {
-            background: #0b0f19;
-            border-radius: 12px;
-            padding: 3rem;
+            background: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80') center/cover;
+            border-radius: 20px;
+            padding: 3rem 1.5rem;
             margin-bottom: 2rem;
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
-            border: 2px solid #00ffff;
-            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+        }
+
+        .project-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(11, 15, 25, 0.85);
+            /* Darker overlay for readability */
+            backdrop-filter: blur(5px);
+            z-index: 1;
+        }
+
+        .typing-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .title-cyber {
-            color: #00ffff;
-            font-size: 2rem;
-            text-shadow: 0 0 10px #00ffff;
-            margin-bottom: 5px;
+            color: var(--cyber-cyan);
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+            margin-bottom: 0.5rem;
             text-align: center;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         .subtitle-cyber {
-            color: #888;
-            font-family: sans-serif;
-            margin-bottom: 30px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 2rem;
             text-align: center;
             font-size: 0.9rem;
         }
@@ -164,256 +287,491 @@
         .stats {
             display: flex;
             justify-content: space-around;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 30px;
+            background: var(--terminal-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--terminal-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 255, 0.05);
         }
 
         .stat-box {
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .stat-box:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            height: 60%;
+            width: 1px;
+            background: var(--glass-border);
         }
 
         .stat-value {
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 2.2rem;
+            font-weight: 800;
             color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         .stat-label {
-            color: #00ffff;
-            font-family: sans-serif;
+            color: var(--cyber-cyan);
+            font-family: 'Inter', sans-serif;
             font-size: 0.8rem;
+            font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 0.1em;
             margin-top: 5px;
         }
 
         .quote-display {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            line-height: 1.6;
+            background: var(--terminal-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            font-size: 1.3rem;
+            line-height: 1.8;
             text-align: justify;
-            margin-bottom: 20px;
-            border-left: 3px solid #00ffff;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--terminal-border);
+            border-left: 4px solid var(--cyber-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            color: #94a3b8;
+            /* un-typed text color */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .quote-display span {
-            transition: 0.1s;
+            transition: all 0.1s;
         }
 
         .quote-display span.correct {
-            color: #00ffff;
-            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            color: var(--cyber-cyan);
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
         }
 
         .quote-display span.incorrect {
-            color: #ff0055;
-            text-shadow: 0 0 5px rgba(255, 0, 85, 0.5);
-            background: rgba(255, 0, 85, 0.2);
+            color: var(--cyber-red);
+            text-shadow: 0 0 8px rgba(255, 0, 85, 0.6);
+            background: rgba(255, 0, 85, 0.15);
             border-radius: 2px;
         }
 
         .quote-input {
             width: 100%;
-            background: #0b0f19;
-            border: 2px solid #333;
-            border-radius: 8px;
+            background: var(--terminal-bg);
+            border: 1px solid var(--terminal-border);
+            border-radius: 16px;
             color: #fff;
-            padding: 15px;
-            font-size: 1.1rem;
+            padding: 1.5rem;
+            font-size: 1.2rem;
             resize: none;
             outline: none;
-            transition: 0.3s;
-            font-family: inherit;
+            transition: all 0.3s;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .quote-input:focus {
-            border-color: #00ffff;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+            border-color: var(--cyber-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(0, 255, 255, 0.1);
+            background: rgba(11, 15, 25, 0.9);
+        }
+
+        .quote-input::placeholder {
+            color: rgba(0, 255, 255, 0.2);
         }
     </style>
+</head>
+margin-top: 1rem;
+font-weight: 700;
+transition: all 0.2s;
+}
+
+.expand-btn:hover {
+background: var(--primary);
+color: white;
+box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+.expandable {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.5s ease-out;
+}
+
+.expandable.show {
+max-height: 2000px;
+transition: max-height 0.8s ease-in;
+}
+
+.back-link {
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+margin-top: 2rem;
+color: var(--text-muted);
+text-decoration: none;
+font-weight: 600;
+transition: color 0.3s;
+}
+
+.back-link:hover {
+color: var(--primary);
+}
+
+/* Typing Test Area */
+.project-area {
+background: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80') center/cover;
+border-radius: 20px;
+padding: 3rem 1.5rem;
+margin-bottom: 2rem;
+position: relative;
+overflow: hidden;
+border: 1px solid var(--glass-border);
+box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+}
+
+.project-area::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(11, 15, 25, 0.85);
+/* Darker overlay for readability */
+backdrop-filter: blur(5px);
+z-index: 1;
+}
+
+.typing-container {
+position: relative;
+z-index: 2;
+width: 100%;
+max-width: 600px;
+margin: 0 auto;
+}
+
+.title-cyber {
+color: var(--cyber-cyan);
+font-size: 2.2rem;
+font-weight: 800;
+text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+margin-bottom: 0.5rem;
+text-align: center;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+}
+
+.subtitle-cyber {
+color: var(--text-muted);
+font-family: 'JetBrains Mono', monospace;
+margin-bottom: 2rem;
+text-align: center;
+font-size: 0.9rem;
+}
+
+.stats {
+display: flex;
+justify-content: space-around;
+background: var(--terminal-bg);
+backdrop-filter: blur(10px);
+border: 1px solid var(--terminal-border);
+border-radius: 16px;
+padding: 1.5rem;
+margin-bottom: 2rem;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 255, 0.05);
+}
+
+.stat-box {
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0 1rem;
+position: relative;
+}
+
+.stat-box:not(:last-child)::after {
+content: '';
+position: absolute;
+right: 0;
+top: 20%;
+height: 60%;
+width: 1px;
+background: var(--glass-border);
+}
+
+.stat-value {
+font-size: 2.2rem;
+font-weight: 800;
+color: #fff;
+font-family: 'JetBrains Mono', monospace;
+text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.stat-label {
+color: var(--cyber-cyan);
+font-family: 'Inter', sans-serif;
+font-size: 0.8rem;
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 0.1em;
+margin-top: 5px;
+}
+
+.quote-display {
+background: var(--terminal-bg);
+padding: 2rem;
+border-radius: 16px;
+font-size: 1.3rem;
+line-height: 1.8;
+text-align: justify;
+margin-bottom: 1.5rem;
+border: 1px solid var(--terminal-border);
+border-left: 4px solid var(--cyber-cyan);
+font-family: 'JetBrains Mono', monospace;
+color: #94a3b8;
+/* un-typed text color */
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.quote-display span {
+transition: all 0.1s;
+}
+
+.quote-display span.correct {
+color: var(--cyber-cyan);
+text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+.quote-display span.incorrect {
+color: var(--cyber-red);
+text-shadow: 0 0 8px rgba(255, 0, 85, 0.6);
+background: rgba(255, 0, 85, 0.15);
+border-radius: 2px;
+}
+
+.quote-input {
+width: 100%;
+background: var(--terminal-bg);
+border: 1px solid var(--terminal-border);
+border-radius: 16px;
+color: #fff;
+padding: 1.5rem;
+font-size: 1.2rem;
+resize: none;
+outline: none;
+transition: all 0.3s;
+font-family: 'JetBrains Mono', monospace;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.quote-input:focus {
+border-color: var(--cyber-cyan);
+box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(0, 255, 255, 0.1);
+background: rgba(11, 15, 25, 0.9);
+}
+
+.quote-input::placeholder {
+color: rgba(0, 255, 255, 0.2);
+}
+</style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Project 27: Typ Snelheid Test</h1>
-        <span class="level">Master</span>
-        <p class="description">Test je reactievermogen met een real-time, letter-voor-letter type controller met een
-            hacking thema!</p>
+        <header>
+            <h1>Project 27: Typ Snelheid Test</h1>
+            <span class="level">Master</span>
+            <p class="description">Test je reactievermogen en focus met deze strakke letter-voor-letter type-controller
+                ontworpen met een retro terminal vibe.</p>
+        </header>
+
+
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>Toetsaanslagen ontrafelen via <code>InputEvent</code> API afvanging.</li>
+                <li>Wiskunde integreren en de berekenfuncties aanleggen ten goede voor WPM (Typ-snelheid meten).</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>Input Event Observer</strong> - Grijpt razendsnel in de seconde aan de actuele inhoud
+                    gebrand naar the de actieve the box.</li>
+                <li><strong>String.split()</strong> - Het de-construeren van reguliere letters reeksen om ze on the the
+                    fly the tot the vergelijkingsobjecten beschikbaar the de stellen.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: Zinnen opsplitsen in losse HTML Elementen</h4>
-                <p>Om te weten of een gebruiker letter-voor-letter de tekst goed typt, moeten we de string omzetten naar
-                    individuele array-karakters met <code>.split('')</code>. Van elk karakter maken we een eigen
-                    <code>&lt;span&gt;</code>, waardoor we die apart rood of groen kunnen kleuren.
-                </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> RANDOM_QUOTE = <span class="string">"De code compilet niet..."</span>;
-
-RANDOM_QUOTE.<span class="function">split</span>(<span class="string">''</span>).<span class="function">forEach</span>(char => {
-    <span class="keyword">const</span> charSpan = document.<span class="function">createElement</span>(<span class="string">'span'</span>);
-    charSpan.innerText = char;
-    quoteDisplay.<span class="function">appendChild</span>(charSpan);
-});</pre>
+                <h4>Stap 1: Variabele Zinnen Injecteren in Containers</h4>
+                <p>Splits grote tekstbrokken open per the karakter, verpak deze rond de nodige the `SPAN`-nodes en the
+                    de de laad dit in de user view in plaats van een hardcoded tekstlaag.</p>
+                <div class="code-example">
+                    <pre>const words = 'Dit is the test the zin.'.split('');
+words.forEach(char =&gt; {
+    const span = document.createElement('span');
+    span.innerText = char;
+    quoteDisplayElement.appendChild(span);
+})</pre>
                 </div>
-                <p><strong>Uitleg:</strong> We vullen de zwarte "terminal" box dynamisch letter-voor-letter met HTML
-                    Spans. Dit heet het prepareren / scaffolden van de UI (User Interface).</p>
             </div>
-
             <div class="step">
-                <h4>Stap 2: Live Vergelijken (Array tegen Array)</h4>
-                <p>Elke keer als er getypt wordt (<code>event: 'input'</code>), splitsen we wat de gebruiker
-                    daadwerkelijk getypt heeft óók op in een nieuw array en vergelijken we de letter op index
-                    <code>[0]</code> met de doeltaal letter op index <code>[0]</code>.
-                </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> arrayQuote = quoteDisplay.<span class="function">querySelectorAll</span>(<span class="string">'span'</span>);
-<span class="keyword">const</span> arrayValue = quoteInput.value.<span class="function">split</span>(<span class="string">''</span>);
-
-arrayQuote.<span class="function">forEach</span>((charSpan, index) => {
-    <span class="keyword">const</span> character = arrayValue[index];
-    <span class="keyword">if</span> (character === charSpan.innerText) {
-        charSpan.classList.<span class="function">add</span>(<span class="string">'correct'</span>);
+                <h4>Stap 2: Input in real-time vergelijken</h4>
+                <p>Verdiep u in de wisselwerking: haal telkens the huidige input veld the lengte op the en de weeg dat
+                    stringteken the secuur the af The aan the de parallelle Node object in de opgeslagen referentie
+                    tekst.</p>
+                <div class="code-example">
+                    <pre>const arrayQuote = quoteDisplayElement.querySelectorAll('span');
+const arrayValue = quoteInputElement.value.split('');
+let correct = true;
+arrayQuote.forEach((charSpan, index) =&gt; {
+    const char = arrayValue[index];
+    if (char == null) charSpan.classList.remove('correct');
+    else if (char === charSpan.innerText) charSpan.classList.add('correct');
+})</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Stap 3: Timer Logica (Spel Controller) Initiaties</h4>
+                <p>Wanneer the exact het eerste teken-event geregistreerd staat bij ons systeem klappen the we over de
+                    naar the timer logica.</p>
+                <div class="code-example">
+                    <pre>quoteInputElement.addEventListener('input', () =&gt; {
+    if(!isTyping) {
+        startTimer();
+        isTyping = true;
     }
 });</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Door parallel te lopen over the array van de <code>querySelectorAll</code>,
-                    kunnen we live CSS classes toevoegen (rood/groen) gebaseerd op een if-else match structuur.</p>
-            </div>
-
-            <div class="step">
-                <h4>Stap 3: WPM Formule (Words per Minute)</h4>
-                <p>Om te berekenen hoe snel de gebruiker is in "Words Per Minute", hebben we het aantal letters,
-                    seconden en een wiskunde formule nodig.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">let</span> cpm = Math.<span class="function">round</span>((valLength / timeElapsed) * <span class="string">60</span>);
-<span class="keyword">let</span> wpm = Math.<span class="function">round</span>(((valLength / <span class="string">5</span>) / timeElapsed) * <span class="string">60</span>);</pre>
-                </div>
-                <p><strong>Uitleg:</strong> In internationale typ-competities telt 1 woord gestandaardiseerd als 5
-                    karakters. Dus: <code>(aantal characters / 5)</code> gedeeld door het aantal seconden dat is
-                    verstreken KEER 60 (maal 60, voor 1 minuut).</p>
             </div>
         </div>
 
-        <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Timer Starten bij de eerste slag)</h3>
-            <pre><span class="comment">// Dit start the timer wanneer we de eerste letter indrukken</span>
-quoteInput.<span class="function">addEventListener</span>(<span class="string">'input'</span>, () => {
-    <span class="comment">// Is er nog GEEN timer ID aanwezig (falsey value)? Start hem dan op!</span>
-    <span class="keyword">if</span> (!timer) {
-        <span class="function">startGame</span>();
-    }
-    
-    <span class="comment">// Ga verder met the UI verversen logica...</span>
-});
+        <div class="code-example" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="color: #f8fafc; margin-bottom: 1rem;">💻 Gedeelde Control the Validatiestructuur </h3>
+            <pre>quoteInputElement.addEventListener('input', () =&gt; {
+    const arrayQuote = quoteDisplayElement.querySelectorAll('span');
+    const arrayValue = quoteInputElement.value.split('');
 
-<span class="keyword">function</span> <span class="function">startGame</span>() {
-    <span class="comment">// Voer 'updateTimer' functie ALTIJD the elke the 1000ms the (1 seconde) uit the</span>
-    timer = <span class="function">setInterval</span>(updateTimer, <span class="string">1000</span>);
-}</pre>
+    let correct = true;
+    arrayQuote.forEach((characterSpan, index) =&gt; {
+        const character = arrayValue[index];
+        if (character == null) {
+            characterSpan.classList.remove('correct', 'incorrect');
+            correct = false;
+        } else if (character === characterSpan.innerText) {
+            characterSpan.classList.add('correct');
+            characterSpan.classList.remove('incorrect');
+        } else {
+            characterSpan.classList.remove('correct');
+            characterSpan.classList.add('incorrect');
+            correct = false;
+        }
+    });
+
+    if (correct) renderNewQuote();
+});</pre>
         </div>
 
-        <!-- Instructies -->
         <div class="instructions">
             <h3>✅ Jouw Opdracht:</h3>
             <ul>
-                <li>Klik in het tekstveld in de donkere box. Zodra je de allereerste letter ("D") typt, begint de rode
-                    timer van 60 seconden direct te lopen!</li>
-                <li>Typ nauwkeurig mee in het kader. Foute toetsaanslagen kleuren bloedrood.</li>
-                <li>Tijdens het typen zie je in de HUD (Heads-Up-Display) je live "WPM" (Words Per Minute) en "CPM"
-                    updaten.</li>
+                <li>Laat the focus the wegdalen the the in the text the venster the the en tik exact de zichtbare codes
+                    over heen.</li>
+                <li>Let in de visuele view laag expliciet mee op foute aanslagen in de kleuren schema en de CPM rating
+                    the metrics bovenaan.</li>
             </ul>
         </div>
 
-        <!-- Tips -->
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong>Waarom <code>Math.round</code>?</strong> Het aantal typ-letters (bijv 38) gedeeld door
-                    seconden (bijv. 7) geeft vervelende ongenuanceerde decimale breuken (<code>5.42857142857</code>).
-                    <code>Math.round</code> zorgt direct voor schone, leesbare integers (<code>5</code>).</li>
-                <li><strong>Waarom <code>split('')</code> met enkele quotes?</strong> De <code>split()</code> functie
-                    breekt een string op in stukjes. Als je niets meegeeft <code>split()</code>, houd je 1 massief blok
-                    over. Als je <code>split(' ')</code> - met spatie - gebruikt, dan breekt het de hele string in losse
-                    woorden op! Een lege string <code>''</code> (niks) breekt het op <strong>EXACT elke letter!</strong>
-                </li>
+                <li><strong>Vermijdt extreme overhead door the de DOM The manipulatie logica: </strong> Het
+                    overschilderen in text the inputs the zelf gaat zelden goed ten koste van snelheid; the het visuele
+                    truuk the wat zich hier voordoet bespaard bergen laadtijd en vertraging bij input handling.</li>
             </ul>
         </div>
 
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: <code>setInterval</code> chaos (meerdere timers tegelijk)</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ FOUT - Start je een interval bij elke toetsaanslag!? Dan tellen er straks 112 timers die elke seconde -112 van je Tijd aftrekken! Crashes ALOM!</span>
-quoteInput.addEventListener('input', () =&gt; {
-    timer = setInterval(updateTimer, 1000);
-});
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: KeyUp logica verwarren met direct Input events.</h4>
+                <p style="color: #f87171;">Veel legacy tutorials gebruiken onnodig the keyboard triggers zoal
+                    <code>keyup</code> wat resulteert in het visuele effect nadat lettertoetsen al verlaten the zijn en
+                    onverwachte onlogica ten the opzichte backspace of the control-shortcuts the invoer teweeg brengen.
+                    Blijft de dus the strikt met inputs spelen hier.</p>
+                <div class="code-example">
+                    <pre>// ❌ FOUT
+veld.addEventListener('keyup', ...);
 
-<span class="comment">// ✅ GOED - Zorg ervoor dat de timer State maar ÉÉN keer ingeschakeld MAG worden (if statement).</span>
-if (!timer) { timer = setInterval(updateTimer, 1000); }</pre>
+// ✅ GOED
+veld.addEventListener('input', ...);</pre>
                 </div>
             </div>
         </div>
 
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor meer? Probeer dit toe te voegen in je eigen IDE:</p>
+            <div class="tips" style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1);">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingsmogelijkheden</h3>
                 <ul>
-                    <li><strong>Fetch APIs:</strong> In plaats van 1 hardcoded variable, haal met <code>fetch()</code>
-                        willekeurige zinnen op via de openbare API <code>https://api.quotable.io/random</code>!</li>
-                    <li><strong>Restart Knop 🔄:</strong> Maak een "Restart" knop die alle <code>timer</code> en
-                        <code>errors</code> variabelen reset, en de input weer leegmaakt, zodat de pagina nooit
-                        "ververst" hoeft te worden.</li>
+                    <li><strong>Percentage-Berekeningen</strong> Voeg ook Accuraatheid metrics (percentage-teken) in de
+                        the header the HUD toe naast CPM of Errors!</li>
+                    <li><strong>Meerdere Level systemen (Uitbreiding):</strong> Laad bij completion de een nog
+                        moeilijkere string op met uitgebreide witregels en complexe codering combinaties.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
-            <h2 class="title-cyber">Systeem Override</h2>
-            <p class="subtitle-cyber">Toets exact de string in om in te loggen...</p>
+            <div class="typing-container">
+                <h2 class="title-cyber">Systeem Override</h2>
+                <p class="subtitle-cyber">Toets exact de string in om in te loggen...</p>
 
-            <div class="stats">
-                <div class="stat-box">
-                    <div class="stat-value" id="wpm">0</div>
-                    <div class="stat-label">WPM</div>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-value" id="wpm">0</div>
+                        <div class="stat-label">WPM</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="cpm">0</div>
+                        <div class="stat-label">CPM</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="errors">0</div>
+                        <div class="stat-label">Errors</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="time">60s</div>
+                        <div class="stat-label">Tijd</div>
+                    </div>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-value" id="cpm">0</div>
-                    <div class="stat-label">CPM</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-value" id="errors">0</div>
-                    <div class="stat-label">Errors</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-value" id="time">60s</div>
-                    <div class="stat-label">Tijd</div>
-                </div>
+
+                <div class="quote-display" id="quoteDisplay"></div>
+                <textarea id="quoteInput" class="quote-input" placeholder="Initiate connection & start typing..."
+                    rows="3" spellcheck="false"></textarea>
             </div>
-
-            <div class="quote-display" id="quoteDisplay"></div>
-            <textarea id="quoteInput" class="quote-input" placeholder="Klik hier en start typen..." rows="3"
-                spellcheck="false"></textarea>
         </div>
 
-        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+        <a href="../index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Terug naar Projecten</a>
     </div>
 
     <script>

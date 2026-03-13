@@ -14,34 +14,35 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            overflow-x: hidden;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
             padding: 2rem;
             max-width: 800px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
         }
 
         .level {
             display: inline-block;
             padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            background: linear-gradient(135deg, #FF6B6B, #C0392B);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -49,7 +50,7 @@
         }
 
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
         }
@@ -60,38 +61,45 @@
         .instructions,
         .tips {
             padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
         }
 
         .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            border-left: 4px solid #f59e0b;
         }
 
         .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
+            border-left: 4px solid #0ea5e9;
         }
 
         .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
+            border-left: 4px solid #94a3b8;
         }
 
         .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
+            border-left: 4px solid #3b82f6;
         }
 
         .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            border-left: 4px solid #10b981;
+        }
+
+        .explanation h3,
+        .concepts h3,
+        .step-by-step h3,
+        .instructions h3,
+        .tips h3,
+        .explanation h4,
+        .concepts h4,
+        .step-by-step h4,
+        .instructions h4,
+        .tips h4 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
         }
 
         h3 {
@@ -104,7 +112,7 @@
         }
 
         .code-example {
-            background: #282c34;
+            background: #0f172a;
             color: #abb2bf;
             padding: 1.5rem;
             border-radius: 8px;
@@ -112,6 +120,7 @@
             overflow-x: auto;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            border: 1px solid #334155;
         }
 
         .code-example .keyword {
@@ -129,18 +138,18 @@
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #667eea;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
         }
 
         /* Project Area */
         .project-area {
-            background: #f8f9fa;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             padding: 3rem;
             margin-bottom: 2rem;
-            border: 2px dashed #ccc;
+            border: 1px solid #334155;
             display: flex;
             gap: 10px;
             justify-content: center;
@@ -204,14 +213,15 @@
         /* Individuele Toast */
         .toast {
             min-width: 250px;
-            background: white;
-            color: #333;
+            background: #1e293b;
+            color: #f8fafc;
             padding: 15px 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border: 1px solid #334155;
             border-left: 5px solid #333;
 
             /* Animatie Setup */
@@ -261,7 +271,7 @@
         }
 
         .close-toast:hover {
-            color: #333;
+            color: #f8fafc;
         }
 
         @keyframes slideIn {
@@ -276,6 +286,32 @@
                 opacity: 0;
             }
         }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 
@@ -283,92 +319,88 @@
     <div class="container">
         <h1>Project 38: Toast Notificaties</h1>
         <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
-        <p class="description">Vervang lelijke `alert()` boxen met een mooi geanimeerd, stapelbaar toast systeem.</p>
+        <p class="description">Vervang standaard browser alerts door een modern, geanimeerd en stapelbaar
+            notificatiesysteem.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>Het dynamisch toevoegen en verwijderen van DOM-elementen.</li>
+                <li>Het gebruik van <code>setTimeout</code> om elementen na een bepaalde tijd te verwijderen.</li>
+                <li>CSS animaties aansturen via JavaScript voor vloeiende overgangen.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>appendChild() & remove()</strong> – De basisfuncties van de DOM om elementen in de boom te
+                    plaatsen of eruit te halen.</li>
+                <li><strong>CSS Keyframes</strong> – Animaties die bepalen hoe een notificatie het scherm binnenkomt en
+                    verlaat.</li>
+                <li><strong>Event Loop & Timers</strong> – Begrijpen hoe <code>setTimeout</code> werkt om notificaties
+                    op te ruimen.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: De Toast Container</h4>
-                <p>Toasts (of snackbars) zijn tijdelijke berichtjes die in beeld schuiven. Omdat het er meerdere
-                    tegelijk kunnen zijn, plaatsen we ze in een vaste, onzichtbare poortwachter: een
-                    <code>#toast-container</code> die rechtsonder in het scherm vastgemaakt ("fixed") is.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">/* De container staat vast op het scherm */</span>
-<span class="keyword">#toast-container</span> {
-    <span class="keyword">position</span>: fixed;
-    <span class="keyword">bottom</span>: <span class="string">20px</span>;
-    <span class="keyword">right</span>: <span class="string">20px</span>;
-}</pre>
+                <h4>Stap 1: Het Element Aanmaken</h4>
+                <p>We maken een nieuw <code>div</code> element aan en vullen dit met de gewenste tekst en een sluitknop.
+                </p>
+                <div class="code-example">
+                    <pre>const toast = document.createElement('div');
+toast.classList.add('toast', type);
+toast.innerHTML = `&lt;span&gt;${message}&lt;/span&gt;&lt;button&gt;&times;&lt;/button&gt;`;</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Vanaf deze plek kunnen we met Javascript dynamisch zoveel berichtjes
-                    injecteren als we willen, en ze zullen netjes boven elkaar 'stapelen'.</p>
             </div>
-
             <div class="step">
-                <h4>Stap 2: Elementen Genereren in JS (createElement)</h4>
-                <p>In plaats van een HTML div onzichtbaar te maken, genereren we een compleet nieuwe HTML div on the fly
-                    met <code>document.createElement('div')</code> en injecteren we de HTML string daarbinnen.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">function</span> <span class="function">showToast</span>(bericht) {
-    <span class="comment">// Maak een lege &lt;div&gt;</span>
-    <span class="keyword">const</span> toast = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
-    toast.className = <span class="string">'toast success'</span>; <span class="comment">// Geef het classes voor de CSS</span>
-    
-    <span class="comment">// Vul de div met inhoud</span>
-    toast.innerHTML = <span class="string">`&lt;span&gt;\${bericht}&lt;/span&gt;`</span>;
-    
-    <span class="comment">// Stop hem in de container, waardoor hij op het scherm verschijnt!</span>
-    container.<span class="function">appendChild</span>(toast);
-}</pre>
+                <h4>Stap 2: Injecteren in de Container</h4>
+                <p>Voeg het nieuwe element toe aan de container die op een vaste plek op het scherm staat.</p>
+                <div class="code-example">
+                    <pre>toastContainer.appendChild(toast);</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Met <code>createElement</code> en <code>appendChild</code> bouw je als een
-                    LEGO-master elementen uit het niets op en klik je ze live vast in je document. Ze schuiven dan
-                    prachtig in beeld dankzij onze CSS animatie.</p>
             </div>
-
             <div class="step">
-                <h4>Stap 3: Garbage Collection (Verdwijnen)</h4>
-                <p>Wat we bouwen vergaat niet zomaar. We moeten de toasts ook weer netjes van de DOM verwijderen, anders
-                    zouden er onzichtbare (transparante) divs in het geheugen ophopen! We programmeren een automatische
-                    sloop ("auto-destruct") actie na 3 seconden met <code>setTimeout</code>.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Wacht 3000ms en start de verdwijn animatie (.hide)</span>
-<span class="function">setTimeout</span>(() => {
-    toast.classList.<span class="function">add</span>(<span class="string">'hide'</span>);
-    
-    <span class="comment">// Wacht tot de slideOut animatie klaar is (300ms) en VERWIJDER hem!</span>
-    <span class="function">setTimeout</span>(() => { toast.<span class="function">remove</span>(); }, <span class="string">300</span>);
-}, <span class="string">3000</span>);</pre>
+                <h4>Stap 3: Automatisch Opruimen</h4>
+                <p>Gebruik een timer om de notificatie na een paar seconden automatisch te laten verdwijnen.</p>
+                <div class="code-example">
+                    <pre>setTimeout(() =&gt; {
+    toast.remove();
+}, 3500);</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Gooi altijd elementen weg met <code>.remove()</code> als je ze niet meer
-                    nodig hebt, zo voorkom je memory leaks (geheugenlekken)! We moeten heel even wachten (die 300ms) om
-                    te zorgen dat gemaakte CSS afgespeeld is, daarna is het tabee.</p>
             </div>
         </div>
 
         <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Handmatig Sluiten)</h3>
-            <pre><span class="comment">// Je kan ook een kruisje toevoegen dat het element handmatig wist.</span>
-<span class="comment">// De logica zoekt het kruisje specifiek *binnen* in deze nieuwe toast!</span>
-<span class="keyword">const</span> closeBtn = toast.<span class="function">querySelector</span>(<span class="string">'.close-toast'</span>);
-
-closeBtn.addEventListener(<span class="string">'click'</span>, () => {
-    <span class="comment">// Handmatig het element verwijderen. Zelfde principe!</span>
-    <span class="function">removeToast</span>(toast);
-});</pre>
+        <div class="code-example">
+            <h3>💻 De Complete Toast Functie</h3>
+            <pre>function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerText = message;
+    
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('hide');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}</pre>
         </div>
 
         <!-- Instructies -->
         <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
+            <h3>✅ Instructies:</h3>
             <ul>
-                <li>Klik op de 4 knoppen hieronder.</li>
-                <li>Merk op dat ze mooi rechtsonder in je scherm schuiven, boven de "Terug naar Projecten" button.</li>
-                <li>Klik er gerust 10 achter elkaar, en klik op de kleine kruisjes in de hoeken. Ze 'stapelen' mooi op
-                    en verdwijnen soepel!</li>
+                <li>Klik op de verschillende knoppen om notificaties van verschillende types te zien verschijnen.</li>
+                <li>Je kunt de notificaties ook handmatig sluiten met het kruisje.</li>
             </ul>
         </div>
 
@@ -376,40 +408,46 @@ closeBtn.addEventListener(<span class="string">'click'</span>, () => {
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong>Re-usable functies:</strong> Je hebt nu 1 <code>showToast(type, cssClass)</code> functie
-                    gebouwd. Je kan deze logica zo hergebruiken bij elk formulier dat je bouwt in de toekomst!</li>
-                <li><strong>UX Feedback:</strong> Vertel een gebruiker altijd <i>wat</i> er gebeurt na een abstracte
-                    actie als het opslaan van code. Er is niks ongemakkelijker dan op een opslaan-button klikken en...
-                    niks zien, onzeker of het nou gefixed is of niet.</li>
+                <li><strong>Fixed Positioning:</strong> Gebruik <code>position: fixed</code> voor de
+                    notificatie-container om ervoor te zorgen dat ze altijd zichtbaar blijven, zelfs als de gebruiker
+                    scrollt.</li>
             </ul>
         </div>
 
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: <code>display: none</code> vs Verwijderen</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - Maak een popup/toast achteraf NIET onzichtbaar door `display: none` in te stellen met JavaScript. Dat verbergt het element alleen, maar het blijft in de DOM cache bestaan. Gebruik ALTIJD `node.remove()` om gemaakte DOM elementen uit het CPU geheugen te deleten!</span></pre>
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #f8fafc;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #f8fafc;">Fout: Geen Animaties</h4>
+                <p style="color: #e2e8f0;">Notificaties die direct in beeld "poppen" voelen onnatuurlijk aan. Gebruik
+                    CSS transities of keyframes voor een vloeibaar effect.</p>
+                <div class="code-example">
+                    <pre>/* ✅ GOED: Geanimeerd */
+.toast {
+    animation: slideIn 0.3s forwards;
+}</pre>
                 </div>
             </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Voeg Timeout-Geluidjes toe:</strong> Speel een heel kort "pop" MP3 geluidje af als de
-                        animatie op het scherm komt, voor maximale dopamine hits bij je gebruikers!</li>
+                    <li><strong>Swipe-to-Dismiss:</strong> Voeg touch events toe zodat gebruikers notificaties op mobiel
+                        kunnen wegswipen.</li>
+                    <li><strong>Progress Bar:</strong> Voeg een klein balkje onderaan de toast toe dat afneemt naarmate
+                        de tijd verstrijkt.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
+
         <div class="project-area">
             <button class="btn-action btn-success"
                 onclick="showToast('success', 'Opslaan Succesvol!', '✅')">Succes</button>
@@ -433,7 +471,7 @@ closeBtn.addEventListener(<span class="string">'click'</span>, () => {
         function showToast(type, message, icon) {
             // 1. Maak the Div The DOM Node
             const toast = document.createElement('div');
-            // Voeg class "toast" toe, plus the thema, bv "toast success"
+            // Voeg class "toast" toe, plus het thema, bv "toast success"
             toast.className = `toast ${type}`;
 
             // 2. Vul in the innerHTML

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 53: Reactie Timer in JS - DOM Projecten</title>
+    <title>Project 53: Reactie Timer - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -14,43 +14,48 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
-            padding: 2rem;
+            padding: 2.5rem;
             max-width: 800px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
+            text-align: center;
         }
 
         .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            display: block;
+            width: fit-content;
+            margin: 0 auto 1.5rem;
+            padding: 0.25rem 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 1rem;
         }
 
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
+            text-align: center;
         }
 
         .explanation,
@@ -59,41 +64,35 @@
         .instructions,
         .tips {
             padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
         }
 
         .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            border-left: 4px solid #f59e0b;
         }
 
         .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
+            border-left: 4px solid #0ea5e9;
         }
 
         .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
+            border-left: 4px solid #94a3b8;
         }
 
         .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
+            border-left: 4px solid #3b82f6;
         }
 
         .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            border-left: 4px solid #10b981;
         }
 
         h3 {
+            color: #f8fafc;
             margin-bottom: 1rem;
         }
 
@@ -103,7 +102,7 @@
         }
 
         .code-example {
-            background: #282c34;
+            background: #0f172a;
             color: #abb2bf;
             padding: 1.5rem;
             border-radius: 8px;
@@ -111,6 +110,7 @@
             overflow-x: auto;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            border: 1px solid #334155;
         }
 
         .code-example .keyword {
@@ -128,75 +128,133 @@
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #667eea;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
         }
 
-        /* Timer Game Area */
+        /* Game Area */
         .project-area {
-            background: #f1f5f9;
+            background: #0f172a;
             border-radius: 12px;
-            padding: 10px;
-            margin-bottom: 2rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid #334155;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .play-pad {
             width: 100%;
             height: 350px;
             background: #3b82f6;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             color: white;
-            transition: 0.1s;
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            border: 4px solid rgba(255, 255, 255, 0.1);
         }
 
         .play-pad.waiting {
             background: #ef4444;
+            border-color: #f87171;
         }
 
-        /* Rood (Wachten) */
         .play-pad.now {
             background: #10b981;
+            border-color: #34d399;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
         }
 
-        /* Groen (Klik!) */
         .play-pad.too-early {
             background: #f59e0b;
+            border-color: #fbbf24;
         }
 
-        /* Oranje (Te Vroeg!) */
-
         .pad-icon {
-            font-size: 4rem;
-            margin-bottom: 15px;
+            font-size: 5rem;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .play-pad:active .pad-icon {
+            transform: scale(1.1);
         }
 
         .pad-text {
-            font-size: 2.2rem;
-            font-weight: bold;
+            font-size: 2.5rem;
+            font-weight: 900;
             text-align: center;
             margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .pad-sub {
-            font-size: 1.1rem;
-            opacity: 0.8;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 500;
         }
 
-        .score-board {
-            margin-top: 20px;
-            font-weight: bold;
+        .best-score {
+            margin-top: 25px;
+            font-weight: 700;
             font-size: 1.2rem;
-            color: #334155;
+            color: #cbd5e1;
+            background: #1e293b;
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            border: 1px solid #334155;
+        }
+
+        .best-score span {
+            color: #3b82f6;
+            margin-left: 5px;
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .step h4 {
+            color: #f8fafc;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .step p {
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -204,275 +262,227 @@
 <body>
     <div class="container">
         <h1>Project 53: Reactie Timer</h1>
-        <span class="level" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">Games</span>
-        <p class="description">Meet de JS <code>Date.now()</code> snelheden op de nanoseconde en maak er een the
-            zenuwslopend spelletje the van!</p>
+        <span class="level">Intermediate</span>
+        <p class="description">Test je reflexen tot op de milliseconde en leer hoe je een robuuste 'state-machine' bouwt
+            waarbij acties afhankelijk zijn van de huidige status van het spel.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project leer je hoe je nauwkeurige tijdmetingen uitvoert en hoe je gebruikersinteractie beheert in
+                een tijdgevoelige applicatie:</p>
+            <ul>
+                <li><strong>Milliseconde Precisie:</strong> Berekeningen maken met de <code>Date.now()</code> timestamp.
+                </li>
+                <li><strong>State Machines:</strong> Logica bouwen die reageert op basis van de huidige modus (Klaar,
+                    Wachten, Klik Nu).</li>
+                <li><strong>Async Control:</strong> Het gebruik van <code>setTimeout</code> voor willekeurige intervals
+                    en <code>clearTimeout</code> voor annuleringen.</li>
+                <li><strong>Visuele States:</strong> Hoe je kleuren en iconen inzet om de status van een systeem direct
+                    te communiceren.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Date.now():</strong> Geeft het aantal milliseconden weer sinds 1 januari 1970. Door twee van
+                    deze waarden van elkaar af te trekken, krijg je de verstreken tijd.</li>
+                <li><strong>State-based Logic:</strong> Het spel heeft 5 fasen: <code>start</code>,
+                    <code>waiting</code>,
+                    <code>go</code>, <code>result</code>, en <code>early</code>. Elke fase heeft zijn eigen regels.
+                </li>
+                <li><strong>Willekeurige Intervals:</strong> <code>Math.random()</code> gebruiken om te voorkomen dat de
+                    gebruiker de timer kan voorspellen.</li>
+                <li><strong>UI Synchronization:</strong> Het synchroon houden van de interne JavaScript status en de
+                    visuele CSS-klassen.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: Het "Date.now()" Object</h4>
-                <p>Hoe the weet JavaScript The the the The Tot the THE op The de the milliseconde The The The the THE
-                    The exact hoelang The something the The duurt the THE? the We the maken THE The gebruik the van the
-                    de The ingebouwde JS the Klok the The. Door <code>Date.now()</code> The the the THE the aan The the
-                    te the The roepen, The the the The krijg THE the the the The je The een ENORM the nummer The (the
-                    bijv. The The THE the The <code>1690000123456</code>). Dit The is the the the the Tijd the the THE
-                    the <strong>in The the the the The The millisecondes The the!</strong> the sinds The the THE 1 The
-                    JAN 1970 the The (the the de "the Unix The The Epoch The").</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// 1. the SLA the the the The The 1e The the the exact 1e START-Tijd the The The op! the THE </span>
-<span class="keyword">const</span> startKlokTheTheTheThe = Date.<span class="function">now</span>();
-
-<span class="comment">// 2. the the LATER in the the Tijd. The (the The the the Wanneer de Speler the the THE klikt The The! ) </span>
-<span class="keyword">const</span> eindKloktheThe = Date.<span class="function">now</span>();
-
-<span class="comment">// 3. the THE the Berekening the the! the The The </span>
-<span class="keyword">const</span> reactieTijd = eindKloktheThe - startKlokTheTheTheThe; <span class="comment">// the the Het The The the verschil in the the MS! TheThe ! </span></pre>
+                <h4>Stap 1: De Start en de Timer</h4>
+                <p>Zodra de student klikt om te beginnen, starten we een onzichtbare timer.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> delay = Math.floor(Math.random() * <span class="string">3500</span>) + <span class="string">1500</span>;
+timerId = <span class="function">setTimeout</span>(() => {
+    state = <span class="string">'go'</span>;
+    startTime = Date.<span class="function">now</span>();
+    <span class="comment">// Kleur naar groen...</span>
+}, delay);</pre>
                 </div>
+                <p><strong>Uitleg:</strong> We kiezen een willekeurige tijd tussen 1.5 en 5 seconden. Pas als die tijd
+                    om
+                    is, leggen we de <code>startTime</code> vast.</p>
             </div>
 
             <div class="step">
-                <h4>Stap 2: The State Machine Pattern The </h4>
-                <p>Omdat the dit the The The the spel the een The <strong>Enkele the the THE the the The the the
-                        Knop</strong> The heeft The (het the The Grote the The The vlak theThe!), the the the The the
-                    the The is The the The "State" the The cruciaal the. The Als de State the The THE the
-                    <code>'start_scherm'</code> The is, The dan the THE moet the The The de the UI the the The the The
-                    wachten the THE (Rood). als The the de State <code>'reactie_klaar'</code> the The isThe, the the dan
-                    The moet UI The the THE succes ! The</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">let</span> spelStatus = <span class="string">'start_scherm'</span>;
-
-<span class="keyword">function</span> <span class="function">klikOpVlakLogica</span>() {
-    <span class="keyword">if</span> (spelStatus === <span class="string">'start_scherm'</span>) {
-        <span class="comment">// THE the code !! the the the Start the timer...</span>
-        spelStatus = <span class="string">'wachten'</span>;
-    } <span class="keyword">else</span> <span class="keyword">if</span> (spelStatus === <span class="string">'wachten'</span>) {
-        <span class="comment">// the code for The the THE !! the the the TE VROEG! !</span>
-    }
+                <h4>Stap 2: De "Te Vroeg" Check</h4>
+                <p>Wat gebeurt er als een student te ongeduldig is?</p>
+                <div class="code-example">
+                    <pre><span class="keyword">if</span> (state === <span class="string">'waiting'</span>) {
+    <span class="function">clearTimeout</span>(timerId);
+    state = <span class="string">'early'</span>;
+    <span class="comment">// Toon waarschuwing...</span>
 }</pre>
                 </div>
+                <p><strong>Uitleg:</strong> Als de status nog <code>waiting</code> is, betekent dit dat de timer nog
+                    loopt. We moeten deze direct stoppen met <code>clearTimeout</code>, anders springt het scherm
+                    alsnog op groen terwijl de student al af is.</p>
             </div>
 
             <div class="step">
-                <h4>Stap 3: Timeout the Cleanup the The (ClearTimeout the the ) </h4>
-                <p>Dit de test vereist je The de "Timeout the The the Clear" the the skills te The THE the the
-                    beheersen! The the the Als the The speler 'te vroeg' the klikt, moet the The the roterende the
-                    (lopende) the 'Willekeurige Start the Timer' the <strong>Vernietigt (Cleared)</strong> the the
-                    worden, anders the springt the The the the de blok the the the the the een the the the paar seconde
-                    the later alsnog The the op "Groen"! </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">let</span> timeoutVariableZetMemOpslag;
-
-<span class="keyword">function</span> <span class="function">startWachten</span>() {
-    <span class="comment">// setTimeout gives a unique ID in JS (a memory handle number!)</span>
-    timeoutVariableZetMemOpslag = <span class="function">setTimeout</span>(() => {
-        <span class="comment">// ... Zet vak the groen ...</span>
-    }, randomTimeVariableMS); 
-}
-
-<span class="keyword">function</span> <span class="function">theFalseStartSpelerKlikteTeVroeg</span>() {
-    <span class="comment">// Sloop the timer the af tellende sequence The, zodat deze HET vak NIET! meer groen zet!</span>
-    <span class="function">clearTimeout</span>(timeoutVariableZetMemOpslag); 
-}</pre>
+                <h4>Stap 3: Reactietijd Berekenen</h4>
+                <p>Als het scherm groen is, meten we het verschil.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> reactionTime = Date.<span class="function">now</span>() - startTime;</pre>
                 </div>
+                <p><strong>Uitleg:</strong> <code>Date.now()</code> op het moment van de klik minus de
+                    <code>startTime</code> (het moment waarop het groen werd) geeft het exacte aantal milliseconden dat
+                    de
+                    student erover deed.
+                </p>
             </div>
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Klik The the the op het blauwe pad the om The The de the the test The THE t te publiceren!</li>
-                <li>Het vak The the Word the the the rood The ("wacht...").</li>
-                <li>Zodra het het the GROEN The WOrd The the (Klik!) the THE the, <strong>Klik zo the the The the the
-                        snel the the als je the kunt!</strong></li>
-                <li>Tip: Een the gemiddelde The the The the speler The reageert the in the The The 220 The tot The 260!
-                    ms the The. Hoe the the Snel ben j The jij the ? </li>
-            </ul>
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: 1px solid rgba(239, 68, 68, 0.2);">
+                <h4 style="color: #fca5a5;">Fout: Zombie Timers</h4>
+                <p style="color: #f87171;">Het niet aanroepen van <code>clearTimeout</code>. Hierdoor kan er een nieuwe
+                    timer starten terwijl de oude nog loopt, wat leidt tot schermen die willekeurig van kleur flitsen.
+                </p>
+            </div>
+            <div class="step" style="border-bottom: none; padding-bottom: 0;">
+                <h4 style="color: #fca5a5;">Fout: Floating point precision</h4>
+                <p style="color: #f87171;">Het proberen te gebruiken van <code>setInterval</code> om de tijd op te
+                    tellen
+                    (bijv. elke 10ms). Dit is onnauwkeurig door browser-vertraging. Gebruik altijd het verschil tussen
+                    twee timestamps.</p>
+            </div>
         </div>
 
         <!-- Tips -->
         <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
+            <h3>💡 Tips voor Studenten</h3>
             <ul>
-                <li><strong>Gekleurde State THE the UIThe thethe :</strong> the The The THE Naast The the interne The
-                    the the the JavaScript STATUS The The, The The update The the we The the the the UI the The klassen
-                    The (The the bijv The The. the <code>ThePlayBoardZThe.className = 'play-pad waiting'</code> the).
-                    css THE the the isThe THE the al klaar om THE the The the The de achtergrond rood The TE THE the
-                    verfen The the then THE ! THE the !! The </li>
+                <li><strong>UX Feedback:</strong> Gebruik geluidseffecten (zoals een korte 'ping') om de
+                    reactietijd-ervaring
+                    nog intenser te maken.</li>
+                <li><strong>State Helpers:</strong> Maak een functie <code>updateUI()</code> die alle visuele elementen
+                    in één keer bijwerkt op basis van de huidige status om fouten te voorkomen.</li>
+                <li><strong>Performance:</strong> Voorkom zware berekeningen in de periode dat het scherm groen is; elke
+                    milliseconde telt voor de student!</li>
             </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: the <code>clearInterval</code> versus <code>clearTimeout</code> TheThe!</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the het theTheThe setTimeout The The the THE The the theThe is The the THE THE: </span>
-<span class="comment">// THE PAS OP: the the the The Je zult een The the the 1The the THE the The fout the THE The melding the The krijgen The the als the je THE the `clearInterval(handle)` the the Gebruikt THE the! op een THE the THE THEThe `setTimeout` the THE THE The! THE The </span>
-<span class="comment">// OPLOSSING THE THE : the the The The Gebruik ALTIJD The `clearTimeout` the THE The theThe the THE voor the The The TheThe the timeouts the the en THE the `clearInterval` THE the the The THE voor The intervalsThe THE the THE THE! THE The </span></pre>
-                </div>
-            </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Voeg The The the Gemiddelde THE THE the The The The the Reactietijd the THE Toe the The
-                            The! </strong> the the thethe the THE the Bouw The THE the the een the Array THE the met The
-                        the the ALL the The JOUW MS The scores The The ! Thethe THE The Update the THE THE the THE The
-                        The THE the The then the the THE the score The bord the the The met THE the the The the
-                        <code>gemiddeldeTijdTHE = TotaalMS / theArrayLenH THE The</code>! The The the ! TheThe!</li>
-                    <li><strong>Straffen! The TheThe TheThe!</strong> The Als The de THE the theThe TheThe The speler
-                        The thetheThe The The The The The The The TE The The TheThe THE The Vroeg the THE the klijkt
-                        TheThe The The! the THE The The the TheThe The the Tel the The 1The The! The seconde THE THE THE
-                        the the THE! the The The (the 1000ms THE The The) the ! the als thethe the STRAF Thethe The ! op
-                        The theThetheTheThe The their the THE next The The THE! score the THE! The </li>
+                    <li><strong>Gemiddelde Calculator:</strong> Laat de student 5 keer achter elkaar proberen en bereken
+                        het gemiddelde resultaat.</li>
+                    <li><strong>Leaderboard:</strong> Sla de snelste 3 tijden op in <code>localStorage</code> en toon
+                        deze als een lijstje.</li>
+                    <li><strong>Moeilijkheidsgraad:</strong> Maak het 'klik vlak' kleiner of laat het bewegen over het
+                        scherm om de uitdaging te vergroten.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Extra Uitdagingen</button>
 
-        <div class="instructions">
-            <h3>✅ Test het uit:</h3>
-            <ul>
-                <li>1. the Klik The the the op het blauwe pad the om The The de the the test The THE t te publiceren!
-                </li>
-                <li>2. het vak The the Word the the the rood The ("wacht...").</li>
-                <li>3. Zodra het het the GROEN The WOrd The the (Klik!) the THE the, <strong>Klik zo the the The the the
-                        snel the the als je the kunt!</strong></li>
-                <li>Tip: Een the gemiddelde The the The the speler The reageert the in the The The 220 The tot The 260!
-                    ms the The. Hoe the the Snel ben j The jij the ? </li>
-            </ul>
-        </div>
 
-        <!-- Demo Area -->
         <div class="project-area">
-
-            <div class="play-pad" id="the-play-board">
-                <div class="pad-icon" id="the-pad-icon">⚡</div>
-                <div class="pad-text" id="the-pad-main-txt">Klaar om te The De Starten?</div>
-                <div class="pad-sub" id="the-pad-lower-txt">Klik ergens The THE in het blauwe The vlak om door te gaan
-                    the the te The beginnen.</div>
+            <div class="play-pad" id="play-pad">
+                <div class="pad-icon" id="pad-icon">⚡</div>
+                <div class="pad-text" id="pad-main-text">Startspel</div>
+                <div class="pad-sub" id="pad-sub-text">Klik om te beginnen</div>
             </div>
 
-            <div class="score-board">Jouw the The the snelste The tijd: <span id="the-snelste-run"
-                    style="color: #3b82f6;">- ms</span></div>
-
+            <div class="best-score">Snelste tijd: <span id="best-time">- ms</span></div>
         </div>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const THEPlayBoardZThe = document.getElementById('the-play-board');
-        const TXTtheBigOne = document.getElementById('the-pad-main-txt');
-        const TXTtheSubSmall = document.getElementById('the-pad-lower-txt');
-        const IconZTheUI = document.getElementById('the-pad-icon');
-        const SnelsteTXTUIRecordThe = document.getElementById('the-snelste-run');
+        const pad = document.getElementById('play-pad');
+        const mainText = document.getElementById('pad-main-text');
+        const subText = document.getElementById('pad-sub-text');
+        const icon = document.getElementById('pad-icon');
+        const bestTimeEl = document.getElementById('best-time');
 
-        // GAME STATES -> 'start_scherm' | 'wachten' | 'reactie_klaar' | 'te_vroeg' | 'resultaat_run'
-        let SpelDeState_The_CurrentO = 'start_scherm';
+        let state = 'start'; // States: start, waiting, go, result, early
+        let timerId = null;
+        let startTime = 0;
+        let bestScore = Infinity;
 
-        let TimeZouTheOutTimerIdLog_The; // Handle so we can .clear() it!
+        function updateUI(bgClass, iconChar, title, subtitle) {
+            pad.className = `play-pad ${bgClass}`;
+            icon.innerText = iconChar;
+            mainText.innerText = title;
+            subText.innerText = subtitle;
+        }
 
-        let StartTijdMSThe_TheTimer = 0;
-        let BesteVastGelegteTijdScore_TheList = 9999;
-
-        THEPlayBoardZThe.addEventListener('click', TheLogicTheHoofdTriggerGame_H_The);
-
-        function TheLogicTheHoofdTriggerGame_H_The() {
-            if (SpelDeState_The_CurrentO === 'start_scherm') {
-                TheGameGoNaarWachtPhaseLogic();
-            } else if (SpelDeState_The_CurrentO === 'wachten') {
-                TheSpelerPThePressedTeTheVroegOepsFalse();
-            } else if (SpelDeState_The_CurrentO === 'reactie_klaar') {
-                DeSuccesReTheActivatorRegistratieValidReact();
-            } else if (SpelDeState_The_CurrentO === 'resultaat_run' || SpelDeState_The_CurrentO === 'te_vroeg') {
-                TheGameGoNaarWachtPhaseLogic();
+        function handleClick() {
+            if (state === 'start' || state === 'result' || state === 'early') {
+                startWaiting();
+            } else if (state === 'waiting') {
+                handleEarlyClick();
+            } else if (state === 'go') {
+                handleSuccess();
             }
         }
 
-        function TheGameGoNaarWachtPhaseLogic() {
-            // "Zet in wachten the The (Rode Box phase!)"
-            SpelDeState_The_CurrentO = 'wachten';
+        function startWaiting() {
+            state = 'waiting';
+            updateUI('waiting', '🛑', 'Wachten...', 'Klik pas bij groen!');
 
-            // UI the update_the The
-            THEPlayBoardZThe.className = 'play-pad waiting';
-            IconZTheUI.innerText = "🛑";
-            TXTtheBigOne.innerText = "Wacht op the Groen...";
-            TXTtheSubSmall.innerText = "";
-
-            // from min 1200ms to max 4500ms delay random times logic The_!
-            const TheWaitTImeMath_TheRandomSec = Math.floor(Math.random() * 3300) + 1200;
-
-            TimeZouTheOutTimerIdLog_The = setTimeout(() => {
-                OpZTheNaarTheGroenKlaarAfReactNuDe_thePhaseZ();
-            }, TheWaitTImeMath_TheRandomSec);
+            const delay = Math.floor(Math.random() * 3500) + 1500;
+            timerId = setTimeout(() => {
+                state = 'go';
+                startTime = Date.now();
+                updateUI('now', '⚡', 'KLIK NU!', 'Snel!');
+            }, delay);
         }
 
-        function TheSpelerPThePressedTeTheVroegOepsFalse() {
-            // Speler Muisde te The vroeg! Cancel Timeout Loop! The theThe 
-            clearTimeout(TimeZouTheOutTimerIdLog_The);
-
-            SpelDeState_The_CurrentO = 'te_vroeg';
-
-            THEPlayBoardZThe.className = 'play-pad too-early';
-            IconZTheUI.innerText = "⚠️";
-            TXTtheBigOne.innerText = "Te the Vroeg!";
-            TXTtheSubSmall.innerText = "Je drukte the op the muis The knop the! voordat the het vlak the the The The the GROEN the werd.";
+        function handleEarlyClick() {
+            clearTimeout(timerId);
+            state = 'early';
+            updateUI('too-early', '⚠️', 'Te vroeg!', 'Niet spieken. Klik om opnieuw te proberen.');
         }
 
-        function OpZTheNaarTheGroenKlaarAfReactNuDe_thePhaseZ() {
-            // Nu starts that de the Reactie Tijd The the Registratie THE Z The 
-            SpelDeState_The_CurrentO = 'reactie_klaar';
-            StartTijdMSThe_TheTimer = Date.now(); // Startklok the MS! Nu The The !!
+        function handleSuccess() {
+            const reactionTime = Date.now() - startTime;
+            state = 'result';
+            updateUI('', '⏱️', `${reactionTime} ms`, 'Klik om nogmaals te spelen.');
 
-            THEPlayBoardZThe.className = 'play-pad now'; // Gets CSS background green (Go_The_!)
-            IconZTheUI.innerText = "⚡";
-            TXTtheBigOne.innerText = "KLIK NU!";
-            TXTtheSubSmall.innerText = "";
-        }
-
-        function DeSuccesReTheActivatorRegistratieValidReact() {
-            // Eindklok MS
-            const EndTijdZDeDataMsZTheThe = Date.now();
-            // Rekensom the score verschil:
-            const THE_VerschilScoreReZThe = EndTijdZDeDataMsZTheThe - StartTijdMSThe_TheTimer;
-
-            SpelDeState_The_CurrentO = 'resultaat_run';
-
-            THEPlayBoardZThe.className = 'play-pad'; // JS css The the remove gets classes the resets back to Blauw!
-            IconZTheUI.innerText = "⏱️";
-            TXTtheBigOne.innerText = `${THE_VerschilScoreReZThe} ms`;
-            TXTtheSubSmall.innerText = "Klik the The om The de the The the test nog The the een The keer te the the af The The de the leggen.";
-
-            // Save records system the
-            if (THE_VerschilScoreReZThe < BesteVastGelegteTijdScore_TheList) {
-                BesteVastGelegteTijdScore_TheList = THE_VerschilScoreReZThe;
-                SnelsteTXTUIRecordThe.innerText = `${BesteVastGelegteTijdScore_TheList} ms`;
+            if (reactionTime < bestScore) {
+                bestScore = reactionTime;
+                bestTimeEl.innerText = `${bestScore} ms`;
             }
         }
 
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
+        pad.addEventListener('click', handleClick);
+
         function toggleExpansions() {
             const expansions = document.getElementById('expansions');
             const btn = event.target;
             if (expansions.classList.contains('show')) {
                 expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+                btn.textContent = '📖 Toon Extra Uitdagingen';
             } else {
                 expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+                btn.textContent = '📖 Verberg Extra Uitdagingen';
             }
         }
     </script>

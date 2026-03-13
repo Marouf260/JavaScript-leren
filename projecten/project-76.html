@@ -14,308 +14,345 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f0fdfa;
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 2.5rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 900px;
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 1000px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #0f172a;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
             text-align: center;
+            font-size: 2.2rem;
         }
 
         .level {
             display: block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
             width: max-content;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 2rem;
+            padding: 0.3rem 1rem;
+            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            color: white;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        /* APP CSS H_T */
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
         .project-area {
-            background: #fff;
-            border-radius: 12px;
-            padding: 1rem;
+            background: #0f172a;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0 2.5rem 0;
+            border: 1px solid #334155;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .controls {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            gap: 20px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
         }
 
-        .KZOokHeTbalkLaNThe {
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 30px;
+        .search-container {
+            flex: 1;
             position: relative;
+            min-width: 300px;
+            background: #1e293b;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            padding: 2px;
         }
 
-        .KZOokHeTbalkLaNThe input {
+        .search-container input {
             width: 100%;
-            padding: 15px 20px;
-            padding-left: 50px;
-            border-radius: 8px;
-            border: 2px solid #e2e8f0;
-            font-size: 1.1rem;
+            padding: 14px 20px 14px 50px;
+            border: none;
+            background: transparent;
+            color: #f8fafc;
+            font-size: 1rem;
             outline: none;
-            transition: 0.2s;
-            background: #f8fafc;
         }
 
-        .KZOokHeTbalkLaNThe input:focus {
-            border-color: #14b8a6;
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
-        }
-
-        .KZOokHeTbalkLaNThe::before {
-            content: '🌍';
+        .search-container::before {
+            content: '🔍';
             position: absolute;
             left: 18px;
-            top: 15px;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 1.2rem;
+            opacity: 0.6;
         }
 
-        .lTheGridDataHTHeLand_eKNz {
+        select {
+            padding: 14px 25px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            background: #1e293b;
+            color: #f8fafc;
+            font-size: 1rem;
+            outline: none;
+            cursor: pointer;
+            min-width: 180px;
+        }
+
+        select:focus {
+            border-color: #14b8a6;
+        }
+
+        .countries-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 25px;
-            width: 100%;
             max-height: 550px;
             overflow-y: auto;
             padding: 10px;
         }
 
-        /* CstM Srclll_ The */
-        .lTheGridDataHTHeLand_eKNz::-webkit-scrollbar {
-            width: 6px;
+        .countries-grid::-webkit-scrollbar {
+            width: 8px;
         }
 
-        .lTheGridDataHTHeLand_eKNz::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
+        .countries-grid::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
         }
 
-        /* DE De LThe TheA_N_D KaaRtT_H */
-        .LLandKaHhG_OTheKkaarta_T {
-            background: white;
-            border-radius: 8px;
+        .country-card {
+            background: #1e293b;
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-            transition: 0.2s;
+            border: 1px solid #334155;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
         }
 
-        .LLandKaHhG_OTheKkaarta_T:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        .country-card:hover {
+            transform: translateY(-8px);
+            border-color: #14b8a6;
+            box-shadow: 0 10px 25px rgba(20, 184, 166, 0.15);
         }
 
-        .f_TDeFvlGlaHTheThegImMgT {
+        .flag-wrapper {
             width: 100%;
-            height: 150px;
+            height: 160px;
+            overflow: hidden;
+            border-bottom: 2px solid #334155;
+        }
+
+        .flag {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-bottom: 1px solid #e2e8f0;
-            background: #f1f5f9;
+            transition: transform 0.5s ease;
         }
 
-        .TDeKKaDatartIn_Tf_Ho_ {
-            padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+        .country-card:hover .flag {
+            transform: scale(1.1);
         }
 
-        .NDaaHND_HNT_e_THoTheTheXT_The {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #1e293b;
+        .card-content {
+            padding: 25px;
+            text-align: left;
+        }
+
+        .country-name {
+            font-size: 1.3rem;
+            font-weight: 800;
             margin-bottom: 15px;
-            line-height: 1.2;
+            color: #f8fafc;
+            letter-spacing: -0.5px;
         }
 
-        .IT_nDeIThenfRoWThe_Z {
-            display: flex;
-            align-items: baseline;
-            gap: 5px;
-            margin-bottom: 8px;
+        .info-row {
             font-size: 0.95rem;
-            color: #475569;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
         }
 
-        .IT_nDeIThenfRoWThe_Z strong {
-            color: #334155;
+        .info-row strong {
+            color: #cbd5e1;
             font-weight: 600;
         }
 
-        /* LOader n ERR */
-        .lTheV_H_LooOdAEderS_pinH {
+        .loader {
             display: none;
-            width: 50px;
-            height: 50px;
-            border: 4px solid #e2e8f0;
-            border-top-color: #14b8a6;
-            border-radius: 50%;
-            animation: LSpinTheThe_M 1s linear infinite;
-            margin: 40px auto;
+            padding: 50px;
+            font-weight: 800;
+            color: #14b8a6;
+            font-size: 1.2rem;
+            animation: pulse 1.5s infinite;
         }
 
-        @keyframes LSpinTheThe_M {
-            to {
-                transform: rotate(360deg);
+        @keyframes pulse {
+            0% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.5;
             }
         }
 
-        .E_TTheErrHROTTDTheMessageH {
-            display: none;
-            color: #ef4444;
-            text-align: center;
-            font-weight: bold;
-            padding: 20px;
-            background: #fee2e2;
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
             border-radius: 8px;
-            width: 100%;
-            max-width: 400px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
         }
 
-        .O_FffiIlttTeRsZGrTeOTheThe {
-            width: 100%;
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 15px;
-            padding-right: 15px;
+        .explanation {
+            border-left: 4px solid #f59e0b;
+            margin-top: 3rem;
         }
 
-        .O_FffiIlttTeRsZGrTeOTheThe select {
-            padding: 10px 15px;
-            border-radius: 6px;
-            border: 1px solid #cbd5e1;
-            outline: none;
-            background: white;
-            font-weight: bold;
-            color: #475569;
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
             cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
         }
 
         .back-link {
-            display: block;
-            margin-top: 2rem;
-            color: #14b8a6;
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
             text-align: center;
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>RestCountries Info App</h1>
-        <span class="level">API & Fetch</span>
+        <h1>Global Country Explorer</h1>
+        <span class="level">Realtime Multi-Filtering</span>
+        <p class="description">Bouw een geavanceerde dashboard-ervaring die communiceert met de REST Countries API. Leer
+            hoe je grote datasets filtert op basis van meerdere criteria tegelijk.</p>
 
-        <!-- Stap voor Stap -->
-        <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
-
-            <div class="step">
-                <h4>Stap 1: Alle the Landen Ophalen!</h4>
-                <p>We_ the the de The gebruiken de `RestCountries` API. We_ the the The_ Halen the Eén The Keer_ THE_
-                    <strong>Alle</strong> the 250+ The_ Landen _ the Op the _ The_ en the the ! <em>Slaan ze_ The the
-                        OP!</em> the The_ inEen _the_ `Array` the _ `(let LLandenG_Logba = [])`_! _ Dit noemen The we
-                    _The_ the <code>Caching</code>_ zodat The the _je_ The niet The Blijft the _The Fetchen_ The bij_
-                    the_ ELke the TypThe_ the _aanslag! </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
-<span class="keyword">const</span> DeRRZseopTheOPNNwTeZ = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'https://restcountries.com/v3.1/all'</span>);
-LLandenG_LogbaGDataAlle_TheTDA_ArrO_ = <span class="keyword">await</span> DeRRZseopTheOPNNwTeZ.<span class="function">json</span>();</pre>
-                </div>
-            </div>
-
-            <div class="step">
-                <h4>Stap 2: Lokaal Filteren (<code>.filter()</code>)</h4>
-                <p>AlsThe_ the je The TyPt_ the The (Of de_ Regio The DropdownThe _ gebruikt) _ the roepen We the The
-                    The the GEEN_ <code>fetch</code> the THE! the Meer the_ Aan! The_ the We_ the The Gebruiken the
-                    Gewoon The de the The_ The_ <code>.filter()</code> the ! Methode op the_ GThe _ Onze _ The _ Lokale
-                    The_ THE_ <code>Array</code> ! Dat the_ the Is the_the The bliksemsnel! </p>
-            </div>
-
-        </div>
-
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Typ the_ OP the_ "Nether" _The! _the in the het the ZoekVeld_The_ ! </li>
-                <li>Gebruik the ! de the the The ! _ Regio The! Dropdown _The Op the _(Bv. the "Europa"!) </li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>The FormattingThe_ the Number :</strong> the The IN The de JS The zie je the_ The ! The _
-                    dat We de Populatie the (Bv_ 17000000) _Z the Mooi the ! the formatteren _ the_ met de
-                    <code>Intl.NumberFormat('nl-NL').format(number)</code> the The! the zodat Het the the 17.000.000
-                    Wordt! _ </li>
-            </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: de_ <code>LowerCase()</code>_ the Vergeten_! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je Filtert_The in_ Een TheArray the ! The ZOEKT  The Javascript_ the the  `Case-Sensitive` (Hoofdlettergevoelig_)</span>
-<span class="comment">// "nederland" === "Nederland"  --&gt; FALSE!!The The</span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_! .toLowerCase()_ Zowel the ! The Op de_ Input values _!! _Als de ARRAY _ the property ! the (Z_ Bv: _The name.common.toLowerCase() )</span></pre>
-                </div>
-            </div>
-        </div>
-
-        <!-- Uitbreidingen -->
-        <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
-                <ul>
-                    <li><strong>SORTEREN _! !! The The The The! </strong> the the thethe the THE the Bouw The DE V The_
-                        the the the The_ Logica OM The_The op the_ Een_! the Selectie _the the the The te! The _ the !
-                        Bouwen the the voor "Soteer op The _ Inwoners (Hoog / LaagThe!)_T_! "! THE ! The! </li>
-                </ul>
-            </div>
-        </div>
-
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
         <div class="project-area">
-
-            <div class="O_FffiIlttTeRsZGrTeOTheThe">
-                <select id="uRe_GGiODRopHOTheThe">
-                    <option value="all">Alle Regio's</option>
+            <div class="controls">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Zoek op landnaam (bijv. Nederland)..."
+                        autocomplete="off">
+                </div>
+                <select id="region-filter">
+                    <option value="all">Alle Werelddelen</option>
                     <option value="africa">Afrika</option>
                     <option value="americas">Amerika</option>
                     <option value="asia">Azië</option>
@@ -324,134 +361,189 @@ LLandenG_LogbaGDataAlle_TheTDA_ArrO_ = <span class="keyword">await</span> DeRRZs
                 </select>
             </div>
 
-            <div class="KZOokHeTbalkLaNThe">
-                <input type="text" id="ZZoTTheokINHTInptUu_A" placeholder="Vind een land (bv. Germany, Brazil)..."
-                    autocomplete="off">
+            <div class="loader" id="loader">De wereldkaart wordt uitgerold... 🌍</div>
+            <div class="countries-grid" id="grid"></div>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project werken we met datasets van meer dan 240 items. Het direct laden van complete pagina's is
+                traag, dus we leren hoe we slim kunnen filteren in het geheugen.</p>
+            <ul>
+                <li><strong>Dynamic Array Filtering:</strong> Het tegelijkertijd filteren op tekst-input en
+                    dropdown-keuzes.</li>
+                <li><strong>Intl API:</strong> Automatisch formatteren van populatiegetallen op basis van lokale
+                    conventies.</li>
+                <li><strong>Lazy Loading Patterns:</strong> Hoe je efficiënt honderden afbeeldingen (vlaggen) verwerkt
+                    in de DOM.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Cross-Filter Logic:</strong> De "AND" logica toepassen: Een land moet én passen in de regio
+                    én passen bij de zoekterm.</li>
+                <li><strong>Intl.NumberFormat:</strong> De browser-native manier om <code>17500000</code> te veranderen
+                    in <code>17.500.000</code>.</li>
+                <li><strong>SVG Management:</strong> Waarom SVG's superieur zijn voor vlaggen (altijd scherp, ongeacht
+                    de schaal).</li>
+            </ul>
+        </div>
+
+        <!-- Stap voor Stap -->
+        <div class="step-by-step">
+            <h3>📝 Stap-voor-stap: Multi-Criteria Filter</h3>
+
+            <div class="step">
+                <h4>1: De populatie formatteren</h4>
+                <div class="code-example">
+                    <pre><span class="comment">// De professionele manier voor getallen:</span>
+<span class="keyword">const</span> format = <span class="keyword">new</span> <span class="function">Intl.NumberFormat</span>(<span class="string">'nl-NL'</span>).<span class="function">format</span>(population);</pre>
+                </div>
             </div>
 
-            <div class="lTheV_H_LooOdAEderS_pinH" id="L_UIITheDeLAddHTherrh_T_"></div>
-            <div class="E_TTheErrHROTTDTheMessageH" id="uEerDeTheMsgZ_TeHTheH">Land the NietGevondenThe ! 😢</div>
-
-            <div class="lTheGridDataHTHeLand_eKNz" id="DeLLndHHTHTO_MDemGridThData_V">
-                <!-- KaartJs T! ! H-->
+            <div class="step">
+                <h4>2: De filter combinatie</h4>
+                <p>We luisteren naar zowel <code>'input'</code> (typen) als <code>'change'</code> (klikken) en roepen
+                    dezelfde filterfunctie aan.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> filtered = allCountries.<span class="function">filter</span>(c => {
+    <span class="keyword">const</span> nameMatch = c.name.common.<span class="function">toLowerCase</span>().<span class="function">includes</span>(searchInput);
+    <span class="keyword">const</span> regionMatch = region === <span class="string">'all'</span> || c.region === region;
+    
+    <span class="keyword">return</span> nameMatch && regionMatch; <span class="comment">// Beide moeten waar zijn!</span>
+});</pre>
+                </div>
             </div>
 
         </div>
+
+        <div class="expandable" id="expansions">
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
+                <ul>
+                    <li><strong>Case Sensitivity:</strong> Zoeken op "Nederland" werkt niet als je alles vergelijkt met
+                        "nederland". Gebruik altijd <code>.toLowerCase()</code> op beide kanten van de vergelijking.
+                    </li>
+                    <li><strong>DOM Thrashing:</strong> De grid compleet leegmaken en opnieuw bouwen bij elke
+                        toetsaanslag kan zwaar zijn. (Tip: kijk in de toekomst naar 'Virtual DOM' of 'Debouncing').</li>
+                </ul>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>Currency Converter:</strong> Haal de wisselkoers op van de lokale munteenheid van het
+                        land.</li>
+                    <li><strong>Border Mapping:</strong> Toon op welke landen het huidige land grenst (via de
+                        <code>borders</code> array in de API).</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Fouten & Uitbreidingen</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const uUIIdGGridLandeTheTn_D = document.getElementById('DeLLndHHTHTO_MDemGridThData_V');
+        const grid = document.getElementById('grid');
+        const searchInput = document.getElementById('search-input');
+        const regionFilter = document.getElementById('region-filter');
+        const loader = document.getElementById('loader');
 
-        const UIInptZOtheT_HoOzekDaT_The = document.getElementById('ZZoTTheokINHTInptUu_A');
-        const DeFiZLlTFiltereD_ROpzV_ = document.getElementById('uRe_GGiODRopHOTheThe');
+        let allCountriesData = [];
 
-        const LUIiSpinnDeHThhDe = document.getElementById('L_UIITheDeLAddHTherrh_T_');
-        const ErrMMesgHDDeTheO_TxetKTheC = document.getElementById('uEerDeTheMsgZ_TeHTheH');
-
-        let LLandenG_LogbaGDataAlle_TheTDA_ArrO_ = []; // THE Cache_ data Array !! H 
-
-        // 1 THE FETCH  ALL DATAV_ H!
-        // The RESTCountries the_ API_ THE v3.1  Z! !
-        async function vVaHLaAdtheAlleHLandeTHnTHeOPDaT() {
-            uUIIdGGridLandeTheTn_D.style.display = "none";
-            LUIiSpinnDeHThhDe.style.display = "block";
-            ErrMMesgHDDeTheO_TxetKTheC.style.display = "none";
+        // De hoofdfunctie voor het ophalen van data
+        async function fetchCountries() {
+            loader.style.display = 'block';
+            grid.innerHTML = '';
 
             try {
-                const DeRRZseopTheOPNNwTeZ = await fetch('https://restcountries.com/v3.1/all');
-                if (!DeRRZseopTheOPNNwTeZ.ok) throw new Error("Th API The Fout ! _ The!!");
+                // De complete lijst van landen
+                const response = await fetch('https://restcountries.com/v3.1/all');
 
-                LLandenG_LogbaGDataAlle_TheTDA_ArrO_ = await DeRRZseopTheOPNNwTeZ.json();
+                if (!response.ok) throw new Error('Kon landen niet ophalen');
 
-                // Render THE all_  the  Z
-                RReTnedHerHDEGridZLandDTaTKaTrTt_v(LLandenG_LogbaGDataAlle_TheTDA_ArrO_);
+                allCountriesData = await response.json();
 
-            } catch (err) {
-                ErrMMesgHDDeTheO_TxetKTheC.innerText = "Kan The geen_ H data the laden _ O !";
-                ErrMMesgHDDeTheO_TxetKTheC.style.display = "block";
-                console.error(err);
+                // Alfabetisch sorteren voor een betere UX
+                allCountriesData.sort((a, b) => a.name.common.localeCompare(b.name.common));
+
+                renderCountries(allCountriesData);
+
+            } catch (error) {
+                console.error(error);
+                grid.innerHTML = '<p style="color: #ef4444; grid-column: 1/-1;">Er ging iets mis bij het verbinden met de wereld-database.</p>';
             } finally {
-                LUIiSpinnDeHThhDe.style.display = "none";
-                uUIIdGGridLandeTheTn_D.style.display = "grid";
+                loader.style.display = 'none';
             }
         }
 
+        // De render functie: bouwt de HTML kaarten
+        function renderCountries(list) {
+            grid.innerHTML = '';
 
-        // 2 THE HTML MAKER_ H_!! 
-        function RReTnedHerHDEGridZLandDTaTKaTrTt_v(arDeTArrayHTheLnaD_MDatHNumTeDataThe) {
-            uUIIdGGridLandeTheTn_D.innerHTML = ""; // leeg O ! _ 
-
-            if (arDeTArrayHTheLnaD_MDatHNumTeDataThe.length === 0) {
-                ErrMMesgHDDeTheO_TxetKTheC.style.display = "block";
+            if (list.length === 0) {
+                grid.innerHTML = '<p style="color: #cbd5e1; grid-column: 1/-1; padding-top: 50px;">Geen landen gevonden die aan deze criteria voldoen...</p>';
                 return;
             }
-            ErrMMesgHDDeTheO_TxetKTheC.style.display = "none";
 
-            arDeTArrayHTheLnaD_MDatHNumTeDataThe.forEach(ZTheObKLandOTheO_Data => {
-                const DOMTDaTHKaaHThMrtTHTnThe = document.createElement('div');
-                DOMTDaTHKaaHThMrtTHTnThe.classList.add('LLandKaHhG_OTheKkaarta_T');
+            list.forEach(country => {
+                const card = document.createElement('div');
+                card.className = 'country-card';
 
-                // FORMAT POPULATION NUmbers THE! (1M ipv 1000000Z!)
-                const POPPPTheTHeGffomTaTTTeNumHData = new Intl.NumberFormat('nl-NL').format(ZTheObKLandOTheO_Data.population);
+                // Formatteren van getallen (v.b. 17.500.000)
+                const population = new Intl.NumberFormat('nl-NL').format(country.population);
 
-                // HAal THe Hoofdstad the the Data string Z H_ ! (Soms Z is er the Z Geen The_!)
-                const hOOZtheCapHdata_RTextTheTth = ZTheObKLandOTheO_Data.capital ? ZTheObKLandOTheO_Data.capital[0] : "Onbekend";
-
-                DOMTDaTHKaaHThMrtTHTnThe.innerHTML = `
-                       <img src="${ZTheObKLandOTheO_Data.flags.svg}" alt="Flag of ${ZTheObKLandOTheO_Data.name.common}" class="f_TDeFvlGlaHTheThegImMgT">
-                       <div class="TDeKKaDatartIn_Tf_Ho_">
-                           <div class="NDaaHND_HNT_e_THoTheTheXT_The">${ZTheObKLandOTheO_Data.name.common}</div>
-                           <div class="IT_nDeIThenfRoWThe_Z"><strong>Populatie:</strong> ${POPPPTheTHeGffomTaTTTeNumHData}</div>
-                           <div class="IT_nDeIThenfRoWThe_Z"><strong>Regio:</strong> ${ZTheObKLandOTheO_Data.region}</div>
-                           <div class="IT_nDeIThenfRoWThe_Z"><strong>Hoofdstad:</strong> ${hOOZtheCapHdata_RTextTheTth}</div>
-                       </div>
-                  `;
-                uUIIdGGridLandeTheTn_D.appendChild(DOMTDaTHKaaHThMrtTHTnThe);
+                card.innerHTML = `
+                    <div class="flag-wrapper">
+                        <img src="${country.flags.svg}" alt="Vlag van ${country.name.common}" class="flag">
+                    </div>
+                    <div class="card-content">
+                        <div class="country-name">${country.name.common}</div>
+                        <div class="info-row"><span>📍 Regio:</span> <strong>${country.region}</strong></div>
+                        <div class="info-row"><span>👥 Populatie:</span> <strong>${population}</strong></div>
+                        <div class="info-row"><span>🏛️ Hoofdstad:</span> <strong>${country.capital ? country.capital[0] : 'N/A'}</strong></div>
+                    </div>
+                `;
+                grid.appendChild(card);
             });
         }
 
+        // De filter logica
+        function handleFilters() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedRegion = regionFilter.value.toLowerCase();
 
-        // 3 DE FILTER_ ENGINE  V_! 
-        function VFffFTIiLTvVerenThe__D__TTaZDeL() {
-            const OzoekTheS_TRingV_TheTexDataDeTKThe = UIInptZOtheT_HoOzekDaT_The.value.toLowerCase().trim();
-            const TTheSTheLEKCT_TheRegiOGDeTDataMHTe_DataThe = DeFiZLlTFiltereD_ROpzV_.value; // "all", "europe"  etc_ !
+            const filtered = allCountriesData.filter(country => {
+                const nameMatch = country.name.common.toLowerCase().includes(searchTerm);
 
-            // GEBRUIK DE ARRAY FUNCTIE: filter() V !!
-            const FFFiGLeTheTTTeT_Rd_DAArtTyTtheVvTHZDaTaOTextAThem = LLandenG_LogbaGDataAlle_TheTDA_ArrO_.filter(DeLTandDa_TTTheV_Obj => {
-                // A check the the the NaamH !
-                const cMMaTtchsThMNaeT_NaMThe_a = DeLTandDa_TTTheV_Obj.name.common.toLowerCase().includes(OzoekTheS_TRingV_TheTexDataDeTKThe);
-                // B check ReGio  The_!V
-                const cMMaTtchThMRReGio_EThe_O = TTheSTheLEKCT_TheRegiOGDeTDataMHTe_DataThe === "all" || DeLTandDa_TTTheV_Obj.region.toLowerCase() === TTheSTheLEKCT_TheRegiOGDeTDataMHTe_DataThe;
+                // Als 'all' is geselecteerd, is regio match altijd waar
+                const regionMatch = selectedRegion === 'all' || country.region.toLowerCase() === selectedRegion;
 
-                return cMMaTtchsThMNaeT_NaMThe_a && cMMaTtchThMRReGio_EThe_O; // beidde the! _ THE true OThe
+                return nameMatch && regionMatch;
             });
 
-            // RE _RENDER !! O ! 
-            RReTnedHerHDEGridZLandDTaTKaTrTt_v(FFFiGLeTheTTTeT_Rd_DAArtTyTtheVvTHZDaTaOTextAThem);
+            renderCountries(filtered);
         }
 
-        // EVENT BINDINGS_ !! HThe 
-        UIInptZOtheT_HoOzekDaT_The.addEventListener('input', VFffFTIiLTvVerenThe__D__TTaZDeL);
-        DeFiZLlTFiltereD_ROpzV_.addEventListener('change', VFffFTIiLTvVerenThe__D__TTaZDeL);
+        // Event Listeners
+        searchInput.addEventListener('input', handleFilters);
+        regionFilter.addEventListener('change', handleFilters);
 
-        // STart de App!! V !! 
-        vVaHLaAdtheAlleHLandeTHnTHeOPDaT();
+        // Initialiseer
+        fetchCountries();
 
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
+            const exp = document.getElementById('expansions');
             const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
         }
     </script>
 </body>

@@ -14,550 +14,511 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #e0f2fe;
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 2.5rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            max-width: 800px;
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 950px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
+            text-align: center;
         }
 
         h1 {
-            color: #0f172a;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
-            text-align: center;
+            font-size: 2.4rem;
         }
 
         .level {
-            display: block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.25rem 1rem;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .description {
+            color: #cbd5e1;
             margin-bottom: 2rem;
-            width: max-content;
-            margin-left: auto;
-            margin-right: auto;
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
 
-        /* THE APP CSS _T */
         .project-area {
-            background: #f8fafc;
-            border-radius: 12px;
+            background: #0f172a;
+            border-radius: 16px;
             padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #e2e8f0;
+            margin: 1.5rem 0 2.5rem 0;
+            border: 1px solid #334155;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .ZOekDeHTFormThePk_N {
+        .pokedex-form {
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
+            margin: 0 auto 40px;
             display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
+            gap: 12px;
+            background: #1e293b;
+            padding: 8px;
+            border-radius: 50px;
+            border: 1px solid #334155;
         }
 
-        .ZOekDeHTFormThePk_N input {
+        .pokedex-form input {
             flex: 1;
-            padding: 12px 20px;
-            border-radius: 30px;
-            border: 2px solid #cbd5e1;
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            color: #f8fafc;
             font-size: 1rem;
             outline: none;
-            transition: 0.2s;
-            text-align: center;
         }
 
-        .ZOekDeHTFormThePk_N input:focus {
-            border-color: #ef4444;
-        }
-
-        .btn_H_tOZoekePTheHTZV {
+        .btn-search {
             background: #ef4444;
             color: white;
             border: none;
-            padding: 0 25px;
-            border-radius: 30px;
-            font-weight: bold;
+            padding: 0 30px;
+            border-radius: 50px;
+            font-weight: 800;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
         }
 
-        .btn_H_tOZoekePTheHTZV:hover {
+        .btn-search:hover {
             background: #dc2626;
-            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+            transform: scale(1.05);
         }
 
-        /* De Pokdex grid_ Z!  HThe */
-        .PKoKeTheDeGGridCThOnTThe_A {
+        .pokedex-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 20px;
-            width: 100%;
-            max-height: 500px;
+            max-height: 550px;
             overflow-y: auto;
             padding: 10px;
         }
 
-        /* Custm scrll *ZThe */
-        .PKoKeTheDeGGridCThOnTThe_A::-webkit-scrollbar {
+        .pokedex-grid::-webkit-scrollbar {
             width: 8px;
         }
 
-        .PKoKeTheDeGGridCThOnTThe_A::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
+        .pokedex-grid::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
         }
 
-        .PKoKTKTheAArtTheDOtHT_V {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
+        .pokemon-card {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 25px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: 0.2s;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #334155;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
-        .PKoKTKTheAArtTheDOtHT_V:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        .pokemon-card:hover {
+            transform: translateY(-8px);
+            border-color: #ef4444;
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.15);
         }
 
-        .UIDeTHTheNumBerbgO {
+        .pokemon-card::before {
+            content: '';
             position: absolute;
-            top: -10px;
-            left: -10px;
-            font-size: 4rem;
-            font-weight: 900;
-            color: rgba(0, 0, 0, 0.03);
-            line-height: 1;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.05) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        .TDePokeIImgThT {
+        .pokemon-img {
             width: 120px;
             height: 120px;
-            z-index: 2;
-            position: relative;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
+            transition: transform 0.3s ease;
         }
 
-        .NaammTheHTPOkeTextThe {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #1e293b;
+        .pokemon-card:hover .pokemon-img {
+            transform: scale(1.1);
+        }
+
+        .pokemon-name {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #f8fafc;
             text-transform: capitalize;
             margin-bottom: 10px;
-            z-index: 2;
-            position: relative;
+            letter-spacing: -0.5px;
         }
 
-        .DeTTyptPSeDBagesThe {
-            display: flex;
-            gap: 5px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .TyYPHTTheHTBZdDeATheGeO {
-            padding: 3px 8px;
-            border-radius: 4px;
+        .type-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 8px;
             font-size: 0.75rem;
             color: white;
-            text-transform: capitalize;
-            font-weight: bold;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
-
-        /* TThe_YPES_ KLEUREN_ THE ! H_ Z */
-        .type-fire {
-            background: #ef4444;
-        }
-
-        .type-water {
-            background: #3b82f6;
-        }
-
-        .type-grass {
-            background: #10b981;
-        }
-
-        .type-electric {
-            background: #f59e0b;
-        }
-
-        .type-ice {
-            background: #0ea5e9;
-        }
-
-        .type-fighting {
-            background: #b91c1c;
-        }
-
-        .type-poison {
-            background: #a855f7;
-        }
-
-        .type-ground {
-            background: #d97706;
-        }
-
-        .type-flying {
-            background: #818cf8;
-        }
-
-        .type-psychic {
-            background: #ec4899;
-        }
-
-        .type-bug {
-            background: #84cc16;
-        }
-
-        .type-rock {
-            background: #78716c;
-        }
-
-        .type-ghost {
-            background: #6366f1;
-        }
-
-        .type-dragon {
-            background: #4338ca;
-        }
-
-        .type-dark {
+            text-transform: uppercase;
+            font-weight: 800;
             background: #334155;
+            margin: 3px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .type-steel {
-            background: #94a3b8;
-        }
-
-        .type-fairy {
-            background: #f472b6;
-        }
-
-        .type-normal {
-            background: #a1a1aa;
-        }
-
-        .lDeLOderHTheSpnTHe_ {
+        .loader {
             display: none;
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-weight: 800;
             color: #ef4444;
-            margin: 20px 0;
+            padding: 30px;
+            font-size: 1.2rem;
+            animation: pulse 1.5s infinite;
         }
 
-        .EeeRRTheMesGeDTAH {
-            color: #b91c1c;
-            background: #fee2e2;
-            padding: 15px;
+        @keyframes pulse {
+            0% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
             border-radius: 8px;
-            font-weight: bold;
-            display: none;
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+            margin-top: 3rem;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            display: block;
             width: 100%;
-            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
         }
 
-        .KNoppDeV_TVTheLaadMeerZ {
-            background: #cbd5e1;
-            color: #334155;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 30px;
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
             display: none;
         }
 
-        .KNoppDeV_TVTheLaadMeerZ:hover {
-            background: #94a3b8;
-            color: white;
+        .expandable.show {
+            display: block;
         }
-
 
         .back-link {
-            display: block;
-            margin-top: 2rem;
-            color: #3b82f6;
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
             text-align: center;
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Pokédex (PokeAPI)</h1>
-        <span class="level">API & Fetch</span>
+        <h1>Pokédex Master</h1>
+        <span class="level">Parallel API Requests</span>
+        <p class="description">Leer hoe je complexe datasets ophaalt met parallelle netwerkverzoeken. We bouwen een
+            visuele database van de eerste 151 Pokémon met realtime zoekfunctionaliteit.</p>
+
+        <div class="project-area">
+            <form class="pokedex-form" id="pokedex-form">
+                <input type="text" id="search-input" placeholder="Zoek op naam of ID (bijv. 25 of Pikachu)..."
+                    autocomplete="off">
+                <button type="submit" class="btn-search">Vang 'm!</button>
+            </form>
+
+            <div class="loader" id="loader">Pokémon worden uit het gras gehaald... 🔴</div>
+            <div class="pokedex-grid" id="pokedex-grid"></div>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Het bouwen van een Pokédex vereist meer dan één simpele fetch. Je leert hoe je massale hoeveelheden data
+                efficiënt naar de browser haalt zonder vertraging.</p>
+            <ul>
+                <li><strong>Parallel Processing:</strong> Het gebruik van <code>Promise.all()</code> om 20 verzoeken
+                    tegelijk te sturen.</li>
+                <li><strong>Dynamic Data Injection:</strong> Het omzetten van JSON-data naar complexe HTML-componenten.
+                </li>
+                <li><strong>Async Searching:</strong> Een zoekinterface bouwen die zowel IDs als namen begrijpt.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>The Waterfall Effect:</strong> Waarom je niet één-voor-één API requests wilt doen (het is
+                    traag), maar "parallel" wilt gaan.</li>
+                <li><strong>Higher Order Render Functions:</strong> Functies schrijven die elementen creëren op basis
+                    van een datastructuur.</li>
+                <li><strong>API Rate Limiting:</strong> Inzicht in hoe je respectvol omgaat met publieke servers zoals
+                    PokeAPI.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: Parallelle Verzoeken</h3>
 
             <div class="step">
-                <h4>Stap 1: De PokéAPI!</h4>
-                <p>We_ the the de The gebruiken de beroemde `PokéAPI`! Deze_ the the geeft _ alles! The terug_ over de_
-                    the Pokémon. the De API the _is the_ <code>RESTful</code>_ the the wat the_ betekent_ Dat the!_ je
-                    the the data_The ophaalt The the via _ The specifieke the_! URL's _ the (bv. `/pokemon/pikachu`).!
+                <h4>1: Het mandje volgooien</h4>
+                <p>In plaats van te wachten op elke fetch, vullen we een Array met "Promises" (beloftes dat data komt).
                 </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
-<span class="keyword">const</span> DTeHOOoAPIUurTl_T_Data_P = <span class="string">'https://pokeapi.co/api/v2/pokemon/'</span>;
-<span class="keyword">const</span> RREetNsHHDeT_THTN_Dete_NetT = <span class="keyword">await</span> <span class="function">fetch</span>(DTeHOOoAPIUurTl_T_Data_P + NaaMOFIdTTexTDeZDataT_v_The);
-<span class="keyword">const</span> pOPopP_PoOkkkeeHDAtaobjTe_CHeTJSON = <span class="keyword">await</span> RREetNsHHDeT_THTN_Dete_NetT.<span class="function">json</span>();</pre>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> promises = [];
+<span class="keyword">for</span>(<span class="keyword">let</span> i=1; i<=20; i++) {
+    promises.<span class="function">push</span>(<span class="function">fetch</span>(url + i).<span class="function">then</span>(r => r.<span class="function">json</span>()));
+}
+<span class="comment">// Nu hebben we 20 verzoeken die 'onderweg' zijn.</span></pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: Promises the the Gelijktijdig! (<code>Promise.all</code>)</h4>
-                <p>Als we The! 12 the The_ Pokémon The tegelijk_ the! the The Willen the _ Laden, _The the Gaan _ we the
-                    NIET_! The the 12 the! the keer the <code>await fetch()</code> the the Achter Elkaar the_ the !
-                    Doen_. (Te_ the the _ the Traag!_). We_ gebruiken_ the The <code>Promise.all()</code> _ the the om
-                    _the de data In the EEN _ KEER _the the (Parallel) _ THE ! Op_ te_ Halen!</p>
-            </div>
-
-        </div>
-
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Klik the_ OP the_ "Meer Laden" _The! _the_ </li>
-                <li>Zoek Een the ! the the the ! _ TheSpecifke the the The! Pokémon The_ Op _(Door de! the Naam of ID
-                    the The Te the Typen!) </li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>The Mapping the Data :</strong> the The JSON The _bevat the the HEEl Veel! The Data_ The ! .
-                    In the JS _Zie THE The ! Je dat de `types` (Er_ KunnenThe er 1 of 2 the ! the of The! the Meer the
-                    zijn) the! the THE met de <code>.map()</code> the The! the Worden the THE _ omgezet_ naar
-                    `&lt;span&gt;` DOM elementjes! _ </li>
-            </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: de_ <code>Promise.all</code>_ the Volgorde_! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je `Promise.all` _the  Gebruikt the! the  KrijgThe je een Array the_ the _TERUG_ The  Met! </span>
-<span class="comment">// exact the the Zelfde_ Volgorde_ the_!  Als theThe de the_ ! The_ the P_ arrays _The!  die theThe je_ the erin The the ! the The Stopte!</span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_! await_ `Promise.all([p1, p2])`_  _ </span></pre>
+                <h4>2: Wachten op alles tegelijk</h4>
+                <p>Met <code>Promise.all()</code> wacht JavaScript tot álle beloftes in het mandje zijn ingelost.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> pokemons = <span class="keyword">await</span> <span class="function">Promise.all</span>(promises);
+<span class="comment">// 'pokemons' is nu een array met 20 complete data objecten!</span></pre>
                 </div>
             </div>
+
         </div>
 
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
                 <ul>
-                    <li><strong>Stats Modal_! !! The The The The! </strong> the the thethe the THE the Bouw The DE V
-                        The_ the the the The_ Logica OM The_The op the_ Een_! The_! Kaart!_ the The te! The _ the !
-                        Klikken the en The! ! een the_! "Modal" Popup_The the_ the ! Te the! The ! Laten the Zien </li>
+                    <li><strong>Te veel Requests:</strong> Proberen 1000 Pokémon parallel te laden. Dit kan je browser
+                        (of de server) blokkeren. Doe het altijd in batches.</li>
+                    <li><strong>Asset Management:</strong> Gebruik de <code>'official-artwork'</code> van de API; de
+                        standaard sprites zijn vaak erg klein en onscherp.</li>
+                </ul>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>Infinite Scroll:</strong> Laad de volgende 20 Pokémon zodra de gebruiker onderaan de
+                        lijst is.</li>
+                    <li><strong>Type Filtering:</strong> Voeg knoppen toe om alleen 'Fire' of 'Water' Pokémon te tonen.
+                    </li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
-        <div class="project-area">
-
-            <form class="ZOekDeHTFormThePk_N" id="FfFormZoekOPPokeTV">
-                <input type="text" id="IInPptN_ZAmOofThDePOHkeTh" placeholder="Zoek op naam of ID (1-1000)..."
-                    autocomplete="off">
-                <button type="submit" class="btn_H_tOZoekePTheHTZV">Zoek!</button>
-            </form>
-
-            <div class="EeeRRTheMesGeDTAH" id="uEerrMOThegHTeHTextTV">Pokémon niet gevonden! Probeer Pikachu of 25.
-            </div>
-            <div class="lDeLOderHTheSpnTHe_" id="lLOOAdderTheDeT">Pokémon Vangen... 🔴</div>
-
-            <div class="PKoKeTheDeGGridCThOnTThe_A" id="DeDOUITGri_tdThKaRDTDataConTheV">
-                <!-- Javascript rendered the _ Cards in Hier !! T (append)_ !-->
-            </div>
-
-            <button class="KNoppDeV_TVTheLaadMeerZ" id="bBTnVMReeHHaalRThe">Meer Laden</button>
-
-        </div>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Fouten & Uitbreidingen</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const OZGZOeekP_OformH_D = document.getElementById('FfFormZoekOPPokeTV');
-        const UVIIN_NPtZoekKDeTHTV = document.getElementById('IInPptN_ZAmOofThDePOHkeTh');
-        const DEEeRRormSezGEThTTVThe_V = document.getElementById('uEerrMOThegHTeHTextTV');
-        const OLLLAdderDTHsTheH_VOs_T_VUI = document.getElementById('lLOOAdderTheDeT');
+        const pokedexGrid = document.getElementById('pokedex-grid');
+        const pokedexForm = document.getElementById('pokedex-form');
+        const searchInput = document.getElementById('search-input');
+        const loader = document.getElementById('loader');
 
-        const HHETDPOU_OGridThevDataV_Z = document.getElementById('DeDOUITGri_tdThKaRDTDataConTheV');
-        const BBtMLaAdDeMoreNNumHTheVTv = document.getElementById('bBTnVMReeHHaalRThe');
+        const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
+        let currentBatch = 1;
+        const BATCH_SIZE = 15;
 
-        // STATE The _ V _! H Z
-        const DTeHOOoAPIUurTl_T_Data_P = 'https://pokeapi.co/api/v2/pokemon/';
-        let TtheA_DataDHeHHvTheTheC_ountLoad_Z_Vv = 1;
-        const MAX_LOAD_OP_KLiC_KZThe_OData = 12; // laad er 12 tegelijk THE !
-
-        let M_ZiZOEKMODtuS__TheDatH_TBool_Z = false;
-
-        // KAART BOLDER FUNCCITE !!!  The D
-        function BBBou_oD_T_W_WeT__H_E_T_ThKaartDOMV_T(pOPopP_PoOkkkeeHDAtaobjTe_CHeTJSON) {
-            const KKkKTHTTheDaKkaartDOMVNODE = document.createElement('div');
-            KKkKTHTTheDaKkaartDOMVNODE.classList.add('PKoKTKTheAArtTheDOtHT_V');
-
-            // Type Badges Genenereren Th _! 
-            const aTheArrtyPTesDOMHTMTheVLTheDe_HHDa_sZStringT = pOPopP_PoOkkkeeHDAtaobjTe_CHeTJSON.types.map(TheOTypOBJZ => {
-                return `<span class="TyYPHTTheHTBZdDeATheGeO type-${TheOTypOBJZ.type.name}">${TheOTypOBJZ.type.name}</span>`;
-            }).join('');
-
-            // Nul pads the H _ _
-            const UIDNumPThe_P_aT_HThsZSDtRir_The = `#${pOPopP_PoOkkkeeHDAtaobjTe_CHeTJSON.id.toString().padStart(3, '0')}`;
-
-            const DIMGUUTheHT_vT__v_RlhLhO_t_T = pOPopP_PoOkkkeeHDAtaobjTe_CHeTJSON.sprites.other['official-artwork'].front_default || pOPopP_PoOkkkeeHDAtaobjTe_CHeTJSON.sprites.front_default;
-
-            KKkKTHTTheDaKkaartDOMVNODE.innerHTML = `
-                   <div class="UIDeTHTheNumBerbgO">${UIDNumPThe_P_aT_HThsZSDtRir_The}</div>
-                   <img src="${DIMGUUTheHT_vT__v_RlhLhO_t_T}" alt="${pOPopP_PoOkkkeeHDAtaobjTe_CHeTJSON.name}" class="TDePokeIImgThT">
-                   <div class="NaammTheHTPOkeTextThe">${pOPopP_PoOkkkeeHDAtaobjTe_CHeTJSON.name}</div>
-                   <div class="DeTTyptPSeDBagesThe">
-                        ${aTheArrtyPTesDOMHTMTheVLTheDe_HHDa_sZStringT}
-                   </div>
-              `;
-            return KKkKTHTTheDaKkaartDOMVNODE;
-        }
-
-        // AsynNC! FETh_DHe_C__H _!
-        async function FFAThecTtZtHHPPTkOO_DeAOMv_Eenn(NaaMOFIdTTexTDeZDataT_v_The) {
+        // Eén enkele Pokémon ophalen (voor search)
+        async function fetchPokemon(idOrName) {
             try {
-                const RREetNsHHDeT_THTN_Dete_NetT = await fetch(`${DTeHOOoAPIUurTl_T_Data_P}${NaaMOFIdTTexTDeZDataT_v_The}`);
-                if (!RREetNsHHDeT_THTN_Dete_NetT.ok) throw new Error("pokm data ThH the_! 404_");
-                return await RREetNsHHDeT_THTN_Dete_NetT.json();
-            } catch (e) {
+                const response = await fetch(`${POKE_API}${idOrName.toLowerCase()}`);
+                if (!response.ok) return null;
+                return await response.json();
+            } catch (err) {
                 return null;
             }
         }
 
-        // De LOAD MEER_ THE V_ H_ LOOP !!
-        async function LLddTheDaMeeZThe_HR_P_vRNDTaV() {
-            if (M_ZiZOEKMODtuS__TheDatH_TBool_Z) {
-                // Als we in zoekmodus waren, gooi the grid O LEEG ! H 
-                HHETDPOU_OGridThevDataV_Z.innerHTML = "";
-                M_ZiZOEKMODtuS__TheDatH_TBool_Z = false;
-                // en _ the resset the index  The!
-                TtheA_DataDHeHHvTheTheC_ountLoad_Z_Vv = 1;
-            }
+        // Een HTML kaart bouwen voor een Pokémon
+        function createCard(pokemon) {
+            const card = document.createElement('div');
+            card.className = 'pokemon-card';
 
-            DEEeRRormSezGEThTTVThe_V.style.display = "none";
-            OLLLAdderDTHsTheH_VOs_T_VUI.style.display = "block";
-            BBtMLaAdDeMoreNNumHTheVTv.style.display = "none";
+            const types = pokemon.types.map(t => `<span class="type-badge">${t.type.name}</span>`).join('');
 
-            // Promise.ALL voor _The Snell_The_ O O_o _Data !!_ THE!_
-            const The_P_LArPZPPromiseZesLTheDa = [];
-            for (let TiiidZHTH_L = 0; TiiidZHTH_L < MAX_LOAD_OP_KLiC_KZThe_OData; TiiidZHTH_L++) {
-                The_P_LArPZPPromiseZesLTheDa.push(FFAThecTtZtHHPPTkOO_DeAOMv_Eenn(TtheA_DataDHeHHvTheTheC_ountLoad_Z_Vv + TiiidZHTH_L));
-            }
+            // Probeer officiële artwork te vinden, anders fallback naar sprite
+            const img = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
 
-            // Wacht tot THE_T alle 12 fetches O Z !! KlaarThe H zijn!
-            const DRe_VTheSSResultatenDaTheTHArrayL_T = await Promise.all(The_P_LArPZPPromiseZesLTheDa);
-
-            DRe_VTheSSResultatenDaTheTHArrayL_T.forEach(PPOHTHeOOKObj => {
-                if (PPOHTHeOOKObj) {
-                    const DKaTDOMV_HDeAtheKaArartNodeTHH = BBBou_oD_T_W_WeT__H_E_T_ThKaartDOMV_T(PPOHTHeOOKObj);
-                    HHETDPOU_OGridThevDataV_Z.appendChild(DKaTDOMV_HDeAtheKaArartNodeTHH);
-                }
-            });
-
-            TtheA_DataDHeHHvTheTheC_ountLoad_Z_Vv += MAX_LOAD_OP_KLiC_KZThe_OData; // verhoog the_ pointerZ index!_H
-
-            OLLLAdderDTHsTheH_VOs_T_VUI.style.display = "none";
-            BBtMLaAdDeMoreNNumHTheVTv.style.display = "block"; // toon The  LaadMeerTTheZ knop V ZThe O ! !!
+            card.innerHTML = `
+                <img src="${img}" alt="${pokemon.name}" class="pokemon-img">
+                <div class="pokemon-name">${pokemon.name}</div>
+                <div class="types-container">${types}</div>
+            `;
+            return card;
         }
 
-        // DE ZOEKER_ O ! THE (Specifiek !The_ )
-        OZGZOeekP_OformH_D.addEventListener('submit', async (vTHEEVZt) => {
-            vTHEEVZt.preventDefault();
+        // Parallel laden van een batch (zoals de eerste 15)
+        async function loadBatch(start, end) {
+            loader.style.display = 'block';
+            const promises = [];
 
-            const DDZOEkkTXT_DThat_HVThe = UVIIN_NPtZoekKDeTHTV.value.trim().toLowerCase(); // api expects the lowercase V
-            if (!DDZOEkkTXT_DThat_HVThe) return;
-
-            // SET Z Zoek_The_ Mo_T Du_The sT AAN_ H The !
-            M_ZiZOEKMODtuS__TheDatH_TBool_Z = true;
-            HHETDPOU_OGridThevDataV_Z.innerHTML = ""; // maak the LEEG THE! 
-
-            BBtMLaAdDeMoreNNumHTheVTv.style.display = "none"; // Hide The MeerH_Knop!
-            DEEeRRormSezGEThTTVThe_V.style.display = "none";
-            OLLLAdderDTHsTheH_VOs_T_VUI.style.display = "block";
-
-            const VGH_evOHTHNDDTheOnO_PokJSONTTheDaTa = await FFAThecTtZtHHPPTkOO_DeAOMv_Eenn(DDZOEkkTXT_DThat_HVThe);
-
-            OLLLAdderDTHsTheH_VOs_T_VUI.style.display = "none";
-
-            if (VGH_evOHTHNDDTheOnO_PokJSONTTheDaTa) {
-                const THeOZaDTheKaaOMTARTTVHTTT_V = BBBou_oD_T_W_WeT__H_E_T_ThKaartDOMV_T(VGH_evOHTHNDDTheOnO_PokJSONTTheDaTa);
-                HHETDPOU_OGridThevDataV_Z.appendChild(THeOZaDTheKaaOMTARTTVHTTT_V);
-                // The TonenThe ! V de  Knop _H Terug ! (Laad The MeerZ ! zal de_ zoekmodus V breken V en VThe default Laden) ! V
-                BBtMLaAdDeMoreNNumHTheVTv.innerText = "Toon Alles";
-                BBtMLaAdDeMoreNNumHTheVTv.style.display = "block";
-            } else {
-                DEEeRRormSezGEThTTVThe_V.style.display = "block";
-                BBtMLaAdDeMoreNNumHTheVTv.innerText = "Toon Alles";
-                BBtMLaAdDeMoreNNumHTheVTv.style.display = "block";
+            for (let i = start; i <= end; i++) {
+                promises.push(fetchPokemon(i.toString()));
             }
 
+            // De parallelle actie!
+            const results = await Promise.all(promises);
+
+            results.forEach(p => {
+                if (p) pokedexGrid.appendChild(createCard(p));
+            });
+
+            loader.style.display = 'none';
+        }
+
+        // Form handling (Search)
+        pokedexForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+
+            if (!query) {
+                pokedexGrid.innerHTML = '';
+                loadBatch(1, BATCH_SIZE);
+                return;
+            }
+
+            pokedexGrid.innerHTML = '';
+            loader.style.display = 'block';
+
+            const pokemon = await fetchPokemon(query);
+            loader.style.display = 'none';
+
+            if (pokemon) {
+                pokedexGrid.appendChild(createCard(pokemon));
+            } else {
+                alert('Pokémon niet gevonden... Heb je de naam goed gespeld?');
+                loadBatch(1, BATCH_SIZE); // Terug naar overzicht
+            }
         });
 
-        // THE _ "MEER LAdEn" KNOP O!!
-        BBtMLaAdDeMoreNNumHTheVTv.addEventListener('click', () => {
-            BBtMLaAdDeMoreNNumHTheVTv.innerText = "Meer Laden"; // resst the text of button O ! 
-            LLddTheDaMeeZThe_HR_P_vRNDTaV();
-        });
+        // Start de app
+        loadBatch(1, BATCH_SIZE);
 
-
-        // START The  ! ! 
-        LLddTheDaMeeZThe_HR_P_vRNDTaV();
-
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
+            const exp = document.getElementById('expansions');
             const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
         }
     </script>
 </body>

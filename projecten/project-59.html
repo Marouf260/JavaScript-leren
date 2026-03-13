@@ -14,43 +14,48 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
-            padding: 2rem;
-            max-width: 800px;
+            padding: 2.5rem;
+            max-width: 850px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
+            text-align: center;
         }
 
         .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            display: block;
+            width: fit-content;
+            margin: 0 auto 1.5rem;
+            padding: 0.25rem 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 1rem;
         }
 
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
+            text-align: center;
         }
 
         .explanation,
@@ -59,23 +64,35 @@
         .instructions,
         .tips {
             padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
         }
 
         .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
         }
 
         .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
         }
 
         h3 {
+            color: #f8fafc;
             margin-bottom: 1rem;
         }
 
@@ -84,437 +101,493 @@
             line-height: 1.6;
         }
 
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #667eea;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
         }
 
-        /* Game Area CSS! */
+        /* Game Area */
         .project-area {
-            background: #f8fafc;
+            background: #0f172a;
             border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid #334155;
             display: flex;
             flex-direction: column;
             align-items: center;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .status-header-H_O {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            padding: 10px 20px;
+        .status-header {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            padding: 0.75rem 2rem;
             border-radius: 30px;
             text-align: center;
-            background: #f1f5f9;
-            border: 2px solid #cbd5e1;
+            background: #1e293b;
+            border: 2px solid #334155;
+            transition: all 0.3s;
         }
 
-        .turn-rood {
+        .status-red {
             color: #ef4444;
+            border-color: #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
         }
 
-        .turn-geel {
-            color: #eab308;
+        .status-yellow {
+            color: #f59e0b;
+            border-color: #f59e0b;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
         }
 
-        /* Het Blauwe Bord 7 kolommen , 6 rij! V */
-        .bord-B_The {
+        .board {
             background: #2563eb;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), inset 0 5px 10px rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 5px 15px rgba(255, 255, 255, 0.2);
             display: grid;
-            grid-template-columns: repeat(7, 50px);
-            grid-template-rows: repeat(6, 50px);
-            gap: 10px;
+            grid-template-columns: repeat(7, 55px);
+            grid-template-rows: repeat(6, 55px);
+            gap: 12px;
+            border: 4px solid #1d4ed8;
         }
 
-        /* 42 Gaten in bord_  The_ */
-        .gat-CelH_De {
-            width: 50px;
-            height: 50px;
-            background: #f8fafc;
+        .cell {
+            width: 55px;
+            height: 55px;
+            background: #0f172a;
             border-radius: 50%;
-            box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.8);
             position: relative;
             cursor: pointer;
+            overflow: hidden;
         }
 
-        /* The Munten die erin vallen ! CSS The ! */
-        .muntje-TheZData {
+        .coin {
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            top: -300px;
-            /* Start boven the bord for fall anim! */
+            top: -400px;
             left: 0;
-            transition: top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: top 0.5s cubic-bezier(0.5, 0, 0.5, 1);
+            border: 2px solid rgba(0, 0, 0, 0.2);
         }
 
-        .muntje-TheZData.rood {
-            background: radial-gradient(circle at 15px 15px, #fca5a5, #ef4444, #991b1b);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(255, 255, 255, 0.5);
+        .coin-red {
+            background: radial-gradient(circle at 18px 18px, #ff5f6d, #ef4444, #991b1b);
+            box-shadow: inset 0 -4px 10px rgba(0, 0, 0, 0.4);
         }
 
-        .muntje-TheZData.geel {
-            background: radial-gradient(circle at 15px 15px, #fdf08a, #eab308, #854d0e);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(255, 255, 255, 0.5);
+        .coin-yellow {
+            background: radial-gradient(circle at 18px 18px, #fde047, #f59e0b, #9a3412);
+            box-shadow: inset 0 -4px 10px rgba(0, 0, 0, 0.4);
         }
 
-        .muntje-TheZData.droppedH {
+        .coin-dropped {
             top: 0;
         }
 
-        /* Anim class The _*/
-
-        .h-anim-winTheMuntFlashZ_ {
-            animation: pulseWinZ_VThe 1s infinite alternate;
-            border: 3px solid #10b981;
+        .win-anim {
+            animation: win-pulse 0.8s infinite alternate;
+            z-index: 10;
         }
 
-        @keyframes pulseWinZ_VThe {
-            100% {
-                transform: scale(1.1);
+        @keyframes win-pulse {
+            from {
+                transform: scale(1);
+                filter: brightness(1);
+            }
+
+            to {
+                transform: scale(1.15);
+                filter: brightness(1.3);
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
             }
         }
 
-        .btn-restart-ZThis {
-            margin-top: 20px;
-            background: #334155;
+        .btn-restart {
+            margin-top: 30px;
+            background: #3b82f6;
             color: white;
-            padding: 10px 20px;
+            padding: 14px 35px;
             border: none;
-            border-radius: 6px;
-            font-weight: bold;
+            border-radius: 8px;
+            font-weight: 800;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 0 #2563eb;
         }
 
-        .btn-restart-ZThis:hover {
-            background: #0f172a;
+        .btn-restart:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #1d4ed8;
+        }
+
+        .btn-restart:active {
+            transform: translateY(2px);
+            box-shadow: 0 0 0 #1d4ed8;
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Project 59: Vier op een Rij </h1>
-        <span class="level" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">Games</span>
-        <p class="description">Maak een the Connect 4 Spel! ! Klik op een kolom the the om het V muntje er The_inThe Z
-            The the te_ the the Laten The vallen ! .</p>
+        <h1>Project 59: Vier op een Rij</h1>
+        <span class="level">Advanced</span>
+        <p class="description">Bouw je eigen versie van Vier op een Rij. Leer hoe je complexe winstcondities controleert
+            in een 2D-grid met behulp van richtingsvectoren.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Dit spel is een uitstekende introductie tot matrijs-controle in computerwetenschappen:</p>
+            <ul>
+                <li><strong>2D Arrays (Matrices):</strong> Het speelveld modelleren in JavaScript als een 'Array van
+                    Arrays' voordat je ooit de DOM aanraakt.</li>
+                <li><strong>Zwaartekracht Simuleren:</strong> Een muntje valt altijd naar de laagste mogelijke lege plek
+                    in een kolom via bottom-up iteratie.</li>
+                <li><strong>Directionele Checking:</strong> In plaats van honderden IF-statements gebruiken we vectoren
+                    (delta r, delta c) om muren van verbonden fiches te tellen.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Data First:</strong> Wat er op het scherm gebeurt (CSS) is slechts een "weergave" van wat er
+                    in JavaScript in de <code>grid</code> variabele staat. JavaScript bestuurt de logica, de DOM is
+                    "dom".</li>
+                <li><strong>Vectoren:</strong> Een richting als diagonaal-rechtsboven wordt in wiskunde uitgedrukt als
+                    <code>[+1, +1]</code> (1 rij omlaag/omhoog, 1 kolom naar rechts).</li>
+                <li><strong>Cubic-Bezier Animatie:</strong> De val animatie in CSS gebruikt een specifieke
+                    <code>transition-timing-function</code> waardoor het perfect een versnellende, vallende steen
+                    nabootst in plaats van een lineaire verschuiving.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: Het the The 2D-Bord The the the </h4>
-                <p>the The Connect 4 The Check _the O the The is flink _! lastiger dan the the The Boter Kaas The En
-                    Eieren_Z! We maken the DeThe 6 Rijen the De en The 7 the the Kolommen in The een the array The the
-                    the the the: <code>[ [0,0,0,0,0,0,0], [0,0...</code> .theThe! Als the the je the the op THE een
-                    _Kolom Z klikt (bv the ZThe Kolomthe 3), the the dan the Thethe moet THE de Code The alle_ the Rij_
-                    6, 5, 4 _ etc. afgaanthe in_die_the specifieke_kolomThe_!._ Om _theThe het Laagste the legevakje te
-                    _thethe vinden.! </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ZOEKT HET LAAGSTE LEGE VAKJE IN DEZE KOLOM Z !! The </span>
-<span class="keyword">let</span> ZDeLeegSteRijXTeZTheIndex = -<span class="string">1</span>;
+                <h4>Stap 1: Het Grid Voorbereiden</h4>
+                <p>We maken een tabel via code. Een rij bevat 7 nullen, en we hebben 6 rijen.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> board = <span class="function">Array</span>(<span class="string">6</span>).<span class="function">fill</span>().<span class="function">map</span>(() => <span class="function">Array</span>(<span class="string">7</span>).<span class="function">fill</span>(<span class="string">0</span>));</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We vullen de initiele array met `undefined`, die mappen we vervolgens naar
+                    een nieuwe array gevuld met nullen. Elke `0` betekent "Leeg". We zullen `1` voor Rood gebruiken en
+                    `2` voor Geel.</p>
+            </div>
 
-<span class="comment">// We loop from bottom (r 5) to top (r 0) !!!  The_  V ! </span>
-<span class="keyword">for</span> (<span class="keyword">let</span> rDataDeTeHChecknLoopV = B_RIJEN_Z - <span class="string">1</span>; rDataDeTeHChecknLoopV >= <span class="string">0</span>; rDataDeTeHChecknLoopV--) {
-    <span class="keyword">if</span> (BO_Logic_MatrixArrZDe[rDataDeTeHChecknLoopV][TheKolIndx_Arg_] === <span class="string">0</span>) {
-        ZDeLeegSteRijXTeZTheIndex = rDataDeTeHChecknLoopV; <span class="comment">// Found the bottom-most empty slot!</span>
+            <div class="step">
+                <h4>Stap 2: Muntje Gooi-Logica</h4>
+                <p>Spelers klikken op een cel, wij zoeken alleen uit welke <em>kolom</em> ze selecteerden en zoeken het
+                    laagste vrije plekje in die kolom.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">let</span> targetRow = -<span class="string">1</span>;
+<span class="keyword">for</span> (<span class="keyword">let</span> r = ROWS - <span class="string">1</span>; r >= <span class="string">0</span>; r--) {
+    <span class="keyword">if</span> (grid[r][col] === <span class="string">0</span>) {
+        targetRow = r;  <span class="comment">// Plekje gevonden!</span>
         <span class="keyword">break</span>;
     }
 }</pre>
                 </div>
+                <p><strong>Uitleg:</strong> <code>r = ROWS - 1</code> start onderaan het bord (rij 5). We tellen af
+                    <code>r--</code> tot rij 0 (de top). Zodra we een 0 spotten, vullen we hem met het ID van de huidige
+                    speler.</p>
             </div>
 
             <div class="step">
-                <h4>Stap 2: The the Zwaartekracht The Animatie Maken The the THE Z</h4>
-                <p>Wanneer we het the_ Laagste lege THE the the the vakje the the thethe the THE hebben gevonden The
-                    The, the Then The the _ the the The Plakken we The the een <code>div</code> The The the the IN THE
-                    de the cellThe the the! !. the Met the de the The CSS the the start THE the the Z
-                    <code>top:-300px</code> The! Vervolgens the THE The the the wachten the the_ we 10ms_ The the en The
-                    then the The geven the The_ the The the we de The_the the the <code>.droppedH</code> The the THE The
-                    class mee TheThe the the. THE ! (Deze sets The the <code>top: 0</code>). CSS the_ the The doet_
-                    <code>transition</code> the the </p>
-            </div>
+                <h4>Stap 3: Winst Controle d.m.v Vector Looping</h4>
+                <p>We controleren alle vier de mogelijke lijnen (Horizontaal, Verticaal, Diagonaal links/rechts) vanuit
+                    de zojuist geplaatste munt.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> directions = [
+    [[<span class="string">0</span>, <span class="string">1</span>], [<span class="string">0</span>, -<span class="string">1</span>]], <span class="comment">// Horizontaal (Rechts/Links checken)</span>
+    [[<span class="string">1</span>, <span class="string">0</span>], [-<span class="string">1</span>, <span class="string">0</span>]]  <span class="comment">// Verticaal (Boven/Onder checken)</span>
+];
 
-            <div class="step">
-                <h4>Stap 3: 4Richtingen_WinCheck_ O:</h4>
-                <p>Na the elke beurt controleren thethe!The _we _Horizontaal, The Verticaal, the _The the
-                    Linksom-Diagonaal, the__The the Rechtsom_Diagonaal! _ !!</p>
+<span class="comment">// Loop code: Check hoeveel muntjes naast de onze liggen van dezelfde kleur.</span>
+<span class="keyword">if</span> (count >= <span class="string">4</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</pre>
+                </div>
+                <p><strong>Uitleg:</strong> Door vanuit de nieuwe munt ('count=1') in twee tegenovergestelde richtingen
+                    in te kleuren en stappen te zetten, weten we in 1 keer of de reeks lang genoeg is (4 of groter).</p>
             </div>
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Klik the the op the _The een_The_V the kolom om _The the een Muntje (Rood/Geel) te __ the de
-                    <code><span class="keyword">droppenH_</span></code>.</li>
-                <li>the Z! the Zorg erThe voorZThe The ! V dat The the the je the V The _vier 4_ Z op1RIJ krijgt! </li>
-            </ul>
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: 1px solid rgba(239, 68, 68, 0.2);">
+                <h4 style="color: #fca5a5;">Fout: Out of bounds (Array fouten)</h4>
+                <p style="color: #f87171;">Tijdens het loopen om te kijken of de buurman rood/geel is, kun je per
+                    ongeluk checken of rij -1 of rij 7 bestaat. Dit geeft direct de gevreesde
+                    <code>Cannot read properties of undefined</code> crash. Bescherm je loops met boundary checks:
+                    <code>nr >= 0 && nr < ROWS</code>.</p>
+            </div>
+            <div class="step" style="border-bottom: none; padding-bottom: 0;">
+                <h4 style="color: #fca5a5;">Fout: Kolom overloop</h4>
+                <p style="color: #f87171;">Zorg dat de <code>handleMove</code> functie direct retouneert (stopt) als
+                    <code>targetRow</code> op <code>-1</code> blijft staan (wanneer the lus niks vond omdat de kolom vol
+                    zit). Anders verwijder/crash je een niet-bestaande plek in de data array.</p>
+            </div>
         </div>
 
         <!-- Tips -->
         <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
+            <h3>💡 Tips voor Studenten</h3>
             <ul>
-                <li><strong>Relatieve CSS The the posites The The the:</strong> the The In The de code The The the THE
-                    Zie the je The The the the theThe een berekening_ the The om _de the <code>muntje-TheZData</code>
-                    the te The The ! the the The The `absolute` The the The ! in The de `gat-CelH_De` (The Die is _
-                    `position: relative` _The !). Hierdoor Vallen The munten The_ The Netjes IN The _de the the de
-                    divjes _! the !_ the !_ </li>
+                <li><strong>Timeout Trucjes:</strong> Omdat we CSS animaties doen, moet het muntje eerst in de DIV
+                    worden getekend bovenaan (onzichtbaar), en pas een fractie later de <code>.coin-dropped</code> class
+                    krijgen, anders slaat de browser de animatie per ongeluk over. Hiervoor staat er een
+                    <code>setTimeout(() => ..., 10)</code> in de code.</li>
             </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: De 4 op eenRij the winThe the Check! is the Lastig ! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ Je kan THE niet zomaar the The The de 14 the _ the _ de Array_ checks The_  the_ the O !  _! . thethe THE THE Z  </span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The thethe Kijk ! in the the source The the the the code the naar de the The `THeCheckDirectionVoorZDatV_XenYZLoopZ(delta_y, delta_x)` functieThethe ! We Tellenthe The The The the stukjes in the the de The + the the The the richting The the the  The EN in de the `-` The theThe the oppositze_ the direction THE! _! THE The </span></pre>
-                </div>
-            </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Speler Naman !! The The The The! </strong> the the thethe the THE the Bouw The THE the
-                        the een the The! The inputThe the The the ! veltje the! ! Dat he_ Speler ! 1 / ! 2 ! the _ he
-                        The naam! O ! Laat The dit the Z! in the UIt de Title zien!The _ . _The !. THE </li>
-                    <li><strong>AI Tegenstander! THE the TheThe _!</strong> The The the The the the Maak THE The_ 1
-                        Speler Modus the _the ! Laat de computer Random the_ in een ! lege The The_ the The The ! Kolom
-                        gooien ! (Math.random !) als the Speler_ Geel de!_ the Aan de The ! _beurt Is The !. _The !
-                    </li>
+                    <li><strong>Slimme AI (Minimax):</strong> Voor de absolute masters: implementeer een neuraal netwerk
+                        of een minimax-algoritme dat voorspelt welke worp jou gaat laten verliezen in 3 beurten.</li>
+                    <li><strong>Ghost Hover:</strong> Toon een semitransparant visueel effect in de kolom waar de speler
+                        met zijn muis overheen zweeft (<code>mouseenter</code> event op de kolom / cel), zodat de speler
+                        kan uittekenen waar zijn fiche zal belanden.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Extra Uitdagingen</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
+            <div class="status-header status-red" id="game-status">Beurt: ROOD</div>
 
-            <div class="status-header-H_O turn-rood" id="UI_H_StatusTextHThe">Beurt: Speler ROOD (1)</div>
-
-            <div class="bord-B_The" id="BORD_GridDeH_The_">
-                <!-- JS Generates 42 Divjes The! -->
+            <div class="board" id="game-board">
+                <!-- Grid wordt door JS gebouwd -->
             </div>
 
-            <button class="btn-restart-ZThis" id="BTN_HREstartHeThe_" style="display:none;">Opnieuw Spelen</button>
-
+            <button class="btn-restart" id="restart-btn" style="display: none;">Opnieuw Spelen</button>
         </div>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const UI_TEXTvDe_O = document.getElementById('UI_H_StatusTextHThe');
-        const THE_G_GridBordOmHTMLO = document.getElementById('BORD_GridDeH_The_');
-        const BTN_G_TheResetZBtnH = document.getElementById('BTN_HREstartHeThe_');
+        const statusEl = document.getElementById('game-status');
+        const boardEl = document.getElementById('game-board');
+        const restartBtn = document.getElementById('restart-btn');
 
-        // BORD IS 6 rows, 7 cols! 
-        const B_RIJEN_Z = 6;
-        const B_KOLOMMEN_V = 7;
+        const ROWS = 6;
+        const COLS = 7;
+        let grid = [];
+        let currentPlayer = 1; // 1 = Red, 2 = Yellow
+        let gameActive = true;
 
-        // the State Variables 
-        let BO_Logic_MatrixArrZDe = []; // 6x7 2D Array data The! 
-        let BO_H_HtmlTheGridDOM_MatHThe = []; // Reference to HTML cell div nodes The! 
+        function createBoard() {
+            boardEl.innerHTML = '';
+            // Data grid setup
+            grid = Array(ROWS).fill().map(() => Array(COLS).fill(0));
 
-        let SpelerHuidigNummerZ_ = 1; // 1 = ROOD, 2 = GEEL O 
-        let GameOverOTheBooleanH_ZThe = false;
-
-        function THE_InitBouwDatBordLoop_G_H() {
-            THE_G_GridBordOmHTMLO.innerHTML = "";
-            BO_Logic_MatrixArrZDe = [];
-            BO_H_HtmlTheGridDOM_MatHThe = [];
-
-            // loop rows 
-            for (let The_Rij = 0; The_Rij < B_RIJEN_Z; The_Rij++) {
-                const matrixO_RiJLogicArrV = [];
-                const DataTheHTML_DO_mRiZTheArrV = [];
-
-                // loop cols for logic
-                for (let deKolThe = 0; deKolThe < B_KOLOMMEN_V; deKolThe++) {
-                    matrixO_RiJLogicArrV.push(0); // 0 is LEEG THE ! 
-
-                    const TheGCDOMNodeDivCellH = document.createElement('div');
-                    TheGCDOMNodeDivCellH.classList.add('gat-CelH_De');
-
-                    // Attach event on EACH cell that passed to drops column
-                    TheGCDOMNodeDivCellH.addEventListener('click', () => {
-                        DropHetMuntjeInDezeZKOLOMK_TheH(deKolThe);
-                    });
-
-                    THE_G_GridBordOmHTMLO.appendChild(TheGCDOMNodeDivCellH);
-                    DataTheHTML_DO_mRiZTheArrV.push(TheGCDOMNodeDivCellH);
+            // Visual grid setup
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.dataset.col = c;
+                    cell.addEventListener('click', () => handleMove(c));
+                    boardEl.appendChild(cell);
                 }
-                BO_Logic_MatrixArrZDe.push(matrixO_RiJLogicArrV);
-                BO_H_HtmlTheGridDOM_MatHThe.push(DataTheHTML_DO_mRiZTheArrV);
             }
-            // reeset colors an var the   
-            SpelerHuidigNummerZ_ = 1;
-            GameOverOTheBooleanH_ZThe = false;
-            UpdateZThe_UIStatusTextKleurZ();
-            BTN_G_TheResetZBtnH.style.display = "none";
+
+            gameActive = true;
+            currentPlayer = 1;
+            statusEl.innerText = "Beurt: ROOD";
+            statusEl.className = "status-header status-red";
+            restartBtn.style.display = 'none';
         }
 
-        // De SPELBEURT LOGICA Z! 
-        function DropHetMuntjeInDezeZKOLOMK_TheH(TheKolIndx_Arg_) {
-            if (GameOverOTheBooleanH_ZThe) return;
+        function handleMove(col) {
+            if (!gameActive) return;
 
-            // ZOEKT HET LAAGSTE LEGE VAKJE IN DEZE KOLOM Z !! The 
-            let ZDeLeegSteRijXTeZTheIndex = -1;
-
-            // We loop from bottom (r 5) to top (r 0) !!!  The_  V ! 
-            for (let rDataDeTeHChecknLoopV = B_RIJEN_Z - 1; rDataDeTeHChecknLoopV >= 0; rDataDeTeHChecknLoopV--) {
-                if (BO_Logic_MatrixArrZDe[rDataDeTeHChecknLoopV][TheKolIndx_Arg_] === 0) {
-                    ZDeLeegSteRijXTeZTheIndex = rDataDeTeHChecknLoopV; // Found the bottom-most empty slot!
+            // Zoek de onderste lege (0) cel in de kolom
+            let targetRow = -1;
+            for (let r = ROWS - 1; r >= 0; r--) {
+                if (grid[r][col] === 0) {
+                    targetRow = r;
                     break;
                 }
             }
 
-            // The Als the helemala The  Vol is (-1) ! O 
-            if (ZDeLeegSteRijXTeZTheIndex === -1) {
-                return; // cant place in this col !!! Return and wait for another click O 
-            }
+            // Kolom zit vol (helemaal open tot rij 0 is 1 of 2 geworden)
+            if (targetRow === -1) return;
 
-            // BOEM ! V THE the data !! Z The_! the UPDATE HET LOGICA BORD
-            BO_Logic_MatrixArrZDe[ZDeLeegSteRijXTeZTheIndex][TheKolIndx_Arg_] = SpelerHuidigNummerZ_;
+            // Markeer wiskundig (Data)
+            grid[targetRow][col] = currentPlayer;
 
-            // BOEM_ RENDEREN in_ THE HTML! Z! 
-            const DeTheHtmlGatNodeDivDeZVThatGetaDataVThe = BO_H_HtmlTheGridDOM_MatHThe[ZDeLeegSteRijXTeZTheIndex][TheKolIndx_Arg_];
-            const TheMuntjeDivChildHDataZThe = document.createElement('div');
-            TheMuntjeDivChildHDataZThe.classList.add('muntje-TheZData');
-            TheMuntjeDivChildHDataZThe.classList.add(SpelerHuidigNummerZ_ === 1 ? 'rood' : 'geel');
-            DeTheHtmlGatNodeDivDeZVThatGetaDataVThe.appendChild(TheMuntjeDivChildHDataZThe);
+            // Markeer visueel (DOM)
+            const cellIndex = targetRow * COLS + col;
+            const targetCell = boardEl.children[cellIndex];
+            const coin = document.createElement('div');
+            coin.className = `coin ${currentPlayer === 1 ? 'coin-red' : 'coin-yellow'}`;
+            targetCell.appendChild(coin);
 
-            // Trigger Animation V (Needs setTimeout so CSS transition fires V) The_  Z!
-            setTimeout(() => { TheMuntjeDivChildHDataZThe.classList.add('droppedH'); }, 10);
+            // Timeout van 10ms om de browser de render-time te geven voordat klas wordt toegevoegd om transities te pushen.
+            setTimeout(() => coin.classList.add('coin-dropped'), 10);
 
+            // Check Winst
+            if (checkWin(targetRow, col)) {
+                gameActive = false;
+                statusEl.innerText = `${currentPlayer === 1 ? 'ROOD' : 'GEEL'} WINT!`;
 
-            // C Heek win ??
-            const isEerVierDataO = TheDeWinnnaarGevondenOFWinThe(ZDeLeegSteRijXTeZTheIndex, TheKolIndx_Arg_, SpelerHuidigNummerZ_);
-            if (isEerVierDataO) {
-                GameOverOTheBooleanH_ZThe = true;
-                UI_TEXTvDe_O.innerText = `🎉 SPELER ${SpelerHuidigNummerZ_ === 1 ? 'ROOD' : 'GEEL'} WINT! 🎉`;
-                UI_TEXTvDe_O.style.background = SpelerHuidigNummerZ_ === 1 ? '#fecaca' : '#fef08a';
-                BTN_G_TheResetZBtnH.style.display = 'block';
+                // Laat een korte pauze vallen voor het gameover scherm zodat user the line ziet
+                setTimeout(() => restartBtn.style.display = 'block', 500);
                 return;
             }
 
-            // Check draw THE!
-            if (CheckBordIsCompleetVtheDO_GVoltZThe_()) {
-                GameOverOTheBooleanH_ZThe = true;
-                UI_TEXTvDe_O.innerText = `Tjees! the THE Gelijkspel The! O `;
-                UI_TEXTvDe_O.style.background = '#e2e8f0'; UI_TEXTvDe_O.style.color = '#334155';
-                BTN_G_TheResetZBtnH.style.display = 'block';
+            // Check Gelijkspel
+            if (isDraw()) {
+                gameActive = false;
+                statusEl.innerText = "Gelijkspel!";
+                statusEl.className = "status-header";
+                restartBtn.style.display = 'block';
                 return;
             }
 
-            // SWAP THE TURN The Z!! 
-            SpelerHuidigNummerZ_ = SpelerHuidigNummerZ_ === 1 ? 2 : 1;
-            UpdateZThe_UIStatusTextKleurZ();
+            // Wissel speler
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+            statusEl.innerText = `Beurt: ${currentPlayer === 1 ? 'ROOD' : 'GEEL'}`;
+            statusEl.className = `status-header ${currentPlayer === 1 ? 'status-red' : 'status-yellow'}`;
         }
 
-        // WIIN CHECKER O !!!
-        function TheDeWinnnaarGevondenOFWinThe(r_zThe, k_ThO, SpelerNumCodeDeDataT_) {
+        function isDraw() {
+            // Als er geen 0 (leeg) elementen in the bovenste rij staan is grid vol
+            return grid[0].every(cell => cell !== 0);
+        }
 
-            // Helper function to count identical pieces in a specific direction (deltaRow, deltaCol)
-            function THeCheckDirectionVoorZDatV_XenYZLoopZ(DR_YtheV, DK_XDeX_H) {
-                let TheCountTellerDatVData_Z = 0; // count self later O
-                let ArrayMetHTheCrdZVoorAniamtiesV = [{ r: r_zThe, k: k_ThO }]; // Self
+        function checkWin(r, c) {
+            // Vectors: +R is down, -R is up. +C is right, -C is left
+            const directions = [
+                [[0, 1], [0, -1]],   // Horizontaal (East & West)
+                [[1, 0], [-1, 0]],   // Verticaal (South & North)
+                [[1, 1], [-1, -1]],  // Diagonaal \ (SouthEast & NorthWest)
+                [[1, -1], [-1, 1]]   // Diagonaal / (SouthWest & NorthEast)
+            ];
 
-                // + direction
-                for (let i = 1; i < 4; i++) {
-                    const deLoopTheCheckRijVTheNumVarZ = r_zThe + (DR_YtheV * i);
-                    const DdeLoopTheCheckTheKolX_num_VData_ = k_ThO + (DK_XDeX_H * i);
-                    if (deLoopTheCheckRijVTheNumVarZ >= 0 && deLoopTheCheckRijVTheNumVarZ < B_RIJEN_Z && DdeLoopTheCheckTheKolX_num_VData_ >= 0 && DdeLoopTheCheckTheKolX_num_VData_ < B_KOLOMMEN_V && BO_Logic_MatrixArrZDe[deLoopTheCheckRijVTheNumVarZ][DdeLoopTheCheckTheKolX_num_VData_] === SpelerNumCodeDeDataT_) {
-                        TheCountTellerDatVData_Z++;
-                        ArrayMetHTheCrdZVoorAniamtiesV.push({ r: deLoopTheCheckRijVTheNumVarZ, k: DdeLoopTheCheckTheKolX_num_VData_ });
-                    } else { break; }
+            // Voor iedere hoofdrichting
+            for (let d of directions) {
+                let count = 1; // Jij bent 1!
+                let winCells = [[r, c]];
+
+                // Loop door de positieve & negatieve vectors in die richting
+                for (let [dr, dc] of d) {
+                    let nr = r + dr;
+                    let nc = c + dc;
+                    // Zoek en stap zolang je niet buiten bord bent, en op juiste kleur.
+                    while (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr][nc] === currentPlayer) {
+                        count++;
+                        winCells.push([nr, nc]);
+                        nr += dr; // Neem nog een stap...
+                        nc += dc;
+                    }
                 }
 
-                // - direction (opposite side The )
-                for (let i = 1; i < 4; i++) {
-                    const deLoopTheCheckRijVTheNumVarZ = r_zThe - (DR_YtheV * i);
-                    const DdeLoopTheCheckTheKolX_num_VData_ = k_ThO - (DK_XDeX_H * i);
-                    if (deLoopTheCheckRijVTheNumVarZ >= 0 && deLoopTheCheckRijVTheNumVarZ < B_RIJEN_Z && DdeLoopTheCheckTheKolX_num_VData_ >= 0 && DdeLoopTheCheckTheKolX_num_VData_ < B_KOLOMMEN_V && BO_Logic_MatrixArrZDe[deLoopTheCheckRijVTheNumVarZ][DdeLoopTheCheckTheKolX_num_VData_] === SpelerNumCodeDeDataT_) {
-                        TheCountTellerDatVData_Z++;
-                        ArrayMetHTheCrdZVoorAniamtiesV.push({ r: deLoopTheCheckRijVTheNumVarZ, k: DdeLoopTheCheckTheKolX_num_VData_ });
-                    } else { break; }
-                }
-
-                // If >= 3 other pieces found (+ the 1 we dropped = 4!)
-                if (TheCountTellerDatVData_Z >= 3) {
-                    // flash class adden V !! the_ 
-                    ArrayMetHTheCrdZVoorAniamtiesV.forEach(cTheCordOBJ => {
-                        const DtheMTheDivCelV = BO_H_HtmlTheGridDOM_MatHThe[cTheCordOBJ.r][cTheCordOBJ.k].querySelector('.muntje-TheZData');
-                        if (DtheMTheDivCelV) DtheMTheDivCelV.classList.add('h-anim-winTheMuntFlashZ_');
-                    });
+                if (count >= 4) {
+                    highlightWin(winCells);
                     return true;
                 }
-                return false;
             }
-
-            // Run checks on all 4 directions! -> the (dRow, dCol) _ 
-            const HeeftGeoZWin = (
-                THeCheckDirectionVoorZDatV_XenYZLoopZ(0, 1) || // Horizontaal -
-                THeCheckDirectionVoorZDatV_XenYZLoopZ(1, 0) || // Verticaal |
-                THeCheckDirectionVoorZDatV_XenYZLoopZ(1, 1) || // Diagonaal \
-                THeCheckDirectionVoorZDatV_XenYZLoopZ(1, -1)   // Diagonaal /
-            );
-            return HeeftGeoZWin;
+            return false;
         }
 
-        // check of de the bord array is completely filled with NO_ '0' z 
-        function CheckBordIsCompleetVtheDO_GVoltZThe_() {
-            for (let rTheHLoop_Var = 0; rTheHLoop_Var < B_RIJEN_Z; rTheHLoop_Var++) {
-                for (let kZtheData_Var = 0; kZtheData_Var < B_KOLOMMEN_V; kZtheData_Var++) {
-                    if (BO_Logic_MatrixArrZDe[rTheHLoop_Var][kZtheData_Var] === 0) return false;
-                }
-            }
-            return true;
+        function highlightWin(cells) {
+            // Mapping de wiskundige [rij, kol] nar 1D flex array elementen en glow applied.
+            cells.forEach(([r, c]) => {
+                const idx = r * COLS + c;
+                const coin = boardEl.children[idx].querySelector('.coin');
+                if (coin) coin.classList.add('win-anim');
+            });
         }
 
-        function UpdateZThe_UIStatusTextKleurZ() {
-            UI_TEXTvDe_O.innerText = `Beurt: Speler ${SpelerHuidigNummerZ_ === 1 ? 'ROOD' : 'GEEL'} (${SpelerHuidigNummerZ_})`;
-            UI_TEXTvDe_O.className = 'status-header-H_O ' + (SpelerHuidigNummerZ_ === 1 ? 'turn-rood' : 'turn-geel');
-            UI_TEXTvDe_O.style.background = '#f1f5f9'; // reset bg for the games
-        }
+        restartBtn.addEventListener('click', createBoard);
 
-        BTN_G_TheResetZBtnH.addEventListener('click', THE_InitBouwDatBordLoop_G_H);
+        // Start het eerste Spel
+        createBoard();
 
-        // INITIALSTART ! 
-        THE_InitBouwDatBordLoop_G_H();
-
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
             const expansions = document.getElementById('expansions');
             const btn = event.target;
             if (expansions.classList.contains('show')) {
                 expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+                btn.textContent = '📖 Toon Extra Uitdagingen';
             } else {
                 expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+                btn.textContent = '📖 Verberg Extra Uitdagingen';
             }
         }
     </script>

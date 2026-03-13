@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 90: Vibrations & Battery API - DOM Projecten</title>
+    <title>Project 90: Hardware Control Center - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -13,449 +13,533 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #020617;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 2.5rem;
             color: #f8fafc;
         }
 
         .container {
-            background: #0f172a;
-            border-radius: 20px;
-            padding: 2.5rem;
-            max-width: 800px;
+            background: #1e293b;
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 900px;
             width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-            border: 1px solid #1e293b;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
             text-align: center;
         }
 
         h1 {
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
             color: #f8fafc;
+            margin-bottom: 0.5rem;
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
         }
 
         .level {
             display: block;
-            padding: 0.35rem 1rem;
-            background: #1e293b;
-            color: #38bdf8;
+            width: max-content;
+            margin: 0 auto 2.5rem;
+            padding: 0.35rem 1.2rem;
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: white;
             border-radius: 30px;
             font-size: 0.85rem;
-            font-weight: bold;
-            margin-bottom: 2.5rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
-            width: max-content;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        /* APP CSS H_T */
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
         .project-area {
-            width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 25px;
+            margin: 1.5rem 0 2.5rem 0;
         }
 
-        /* THE 50/50 Deel _ Gird the  ! */
-        @media (max-width: 600px) {
-            .project-area {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .cCCoOTheHlOmMnnTVDeH_The_a {
-            background: #1e293b;
-            border-radius: 16px;
-            padding: 25px;
+        .panel {
+            background: #0f172a;
+            border-radius: 20px;
+            padding: 2.5rem;
             border: 1px solid #334155;
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 20px;
+            box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
         }
 
-        .cCCoOTheHlOmMnnTVDeH_The_a h2 {
-            color: #f1f5f9;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .panel:hover {
+            border-color: #38bdf8;
+        }
+
+        .panel h2 {
+            font-size: 1.1rem;
+            color: #38bdf8;
+            margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: 800;
         }
 
-        .cCCoOTheHlOmMnnTVDeH_The_a i {
-            font-size: 1.5rem;
-        }
-
-        /* DEEl 1: Vibrations  THE O_ H !!*/
-        .bTtnH_VVRill_leKnonT_PTheTTVThe_ {
+        /* Vibration Actions */
+        .vibrate-stack {
             width: 100%;
-            background: #c026d3;
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 1rem;
-            margin-bottom: 15px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .bTtnH_VVRill_leKnonT_PTheTTVThe_:hover {
-            background: #a21caf;
-            transform: translateY(-2px);
-        }
-
-        .bTtnH_VVRill_leKnonT_PTheTTVThe_:active {
-            transform: translateY(0);
-        }
-
-        /* The Shake _The THE _ H Ani the_H_ on clickV_!H */
-        .aAnNnimATheATtiEShhaaKETheV {
-            animation: sHHHhaDkeA_anitVM 0.5s ease-in-out;
-        }
-
-        @keyframes sHHHhaDkeA_anitVM {
-            0% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(-5px) rotate(-2deg);
-            }
-
-            50% {
-                transform: translateX(5px) rotate(2deg);
-            }
-
-            75% {
-                transform: translateX(-5px) rotate(-2deg);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
-        }
-
-        .mEsTsGTheeNnietV_OoOndrtSte_und {
-            color: #ef4444;
+        .vibrate-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-size: 0.9rem;
-            font-weight: bold;
-            margin-top: auto;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* DEEl 2: Battery THE O!! */
-        .BbaTaTEtTtTheDTRerVUI_UiBGDO_MB {
-            width: 100px;
-            height: 160px;
-            border: 5px solid #64748b;
+        .v-pulse {
+            background: #c026d3;
+            box-shadow: 0 8px 16px rgba(192, 38, 211, 0.2);
+        }
+
+        .v-heart {
+            background: #e11d48;
+            box-shadow: 0 8px 16px rgba(225, 29, 72, 0.2);
+        }
+
+        .v-sos {
+            background: #6366f1;
+            box-shadow: 0 8px 16px rgba(99, 102, 241, 0.2);
+        }
+
+        .vibrate-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            filter: brightness(1.1);
+        }
+
+        /* Battery Visuals */
+        .battery-container {
+            position: relative;
+            padding: 20px;
+        }
+
+        .battery-shell {
+            width: 70px;
+            height: 120px;
+            border: 4px solid #334155;
             border-radius: 12px;
             position: relative;
+            padding: 5px;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 5px;
-            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.02);
         }
 
-        .BbaTaTEtTtTheDTRerVUI_UiBGDO_MB::before {
+        .battery-shell::after {
             content: '';
-            width: 40px;
-            height: 10px;
-            background: #64748b;
-            border-radius: 5px 5px 0 0;
+            width: 30px;
+            height: 8px;
+            background: #334155;
             position: absolute;
-            top: -15px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%);
+            border-radius: 4px 4px 0 0;
         }
 
-        .AactcTiiEeVBTTaEtheTTRNiv_eaU_ {
+        .battery-fill {
             width: 100%;
-            background: #22c55e;
-            border-radius: 5px;
-            transition: height 1s ease, background 1s ease;
-            height: 50%;
+            height: 0%;
+            background: #10b981;
+            border-radius: 6px;
+            transition: height 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.5s;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
         }
 
-        .bBtaRRYPeRCTetThEnTTTx_VTTe_TheH {
+        .battery-text {
             font-size: 2.5rem;
             font-weight: 900;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
             color: #f8fafc;
-            margin-bottom: 10px;
         }
 
-        .oOiIinHfOTheTextTDat_StsTaHBTaTHtv {
-            font-size: 1rem;
-            color: #94a3b8;
-            font-weight: bold;
+        .charging-status {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
+        .charging-bolt {
+            color: #fbbf24;
+            font-size: 1.2rem;
+            animation: pulse-bolt 1.5s infinite;
+            display: none;
+        }
+
+        @keyframes pulse-bolt {
+            0% {
+                opacity: 0.5;
+                transform: scale(0.9);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+
+            100% {
+                opacity: 0.5;
+                transform: scale(0.9);
+            }
+        }
+
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+            margin-top: 4rem;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
 
         .back-link {
-            display: block;
-            margin-top: 2rem;
-            color: #64748b;
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
             text-align: center;
+            width: 100%;
         }
 
-        .back-link:hover {
-            color: #94a3b8;
+        @media (max-width: 700px) {
+            .project-area {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
-    <!-- FONT O !! Z ! -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
-        <h1>Vibrations & Battery API</h1>
-        <span class="level">Advanced APIs (Hardware)</span>
+        <h1>Hardware Command Center</h1>
+        <span class="level">Vibration & Battery APIs</span>
+        <p class="description">Word de meester over de fysieke hardware van je apparaat. Leer hoe je haptische feedback
+            (vibratie) genereert en de energie-status van de batterij tot op de seconde monitort.</p>
+
+        <div class="project-area">
+            <div class="panel">
+                <h2>Haptic Feedback 📳</h2>
+                <div class="vibrate-stack">
+                    <button class="vibrate-btn v-pulse" id="pulse-btn">Taptic Pulse (200ms)</button>
+                    <button class="vibrate-btn v-heart" id="heart-btn">Heartbeat Pattern ❤️</button>
+                    <button class="vibrate-btn v-sos" id="sos-btn">SOS Emergency 🚨</button>
+                </div>
+                <p style="font-size: 0.75rem; color: #94a3b8;">(Werkt alleen op Android-browsers)</p>
+            </div>
+
+            <div class="panel">
+                <h2>Power Matrix 🔋</h2>
+                <div class="battery-shell">
+                    <div class="battery-fill" id="battery-fill"></div>
+                </div>
+                <div class="battery-text" id="battery-pct">--%</div>
+                <div class="charging-status">
+                    <span class="charging-bolt" id="bolt">⚡</span>
+                    <span id="charging-label">Laden...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Moderne browsers fungeren als een bridge naar de fysieke hardware van je telefoon of laptop.</p>
+            <ul>
+                <li><strong>Haptics:</strong> Het gebruik van patronen (arrays van aan/uit milliseconden) voor vibratie.
+                </li>
+                <li><strong>Energy Awareness:</strong> Hoe je web-apps 'zuinig' maakt door features uit te schakelen bij
+                    een lage batterij.</li>
+                <li><strong>Event Listeners:</strong> Reageren op hardware-veranderingen (zoals het aansluiten van een
+                    oplader).</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Vibration Pattern:</strong> Een array zoals <code>[100, 50, 100]</code> betekent: 100ms
+                    trillen, 50ms stilte, 100ms trillen.</li>
+                <li><strong>Battery Manager:</strong> Een asynchroon object met properties als <code>level</code>,
+                    <code>charging</code>, <code>dischargingTime</code>.</li>
+                <li><strong>Hardware Restrictions:</strong> Waarom iOS (Apple) bepaalde APIs zoals vibratie blokkeert in
+                    de browser.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: De Hardware Logic</h3>
 
             <div class="step">
-                <h4>Stap 1: Vibration API</h4>
-                <p>De <strong>Vibration API</strong> laat een telefoon trillen via <code>navigator.vibrate()</code>. Je
-                    kunt een getal meegeven (ms) of een array voor patronen!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Simpel getal = 1 trilling van 200ms</span>
-navigator.<span class="function">vibrate</span>(<span class="string">200</span>);
+                <h4>1: Trillen met Patronen</h4>
+                <p>Simpel of complex, jij bepaalt het ritme.</p>
+                <div class="code-example">
+                    <pre><span class="comment">// 200ms trillen</span>
+navigator.<span class="function">vibrate</span>(200);
 
-<span class="comment">// Array = patroon: [tril, rust, tril, rust, ...]</span>
-navigator.<span class="function">vibrate</span>([<span class="string">100</span>, <span class="string">100</span>, <span class="string">300</span>]); <span class="comment">// kort, pauze, lang</span></pre>
+<span class="comment">// SOS: kort-kort-kort, lang-lang-lang...</span>
+navigator.<span class="function">vibrate</span>([100,100,100, 300,100,300]);</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: Battery API</h4>
-                <p>De <strong>Battery Status API</strong> geeft toegang tot de batterijstatus van het apparaat. Let op:
-                    Dit is deprecated op Firefox maar werkt nog in Chrome en Edge!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> battery = <span class="keyword">await</span> navigator.<span class="function">getBattery</span>();
-console.<span class="function">log</span>(battery.level);    <span class="comment">// 0 tot 1 (bijv: 0.85 = 85%)</span>
-console.<span class="function">log</span>(battery.charging); <span class="comment">// true of false</span></pre>
+                <h4>2: De Batterij Uitlezen</h4>
+                <p>We vragen toegang en luisteren naar updates.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> bat = <span class="keyword">await</span> navigator.<span class="function">getBattery</span>();
+bat.<span class="function">addEventListener</span>(<span class="string">'levelchange'</span>, () => {
+    <span class="keyword">console</span>.<span class="function">log</span>(bat.level * 100 + <span class="string">'%'</span>);
+});</pre>
                 </div>
             </div>
 
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Open deze pagina <strong>op je mobiel</strong> voor de trillingen!</li>
-                <li>Klik de knoppen om de SOS en hartslag patronen te voelen!</li>
-                <li>Bekijk je batterijpercentage rechts in beeld.</li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>Vibrate op Desktop:</strong> Op de PC doet <code>navigator.vibrate()</code> niets - er is
-                    immers geen trilmotor! Test het op je telefoon voor het echte effect.</li>
-                <li><strong>Battery deprecated:</strong> De Battery API werkt niet meer in Firefox en iOS Safari vanwege
-                    privacyzorgen. Chrome ondersteunt het nog wel.</li>
-            </ul>
-        </div>
-
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
                 <ul>
-                    <li><strong>Eigen Patroon:</strong> Voeg een textarea toe waar de gebruiker een eigen
-                        vibratiepatroon kan intikken als komma-gescheiden getallen en laat het afspelen!</li>
+                    <li><strong>Silent/DND Mode:</strong> Als een telefoon op 'Niet Storen' staat, negeert de hardware
+                        vaak de <code>vibrate</code> commando's.</li>
+                    <li><strong>Permission Denial:</strong> Hoewel Batterij API vaak geen popup geeft, moet de site wel
+                        op de voorgrond staan.</li>
+                    <li><strong>Legacy Support:</strong> De Battery API is in sommige hele oude browsers (of juist hele
+                        nieuwe Firefox versies) soms verwijderd wegens privacy.</li>
+                </ul>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>Game Feedback:</strong> Laat de telefoon trillen wanneer de speler in een game een
+                        muntje pakt of geraakt wordt.</li>
+                    <li><strong>Energy Saver Mode:</strong> Verlaag de frame-rate van je animaties automatisch zodra de
+                        batterij onder de 15% komt.</li>
+                    <li><strong>Charging Notification:</strong> Speel een sound effect of toon een felicitatie-animatie
+                        zodra de gebruiker zijn toestel in de lader steekt.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
-        <div class="project-area">
-
-            <!-- Kolom 1:! The V  trillen_ H! -->
-            <div class="cCCoOTheHlOmMnnTVDeH_The_a">
-                <h2><i class="fas fa-mobile-alt" style="color:#c026d3;"></i> Vibrations</h2>
-                <p style="color:#94a3b8; font-size:0.9rem; margin-bottom: 25px;">Let op: the _The Werkt _THE V H !
-                    alleen op The <b>mobiele apparaten</b> the die_The_een_ Vthe TriLmottor the The!_Zthe _ THE_
-                    hebben!v_</p>
-
-                <button class="bTtnH_VVRill_leKnonT_PTheTTVThe_" id="bBtnTTHE_KnnnoOpKVort_oZ1">
-                    <i class="fas fa-bolt"></i> Korte Trilling (200ms)
-                </button>
-                <button class="bTtnH_VVRill_leKnonT_PTheTTVThe_" id="bBtnTTHE_LangGEeEKl_oPTh_"
-                    style="background: #a21caf;">
-                    <i class="fas fa-heartbeat"></i> Hartslag Patroon
-                </button>
-                <button class="bTtnH_VVRill_leKnonT_PTheTTVThe_" id="B_ThBBtnGReaVtheeC__KLH_DeHHThe"
-                    style="background: #86198f;">
-                    <i class="fas fa-hammer"></i> SOS Patroon
-                </button>
-
-                <div class="mEsTsGTheeNnietV_OoOndrtSte_und" id="MMSGGeGeTHEVvibH_rThNiett" style="display:none;">
-                    (Vibrate API niet _ the V the ondersteunt op dt the aparamta!)</div>
-            </div>
-
-            <!-- Kolom 2: THE! The _ Accu ! O H ! _ -->
-            <div class="cCCoOTheHlOmMnnTVDeH_The_a">
-                <h2><i class="fas fa-battery-half" style="color:#22c55e;"></i> Battery Info</h2>
-
-                <div class="BbaTaTEtTtTheDTRerVUI_UiBGDO_MB">
-                    <div class="AactcTiiEeVBTTaEtheTTRNiv_eaU_" id="UILLveeLTheEAcCuHHooGTeTheVThe"></div>
-                </div>
-
-                <div class="bBtaRRYPeRCTetThEnTTTx_VTTe_TheH"><span id="uUiTHThebBattPtThRcr_Te">--</span>%</div>
-                <div class="oOiIinHfOTheTextTDat_StsTaHBTaTHtv" id="TuxTU_UIILaaDHTDatTTheVZZTheHT">Wordt het opgeladen:
-                    ?</div>
-
-                <div class="mEsTsGTheeNnietV_OoOndrtSte_und" id="EGeH_TnHbAtheTT_aTTTheEErUuPIiNiM_SG"
-                    style="display:none; margin-top:20px;">(Battery API N_ITheeH t _ V The_ Ondersteunt_ O op The O
-                    Deze_ H THE bR_The owsOer1_!)</div>
-            </div>
-
-        </div>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Bekijk Geavanceerde Hardware Tips</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        // --- VIBRATION LOGIC THE --- //
-        const VVviHTBtnKnPKOoRo_th_ = document.getElementById('bBtnTTHE_KnnnoOpKVort_oZ1');
-        const vViHBBThLHanTheThegNHTt_eThe_Vv = document.getElementById('bBtnTTHE_LangGEeEKl_oPTh_');
-        const vViTTHHTTeT_STheHHOBVssTNTHEHTh_e = document.getElementById('B_ThBBtnGReaVtheeC__KLH_DeHHThe');
-        const me_SSGTheH_EViBRVTH__NTNniEETT_oHThvO_ = document.getElementById('MMSGGeGeTHEVvibH_rThNiett');
+        // --- VIBRATION MODULE ---
+        const pulseBtn = document.getElementById('pulse-btn');
+        const heartBtn = document.getElementById('heart-btn');
+        const sosBtn = document.getElementById('sos-btn');
 
-        // CHTheECK the  of de browser H! t kan V !!
-        if (!navigator.vibrate) {
-            me_SSGTheH_EViBRVTH__NTNniEETT_oHThvO_.style.display = "block";
-            VVviHTBtnKnPKOoRo_th_.disabled = true;
-            vViHBBThLHanTheThegNHTt_eThe_Vv.disabled = true;
-            vViTTHHTTeT_STheHHOBVssTNTHEHTh_e.disabled = true;
-        } else {
-            // 1 KORTE THE! the TRILLING _ THE H V: the The Array _  of Int the !
-            VVviHTBtnKnPKOoRo_th_.addEventListener('click', () => {
-                navigator.vibrate(200); // the 200 milisehcnonTheHtrilThe!!! V  
-                ZVoDeEgTThsAAANiMmHMMGZ_TOo(VVviHTBtnKnPKOoRo_th_);
-            });
+        const canVibrate = 'vibrate' in navigator;
 
-            // 2 LANG THE PATROON (_ 2x kort) The V_ !! 
-            vViHBBThLHanTheThegNHTt_eThe_Vv.addEventListener('click', () => {
-                // The H PATROON FORMAT The: [TRIL_m_Thes, theThe RUST_mTheTheS, THE TRI_ms, the_ RUsS_mst, TRRil_ms..H]
-                navigator.vibrate([100, 100, 100, 500, 200]);
-                ZVoDeEgTThsAAANiMmHMMGZ_TOo(vViHBBThLHanTheThegNHTt_eThe_Vv);
-            });
+        pulseBtn.addEventListener('click', () => {
+            if (canVibrate) navigator.vibrate(200);
+            else alert("Vibratie wordt niet ondersteund op dit apparaat/browser combo.");
+        });
 
-            // 3 SOS THE THE! PATRON O !! H _ ... --- ...
-            vViTTHHTTeT_STheHHOBVssTNTHEHTh_e.addEventListener('click', () => {
-                navigator.vibrate([
-                    100, 100, 100, 100, 100, // ... (kort)
-                    400, // pauZuze_ZThe
-                    300, 100, 300, 100, 300, // --- (la_H THE The THE ng_ THE H ) 
-                    400, // p The THE !! 
-                    100, 100, 100, 100, 100 // THE  ... (kH OThe The orteThe rt)
-                ]);
-                ZVoDeEgTThsAAANiMmHMMGZ_TOo(vViTTHHTTeT_STheHHOBVssTNTHEHTh_e);
-            });
-        }
+        heartBtn.addEventListener('click', () => {
+            // Patroon: trillen, pauze, trillen, pauze...
+            if (canVibrate) navigator.vibrate([100, 100, 100, 400, 100]);
+        });
 
-        function ZVoDeEgTThsAAANiMmHMMGZ_TOo(DOMEEtheLmeNeT_H) {
-            DOMEEtheLmeNeT_H.classList.add('aAnNnimATheATtiEShhaaKETheV');
-            setTimeout(() => DOMEEtheLmeNeT_H.classList.remove('aAnNnimATheATtiEShhaaKETheV'), 500);
-        }
+        sosBtn.addEventListener('click', () => {
+            // SOS: ... --- ...
+            if (canVibrate) navigator.vibrate([100, 100, 100, 100, 100, 100, 300, 100, 300, 100, 300, 100, 100, 100, 100, 100, 100]);
+        });
 
 
-        // --- BATTERY LOGIC THE --- //
-        const UiTThLBBaTTt_eTeTH__r_NiH_U_veaua_T_DOM = document.getElementById('UILLveeLTheEAcCuHHooGTeTheVThe');
-        const bBAAttTheTTxR_TTheHPerETheNt_AageTHEZ_TXTZ = document.getElementById('uUiTHThebBattPtThRcr_Te');
-        const bBTatH_TheTTTheTxtCHa_RGiInNgO = document.getElementById('TuxTU_UIILaaDHTDatTTheVZZTheHT');
-        const bBaT_TTeTheEryEMR_TheHHTMsSGNOON = document.getElementById('EGeH_TnHbAtheTT_aTTTheEErUuPIiNiM_SG');
+        // --- BATTERY MODULE ---
+        const batteryFill = document.getElementById('battery-fill');
+        const batteryPct = document.getElementById('battery-pct');
+        const chargingLabel = document.getElementById('charging-label');
+        const boltIcon = document.getElementById('bolt');
 
-        // BATTERY STATUS PROMISE (Is currently DEPRECATED op_ H! sommige  _ THE _browsers_zoals firefox_ The Z en _ THE IOS! Maar werkt V !_ THE H nog in THE chrome V!! O!)
         if ('getBattery' in navigator) {
-            navigator.getBattery().then((BaAAtTeTtTHHeRYyTDbBJ_OBbTe) => {
+            navigator.getBattery().then(battery => {
 
-                // Initial the THE load! V 
-                BBUUaPpTTDaerRRThHTTheUUiIThe(BaAAtTeTtTHHeRYyTDbBJ_OBbTe);
+                const updateStatus = () => {
+                    // 1. Percentage
+                    const level = battery.level * 100;
+                    batteryPct.innerText = `${Math.round(level)}%`;
 
-                // EVENT LIsTENthe_ TheV ! ERS Z! THE  _ O  als the accu the percentage  the the _ verandert H ! THE V! 
-                BaAAtTeTtTHHeRYyTDbBJ_OBbTe.addEventListener('levelchange', () => BBUUaPpTTDaerRRThHTTheUUiIThe(BaAAtTeTtTHHeRYyTDbBJ_OBbTe));
-                BaAAtTeTtTHHeRYyTDbBJ_OBbTe.addEventListener('chargingchange', () => BBUUaPpTTDaerRRThHTTheUUiIThe(BaAAtTeTtTHHeRYyTDbBJ_OBbTe));
+                    // 2. Visual Fill
+                    batteryFill.style.height = `${level}%`;
 
-            }).catch(console.error);
+                    // 3. Colors based on level
+                    if (level <= 20) {
+                        batteryFill.style.background = "#ef4444"; // Red
+                        batteryFill.style.boxShadow = "0 0 20px rgba(239, 68, 68, 0.4)";
+                    } else if (level <= 50) {
+                        batteryFill.style.background = "#f59e0b"; // Orange
+                        batteryFill.style.boxShadow = "0 0 20px rgba(245, 158, 11, 0.4)";
+                    } else {
+                        batteryFill.style.background = "#10b981"; // Green
+                        batteryFill.style.boxShadow = "0 0 20px rgba(16, 185, 129, 0.4)";
+                    }
 
+                    // 4. Charging State
+                    if (battery.charging) {
+                        chargingLabel.innerText = "Wordt opgeladen";
+                        boltIcon.style.display = "inline-block";
+                        batteryFill.style.background = "#38bdf8"; // Blueish when charging
+                    } else {
+                        chargingLabel.innerText = "Op batterijvoeding";
+                        boltIcon.style.display = "none";
+                    }
+                };
+
+                // Init
+                updateStatus();
+
+                // Listeners voor realtime updates
+                battery.addEventListener('levelchange', updateStatus);
+                battery.addEventListener('chargingchange', updateStatus);
+            });
         } else {
-            // Geen_ O  the battery The The! API ondersteunnigng in THE DeezThe e v! The _ de browser ! H (MThe _ The waarschijhniHT lijk the ! firefox of oTThe h! _ THE safari O)_ !H_ T!! _V
-            bBaT_TTeTheEryEMR_TheHHTMsSGNOON.style.display = "block";
+            chargingLabel.innerText = "Batterij API niet ondersteund.";
+            batteryPct.innerText = "N/A";
         }
 
-
-        function BBUUaPpTTDaerRRThHTTheUUiIThe(ThEBtThATtterTY_DBaOOtbj) {
-            // level the is een de_ getting THE waarde in the getal the tussen_ Z 0 the en_ !  _ H THE  1! The THE (bijv 0.9_ THE= 90%)_
-            const The_PThePEHTReRTTheCHenNTtaGE = Math.round(ThEBtThATtterTY_DBaOOtbj.level * 100);
-
-            // Uu_H TThe IDAate Pectntage text 
-            bBAAttTheTTxR_TTheHPerETheNt_AageTHEZ_TXTZ.innerText = The_PThePEHTReRTTheCHenNTtaGE;
-
-            // UU THE ! DDdaTtTEe UI The _ Bttatery BAlK Height!! _Z! _O
-            UiTThLBBaTTt_eTeTH__r_NiH_U_veaua_T_DOM.style.height = `${The_PThePEHTReRTTheCHenNTtaGE}%`;
-
-            // KKlleTueHTr THE_ BALKL !!! V !
-            if (The_PThePEHTReRTTheCHenNTtaGE <= 20) {
-                UiTThLBBaTTt_eTeTH__r_NiH_U_veaua_T_DOM.style.background = "#ef4444"; // rThe dRood H THE als heT ! _  The _ bijna 1 the LTheZ eegis The!! _ V 
-            } else if (The_PThePEHTReRTTheCHenNTtaGE <= 50) {
-                UiTThLBBaTTt_eTeTH__r_NiH_U_veaua_T_DOM.style.background = "#f59e0b"; //  oranNnJThe the e ! H V THE H
-            } else {
-                UiTThLBBaTTt_eTeTH__r_NiH_U_veaua_T_DOM.style.background = "#22c55e"; // grTheooEenn HTHeThe_
-            }
-
-            // De IsH _CHTheAargiin1! VThe O g _ TheH TextZ!! H ! The V
-            if (ThEBtThATtterTY_DBaOOtbj.charging) {
-                bBTatH_TheTTTheTxtCHa_RGiInNgO.innerHTML = "<i class='fas fa-plug' style='color:#f59e0b;'></i> Aan het the opladen! ⚡";
-                bBTatH_TheTTTheTxtCHa_RGiInNgO.style.color = "#f59e0b";
-            } else {
-                bBTatH_TheTTTheTxtCHa_RGiInNgO.innerHTML = "Op the de 🔋 batterij stroom_! THE_ ";
-                bBTatH_TheTTTheTxtCHa_RGiInNgO.style.color = "#94a3b8";
-            }
-        }
-
-    </script>
-    <script>
+        // --- UI HELPERS ---
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
-            const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            const exp = document.getElementById('expansions');
+            const btn = event.currentTarget;
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Hardware Tips' : '📖 Bekijk Geavanceerde Hardware Tips';
         }
     </script>
 </body>

@@ -5,7 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 24: Recepten Zoeker - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #ec4899;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --recipe-bg: rgba(255, 255, 255, 0.05);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,104 +32,138 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-        }
-
-        .container {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .description {
-            color: #666;
-            margin-bottom: 2rem;
             line-height: 1.6;
         }
 
+        .container {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.025em;
+        }
+
+        .level {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        /* General UI Elements */
         .explanation,
         .concepts,
         .step-by-step,
         .instructions,
         .tips {
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
-        }
-
-        .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
-        }
-
-        .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
-        }
-
-        .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
-        }
-
-        .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 18px;
+            margin-bottom: 2rem;
         }
 
         h3 {
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-main);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
         }
 
         ul {
             margin-left: 1.5rem;
             line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .code-example {
-            background: #282c34;
-            color: #abb2bf;
+            background: #0f172a;
+            border: 1px solid var(--glass-border);
             padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
+            border-radius: 14px;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #e2e8f0;
             overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
         }
 
         .code-example .keyword {
@@ -125,259 +178,375 @@
             color: #61afef;
         }
 
-        .back-link {
-            display: inline-block;
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
             margin-top: 1rem;
-            color: #667eea;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .expandable {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .expandable.show {
+            max-height: 2000px;
+            transition: max-height 0.8s ease-in;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
         }
 
         /* Recipe Finder Area */
         .project-area {
-            background: #fdfbfb;
-            border-radius: 12px;
-            padding: 2rem;
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
             margin-bottom: 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            border: 2px dashed #ff7e5f;
+            border: 1px solid var(--glass-border);
             overflow-y: auto;
-            max-height: 600px;
+            max-height: 700px;
+        }
+
+        /* Custom Scrollbar for Project Area */
+        .project-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .project-area::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .project-area::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
         }
 
         .header-search {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 2.5rem;
             width: 100%;
+        }
+
+        .header-search h2 {
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        .header-search p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .search-area {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin: 0 auto;
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            border-radius: 99px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s;
+        }
+
+        .search-area:focus-within {
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .search-area input {
             flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 30px;
+            padding: 0.5rem 1.2rem;
+            border: none;
+            background: transparent;
+            color: #fff;
             outline: none;
-            transition: 0.3s;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .search-area input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
         }
 
         .search-area button {
-            padding: 10px 20px;
+            padding: 0.6rem 1.5rem;
             border: none;
-            border-radius: 30px;
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            border-radius: 99px;
+            background: var(--primary);
             color: white;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-area button:hover {
+            background: var(--primary-hover);
+            transform: scale(1.05);
         }
 
         .recipes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
             width: 100%;
         }
 
         .recipe-card {
-            background: #fff;
-            border-radius: 10px;
+            background: var(--recipe-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .recipe-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(99, 102, 241, 0.4);
         }
 
         .recipe-img {
             width: 100%;
-            height: 120px;
+            height: 140px;
             object-fit: cover;
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .recipe-info {
-            padding: 15px;
+            padding: 1.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .recipe-title {
-            font-size: 1rem;
-            margin-bottom: 5px;
-            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: #fff;
+            font-weight: 600;
         }
 
         .recipe-tags {
             display: flex;
-            gap: 5px;
+            gap: 0.5rem;
             flex-wrap: wrap;
-            margin-bottom: 10px;
+            margin-bottom: 1rem;
+            flex: 1;
         }
 
         .tag {
-            padding: 3px 8px;
-            background: #ffeae1;
-            color: #ff7e5f;
-            border-radius: 15px;
-            font-size: 0.7rem;
-            font-weight: bold;
+            padding: 0.25rem 0.6rem;
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
         }
 
         .recipe-time {
-            color: #888;
-            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 500;
+            margin-top: auto;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Project 24: Recepten Zoeker</h1>
-        <span class="level">Master</span>
-        <p class="description">Bouw een receptenzoekmachine met geavanceerde .filter() methoden in JavaScript.</p>
+        <header>
+            <h1>Project 24: Recepten Zoeker</h1>
+            <span class="level">Master</span>
+            <p class="description">Bouw een receptenzoekmachine met geavanceerde .filter() methoden in JavaScript.</p>
+        </header>
+
+
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>Gegevens ophalen via een externe bron via de Fetch-API</li>
+                <li>Werken met asynchrone functies (<code>async</code>/<code>await</code>)</li>
+                <li>JSON-data parseren en vertalen naar bruikbare HTML-componenten</li>
+            </ul>
+        </div>
+
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>Fetch API</strong> - De moderne manier om data te halen vanaf een andere sever.</li>
+                <li><strong>async / await</strong> - Pauzeert de uitvoering van een functie totdat de benodigde data
+                    gedownload is.</li>
+                <li><strong>Template literals (&#96;&#96;)</strong> - Grote stukken HTML overzichtelijk als een string
+                    in JavaScript injecteren.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: HTML Elementen aanmaken in Javascript met Template Literals</h4>
-                <p>We creëren HTML voor onze recepten niet in <code>index.html</code>, maar met zogenaamde "Template
-                    Literals" (backticks `` ` ``) in JavaScript, waardoor we waarden dynamisch kunnen inkleuren.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> card = document.<span class="function">createElement</span>(<span class="string">'div'</span>);
-card.className = <span class="string">'recipe-card'</span>;
-card.innerHTML = <span class="string">`
-    &lt;img src="<span class="keyword">${r.img}</span>" alt="<span class="keyword">${r.title}</span>" class="recipe-img"&gt;
-    &lt;h3 class="recipe-title"&gt;<span class="keyword">${r.title}</span>&lt;/h3&gt;
-`</span>;</pre>
+                <h4>Stap 1: De Fetch Request opzetten</h4>
+                <p>We gebruiken de Fetch-API om de receptendata als JSON op te halen.</p>
+                <div class="code-example">
+                    <pre>const response = await fetch(`https://api.example.com/recipes?q=${query}`);
+const data = await response.json();</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Het gebruik van <code>${variabele}</code> binnen backticks laat je direct
-                    variabelen en methodes uitvoeren ín een string!</p>
             </div>
-
             <div class="step">
-                <h4>Stap 2: .map() & .join() voor Geneste data (Tags)</h4>
-                <p>Een recept kan meerdere tags hebben (bijv "Gezond", "Lunch"). We converteren de JavaScript array van
-                    strings naar een HTML string list.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">${</span>r.tags.<span class="function">map</span>(t => <span class="string">`&lt;span class="tag"&gt;<span class="keyword">${t}</span>&lt;/span&gt;`</span>).<span class="function">join</span>(<span class="string">''</span>)<span class="keyword">}</span></pre>
+                <h4>Stap 2: Data weergeven in de browser</h4>
+                <p>Doorloop de teruggestuurde recepten met <code>forEach</code> en toon ze dynamisch op het scherm.</p>
+                <div class="code-example">
+                    <pre>resultsContainer.innerHTML = '';
+data.recipes.forEach(recipe =&gt; {
+    resultsContainer.innerHTML += `&lt;div&gt;${recipe.title}&lt;/div&gt;`;
+});</pre>
                 </div>
-                <p><strong>Uitleg:</strong> De <code>.map()</code> functie transformeert elke tag (bijv. "Lunch") in de
-                    gewenste HTML-tag. <code>.join('')</code> plakt al deze gemaakte HTML-tags naadloos zonder komma's
-                    aan elkaar.</p>
             </div>
-
             <div class="step">
-                <h4>Stap 3: Krachtig Zoeken met .filter()</h4>
-                <p>Tijdens het typen, pakken we alle recepten en filteren we alleen degene die we willen overhouden en
-                    weergaven.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> query = searchInput.value.<span class="function">toLowerCase</span>();
-<span class="keyword">const</span> filtered = mockRecipes.<span class="function">filter</span>(r => 
-    r.title.<span class="function">toLowerCase</span>().<span class="function">includes</span>(query) || 
-    r.tags.<span class="function">some</span>(t => t.<span class="function">toLowerCase</span>().<span class="function">includes</span>(query))
-);</pre>
+                <h4>Stap 3: Fouten afvangen (Error Handling)</h4>
+                <p>Als de aanvraag naar de server mislukt (bijvoorbeeld door een internetstoring), vangen we dit af met
+                    een <code>try/catch</code>-blok.</p>
+                <div class="code-example">
+                    <pre>try {
+    // fetch data
+} catch(error) {
+    console.log('Oeps, server fout', error);
+}</pre>
                 </div>
-                <p><strong>Uitleg:</strong> <code>.includes()</code> kijkt of de in-getypte tekst ergens in de titel of
-                    tags zit. Het gebruik van <code>.some()</code> controleert of <strong>in ieder geval één</strong>
-                    tag voldoet.</p>
             </div>
         </div>
 
         <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Real-Time Zoeken via "input" event)</h3>
-            <pre><span class="keyword">function</span> <span class="function">handleSearch</span>() {
-    <span class="keyword">const</span> query = searchInput.value.<span class="function">toLowerCase</span>();
-    <span class="keyword">const</span> filtered = mockRecipes.<span class="function">filter</span>(r => 
-        r.title.<span class="function">toLowerCase</span>().<span class="function">includes</span>(query) || 
-        r.tags.<span class="function">some</span>(t => t.<span class="function">toLowerCase</span>().<span class="function">includes</span>(query))
-    );
-    <span class="function">renderRecipes</span>(filtered);
-}
-
-<span class="comment">// De magie: Activeert IEDERE keer als een karakter wordt ingetypt/gewist</span>
-searchInput.<span class="function">addEventListener</span>(<span class="string">'input'</span>, handleSearch);
-document.<span class="function">getElementById</span>(<span class="string">'searchBtn'</span>).<span class="function">addEventListener</span>(<span class="string">'click'</span>, handleSearch);</pre>
+        <div class="code-example" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="color: #f8fafc; margin-bottom: 1rem;">💻 Volledige Zoekfunctie</h3>
+            <pre>async function searchRecipes() {
+    const query = searchInput.value;
+    if(!query) return;
+    try {
+        // Laad-animatie tonen
+        loader.style.display = 'block';
+        const res = await fetch('url' + query);
+        const data = await res.json();
+        renderData(data);
+    } catch(err) {
+        alert('Kon niet laden');
+    }
+}</pre>
         </div>
 
-        <!-- Instructies -->
         <div class="instructions">
             <h3>✅ Jouw Opdracht:</h3>
             <ul>
-                <li>Typ direct 'Oven' of 'Lunch' in de zoekbalk hieronder in de demo.</li>
-                <li>Verwijder karakters met backspace en zie hoe recepten direct weer terugspringen.</li>
-                <li>Breid (lokaal in je eigen editor) het `mockRecipes` object uit met jouw lievelingsgerecht.</li>
+                <li>Typ de naam van een gerecht in (bijv. "Pasta").</li>
+                <li>Zie hoe JavaScript asynchroon wacht op de data, en de HTML daarna dynamisch aanvult.</li>
             </ul>
         </div>
 
-        <!-- Tips -->
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong>Waarom <code>grid.innerHTML = ''</code>?</strong> Om te voorkomen dat de resultaten van een
-                    nieuwe zoekopdracht gewoon <em>onder</em> de resultaten van een eerdere zoekopdracht worden geplakt,
-                    maken we eerst in <code>renderRecipes()</code> razendsnel de Grid leeg voordat de forEach wordt
-                    gestart.</li>
-                <li><strong>Event <code>'input'</code> vs <code>'change'</code>:</strong> Gebruik <code>input</code> in
-                    de plaats van <code>change</code> op tekstvelden omdat <code>change</code> pas afvuurt wanneer de
-                    gebruiker buiten het invoerveld klikt (blur).</li>
+                <li><strong>Debouncing:</strong> Om te voorkomen dat je bij elke toetsaanslag onnodig vaak een server
+                    aanroept, kun je met behulp van <code>setTimeout</code> een zogenaamde 'debounce' inbouwen.</li>
             </ul>
         </div>
 
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: <code>.map()</code> en Komma's</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ FOUT - Als je .join('') vergeet print HTML een komma tussen elementen in de weergave!</span>
-${r.tags.map(t =&gt; `&lt;span class="tag"&gt;${t}&lt;/span&gt;`)}
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: Vergeten <code>async/await</code> te gebruiken</h4>
+                <p style="color: #f87171;">Zonder <code>await</code> loopt JavaScript al verder voordat de server de
+                    data daadwerkelijk heeft teruggestuurd. We kunnen niet proberen iets in de HTML te plaatsen dat nog
+                    onderweg is.</p>
+                <div class="code-example">
+                    <pre>// ❌ FOUT
+const res = fetch('url');
+console.log(res); // undefined of Promise (nog niet klaar)
 
-<span class="comment">// ✅ GOED - Plak de array elementen naadloos aan elkaar</span>
-${r.tags.map(t =&gt; `&lt;span class="tag"&gt;${t}&lt;/span&gt;`).join('')}</pre>
+// ✅ GOED
+const res = await fetch('url');
+console.log(await res.json()); // Correct</pre>
                 </div>
             </div>
         </div>
 
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor meer? Probeer dit toe te voegen:</p>
+            <div class="tips" style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1);">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingsmogelijkheden</h3>
                 <ul>
-                    <li><strong>No Results feedback:</strong> We tonen al een tekst bij 0 results, voeg hier een icon
-                        (bijv. FontAwesome) of illustratie aan toe.</li>
-                    <li><strong>Debouncing:</strong> Voeg "debounce" logica toe zodat <code>handleSearch()</code> pas
-                        afvuurt als de gebruiker 300ms stopt met typen (handig bij zware applicaties of API requests).
-                    </li>
-                    <li><strong>Dropdown categorie filter:</strong> Voeg een <code>&lt;select&gt;</code> dropdown toe om
-                        snel te filteren op categorieën zoals "Diner", "Vis", "Lunch", of "Gezond".</li>
+                    <li><strong>Favorieten opslaan:</strong> Gebruik LocalStorage om een lijst aan gekozen favoriete
+                        recepten blijvend op te slaan.</li>
+                    <li><strong>Filteropties toevoegen:</strong> Voeg een mogelijkheid toe om extra criteria te
+                        filteren, zoals uitsluitend 'Vegan'.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
             <div class="header-search">
-                <h2 style="color: #ff7e5f; margin-bottom: 5px;">Vind Jouw Recept</h2>
-                <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">Ontdek heerlijke maaltijden voor
-                    vandaag.</p>
+                <h2>Vind Jouw Recept</h2>
+                <p>Ontdek heerlijke maaltijden voor vandaag.</p>
                 <div class="search-area">
                     <input type="text" id="searchInput" placeholder="Zoek op gerecht (bijv. Vis of Salade)...">
-                    <button id="searchBtn">Zoeken</button>
+                    <button id="searchBtn"><i class="fas fa-search"></i> Zoeken</button>
                 </div>
             </div>
 
@@ -386,7 +555,7 @@ ${r.tags.map(t =&gt; `&lt;span class="tag"&gt;${t}&lt;/span&gt;`).join('')}</pre
             </div>
         </div>
 
-        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+        <a href="../index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Terug naar Projecten</a>
     </div>
 
     <script>
@@ -404,7 +573,7 @@ ${r.tags.map(t =&gt; `&lt;span class="tag"&gt;${t}&lt;/span&gt;`).join('')}</pre
         function renderRecipes(recipes) {
             grid.innerHTML = '';
             if (recipes.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888; font-size: 1rem;">Geen recepten gevonden.</p>';
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #cbd5e1; font-size: 1.1rem; padding: 2rem;"><i class="fas fa-search-minus" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>Geen recepten gevonden.</p>';
                 return;
             }
 
@@ -418,7 +587,7 @@ ${r.tags.map(t =&gt; `&lt;span class="tag"&gt;${t}&lt;/span&gt;`).join('')}</pre
                             ${r.tags.map(t => `<span class="tag">${t}</span>`).join('')}
                         </div>
                         <h3 class="recipe-title">${r.title}</h3>
-                        <div class="recipe-time">⏱️ ${r.time}</div>
+                        <div class="recipe-time"><i class="far fa-clock"></i> ${r.time}</div>
                     </div>
                 `;
                 grid.appendChild(card);

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 48: Simpele Markdown Preview - DOM Projecten</title>
+    <title>Project 48: Simpele Markdown Previewer - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -14,33 +14,35 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
             padding: 2rem;
             max-width: 1000px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
         }
 
         .level {
             display: inline-block;
             padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -48,7 +50,7 @@
         }
 
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
         }
@@ -59,41 +61,35 @@
         .instructions,
         .tips {
             padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
         }
 
         .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            border-left: 4px solid #f59e0b;
         }
 
         .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
+            border-left: 4px solid #0ea5e9;
         }
 
         .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
+            border-left: 4px solid #94a3b8;
         }
 
         .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
+            border-left: 4px solid #3b82f6;
         }
 
         .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            border-left: 4px solid #10b981;
         }
 
         h3 {
+            color: #f8fafc;
             margin-bottom: 1rem;
         }
 
@@ -103,7 +99,7 @@
         }
 
         .code-example {
-            background: #282c34;
+            background: #0f172a;
             color: #abb2bf;
             padding: 1.5rem;
             border-radius: 8px;
@@ -111,6 +107,7 @@
             overflow-x: auto;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            border: 1px solid #334155;
         }
 
         .code-example .keyword {
@@ -128,20 +125,20 @@
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #667eea;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
         }
 
-        /* Document Area */
+        /* Project Area */
         .project-area {
             display: flex;
             gap: 20px;
-            background: #f8fafc;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
-            border: 2px solid #e2e8f0;
+            border: 1px solid #334155;
             height: 500px;
         }
 
@@ -155,7 +152,7 @@
         .editor-container h4,
         .preview-container h4 {
             margin-bottom: 10px;
-            color: #64748b;
+            color: #cbd5e1;
             text-transform: uppercase;
             font-size: 0.85rem;
             letter-spacing: 1px;
@@ -164,8 +161,10 @@
         .editor {
             flex: 1;
             padding: 15px;
-            border: 2px solid #cbd5e1;
+            background: #0f172a;
+            border: 1px solid #334155;
             border-radius: 8px;
+            color: #f8fafc;
             font-family: monospace;
             font-size: 1rem;
             resize: none;
@@ -180,50 +179,38 @@
         .preview {
             flex: 1;
             padding: 15px;
-            border: 2px solid transparent;
+            background: #f8fafc;
             border-radius: 8px;
             font-size: 1rem;
-            background: white;
             overflow-y: auto;
-            color: #334155;
+            color: #1e293b;
             line-height: 1.6;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Generated Markdown default CSS */
+        /* Markdown Preview Styling */
         .preview h1 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #e2e8f0;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
             padding-bottom: 5px;
             color: #0f172a;
         }
 
         .preview h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            margin-top: 15px;
-            color: #0f172a;
+            font-size: 1.4rem;
+            margin: 1rem 0 0.5rem;
+            color: #1e293b;
         }
 
         .preview h3 {
-            font-size: 1.17rem;
-            margin-bottom: 8px;
-            margin-top: 12px;
-            color: #0f172a;
+            font-size: 1.1rem;
+            margin: 0.8rem 0 0.4rem;
+            color: #334155;
         }
 
         .preview p {
-            margin-bottom: 15px;
-        }
-
-        .preview strong {
-            font-weight: bold;
-            color: #000;
-        }
-
-        .preview em {
-            font-style: italic;
+            margin-bottom: 1rem;
         }
 
         .preview code {
@@ -233,74 +220,124 @@
             font-family: monospace;
             color: #ef4444;
         }
+
+        .preview strong {
+            font-weight: bold;
+        }
+
+        .preview em {
+            font-style: italic;
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <h1>Project 48: Simpele Markdown Previewer</h1>
-        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">Data
-            Logic</span>
-        <p class="description">Maak the the een the simpele parser the The the text the met the '# Header', '**dik**'
-            the the naar HTML tags The omzet!</p>
+        <span class="level">Data Logic</span>
+        <p class="description">Bouw een parser die Markdown-tekst zoals headers en dikgedrukte woorden realtime omzet
+            naar HTML.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>Het gebruik van Regular Expressions (RegEx) om specifieke tekstpatronen te vinden.</li>
+                <li>Het realtime updaten van de DOM op basis van textarea-invoer.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>String.replace()</strong> – Het hart van onze parser, die patterns vervangt door HTML tags.
+                </li>
+                <li><strong>Global (g) & Multiline (m) Flags</strong> – Om patronen over de gehele tekst en op nieuwe
+                    regels te vinden.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: Het Regex Gevaar (Globaal vs Lokaal)</h4>
-                <p>Als je <code>text.replace('**', '&lt;strong&gt;')</code> the gebruikt the, the vervangt the
-                    JavaScript the the ALLEEN the the de the allereerste the "the**the" die the hij tegenkomt. The Door
-                    the the een Reguliere Expressie the (RegEx) te the the the the maken the the the the over the met
-                    The "G" The (Global) the the the parameter <code>/regex/g</code> The the the The , the the checkt
-                    the The hij het The the hele The the the document!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// De syntax is the /pattern/flags  </span>
-<span class="comment">// `g` staat voor global (alles vervangen)</span>
-<span class="comment">// `m` (the the the multi-line) The The the is the cruciaal The the voor The the de enters the \n \r !</span>
-<span class="keyword">let</span> regexKlaar = <span class="keyword">/mijnPatroon/gm</span>;</pre>
+                <h4>Stap 1: Veranderingen Onderscheppen</h4>
+                <p>Luister naar de <code>input</code> event op de editor om direct te reageren op elke toetsaanslag.</p>
+                <div class="code-example">
+                    <pre>editor.addEventListener('input', () => {
+    preview.innerHTML = parseMarkdown(editor.value);
+});</pre>
                 </div>
             </div>
-
             <div class="step">
-                <h4>Stap 2: Capture Groups the the THE ($1)</h4>
-                <p>Hoe the The weet the the the the the the <code>replace</code> the the functie the the wat the The hij
-                    The TUSSEN the de The <code>**</code> the en The de <code>**</code> the The the the the The the the
-                    moet the The The zetten? Daar the the Gebruiken The The The the The the de we The the () The haakjes
-                    the voor The in the the The de The Regex! Dat in the the is the The een The "Capture The The Group"
-                    The !</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// (.*?) Betekent: vang The ALLES (The The in The de the the haken the ) the the op the !The The The The The The The The The The The The The The The The </span>
-htmlText = htmlText.<span class="function">replace</span>(<span class="keyword">/\*\*(.*?)\*\*/gim</span>, <span class="string">'&lt;strong&gt;$1&lt;/strong&gt;'</span>);
-
-<span class="comment">// De The the $1 The in the the The the the the replacement the the the the string the the the the verwijst The The naar The the wat the The the The the in The The het (eertse) The () the haakjes-the the the blok The was The the The The the gevangen The the !</span></pre>
+                <h4>Stap 2: RegEx Patronen Toepassen</h4>
+                <p>Gebruik vervangingsregels voor headers, dikgedrukte en schuingedrukte tekst.</p>
+                <div class="code-example">
+                    <pre>text = text.replace(/^# (.*)$/gm, '&lt;h1&gt;$1&lt;/h1&gt;');
+text = text.replace(/\*\*(.*)\*\*/g, '&lt;strong&gt;$1&lt;/strong&gt;');</pre>
                 </div>
             </div>
-
             <div class="step">
-                <h4>Stap 3: Het Enters The The The The Probleem the The </h4>
-                <p>In the the HTML The the The the the is een The Enter in the the The the The de code the onzichtbaar
-                    The. The The In the Markdown the the The betekent The een enter vaak een the the The The nieuwe
-                    Alinea of the The The! The The the <code>&lt;br&gt;</code> The! We the The The The moeten The The
-                    The de <code>\n</code> the (newline) characters dus vertalen.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Zoek NAAR the THE THE de The the ENTER the (\n) en the the the the the vervang The The the The hem met the The de The the HTML de variant The The.</span>
-htmlText = htmlText.<span class="function">replace</span>(<span class="keyword">/\n/g</span>, <span class="string">'&lt;br&gt;'</span>);</pre>
+                <h4>Stap 3: Nieuwe Regels Behandelen</h4>
+                <p>Markdown gebruikt vaak gewone enters voor witruimte. Zet deze om naar <code>&lt;br&gt;</code> tags.
+                </p>
+                <div class="code-example">
+                    <pre>text = text.replace(/\n/g, '&lt;br&gt;');</pre>
                 </div>
             </div>
         </div>
 
+        <!-- Code Voorbeeld -->
+        <div class="code-example">
+            <h3>💻 De Parser Functie</h3>
+            <pre>function parseMarkdown(text) {
+    let html = text;
+    // Headers
+    html = html.replace(/^#\s(.*)$/gm, '&lt;h1&gt;$1&lt;/h1&gt;');
+    html = html.replace(/^##\s(.*)$/gm, '&lt;h2&gt;$1&lt;/h2&gt;');
+    // Bold/Italic
+    html = html.replace(/\*\*(.*?)\*\*/g, '&lt;strong&gt;$1&lt;/strong&gt;');
+    html = html.replace(/\*(.*?)\*/g, '&lt;em&gt;$1&lt;/em&gt;');
+    return html;
+}</pre>
+        </div>
+
         <!-- Instructies -->
         <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
+            <h3>✅ Instructies:</h3>
             <ul>
-                <li>In het the Linker the the the veld, The the pas the the tekst The aan The The met the headers
-                    <code>#</code> en typ The The bold <code>**</code> tekst.</li>
-                <li>The De the the the the rechter The The de kanten The past The the zich The The direct the the the
-                    formatered the aan The The the The de de live preview The The The The blok!</li>
-                <li>Check the The of the the the the Enters The the The the (Newlines) The the netjes the the The worden
-                    the overgenomen!</li>
+                <li>Typ Markdown in het linkervak (bijv. <code># Titel</code>).</li>
+                <li>Gebruik <code>**tekst**</code> voor dikgedrukt en <code>*tekst*</code> voor schuin.</li>
+                <li>Bekijk het direct gerenderde resultaat in het rechtervak.</li>
             </ul>
         </div>
 
@@ -308,66 +345,58 @@ htmlText = htmlText.<span class="function">replace</span>(<span class="keyword">
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong>The Volgorde is the The Cruciaal!:</strong> The the The the parse the The The functie the
-                    the voeren the the the The we de vervangingen in volgorde the The the the the The uit! the The Doe
-                    The <code>&lt;br&gt;</code> The the always the ALS LAATST The! the The Anders the The The The the
-                    breek the je the de the The Regex The The the in de regels the the theThe The Ervoor The! The The
-                </li>
+                <li><strong>Order matters:</strong> Pas complexere RegEx regels eerst toe voordat je eenvoudige tekens
+                    (zoals witruimte) vervangt.</li>
             </ul>
         </div>
 
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: "Greedy" The Regexes the</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - (.*) Zonder The the the vraagteken is "the the Greedy The". The </span>
-<span class="comment">// Als The the the the tekst is: "**A** the en the **B**", The pakt hij the the The ALLLES tussen The de the de The eerste The the en de the laatste The de *, the the dus The The the het resultaat wordt 1 The mega the dikgedrukte the zin! The </span>
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: Te gulzige (greedy) matching</h4>
+                <p style="color: #f87171;">RegEx probeert standaard zoveel mogelijk tekst te pakken. Gebruik
+                    <code>.*?</code> in plaats van <code>.*</code> om te stoppen bij de eerste match.</p>
+                <div class="code-example">
+                    <pre>// FOUT: pakt alles tussen eerste en LAATSTE ster
+text.replace(/\*(.*)\*/g, '...');
 
-<span class="comment">// OPLOSSING: the The Gebruik (.*?) The. The the the Het the Vraagteken the The maakt the The The the regex "Lazy", Hij the the the stopt The The The direct the The the the bij de the The EERSTE the the afsluitende The tag the die de hij The Tegenkomt The The!</span>
-htmlText.<span class="function">replace</span>(<span class="keyword">/\*\*(.*?)\*\*/gim</span>, <span class="string">'&lt;strong&gt;$1&lt;/strong&gt;'</span>);</pre>
+// GOED: pakt alles tussen eerste en VOLGENDE ster
+text.replace(/\*(.*?)\*/g, '...');</pre>
                 </div>
             </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Voeg The the blockquotes The The the Toe!</strong> the the Maak een regex The the voor
-                        The the <code>> the een quote!</code> The. The Vervang The the de The matched the The de $1 in
-                        The The the the een <code>&lt;blockquote&gt;$1&lt;/blockquote&gt;</code> The the the om the de
-                        quotes stylen the! </li>
-                    <li><strong>Images!:</strong> The The De syntax voor The The images The is the
-                        <code>![The Alt Text](url)</code> The. Kun the jij The the two the The The Capture The the the
-                        the Groups <code>$1</code> the The de text, the $2 the URL the The The the The the The The the
-                        maken?! </li>
+                    <li><strong>Images & Links:</strong> Voeg support toe voor <code>[link](url)</code> en
+                        <code>![alt](url)</code>.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
             <div class="editor-container">
                 <h4>Markdown Editor</h4>
-                <textarea class="editor" id="md-input"># Welkom bij de Markdown Parser!
+                <textarea class="editor" id="md-input"># Welkom!
+Dit is een live **Markdown** previewer.
 
-Je kunt hier Headers genereren door hashtags te the the The gebruiken.
-## Subheader
-### Een the the the Derde The The THE The HEADER the the The
+## Lijsten werken nog niet...
+Maar *schuin* en `code` wel!
 
-Tekst kan **dikgedrukt** of *schuingedrukt* zijn!
-
-Je kunt the ook the the stukjes the The pure The `code` schrijven, the The the handig he?</textarea>
+### Probeer het zelf:
+Typ hieronder je eigen tekst.</textarea>
             </div>
 
             <div class="preview-container">
-                <h4>Live Preview Resultaat</h4>
+                <h4>Live Preview</h4>
                 <div class="preview" id="md-preview"></div>
             </div>
         </div>
@@ -379,43 +408,34 @@ Je kunt the ook the the stukjes the The pure The `code` schrijven, the The the h
         const editor = document.getElementById('md-input');
         const preview = document.getElementById('md-preview');
 
-        // Onze Super the the The the the Simple! The the the Parser Function The The the the! The The the
         function parseMarkdown(text) {
-            let htmlText = text;
+            let html = text;
 
-            // 1. Headers H1, H2, H3
-            // starts with The the '#' followed The the by the whitespace \s the The and anything else (.*) Then
-            htmlText = htmlText.replace(/^#\s(.*)$/gm, '<h1>$1</h1>');
-            htmlText = htmlText.replace(/^##\s(.*)$/gm, '<h2>$1</h2>');
-            htmlText = htmlText.replace(/^###\s(.*)$/gm, '<h3>$1</h3>');
+            // Headers
+            html = html.replace(/^#\s(.*)$/gm, '<h1>$1</h1>');
+            html = html.replace(/^##\s(.*)$/gm, '<h2>$1</h2>');
+            html = html.replace(/^###\s(.*)$/gm, '<h3>$1</h3>');
 
-            // 2. the the Bold The The The the The the Text The the
-            htmlText = htmlText.replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>');
+            // Bold & Italic
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
 
-            // 3. The The The The Italic The The Text The the The the
-            // \b is een word the boundary
-            htmlText = htmlText.replace(/\*(.*?)\*/gim, '<em>$1</em>');
+            // Code
+            html = html.replace(/`(.*?)`/g, '<code>$1</code>');
 
-            // 4. the the the The Inline The Code The The 
-            htmlText = htmlText.replace(/`(.*?)`/gim, '<code>$1</code>');
+            // Linebreaks
+            html = html.replace(/\n/g, '<br>');
 
-            // 5. the The the The Paragraphs and The the The Linebreaks 
-            // the Any the empty enter \n\n the The gets the <br>
-            htmlText = htmlText.replace(/^\s*(\n)?\s*/g, ''); // the cleanup The the leading the The the empty spaces! the The
-            htmlText = htmlText.replace(/\n/g, '<br>');
-
-            return htmlText;
+            return html;
         }
 
-        // Live updater The the the Fire The the The! 
         editor.addEventListener('input', () => {
             preview.innerHTML = parseMarkdown(editor.value);
         });
 
-        // OnInit
+        // Init
         preview.innerHTML = parseMarkdown(editor.value);
 
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
             const expansions = document.getElementById('expansions');
             const btn = event.target;

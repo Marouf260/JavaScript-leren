@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 64: Weer App (Fetch Sim) - DOM Projecten</title>
+    <title>Project 64: Weer App (Fetch API) - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -14,121 +14,129 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            transition: background 0.5s;
+            color: #f8fafc;
+            transition: background 0.5s ease;
         }
 
-        /* The The Dynamic Backgrounds !  */
+        /* Dynamische Achtergronden op basis van weer-status */
         body.weer-zonnig {
-            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+            background: radial-gradient(circle at center, #fbbf24 0%, #0f172a 100%);
         }
 
         body.weer-regen {
-            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            background: radial-gradient(circle at center, #3b82f6 0%, #0f172a 100%);
         }
 
         body.weer-bewolkt {
-            background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);
+            background: radial-gradient(circle at center, #475569 0%, #0f172a 100%);
         }
 
         body.weer-sneeuw {
-            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            background: radial-gradient(circle at center, #e2e8f0 0%, #0f172a 100%);
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
+            background: #1e293b;
             border-radius: 12px;
-            padding: 2rem;
+            padding: 2.5rem;
             max-width: 600px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 0.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
             text-align: center;
         }
 
+        h1 {
+            color: #f8fafc;
+            margin-bottom: 0.5rem;
+        }
+
         .level {
-            display: block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.25rem 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 2rem;
-            width: max-content;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        /* App Style WEER _ THE */
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
         .project-area {
-            background: rgba(255, 255, 255, 0.5);
-            /* Glass_The  */
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(10px);
             border-radius: 12px;
             padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #334155;
             display: flex;
             flex-direction: column;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        .TheZoekTheVorm_D_DeZkr {
+        .search-form {
             display: flex;
             gap: 10px;
             margin-bottom: 30px;
             width: 100%;
         }
 
-        .TheZoekTheVorm_D_DeZkr input {
+        .search-form input {
             flex: 1;
             padding: 12px 20px;
-            font-size: 1.1rem;
-            border: 2px solid #cbd5e1;
+            font-size: 1rem;
+            background: #0f172a;
+            border: 1px solid #334155;
             border-radius: 30px;
+            color: #f8fafc;
             outline: none;
-            background: rgba(255, 255, 255, 0.9);
         }
 
-        .TheZoekTheVorm_D_DeZkr input:focus {
+        .search-form input:focus {
             border-color: #3b82f6;
         }
 
-        .TheZoekTheVorm_D_DeZkr button {
+        .search-form button {
             background: #3b82f6;
             color: white;
             border: none;
             padding: 12px 25px;
             border-radius: 30px;
             cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
+            font-weight: 700;
+            transition: all 0.2s;
         }
 
-        .TheZoekTheVorm_D_DeZkr button:hover {
+        .search-form button:hover {
             background: #2563eb;
         }
 
-        .weer-TheKaart_TheOData_Z {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            display: none;
-            /* starts hidden Z ! */
-            animation: fadeInZ 0.5s ease;
-            width: 100%;
+        .search-form button:disabled {
+            background: #475569;
+            cursor: not-allowed;
         }
 
-        @keyframes fadeInZ {
+        .weather-card {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: translateY(10px);
@@ -140,349 +148,405 @@
             }
         }
 
-        .S_DDeStadNamHTitH {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #1e293b;
+        .city-name {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #f8fafc;
             margin-bottom: 5px;
-            text-transform: capitalize;
         }
 
-        .DdataDDeTmpH_VHTekstZ {
+        .temp-display {
             font-size: 5rem;
             font-weight: 900;
-            color: #0f172a;
+            color: #f8fafc;
             margin: 10px 0;
-            line-height: 1;
         }
 
-        .D_HetWeerIcoonEmojiHT {
-            font-size: 6rem;
-            line-height: 1;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .weather-icon {
+            font-size: 5rem;
             margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
         }
 
-        .Z_DeStatusT_xtDes_CHZ {
-            font-size: 1.2rem;
-            color: #475569;
+        .status-text {
+            font-size: 1.1rem;
+            color: #cbd5e1;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            font-weight: 700;
+            margin-bottom: 25px;
         }
 
-        .DetailsZWeerDataR_The {
+        .weather-details {
             display: flex;
             justify-content: space-around;
             width: 100%;
-            background: rgba(255, 255, 255, 0.7);
-            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
             border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .DEtailPTheItemO {
+        .detail-item {
             text-align: center;
-            color: #334155;
         }
 
-        .DEtailPTheItemO span {
+        .detail-item span {
             display: block;
-            font-size: 0.8rem;
-            color: #64748b;
+            font-size: 0.7rem;
+            color: #94a3b8;
             text-transform: uppercase;
             margin-bottom: 5px;
+            font-weight: 800;
         }
 
-        .DEtailPTheItemO div {
-            font-weight: bold;
-            font-size: 1.2rem;
+        .detail-item div {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #e2e8f0;
         }
 
-        .error-HmsgTheZ {
-            color: #ef4444;
-            font-weight: bold;
-            text-align: center;
-            display: none;
-            background: #fee2e2;
-            padding: 10px;
-            border-radius: 6px;
+        /* Documentation Styles */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .variable {
+            color: #e5c07b;
+        }
+
+        .expand-btn {
+            display: block;
             width: 100%;
-            margin-bottom: 20px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
         }
 
-        .loadingHTheTheDSpinZ {
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
             display: none;
-            margin: 20px 0;
-            color: #3b82f6;
-            font-weight: bold;
+        }
+
+        .expandable.show {
+            display: block;
         }
 
         .back-link {
-            display: block;
-            margin-top: 2rem;
-            color: #667eea;
+            display: inline-block;
+            margin-top: 1rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
-            text-align: center;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Project 64: Weer App (Fetch API Simulatie)</h1>
-        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;">Utility
-            Apps</span>
+        <h1>Project 64: Weer App (Network Fetch)</h1>
+        <span class="level">Advanced APIs</span>
+        <p class="description">Leer hoe de asynchrone JavaScript "Fetch API" werkt. Bouw een weer dashboard dat gegevens
+            simuleert en de UI dynamisch updatet inclusief laad-animaties.</p>
 
-        <p class="description" style="margin-bottom: 10px; text-align: center;">Zoek O the _The naar een the _stad en
-            The the krijg LIVE (The Gesimuleerde) weers_informatie data T_!.</p>
+        <div class="project-area">
+            <form class="search-form" id="search-form">
+                <input type="text" id="city-input" placeholder="Zoek een stad (bijv. Tokyo, Amsterdam...)" required
+                    autocomplete="off">
+                <button type="submit" id="submit-btn">Zoek</button>
+            </form>
+
+            <div id="loading"
+                style="display:none; margin: 1rem 0; color: #3b82f6; font-weight: bold; font-size: 1.2rem;">
+                <span style="display:inline-block; animation: spin 1s linear infinite;">⏳</span> Gegevens ophalen...
+            </div>
+
+            <style>
+                @keyframes spin {
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+            </style>
+
+            <div class="weather-card" id="weather-card">
+                <div class="city-name" id="display-city">Amsterdam</div>
+                <div class="weather-icon" id="display-icon">⛅</div>
+                <div class="temp-display" id="display-temp">14°C</div>
+                <div class="status-text" id="display-status">Bewolkt</div>
+
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <span>Luchtvochtigheid</span>
+                        <div id="display-humidity">70%</div>
+                    </div>
+                    <div class="detail-item">
+                        <span>Windkracht</span>
+                        <div id="display-wind">15 km/u</div>
+                    </div>
+                    <div class="detail-item">
+                        <span>Gevoelstemp.</span>
+                        <div id="display-feel">12°C</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Vrijwel elke moderne applicatie haalt the data op van een the externe server. Dit doe je middels een
+                protocol dat HTTP API's the the the heet. In dit framework leer je:</p>
+            <ul>
+                <li><strong>Promises (Beloftes):</strong> Een Fetch Call naar the een server sturen The is the the The
+                    en wachten op The de the postbode the Die terug the the the Komt in the de background.</li>
+                <li><strong>Async / Await Syntax:</strong> De the the de the elegante the the the the code syntaxis the
+                    waarmee je the the the JS engine the beveelt: "Slaap The the hier the the the Even the the tot de
+                    The the JSON Data binnen The The de is".</li>
+                <li><strong>UI The State Toggling:</strong> Het netjes verbergen van The de The de the data card the the
+                    the the the the the the The tonen the the the the van een Loading The Spinner.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>JSON (JavaScript Object Notation):</strong> Servers zenden text data. JSON.parse()
+                    "Deserializeert" the deze text naar werkende JS The Object the properties the the The de The (zoals
+                    <code>responseData.temp</code>).</li>
+                <li><strong>Asynchrone Functies:</strong> Voeg the het woord The the The keyword <code>async</code> toe
+                    voor The The een the the <code>function()</code>. The the the Pas dan The the mag je the the the The
+                    magische The <code>await</code> keyword the gebruiken the The within The Die body!</li>
+                <li><strong>Try & Catch (Error Handling):</strong> Wat the the the the the als de server the plat The
+                    the ligt the the of the the de User the offline the The Is? the The the Code the Zonder
+                    <code>try {} catch(e) {}</code> The The the the The The the block crasht the de browser. Pika!</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: De (Gesimuleerde) Fetch API</h4>
-                <div
-                    style="background: #e0f2fe; padding: 15px; border-radius: 6px; border-left: 4px solid #0ea5e9; font-size: 0.9rem; color: #0369a1; margin-bottom: 15px;">
-                    <strong>LET OP:</strong> the The Omdat V_ een echte weer V_API _the vaak keys The en The tokens The
-                    the the the the the_ The _vereist, the \_The <strong>Simuleren O</strong>_ Thewe hier_the _een_
-                    REST_the_ the <code>fetch()</code> API! the_ the the _callT _met <code>setTimeout</code> The en the
-                    The _The the_ een _Z Promise H ! The (Dit the __werkt the precies The HetZelfde als een Echte The
-                    Server The Database_ ! )
+                <h4>Stap 1: De Asynchrone Ophaalfunctie (The Fetch)</h4>
+                <p>We markeren onze startfunctie als <code>async</code>, zodat hij the HTTP verbinding The the the The
+                    de the the start The the The en op de the the respons the The Wacht.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">async</span> <span class="keyword">function</span> <span class="function">fetchWeather</span>(city) {
+    <span class="keyword">try</span> {
+        loader.style.<span class="variable">display</span> = <span class="string">'block'</span>; <span class="comment">// Toon the Spinner</span>
+        
+        <span class="comment">// The AWAIT: pauzeer de functie hier tot The the server reageert!</span>
+        <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">`https://api.weathertest.com/q=</span>${city}<span class="string">`</span>);
+        <span class="keyword">const</span> data = <span class="keyword">await</span> response.<span class="function">json</span>(); <span class="comment">// Decodeer tot JSON object</span>
+        
+        <span class="function">updateUI</span>(data); <span class="comment">// Druk het af The the The in de the DOM.</span>
+    } <span class="keyword">catch</span> (err) {
+        <span class="function">alert</span>(<span class="string">"Kan server the The the niet bereiken!"</span>);
+    } <span class="keyword">finally</span> {
+        loader.style.<span class="variable">display</span> = <span class="string">'none'</span>; <span class="comment">// the the the The Verberg spinner altijd!</span>
+    }
+}</pre>
                 </div>
-                <p>We maken een the the <code>Promise</code>. Dit the Thethe is_ een the the belofte dat the je in de
-                    toekomst the eet Data_ of_ Error! The_ the terug krijgt. </p>
             </div>
 
             <div class="step">
-                <h4>Stap 2: Async en Await ! </h4>
-                <p>Een the_ submit _ event_ kan *Async* the_ the gemaakt_ the worden_. Je the z_TheZegt
-                    <code>await fetchSomething()</code> the The. The de code _pauzeert_ op de! the _regel_ Thethe TOT
-                    The er_ responseThe__is! the </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// MAIN Async the _The handler Z </span>
-VZ_DeTheVoHrmZoekO.addEventListener(<span class="string">'submit'</span>, <span class="keyword">async</span> (e_) => {
-    e_.<span class="function">preventDefault</span>();
-    
-    <span class="keyword">try</span> {
-        <span class="comment">// WACHT_ OP_ DE DATA_ (The _await)! The The </span>
-        <span class="keyword">const</span> THE_WeerO_ZDataGThisHDeData_S = <span class="keyword">await</span> <span class="function">TheG_esimuleerdeAFetchPZ_I_D</span>(deGet_TypTe_DTheTexZO__tTheDataZThe);
-
-        <span class="comment">// DATA_The_ IS_ BINNEN!! _  (Update THE UI !)</span>
-        KAartH_WeerODataVTheHTML.style.display = <span class="string">"flex"</span>;
-        
-    } <span class="keyword">catch</span> (err) {
-        ERRUIMess_VDeHT.style.display = <span class="string">"block"</span>; <span class="comment">// vANG ERROR !</span>
-    }
-});</pre>
-                </div>
+                <h4>Stap 2: The Mock Data Trick</h4>
+                <p>In dit pure HTML/JS project bevragen we The <em>niet daadwerkelijk</em> de dure OpenWeatherMap API
+                    (omdat the je The daar Private the API keys The The the the the voor the nodig The the hebt), the
+                    the We wachten simpelweg the The the the 1 The seconde via The the <code>await new Promise()</code>
+                    om The the de server The The the The the the the the vertraging the te the simuleren, waarna the The
+                    the The The the The we The direct the the the resultaat The out de the the in The code The the
+                    <code>MOCK_DATA</code> dictionary The pakken!</p>
             </div>
-        </div>
-
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Zoek O the _The naar een the _stad (Bv. the `amsterdamThe` the_ of the `tokio` O! )en The the krijg
-                    LIVE (The Gesimuleerde) weers_informatie data T_!.</li>
-                <li>the Bekijk hoe_ The _het _The de _Laden ! _ spinner_ UI Eerst! in_ Beeld is ! </li>
-            </ul>
         </div>
 
         <!-- Tips -->
         <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
+            <h3>💡 Tips voor Studenten</h3>
             <ul>
-                <li><strong>try / catch _the the:</strong> the The In The de HTML the zie the the je_ de `catch`. Bij
-                    Asynchrone the the logica _KUNNEN dingen the Fout ! the the _gaan. `Try/Catch` is the THE _ the the_
-                    standaard_ Manier THE THE _The. the </li>
+                <li><strong>Knop Blokkeren:</strong> Merk op hoe de the code the the The the knop the
+                    <code>disabled = true</code> The activeert zodra je drukt? Dit the The the the The voorkomt dat
+                    impatient The The de users 20 API-calls The spammen door herhaaldelijk the The the te klikken the
+                    The the tijdens het the The laden!</li>
             </ul>
         </div>
 
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Vergeten <code>await</code>_ the The the In The V The the the ! Te zetten ! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je de_ the the the  `await` the_ _laat the the ! Dan the kThe kThe The the `const TheWeer` = &lt;Promise (pending..)&gt; The the En niet THE het Object data_ met de graden_ !  </span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The thethe Kijk_ ALTIJD! the Of de  Functie een PROMise_The The is ! !! The The The ! The_ </span></pre>
-                </div>
-            </div>
-        </div>
-
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Echte the API! !! The The The The! </strong> the the thethe the THE the Bouw The het !
-                        the The de The API the_ the the The code_ the_ _OM_ the Naar de Echte_ The OpenWeather API The !
-                        VZ_ TheZ_ the _ !! OpeN! The _ . _The !. THE </li>
+                    <li><strong>Echte API:</strong> Ga naar the The the <code>openweathermap.org</code>, registreer The
+                        The The the The the een gratis the The Dev The The The the Account, en The vervang the the
+                        simpele the The <code>setTimeout</code> mock met een the The echte the The
+                        <code>fetch(url_with_api_key)</code> The call!</li>
+                    <li><strong>Local Storage Memory:</strong> Sla the the de the <code>cityInput.value</code> op in de
+                        the <code>localStorage.setItem("lastCity", city)</code>. Lees The de the The de stad the bij het
+                        the the herladen the The van the the the The de The page the Direct uit de The cache!</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- Demo Area -->
-        <div class="project-area">
-
-            <form class="TheZoekTheVorm_D_DeZkr" id="ZZoekVormWeerDeApp_H">
-                <input type="text" id="ZZDeInvoerSThTa_d_The" placeholder="Bv. Amsterdam, Parijs, Tokio..." required
-                    autocomplete="off">
-                <button type="submit">Zoek Weer</button>
-            </form>
-
-            <div class="error-HmsgTheZ" id="UErr_MessaGeTheZ">Stad niet gevonden! Probeer een andere.</div>
-            <div class="loadingHTheTheDSpinZ" id="DeLLoadingSpinn_the_TheH">📡 Verbinden met Weer-Satelliet... </div>
-
-            <div class="weer-TheKaart_TheOData_Z" id="HDE_ReSultaatKaartOTheZDataWeer">
-                <div class="S_DDeStadNamHTitH" id="SStad_Textnaam_TheHData">Amsterdam</div>
-                <div class="D_HetWeerIcoonEmojiHT" id="HHetUIEmojiTDeIcoonTV">⛅</div>
-                <div class="DdataDDeTmpH_VHTekstZ" id="THetTempTekstVFieldHThe_V"><span style="font-size:4rem;"></span>
-                </div> <!-- Z JS Vult the the The innerThe txt The -->
-                <div class="Z_DeStatusT_xtDes_CHZ" id="TThEStatusTextDescVThe">Licht Bewolkt</div>
-
-                <div class="DetailsZWeerDataR_The">
-                    <div class="DEtailPTheItemO">
-                        <span>Luchtvochtigheid</span>
-                        <div id="uLuchtvochtheVNumDeH_">__%</div>
-                    </div>
-                    <div class="DEtailPTheItemO">
-                        <span>Wind</span>
-                        <div id="uWindDDataSZTheNumH_">__ km/u</div>
-                    </div>
-                    <div class="DEtailPTheItemO">
-                        <span>Min/Max</span>
-                        <div id="uThe_MinMaxDeTmpTTheDNumH_">__° / __°</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Extra Uitdagingen</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const VZ_DeTheVoHrmZoekO = document.getElementById('ZZoekVormWeerDeApp_H');
-        const TIInpu_tGStadTVeldH = document.getElementById('ZZDeInvoerSThTa_d_The');
+        const weatherForm = document.getElementById('search-form');
+        const cityInput = document.getElementById('city-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const card = document.getElementById('weather-card');
+        const loader = document.getElementById('loading');
 
-        const ERRUIMess_VDeHT = document.getElementById('UErr_MessaGeTheZ');
-        const LLTheLoaderUI__SpH = document.getElementById('DeLLoadingSpinn_the_TheH');
-        const KAartH_WeerODataVTheHTML = document.getElementById('HDE_ReSultaatKaartOTheZDataWeer');
-
-        // The The UI the NodeThe Refs _Z
-        const nNStaZdaHTextDO_MT = document.getElementById('SStad_Textnaam_TheHData');
-        const nETheEmojiWeerOTheDO_MT = document.getElementById('HHetUIEmojiTDeIcoonTV');
-        const TheTemptDeTextHTMLVFieldDe_the = document.getElementById('THetTempTekstVFieldHThe_V');
-        const DDeStatus_VThe_HTmslGTheTextDO_M = document.getElementById('TThEStatusTextDescVThe');
-
-        const LVocDDataH_HText = document.getElementById('uLuchtvochtheVNumDeH_');
-        const WZ_WiDntDeHDataOText = document.getElementById('uWindDDataSZTheNumH_');
-        const MMaMinMZzGTheTexVText = document.getElementById('uThe_MinMaxDeTmpTTheDNumH_');
-
-        // Gesimuleerde API Database_ (Mocked Backend Data)! !  Z_ 
-        // Normaal the HThe roep _the THE_The je _hiervoor https://api.openweathermap.org aan the_The 
-        const DDDAatabaseSDeSTheMock_A_Pi_ZDB = {
-            'amsterdam': { temp: 14, status: 'Bewolkt', icon: '⛅', bgCode: 'weer-bewolkt', lucht: 76, wind: 18, min: 10, max: 15 },
-            'parijs': { temp: 22, status: 'Zonnig', icon: '☀️', bgCode: 'weer-zonnig', lucht: 45, wind: 10, min: 18, max: 24 },
-            'tokio': { temp: 28, status: 'Regen', icon: '🌧️', bgCode: 'weer-regen', lucht: 85, wind: 25, min: 24, max: 30 },
-            'oslo': { temp: -2, status: 'Sneeuw', icon: '❄️', bgCode: 'weer-sneeuw', lucht: 60, wind: 5, min: -8, max: 0 },
-            'new york': { temp: 18, status: 'Licht Bewolkt', icon: '🌤️', bgCode: 'weer-zonnig', lucht: 55, wind: 12, min: 15, max: 20 },
-            'Londen': { temp: 12, status: 'Regen', icon: '🌧️', bgCode: 'weer-regen', lucht: 80, wind: 22, min: 8, max: 13 }
+        // Gesimuleerde "Database" (Om CORS en The Rate-Limiting The errors in The dom project te vermijden)
+        const MOCK_DATA = {
+            'amsterdam': { temp: 14, status: 'Bewolkt', icon: '⛅', bg: 'weer-bewolkt', hum: 70, wind: 15, feel: 12 },
+            'tokyo': { temp: 28, status: 'Zonnig', icon: '☀️', bg: 'weer-zonnig', hum: 40, wind: 5, feel: 30 },
+            'oslo': { temp: -2, status: 'Sneeuw', icon: '❄️', bg: 'weer-sneeuw', hum: 80, wind: 10, feel: -6 },
+            'london': { temp: 12, status: 'Regen', icon: '🌧️', bg: 'weer-regen', hum: 90, wind: 20, feel: 10 }
         };
 
-        // De Fake Fetch ! Async Promise The 
-        function TheG_esimuleerdeAFetchPZ_I_D(deK_StadThe_ZO) {
-            return new Promise((The_H_Resolve, TTheH_Z_R_Reject) => {
-                // Fake netwerk delay! _ The 
-                setTimeout(() => {
-                    const deSZTheK_GezochteZTheStadNTextStringO = deK_StadThe_ZO.toLowerCase();
-                    const theWeerTObjDataTheVanDTheDB_V = DDDAatabaseSDeSTheMock_A_Pi_ZDB[deSZTheK_GezochteZTheStadNTextStringO];
-
-                    if (theWeerTObjDataTheVanDTheDB_V) {
-                        The_H_Resolve(theWeerTObjDataTheVanDTheDB_V);
-                    } else {
-                        // Generate Fake O Data the voor the de ! "the Rest _" _ ! ! 
-                        const vRndRTheTempHTempThe = Math.floor(Math.random() * 35) - 5; // -5 to 30 C! 
-                        const iO_sOTheRegenZV = Math.random() > 0.6;
-
-                        The_H_Resolve({
-                            temp: vRndRTheTempHTempThe,
-                            status: iO_sOTheRegenZV ? 'Regen' : (vRndRTheTempHTempThe > 20 ? 'Zonnig' : 'Bewolkt'),
-                            icon: iO_sOTheRegenZV ? '🌧️' : (vRndRTheTempHTempThe > 20 ? '☀️' : '⛅'),
-                            bgCode: iO_sOTheRegenZV ? 'weer-regen' : (vRndRTheTempHTempThe > 20 ? 'weer-zonnig' : 'weer-bewolkt'),
-                            lucht: Math.floor(Math.random() * 50) + 40,
-                            wind: Math.floor(Math.random() * 30),
-                            min: vRndRTheTempHTempThe - 5,
-                            max: vRndRTheTempHTempThe + 5
-                        });
-                    }
-                }, 1200); // 1.2 sec laden H The 
-            });
-        }
-
-
-        // MAIN Async the _The handler Z 
-        VZ_DeTheVoHrmZoekO.addEventListener('submit', async (e_) => {
-            e_.preventDefault();
-            const deGet_TypTe_DTheTexZO__tTheDataZThe = TIInpu_tGStadTVeldH.value.trim();
-            if (!deGet_TypTe_DTheTexZO__tTheDataZThe) return;
-
-            // UI The_  Load The 
-            ERRUIMess_VDeHT.style.display = "none";
-            KAartH_WeerODataVTheHTML.style.display = "none";
-            LLTheLoaderUI__SpH.style.display = "block"; // Z Tonen V 
+        // Het sleutelwoord ASYNC stelt ons in staat om the 'await' the command The te the gebruiken
+        async function fetchWeather(city) {
+            // UI State Manager: Toon loader en blokkeer de the The search knop
+            loader.style.display = 'block';
+            card.style.display = 'none';
+            submitBtn.disabled = true;
 
             try {
-                // WACHT_ OP_ DE DATA_ (The _await)! The The 
-                const THE_WeerO_ZDataGThisHDeData_S = await TheG_esimuleerdeAFetchPZ_I_D(deGet_TypTe_DTheTexZO__tTheDataZThe);
+                // Hier stop de executie van de the code 1000 miliseconde zonder de tab te bevriezen. Network imitatie!
+                await new Promise(r => setTimeout(r, 1000));
 
-                // DATA_The_ IS_ BINNEN!! _ 
-                LLTheLoaderUI__SpH.style.display = "none"; // Hide Load !
+                // Normaliseer de string (" Amsterdam  " -> "amsterdam")
+                const cityLower = city.toLowerCase().trim();
 
-                // VUl de! Html in The H _The! _! 
-                nNStaZdaHTextDO_MT.innerText = deGet_TypTe_DTheTexZO__tTheDataZThe;
-                nETheEmojiWeerOTheDO_MT.innerText = THE_WeerO_ZDataGThisHDeData_S.icon;
-                TheTemptDeTextHTMLVFieldDe_the.innerHTML = `${THE_WeerO_ZDataGThisHDeData_S.temp}<span style="font-size:3rem; position:relative; top:-20px;">°C</span>`;
-                DDeStatus_VThe_HTmslGTheTextDO_M.innerText = THE_WeerO_ZDataGThisHDeData_S.status;
+                // Fetch the Data The of The fallback The naar The a random generate The weather object
+                const data = MOCK_DATA[cityLower] || {
+                    temp: Math.floor(Math.random() * 25) + 5,
+                    status: 'Licht Bewolkt',
+                    icon: '🌤️',
+                    bg: 'weer-bewolkt',
+                    hum: Math.floor(Math.random() * 40) + 40,
+                    wind: Math.floor(Math.random() * 20) + 5,
+                    feel: 17
+                };
 
-                LVocDDataH_HText.innerText = THE_WeerO_ZDataGThisHDeData_S.lucht + '%';
-                WZ_WiDntDeHDataOText.innerText = THE_WeerO_ZDataGThisHDeData_S.wind + ' km/u';
-                MMaMinMZzGTheTexVText.innerText = `${THE_WeerO_ZDataGThisHDeData_S.min}° / ${THE_WeerO_ZDataGThisHDeData_S.max}°`;
+                // The Pass the returned data JSON to the render function
+                updateUI(city, data);
+            } catch (error) {
+                // In a real the fetch call The the dit the the vangt 404 the of offline the status af
+                alert("Er is iets misgegaan the the bij het the the the the ophalen van het weer.");
+            } finally {
+                // Zelfs the the bij een the Mislukking the the moet The the the The spinner The the the The the Hide The and the the knop the the unblocken!
+                loader.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        }
 
-                // Update Background The ! Z DataThe !
-                document.body.className = THE_WeerO_ZDataGThisHDeData_S.bgCode;
+        function updateUI(city, data) {
+            // We updaten de elementen in de DOM gebaseerd op de de JS object The property Data
+            document.getElementById('display-city').innerText = city.charAt(0).toUpperCase() + city.slice(1).trim();
+            document.getElementById('display-temp').innerText = data.temp + '°C';
+            document.getElementById('display-status').innerText = data.status;
+            document.getElementById('display-icon').innerText = data.icon;
+            document.getElementById('display-humidity').innerText = data.hum + '%';
+            document.getElementById('display-wind').innerText = data.wind + ' km/u';
+            document.getElementById('display-feel').innerText = data.feel + '°C';
 
-                // BOEM SHOW !The! The 
-                KAartH_WeerODataVTheHTML.style.display = "flex";
+            // Verander dynamically The CSS The the body classes the The gradient The de theme colors The the bepalen
+            document.body.className = data.bg;
+            card.style.display = 'flex';
+        }
 
-            } catch (err) {
-                LLTheLoaderUI__SpH.style.display = "none";
-                ERRUIMess_VDeHT.style.display = "block";
-                console.error(err);
+        weatherForm.addEventListener('submit', e => {
+            e.preventDefault(); // Herlaad The the page the The the niet!
+            const city = cityInput.value;
+            if (city) {
+                fetchWeather(city);
             }
         });
 
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
+            const exp = document.getElementById('expansions');
             const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Extra Uitdagingen' : '📖 Toon Extra Uitdagingen';
         }
     </script>
 </body>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 42: Regex Tester - DOM Projecten</title>
+    <title>Project 42: RegEx Highlighter - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -14,33 +14,35 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
             padding: 2rem;
             max-width: 900px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
         }
 
         .level {
             display: inline-block;
             padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -48,7 +50,7 @@
         }
 
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
         }
@@ -59,41 +61,35 @@
         .instructions,
         .tips {
             padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
         }
 
         .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            border-left: 4px solid #f59e0b;
         }
 
         .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
+            border-left: 4px solid #0ea5e9;
         }
 
         .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
+            border-left: 4px solid #94a3b8;
         }
 
         .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
+            border-left: 4px solid #3b82f6;
         }
 
         .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            border-left: 4px solid #10b981;
         }
 
         h3 {
+            color: #f8fafc;
             margin-bottom: 1rem;
         }
 
@@ -103,7 +99,7 @@
         }
 
         .code-example {
-            background: #282c34;
+            background: #0f172a;
             color: #abb2bf;
             padding: 1.5rem;
             border-radius: 8px;
@@ -111,6 +107,7 @@
             overflow-x: auto;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            border: 1px solid #334155;
         }
 
         .code-example .keyword {
@@ -128,25 +125,25 @@
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #667eea;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
         }
 
         /* RegExp Area */
         .project-area {
-            background: #fafafa;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
-            border: 2px dashed #3b82f6;
+            border: 1px solid #334155;
         }
 
         .regex-input-box {
             display: flex;
             align-items: center;
-            background: white;
-            border: 2px solid #ccc;
+            background: #0f172a;
+            border: 1px solid #334155;
             border-radius: 8px;
             padding: 5px 15px;
             margin-bottom: 20px;
@@ -155,7 +152,7 @@
         }
 
         .regex-input-box span {
-            color: #d97706;
+            color: #f59e0b;
             font-weight: bold;
         }
 
@@ -165,7 +162,8 @@
             outline: none;
             padding: 10px;
             font-size: 1.1rem;
-            color: #b91c1c;
+            color: #fb7185;
+            background: transparent;
             font-weight: bold;
             font-family: monospace;
         }
@@ -175,20 +173,23 @@
             border: none;
             outline: none;
             padding: 10px;
-            color: #2563eb;
+            background: transparent;
+            color: #60a5fa;
             font-weight: bold;
             font-family: monospace;
         }
 
-        .test-string-box {
+        .container-highlite {
             position: relative;
+            height: 150px;
+            margin-bottom: 10px;
         }
 
         .test-string {
             width: 100%;
             height: 150px;
             padding: 15px;
-            border: 2px solid #ccc;
+            border: 1px solid #334155;
             border-radius: 8px;
             font-size: 1.1rem;
             resize: vertical;
@@ -202,7 +203,7 @@
             top: 0;
             left: 0;
             z-index: 2;
-            caret-color: black;
+            caret-color: #f8fafc;
             margin: 0;
         }
 
@@ -210,14 +211,14 @@
             width: 100%;
             height: 150px;
             padding: 15px;
-            border: 2px solid transparent;
+            border: 1px solid transparent;
             border-radius: 8px;
             font-size: 1.1rem;
             font-family: monospace;
             white-space: pre-wrap;
             line-height: 1.5;
-            color: #444;
-            background: white;
+            color: #cbd5e1;
+            background: #0f172a;
             position: absolute;
             top: 0;
             left: 0;
@@ -225,12 +226,6 @@
             z-index: 1;
             margin: 0;
             overflow: hidden;
-        }
-
-        .container-highlite {
-            position: relative;
-            height: 150px;
-            margin-bottom: 10px;
         }
 
         .highlights mark {
@@ -246,86 +241,132 @@
             min-height: 20px;
             font-weight: bold;
         }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <h1>Project 42: RegEx Highlighter</h1>
-        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">Data
-            Logic</span>
-        <p class="description">Bouw een live editor voor Reguliere Expressies (RegExp) en zie direct wat jouw code
-            matcht in de tekst!</p>
+        <span class="level">Data Logic</span>
+        <p class="description">Maak een interactieve tool om Reguliere Expressies (RegEx) live te testen en de
+            resultaten in realtime te markeren.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>Werken met Regular Expressions (RegEx) in JavaScript.</li>
+                <li>Het markeren (highlighten) van specifieke tekstdelen in de DOM door strings te vervangen met
+                    HTML-tags.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>String.replace()</strong> – Om patronen in tekst te zoeken en deze te vervangen of te
+                    beïnvloeden.</li>
+                <li><strong>RegEx Flags</strong> – Het gebruik van <code>/g</code> (global) en <code>/i</code>
+                    (case-insensitive) om zoekopdrachten te verfijnen.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: Dynamic Highlighting (De Illusie)</h4>
-                <p>Een standaard <code>&lt;textarea&gt;</code> ondersteunt geen HTML elementen zoals
-                    <code>&lt;mark&gt;</code> of dikgedrukte kleuren er in. Hoe maken pseudo-code editors dit dan toch
-                    mogelijk? Met een optische illusie!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">&lt;!-- OP ACHTERGROND: Een transparante textarea, waar je écht in typt --&gt;</span>
-&lt;textarea class="test-string" spellcheck="false"&gt;Jouw tekst&lt;/textarea&gt;
-
-<span class="comment">&lt;!-- OP VOORGROND: Een DIV direct over de textarea gelegd via CSS Absolute Position --&gt;</span>
-<span class="comment">&lt;!-- pointer-events: none; zorgt dat je clicks er 'doorheen' vallen.</span>
-&lt;div class="highlights"&gt;&lt;mark&gt;Jouw&lt;/mark&gt; tekst&lt;/div&gt;</pre>
+                <h4>Stap 1: Verkrijgen van Invoer</h4>
+                <p>Haal de RegEx-patronen en de testtekst op uit de invoervelden van de UI.</p>
+                <div class="code-example">
+                    <pre>const pattern = document.getElementById('regex').value;
+const targetText = document.getElementById('test').value;</pre>
                 </div>
             </div>
-
             <div class="step">
-                <h4>Stap 2: De RegEx Machine</h4>
-                <p>Net als de letterlijke slashes <code>/patroon/g</code> die je typt, genereert onze Javascript live
-                    een object genaamd <code>new RegExp()</code>.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Lees de inputvelden uit</span>
-<span class="keyword">const</span> patroon = regexInput.value; <span class="comment">// bijv: "\b[A-Z]"</span>
-<span class="keyword">const</span> flag = flagsInput.value;   <span class="comment">// bijv: "g"</span>
-
-<span class="comment">// Draai de Javascript machine aan</span>
-<span class="keyword">const</span> regex = <span class="keyword">new</span> RegExp(patroon, flag);
-
-<span class="comment">// Vervang alles in de tekst dat de RegExp raakt door een &lt;mark&gt; element!</span>
-<span class="comment">// Het speciale "$&" karakter plakt het originele woord er netjes in terug.</span>
-<span class="keyword">const</span> highlightedText = text.<span class="function">replace</span>(regex, <span class="string">'&lt;mark&gt;$&amp;&lt;/mark&gt;'</span>);</pre>
-                </div>
-            </div>
-
-            <div class="step">
-                <h4>Stap 3: Foutafhandeling (Try-Catch)</h4>
-                <p>Omdat de gebruiker live RegEx typt in de inputvelden, crasht de applicatie genadeloos als the RegEx
-                    ineens ongeldig gemaakt wordt (bijvoorbeeld bij het openen van een <code>[</code> maar nog niet
-                    sluiten). JavaScript probeert in paniek die incomplete regex the runnen, maar weet zich er geen raad
-                    mee.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">try</span> {
-    <span class="comment">// PROBEER dit uit te voeren...</span>
-    <span class="keyword">const</span> regex = <span class="keyword">new</span> RegExp(patroon, flag);
-    
-    <span class="comment">// Geen error? Dan printen wij de markup in de frontend div!</span>
-    highlights.innerHTML = text.<span class="function">replace</span>(regex, <span class="string">'&lt;mark&gt;$&amp;&lt;/mark&gt;'</span>);
-    
-} <span class="keyword">catch</span> (err) {
-    <span class="comment">// Als het PROBEER gedeelte weigert te compilen, val je genadeloos hierin!</span>
-    <span class="comment">// In plaats van de hele site te doen crashen on-screen... geven wij een sierlijke melding.</span>
-    errMsg.innerText = <span class="string">"Syntax Error: Je RegExp is ongeldig gebouwd."</span>;
+                <h4>Stap 2: RegEx Object Maken</h4>
+                <p>Bouw een nieuw <code>RegExp</code> object dynamisch op basis van de string-invoer van de gebruiker.
+                </p>
+                <div class="code-example">
+                    <pre>let regex;
+try {
+    regex = new RegExp(pattern, 'g');
+} catch (e) {
+    console.log('Fout: ' + e);
 }</pre>
+                </div>
+            </div>
+            <div class="step">
+                <h4>Stap 3: Highlighter Toepassen</h4>
+                <p>Vervang alle overeenkomende tekstfragmenten door een <code>&lt;mark&gt;</code> element voor visuele
+                    feedback.</p>
+                <div class="code-example">
+                    <pre>const html = targetText.replace(regex, match => {
+    return `&lt;mark&gt;${match}&lt;/mark&gt;`;
+});
+outputDiv.innerHTML = html;</pre>
                 </div>
             </div>
         </div>
 
+        <!-- Code Voorbeeld -->
+        <div class="code-example">
+            <h3>💻 Foutieve RegEx Veilig Opvangen</h3>
+            <pre>function updateHighlights() {
+    const pattern = regexInput.value;
+    const text = textInput.value;
+    
+    if (pattern === '') {
+        output.innerHTML = text;
+        return;
+    }
+
+    try {
+        const regex = new RegExp(pattern, 'g');
+        let highlighted = text.replace(regex, match => `&lt;mark&gt;${match}&lt;/mark&gt;`);
+        output.innerHTML = highlighted;
+        regexInput.classList.remove('error');
+    } catch (e) {
+        regexInput.classList.add('error');
+        output.innerHTML = text;
+    }
+}</pre>
+        </div>
+
         <!-- Instructies -->
         <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
+            <h3>✅ Instructies:</h3>
             <ul>
-                <li>De default test zoekt naar alle woorden gestart met een letter (w+).</li>
-                <li>Verander de regex naar <code>[0-9]+</code> om alleen getallen in de zin te omcirkelen.</li>
-                <li>Voer een ongeldige RegEx in, verwijder bijvoorbeeld het sluitende haakje, en verander
-                    <code>[0-9]+</code> naar <code>[0-9+</code> om de rode Foutmelding (Try/Catch) the testen! De
-                    website is onbeschadigd vanwege de error handling.</li>
+                <li>Vul een geldig RegEx patroon in (bijv. <code>[0-9]+</code> voor getallen).</li>
+                <li>Typ of plak tekst in het testgebied om de overeenkomsten direct gemarkeerd te zien.</li>
             </ul>
         </div>
 
@@ -333,46 +374,42 @@
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong>RegEx Leren:</strong> RegEx blijft voor de meesten onleesbare hiërogliefen. Maar gelukkig
-                    hoef je ze niet uit the hoofd the kennen. Maak wel alvast kennis met <code>\d</code> (digit/cijfer),
-                    <code>\w</code> (word/letter/cijfer), en the anchor <code>^</code> (begin van de string).</li>
+                <li><strong>Sanitize:</strong> Om XSS te voorkomen, ontdoe gebruikersinput van HTML-tags voordat je deze
+                    rendert.</li>
             </ul>
         </div>
 
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Linebreaks (Enters) en HTML</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - Een textarea begrijpt dat "Enter" een newline '\n' is. Maar de gerenderde DIV begrijpt dat totaal niet en klapt alles op 1 regel. Ouderwetse truc is nodig! Vervang '\n' the RegEx expliciet door het HTML taggetje '&lt;br&gt;'!</span>
-<span class="keyword">const</span> fixedLineBreaks = highlightedText.<span class="function">replace</span>(<span class="regexp">/\n/g</span>, <span class="string">'&lt;br&gt;'</span>);</pre>
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: Vastlopen door foute syntax</h4>
+                <p style="color: #f87171;">Het direct maken van RegEx zonder try-catch crasht de app bij foutieve
+                    syntax.</p>
+                <div class="code-example">
+                    <pre>try { let m = new RegExp(val); } catch(err) { /* handle */ }</pre>
                 </div>
             </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Matches Tellen:</strong> Onder de error tekst "Ongeldige syntax", schrijf je in
-                        real-time hoeveel <em>Matches</em> de RegEx gevonden heeft (the <code>replace</code> functie
-                        overigens heeft toegang tot de match via parameters indien in een loop-callback gebruikt, of je
-                        gebruikt de <code>.match()</code> array op de string).</li>
-                    <li><strong>Cheatsheet Toggle:</strong> Bouw een info knopje, dat een panel over the rechterflank
-                        van the form in laat sliden, die een tabel met common regex tokens laat zien.</li>
+                    <li><strong>Flags:</strong> Voeg checkboxes toe om vlaggen als <code>g</code>, <code>i</code> en
+                        <code>m</code> interactief aan te passen.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
             <div>
-                <label style="font-weight:bold; margin-bottom:8px; display:block; color:#555;">RegEx Pattern</label>
+                <label style="font-weight:bold; margin-bottom:8px; display:block; color:#cbd5e1;">RegEx Pattern</label>
                 <div class="regex-input-box">
                     <span>/</span>
                     <input type="text" class="regex-input" id="regex" value="\b[A-Za-z]{4,}\b">
@@ -383,7 +420,7 @@
             </div>
 
             <div style="margin-top: 15px;">
-                <label style="font-weight:bold; margin-bottom:8px; display:block; color:#555;">Test Tekst</label>
+                <label style="font-weight:bold; margin-bottom:8px; display:block; color:#cbd5e1;">Test Tekst</label>
                 <div class="container-highlite">
                     <div class="highlights" id="highlights"></div>
                     <textarea class="test-string" id="test-text" spellcheck="false">Welkom bij de RegExp Tester 2026!
@@ -408,7 +445,6 @@ De default (bovenin) markeert alle woorden met 4 of meer letters.</textarea>
             const patroon = regexInput.value;
             const flag = flagsInput.value;
 
-            // Zorg we render newline breaks (zodat the highlighted div snapt wnr een enter gepressd is)
             const textForDiv = text.replace(/\n/g, '<br>');
 
             if (!patroon) {
@@ -418,44 +454,31 @@ De default (bovenin) markeert alle woorden met 4 of meer letters.</textarea>
             }
 
             try {
-                // Compile the Javascript RegExp class using dynamic strings
                 const regex = new RegExp(patroon, flag);
-
-                // We want to wrap matches in <mark> tags!
-                // "g" flag is usually needed for multiple matches
-
-                // $& representeert the matched string uit het origineel!!
                 const highlightedText = text.replace(regex, '<mark>$&</mark>');
-
-                // Need to convert linebreaks manually since we are dumping into innerHTML
                 const fixedLineBreaks = highlightedText.replace(/\n/g, '<br>');
 
                 highlights.innerHTML = fixedLineBreaks;
                 errMsg.innerText = '';
 
             } catch (err) {
-                // Syntax Error triggered! (By incomplete regex usually)
                 errMsg.innerText = "Error: Onvolledige of foute RegEx Expressie.";
                 highlights.innerHTML = textForDiv;
             }
         }
 
-        // Knoopt textarea scrolling aan the invisible div, om sync issues te fixen:
         function syncScroll() {
             highlights.scrollTop = testText.scrollTop;
             highlights.scrollLeft = testText.scrollLeft;
         }
 
-        // Live Event Listeners
         regexInput.addEventListener('input', updateHighlights);
         flagsInput.addEventListener('input', updateHighlights);
         testText.addEventListener('input', updateHighlights);
         testText.addEventListener('scroll', syncScroll);
 
-        // Run On load
         updateHighlights();
 
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
             const expansions = document.getElementById('expansions');
             const btn = event.target;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 73: Random Dog Generator - DOM Projecten</title>
+    <title>Project 73: Random Dog API - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -14,303 +14,393 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
-            border-radius: 12px;
-            padding: 2.5rem;
-            max-width: 600px;
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 650px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             text-align: center;
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
+            font-size: 2.2rem;
         }
 
         .level {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #e0e7ff;
-            color: #4338ca;
+            margin-bottom: 2rem;
+            padding: 0.25rem 1rem;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 2rem;
+            text-transform: uppercase;
         }
 
-        /* THE APP CSS _T */
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
         .project-area {
+            background: #0f172a;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0 2.5rem 0;
+            border: 1px solid #334155;
+            min-height: 400px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .HHHDogHImageK_AadarData_ZK {
-            width: 100%;
-            height: 350px;
-            background: #f1f5f9;
+        .dog-image {
+            max-width: 100%;
+            max-height: 450px;
+            object-fit: cover;
             border-radius: 12px;
-            overflow: hidden;
-            border: 4px solid #e2e8f0;
-            margin-bottom: 25px;
-            position: relative;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 4px solid #334155;
+            transition: transform 0.3s ease;
+        }
+
+        .dog-image:hover {
+            transform: scale(1.02);
+        }
+
+        .btn-fetch {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 18px 36px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 10px 15px rgba(239, 68, 68, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            gap: 10px;
         }
 
-        .H_DFooHTtoImGeTDOMoNdeZ_ThatO {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+        .btn-fetch:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 20px rgba(239, 68, 68, 0.4);
         }
 
-        /* when image is loaded The H */
-        .H_DFooHTtoImGeTDOMoNdeZ_ThatO.TGeThLadenZO_IsTheGZ {
-            opacity: 1;
+        .btn-fetch:disabled {
+            background: #334155;
+            color: #94a3b8;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
 
-        .loadingHDThetDSpin {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border: 5px solid #cbd5e1;
-            border-top-color: #f97316;
+        .loader {
+            display: none;
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #ef4444;
             border-radius: 50%;
-            animation: spinDeM 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
-        @keyframes spinDeM {
+        @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
 
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
 
-        .bbTNFOFetchZNiweHndDe {
-            background: #f97316;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 6px rgba(249, 115, 22, 0.3);
+        .explanation {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            display: block;
             width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
         }
 
-        .bbTNFOFetchZNiweHndDe:hover {
-            background: #ea580c;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 10px rgba(249, 115, 22, 0.4);
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .bbTNFOFetchZNiweHndDe:active {
-            transform: translateY(0);
+        .expandable {
+            display: none;
         }
 
-        .bbTNFOFetchZNiweHndDe:disabled {
-            background: #fdba74;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+        .expandable.show {
+            display: block;
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 2rem;
-            color: #ea580c;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
-        }
-
-        .back-link:hover {
-            color: #c2410c;
+            text-align: center;
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Project 73: Random Dog API</h1>
-        <span class="level">API & Fetch</span>
+        <h1>Dog API Finder</h1>
+        <span class="level">Media Fetch & States</span>
+        <p class="description">Leer hoe je afbeeldingen asynchroon laadt van een externe API en hoe je 'Loading States'
+            implementeert om de gebruikerservaring soepel te houden.</p>
+
+        <div class="project-area">
+            <div class="loader" id="loader"></div>
+            <img src="" alt="Willekeurige hond" class="dog-image" id="dog-image">
+        </div>
+
+        <button class="btn-fetch" id="fetch-btn">
+            <span>🐶</span> Geef Mij Een Hond!
+        </button>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Communiceren met een API gaat verder dan alleen tekst. In dit project leer je hoe je metadata (een
+                afbeeldings-URL) verwerkt en hoe je de browser dwingt deze pas te tonen als de download écht klaar is.
+            </p>
+            <ul>
+                <li><strong>Dynamic Image Loading:</strong> De <code>onload</code> event handler gebruiken om flikkering
+                    te voorkomen.</li>
+                <li><strong>Async Fetch Pipeline:</strong> Het ophalen van JSON en het vertalen daarvan naar een
+                    DOM-attribuut.</li>
+                <li><strong>UI State Management:</strong> Het managen van knopstatussen tijdens netwerkverkeer.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>API Endpoint:</strong> Een specifieke URL (vandaag <code>dog.ceo</code>) die data
+                    terugstuurt in plaats van een webpagina.</li>
+                <li><strong>The Event Loop:</strong> Begrijpen dat netwerkverzoeken tijd kosten en dat je de rest van je
+                    code niet wilt laten "bevriezen".</li>
+                <li><strong>Image Buffer:</strong> Weten dat een <code>img.src</code> zetten het downloaden start, maar
+                    dat het <code>onload</code> event pas vuurt als de pixels klaar zijn.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: Geavanceerde Loading States</h3>
 
             <div class="step">
-                <h4>Stap 1: Afbeeldingen Ophalen!</h4>
-                <p>Niet_ the elke The API the THE the geeft Tekst _ of_ the the The_ Getallen! Sommige API's the zoals
-                    the de `Dog API` geven_ the_ The the URL the ! van the the de The ! the Afbeelding_ in_ the ! the
-                    JSON THE Terug! </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
-<span class="keyword">const</span> HHDtehZNeTWerkSRespDaata_TheZ = <span class="keyword">await</span> <span class="function">fetch</span>(APIdHTHEURLTDDOGVDataT);
-<span class="keyword">const</span> UTheJSonTDataD_KHTOO = <span class="keyword">await</span> HHDtehZNeTWerkSRespDaata_TheZ.<span class="function">json</span>();
-
-<span class="comment">// the .message is_ the the De the_!  URL_the  ! string </span>
-UUII_MMGDatOHTTheNDHDeOMZNode_HThe.src = UTheJSonTDataD_KHTOO.message;</pre>
+                <h4>1: Het ophalen van de URL</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> res = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'https://dog.ceo/api/breeds/image/random'</span>);
+<span class="keyword">const</span> data = <span class="keyword">await</span> res.<span class="function">json</span>();
+<span class="comment">// data.message bevat nu de URL van de afbeelding</span></pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: Wachten _ the op_ de The_ Afbeelding!</h4>
-                <p>Een the_ The The afbeelding the heeft Tijd the! the Nodig_ om the_! te _ the The the Laden_!
-                    (Downloaden_The! )_ the the The Omdat we the the ! Een_ Spinner_ The tonen_ Moeten The _ we_ weten
-                    <strong>Wanneer</strong> `&lt;img&gt;` the The The the Gereed _ The _ IS ! HierThe ! the the The de
-                    gebruiken_ We The The ! <code>img.addEventListener('load')</code>_ Voor! </p>
-            </div>
-
-        </div>
-
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Klik the_ OP the_ "Geef Mij Een Hond!" _The! _the_ </li>
-                <li>Bekijk The_ The de the the Spinning The_ Loader de the ! _TerwiJl de_ the Afbeelding the the wordt
-                    the! Opgehaald! </li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>The Image Load The Logic:</strong> the The In The de JS The zie je the_ The ! The _ dat we
-                    NIET_! direct_! the the de spinner The weghalen_ The! the na _ the `fetch()`. We the the doen the
-                    dit the pas as_ the de the! The the <code>img.addEventListener('load')</code> The The ! _ Vuurt! _
-                    Dit_ The Voorkomt the the een the the Lege/Halve the ! the Afbeelding_ The! </li>
-            </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: de_ <code>src</code>_ the Error_! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je de `fetch` Faalt, the_! The The! THE_ the the _The  dan The! the The Blijft the_ The the de  `src` the of de the `Loader` the the The  Hangen!!The </span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_! in_ de `catch(e)` The The the! the de The the_ Loader_ the the UIT!_! en de The KnoP weer AAN!_!  _ </span></pre>
+                <h4>2: De Onload Trick</h4>
+                <p>Veel developers maken de fout om de loader direct te stoppen na de fetch. Wij wachten tot de
+                    <i>afbeelding zelf</i> klaar is met laden.</p>
+                <div class="code-example">
+                    <pre>img.src = data.message;
+img.onload = () => {
+    loader.style.display = <span class="string">'none'</span>; <span class="comment">// Nu pas stoppen!</span>
+    img.style.display = <span class="string">'block'</span>;
+};</pre>
                 </div>
             </div>
+
         </div>
 
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
                 <ul>
-                    <li><strong>Raster The_! !! The The The The! </strong> the the thethe the THE the Bouw The DE V The_
-                        the the the The_ Logica OM The_The Niet! _ 1 _ The! Hond_ maar The the Bv_ The EEN RASTER _The
-                        the! van 4 _ the Honden_ the GelijKthe ! The_ Te Halen _ </li>
+                    <li><strong>Memory Leaks:</strong> Herhaaldelijk event listeners toevoegen binnen een loop. (Tip:
+                        definieer je onload listener één keer buiten de fetch functie).</li>
+                    <li><strong>Cache issues:</strong> De browser kan soms een oude afbeelding onthouden. De
+                        <code>dog.ceo</code> API lost dit voor ons op door unieke URL's te genereren.</li>
+                </ul>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>Breed Filter:</strong> Voeg een dropdown toe om specifieke hondenrassen op te halen
+                        (bijv. alleen Labradors).</li>
+                    <li><strong>Gallery Mode:</strong> Sla de laatste 5 honden op in een klein overzicht onder de
+                        hoofdafbeelding.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
-        <div class="project-area">
-
-            <div class="HHHDogHImageK_AadarData_ZK">
-                <!-- De loader staat erachter_ H ! als default!_ -->
-                <div class="loadingHDThetDSpin" id="TThHUHSpinn_LoadVTheZ"></div>
-
-                <img src="" alt="Hondje_TDeDataZ_" class="H_DFooHTtoImGeTDOMoNdeZ_ThatO"
-                    id="UID_DoGIOgTmageHHODemZ_Dat">
-            </div>
-
-            <button class="bbTNFOFetchZNiweHndDe" id="ZBNToPFetch_nHOnddApiH">🐶 Geef Mij Een Hond!</button>
-
-        </div>
-
-
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Fouten & Uitbreidingen</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const UUII_MMGDatOHTTheNDHDeOMZNode_HThe = document.getElementById('UID_DoGIOgTmageHHODemZ_Dat');
-        const UUik_TheKnoO__PPDataTheVFetchG_TheZ = document.getElementById('ZBNToPFetch_nHOnddApiH');
-        const LLSTheSpTheMoiNnDe_R_TheHUD_ = document.getElementById('TThHUHSpinn_LoadVTheZ');
+        const dogImage = document.getElementById('dog-image');
+        const fetchBtn = document.getElementById('fetch-btn');
+        const loader = document.getElementById('loader');
 
-        // De Dog API THE URL Z !! 
-        const APIdHTHEURLTDDOGVDataT = 'https://dog.ceo/api/breeds/image/random';
-
-        async function FffetchThWeeTHoDneTheApiGThe() {
-            // 1. Reset STATE
-            UUik_TheKnoO__PPDataTheVFetchG_TheZ.disabled = true;
-            UUII_MMGDatOHTTheNDHDeOMZNode_HThe.classList.remove('TGeThLadenZO_IsTheGZ'); // Fade out de ! img !
-            LLSTheSpTheMoiNnDe_R_TheHUD_.style.display = "block"; // Zett loader _  ZTheAAN The !
+        // De asynchrone fetch functie
+        async function fetchDog() {
+            // UI voorbereiden
+            loader.style.display = 'block';
+            dogImage.style.display = 'none';
+            fetchBtn.disabled = true;
 
             try {
-                // 2. FETCH !! O
-                const HHDtehZNeTWerkSRespDaata_TheZ = await fetch(APIdHTHEURLTDDOGVDataT);
-                const UTheJSonTDataD_KHTOO = await HHDtehZNeTWerkSRespDaata_TheZ.json();
+                const response = await fetch('https://dog.ceo/api/breeds/image/random');
 
-                // De data ! bevat the .message the = de URL the string ! 
-                const NUNeueweUIMGTRuDaataOTheZ_TheString = UTheJSonTDataD_KHTOO.message;
+                if (!response.ok) throw new Error('Netwerk reageert niet');
 
-                // D3E MAGIE H:
-                // Stop de URL in de The_ IMG H ! 
-                UUII_MMGDatOHTTheNDHDeOMZNode_HThe.src = NUNeueweUIMGTRuDaataOTheZ_TheString;
+                const data = await response.json();
 
-                // We_ SETTEN O ENABLE ! in de img_ _The 'load' eventThe hieronder !! 
+                // De src aanpassen start de download op de achtergrond
+                dogImage.src = data.message;
 
-            } catch (e_) {
-                console.error("The DogTheAPI FaillDataH_", e_);
-                UUik_TheKnoO__PPDataTheVFetchG_TheZ.disabled = false;
-                LLSTheSpTheMoiNnDe_R_TheHUD_.style.display = "none";
+                // De 'onload' onderaan zorgt voor de UI afhandeling
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+                alert('Oeps! De honden zijn momenteel aan het slapen. Probeer het later nog eens.');
+                loader.style.display = 'none';
+                fetchBtn.disabled = false;
             }
         }
 
-        // ALS DE IMAGE The GThe Download _ THE isThe Hdoor de Browser_ O !:
-        UUII_MMGDatOHTTheNDHDeOMZNode_HThe.addEventListener('load', () => {
-            LLSTheSpTheMoiNnDe_R_TheHUD_.style.display = "none"; // the_Loader V Weg!
-            UUII_MMGDatOHTTheNDHDeOMZNode_HThe.classList.add('TGeThLadenZO_IsTheGZ'); // IMG zichtbar (Opacity CSS )!_
-            UUik_TheKnoO__PPDataTheVFetchG_TheZ.disabled = false; // KNoppie WEER ! V
-        });
+        // De magische onload handler: vuurt pas als de JPG/PNG volledig binnen is
+        dogImage.onload = () => {
+            loader.style.display = 'none';
+            dogImage.style.display = 'block';
+            fetchBtn.disabled = false;
+        };
 
-        // KLilk op the kNopThe V!!! 
-        UUik_TheKnoO__PPDataTheVFetchG_TheZ.addEventListener('click', FffetchThWeeTHoDneTheApiGThe);
+        // Event Listener
+        fetchBtn.addEventListener('click', fetchDog);
 
-        // Init default dog The ! Z 
-        FffetchThWeeTHoDneTheApiGThe();
+        // Initialiseer bij laden
+        fetchDog();
 
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
+            const exp = document.getElementById('expansions');
             const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
         }
     </script>
 </body>

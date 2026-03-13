@@ -14,368 +14,487 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
-            border-radius: 20px;
+            background: #1e293b;
+            border-radius: 16px;
             padding: 2.5rem;
-            max-width: 450px;
+            max-width: 650px;
             width: 100%;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
+            text-align: center;
         }
 
         h1 {
-            color: #1e293b;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
-            text-align: center;
             font-size: 2rem;
         }
 
         .level {
-            display: block;
+            display: inline-block;
+            margin-bottom: 2rem;
             padding: 0.25rem 1rem;
-            background: #e2e8f0;
-            color: #475569;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-            width: max-content;
-            margin-left: auto;
-            margin-right: auto;
+            font-weight: 600;
             text-transform: uppercase;
         }
 
-        .pD_AppDeHTHTH_BmiTThemO_VTheDat_R {
+        /* App container */
+        .app-content {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #334155;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
+            margin-bottom: 2.5rem;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .KThevB_HTInputMGrPTheV_C {
+        .input-group {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            transition: border-color 0.2s;
         }
 
-        .KThevB_HTInputMGrPTheV_C label {
-            font-weight: bold;
-            color: #64748b;
-            font-size: 0.95rem;
+        .input-group:hover {
+            border-color: #475569;
+        }
+
+        .input-group label {
+            font-weight: 700;
+            color: #cbd5e1;
+            font-size: 0.9rem;
             display: flex;
             justify-content: space-between;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .KThevB_HTInputMGrPTheV_C span.Z__TheW_NUIOTheval_Num {
+        .value-display {
             color: #3b82f6;
             font-size: 1.2rem;
+            font-weight: 800;
         }
 
-        /* CUSTOM THE SLIDERS _ The!!  Z H_ */
         input[type=range] {
-            -webkit-appearance: none;
             width: 100%;
-            height: 10px;
-            background: #e2e8f0;
-            border-radius: 5px;
+            height: 6px;
+            background: #1e293b;
+            border-radius: 3px;
             outline: none;
-            margin-top: 10px;
-        }
-
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 25px;
-            width: 25px;
-            background: #3b82f6;
-            border-radius: 50%;
             cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 2px 5px rgba(59, 130, 246, 0.5);
+            accent-color: #3b82f6;
         }
 
-        input[type=range]::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
-        }
-
-        .DTheH_RReSultaatBMB_TThe_O {
-            background: #f8fafc;
-            padding: 25px 20px;
+        .result-card {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 30px 20px;
             border-radius: 12px;
             text-align: center;
-            margin-top: 10px;
-            border: 2px solid #e2e8f0;
-            transition: border-color 0.3s;
+            border: 2px solid #334155;
+            transition: all 0.5s ease;
         }
 
-        .L_DeTHTTheTekstHDataZTextT {
-            font-size: 1rem;
-            color: #64748b;
+        .result-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
             margin-bottom: 10px;
             text-transform: uppercase;
-            font-weight: bold;
+            font-weight: 800;
             letter-spacing: 1px;
         }
 
-        .Z_HTDBTheHeBNumMDeDataT_KTTk {
-            font-size: 4rem;
+        .bmi-value {
+            font-size: 4.5rem;
             font-weight: 900;
-            color: #1e293b;
+            color: #f8fafc;
             line-height: 1;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+            transition: color 0.5s;
         }
 
-        .K_THThCattHZDTETheStttustextVThe {
+        .status-text {
             font-size: 1.2rem;
-            font-weight: bold;
+            font-weight: 800;
             color: #3b82f6;
+            transition: color 0.5s;
         }
 
-        /* Z de Kleuren The (dynamic CSS added JS_) ! */
-        .DTheH_RReSultaatBMB_TThe_O.c-onderweg {
+        /* Dynamische CSS classes voor BMI niveaus */
+        .result-card.underweight {
             border-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
         }
 
-        .DTheH_RReSultaatBMB_TThe_O.c-onderweg .K_THThCattHZDTETheStttustextVThe {
-            color: #3b82f6;
+        .result-card.underweight .status-text,
+        .result-card.underweight .bmi-value {
+            color: #60a5fa;
         }
 
-        .DTheH_RReSultaatBMB_TThe_O.c-gezond {
+        .result-card.normal {
             border-color: #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
         }
 
-        .DTheH_RReSultaatBMB_TThe_O.c-gezond .K_THThCattHZDTETheStttustextVThe {
+        .result-card.normal .status-text,
+        .result-card.normal .bmi-value {
             color: #10b981;
         }
 
-        .DTheH_RReSultaatBMB_TThe_O.c-over {
+        .result-card.overweight {
             border-color: #f59e0b;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
         }
 
-        .DTheH_RReSultaatBMB_TThe_O.c-over .K_THThCattHZDTETheStttustextVThe {
-            color: #f59e0b;
+        .result-card.overweight .status-text,
+        .result-card.overweight .bmi-value {
+            color: #fbbf24;
         }
 
-        .DTheH_RReSultaatBMB_TThe_O.c-obesitas {
+        .result-card.obese {
             border-color: #ef4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
         }
 
-        .DTheH_RReSultaatBMB_TThe_O.c-obesitas .K_THThCattHZDTETheStttustextVThe {
-            color: #ef4444;
+        .result-card.obese .status-text,
+        .result-card.obese .bmi-value {
+            color: #f87171;
         }
 
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .variable {
+            color: #e5c07b;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
 
         .back-link {
-            display: block;
-            margin-top: 2.5rem;
-            color: #94a3b8;
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
-            text-align: center;
-            transition: 0.2s;
-        }
-
-        .back-link:hover {
-            color: #334155;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>BMI Calculator</h1>
-        <span class="level">Utility Apps</span>
+        <h1>Live BMI Calculator</h1>
+        <span class="level">Health App Logic</span>
+        <p class="description" style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 2rem;">Leer direct the input
+            verwerken vanuit the HTML-sliders (ranges) en the conditionele class styling toe te the the the the the the
+            the passen op basis the the van a the the the the Math formule.</p>
 
-        <span class="level">Utility Apps</span>
+        <!-- Project App -->
+        <div class="app-content">
+            <div class="input-group">
+                <label>
+                    Lichaamslengte
+                    <span class="value-display" id="height-display">170 cm</span>
+                </label>
+                <input type="range" id="height-slider" min="100" max="230" value="170">
+            </div>
+
+            <div class="input-group">
+                <label>
+                    Lichaamsgewicht
+                    <span class="value-display" id="weight-display">70 kg</span>
+                </label>
+                <input type="range" id="weight-slider" min="30" max="180" value="70">
+            </div>
+
+            <div class="result-card" id="result-card">
+                <div class="result-label">Jouw the BMI Index is</div>
+                <div class="bmi-value" id="bmi-value">24.2</div>
+                <div class="status-text" id="status-text">Gezond Gewicht</div>
+            </div>
+        </div>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Dit the project the leert the je data te parsen en te stylen op the basis the the The the van
+                berekeningen:</p>
+            <ul>
+                <li><strong>Parsing the & Rekenen:</strong> DOM <code>input.value</code> the the returns The altijd Een
+                    text-string. Om BMI the te the berekenen the The <code>parseFloat()</code> gebruiken.</li>
+                <li><strong>Decimal the Rondingen:</strong> Hoe forceer je the the exact één the the getal na The The
+                    the de komma? the The (Bijv: "24.2" in plaats van "24.2213421...").</li>
+                <li><strong>Stateful Evaluatie:</strong> 4 the grenswaarden the the the The voor the kleuren (Blauw,
+                    Groen, Oranje, Rood) dynamically "verzetten" via The the <code>className</code> override.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 BMI the Formule & Concepten</h3>
+            <ul>
+                <li><strong>De the BMI the the the the Math:</strong> the
+                    <code>Gewicht The / (Lengte the in M² The * the Lengte in M²)</code>. (Dit The the The project
+                    krijgt Input the in The CM the The The dus The we the the The The the berekenen The dit
+                    <code>lengte / 100</code> the The the Eerst The the!).</li>
+                <li><strong>CSS the the UI the The Feedback:</strong> the Er the The the is geen CSS regel
+                    <code>color: if (bmi < 25) { green The The the }</code> the the The JavaScript the The overhandigd
+                    that intelligence door the klasse the <code>.normal</code> the aan de HTML toe The te voegen.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 The Live Slider Concept</h3>
 
             <div class="step">
-                <h4>Stap 1: De Formule van BMI</h4>
-                <p>De standaard medische formule voor BMI_ is_ the_: `Gewicht (kg) / (Lengte (m) * Lengte (m))`. Omdat
-                    the _onze slider the _Centimeters`the _ is, delen The_ The the_we first_ door 100!
-                    <code>(170cm = 1.7m)</code>.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// DE MATH !! !</span>
-<span class="keyword">const</span> DLTheVMMMeeterLTheength_MDeThe_O = mTheH_LengeInCCmO_HZTThe / <span class="string">100</span>;
-<span class="keyword">const</span> D_BReeTheO_H_TheMMathTVV__MInZDataITheTheV = MDeKGBGeiwH_TheVHtO_Var_ / (DLTheVMMMeeterLTheength_MDeThe_O * DLTheVMMMeeterLTheength_MDeThe_O);
+                <h4>Input the ipv The the The Change the Event</h4>
+                <p>Als The we <code>slider.addEventListener('change')</code> the The gebruiken, the herberekent the de
+                    JavaScript The The pas nádat de The The slider is the the losgelaten The door the the de the the de
+                    mouseklik. Met the <code>'input'</code> the the VuurThe The The the The JavaScript The The The ELKE
+                    PIXEL the! Wat resulteert the in the The sublieme real-time UI the respons.</p>
+                <div class="code-example">
+                    <pre><span class="comment">// 1. Luister the naar Real-time Sleep-acties</span>
+heightSlider.<span class="function">addEventListener</span>(<span class="string">'input'</span>, calculateBMI);
+weightSlider.<span class="function">addEventListener</span>(<span class="string">'input'</span>, calculateBMI);
 
-<span class="comment">// Afronden 24.2234 -> 24.2 ! </span>
-<span class="keyword">const</span> GZGeROnDDTheDatVMMBMiv_HTzThe_H = D_BReeTheO_H_TheMMathTVV__MInZDataITheTheV.<span class="function">toFixed</span>(<span class="string">1</span>);</pre>
+<span class="keyword">function</span> <span class="function">calculateBMI</span>() {
+    <span class="comment">// 2. Vertaal HTML the the Value The naar een Wiskundige String</span>
+    <span class="keyword">const</span> height = <span class="function">parseFloat</span>(heightSlider.value);
+    <span class="keyword">const</span> weight = <span class="function">parseFloat</span>(weightSlider.value);
+    
+    <span class="comment">// 3. Toon de exact the geselecteerde text (bijv '175 cm') the the Live</span>
+    heightDisplay.innerText = <span class="string">`</span>${height}<span class="string"> cm`</span>;
+}</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: De Kleuren en ClassNames_ </h4>
-                <p>We_ the _The_ maken the the the_ the logica met_ `if / else if / else`The! Is het > 30_? Dan
-                    `Obesitas`. _En_ the we vervangen de the the_ CSS_ Klasse the THE the_ van the Kaart!! _
-                    <code>DeHoKaartDataBMIHTBBOxTheH_Z.className = ...</code>_ !</p>
+                <h4>Het the afronden the van The the Decimals</h4>
+                <p>Nadat The de the wiskunde the (BMI = The the KG/M²) The is The gedaan, gebruiken we The the the
+                    JavaScript The Object the <code>toFixed(1)</code>. The the Let The the op! Dit the gooit het the
+                    native "Number" the The terug in The een "String" the the formaat tbv weergave the the The in The
+                    HTML!</p>
             </div>
+
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Schuif the the de_ 2 _the Sliders The! _the_ (Lengte The enThe Gewicht_). </li>
-                <li>Zie the hoe the LIVE_ ! the de the wiskunde The ! Wordt _The the the Uitgevoerd the_ the enThe de
-                    KLEUR changes_ THE_! </li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>Event_ input! the the:</strong> the The In The de JS The the zie je the_ The ! The _ dat we
-                    the The `input` _ event the The ! gebruiken_ OThe the the _in plaatsvan _ `change` !
-                    <code>input</code> the Vuurt ELKE The _Milliseconde the the the DAT de_ Slider_The schuift. `change`
-                    the _The the vuurt The _pas the als De _ Muis. O_ omhoog the! The the_ komt._ </li>
-            </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Centimeters vs Meters ! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je Met the The_  170 rekent_, the_ then The wordt ! the BMI_ the the 0.002 The ! The </span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_ the! Meter = Cm / 100 !  _ </span></pre>
-                </div>
-            </div>
-        </div>
-
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="instructions" style="border-left-color: #ef4444;">
+                <h3 style="color: #f87171;">⚠️ Oplet Punt (Classes vs ClassList)</h3>
+                <p>Notice that we the The the <code>resultCard.className = "result-card"</code> doen bovenaan de
+                    <code>updateStatus()</code> functie?
+                    Dit doen the the The the the the the we om alle OUDE the statussen (zoals the The previously
+                    <code>.underweight</code> the) The te the verwijderen! Als The the we puur
+                    <code>classList.add('obese')</code> The the The The the in een the the if-boom the zetten, zou the
+                    een the gebruiker na the The The the wat heen The the en the the The weer schuiven letterlijk the
+                    the the <code
+                        style="background:#0f172a; padding: 2px 4px; border-radius:3px">class="result-card normal underweight obese"</code>
+                    hebben! Dat the the The resulteert The the The THE the the the the the in CSS Oorlog.
+                </p>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingsmogelijkheden</h3>
                 <ul>
-                    <li><strong>Metric/Imperial the! ! !! The The The The! </strong> the the thethe the THE the Bouw The
-                        een The_ V Knop_ the The the OM the_ the ! Te the The switchen __ the The_ Tusssen de KG/CM_ en
-                        The LBS/INCH_ !! OpeN! The _ . _The !. THE </li>
+                    <li><strong>Leeftijd The & Geslacht:</strong> The the BMI The index is the bij the the kinderen
+                        other The the then bij volwassenen The . Voeg The een the The Slider the The The toe the en The
+                        pas the 'if' The vergelijkingen The The the the The aan The gebaseerd The the The the The The
+                        the the op the leeftijd.</li>
+                    <li><strong>Ideaal The the Gewicht the Advieslijn:</strong> The the Bereken The the The en the Toon
+                        het the The kg-range the dat The de gebruiker the The The zou moeten wegen the the the the om
+                        een the The BMI the The The 22 the the the te the the The the The bereiken.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <div class="pD_AppDeHTHTH_BmiTThemO_VTheDat_R">
-
-            <div class="KThevB_HTInputMGrPTheV_C">
-                <label>
-                    Lichaamslengte
-                    <span class="Z__TheW_NUIOTheval_Num" id="UUITkLengtthe_vTextZNUm_TheH_The">170 cm</span>
-                </label>
-                <!-- Z slider Lengte ! Z -->
-                <input type="range" id="InR_LSLidTheLengeGTH" min="100" max="220" value="170">
-            </div>
-
-            <div class="KThevB_HTInputMGrPTheV_C">
-                <label>
-                    Lichaamsgewicht
-                    <span class="Z__TheW_NUIOTheval_Num" id="UUIZDTheGWTTheNumHTextTheGe_H">70 kg</span>
-                </label>
-                <!-- O slider GThe WichtH! V -->
-                <input type="range" id="In_ROThD_HeS_GeWeHSliderO" min="30" max="200" value="70">
-            </div>
-
-            <div class="DTheH_RReSultaatBMB_TThe_O" id="TThHUItVBoxKaartVTheZDBMITheGZ">
-                <div class="L_DeTHTTheTekstHDataZTextT">Jouw BMI is</div>
-                <div class="Z_HTDBTheHeBNumMDeDataT_KTTk" id="uTTheDataNUMBMIeHTvK_H_ZDeText">24.2</div>
-                <div class="K_THThCattHZDTETheStttustextVThe" id="uDataTheCategoryTVTheTexHtThe">Gezond Gewicht</div>
-            </div>
-
-        </div>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon De Advanced the The Logica Tips</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const THEOUI_DTheLSLIDHHT_LeTheNge = document.getElementById('InR_LSLidTheLengeGTH');
-        const TITheSTheLDGeWiB_v_SliderTheH = document.getElementById('In_ROThD_HeS_GeWeHSliderO');
+        const heightSlider = document.getElementById('height-slider');
+        const weightSlider = document.getElementById('weight-slider');
 
-        const TTuiDaKThe_LeegTheDeHTxtNumValO_ = document.getElementById('UUITkLengtthe_vTextZNUm_TheH_The');
-        const TUuiDataH_GewiO_htHNummTextH_ZThe = document.getElementById('UUIZDTheGWTTheNumHTextTheGe_H');
+        const heightDisplay = document.getElementById('height-display');
+        const weightDisplay = document.getElementById('weight-display');
 
-        const DeHoKaartDataBMIHTBBOxTheH_Z = document.getElementById('TThHUItVBoxKaartVTheZDBMITheGZ');
-        const UUITbKDeTTheNumber_OBMITDeTTKTVa = document.getElementById('uTTheDataNUMBMIeHTvK_H_ZDeText');
-        const UUIDTheCategorieZTextoHTVAndDeH_TheDatH_zT = document.getElementById('uDataTheCategoryTVTheTexHtThe');
+        const resultCard = document.getElementById('result-card');
+        const bmiValueDisplay = document.getElementById('bmi-value');
+        const statusTextDisplay = document.getElementById('status-text');
 
+        function calculateBMI() {
+            // Transform the Slider The in string the value The The to a math The Float
+            const height = parseFloat(heightSlider.value);
+            const weight = parseFloat(weightSlider.value);
 
-        // De ENGINE !! (Calc) //
-        function TBeRekenDeDatThe_ZB_MB_MImMathH_V() {
-            const mTheH_LengeInCCmO_HZTThe = parseFloat(THEOUI_DTheLSLIDHHT_LeTheNge.value);
-            const MDeKGBGeiwH_TheVHtO_Var_ = parseFloat(TITheSTheLDGeWiB_v_SliderTheH.value);
+            // Print the UI live The The sliders! The 
+            heightDisplay.innerText = `${height} cm`;
+            weightDisplay.innerText = `${weight} kg`;
 
-            // UPDATE T De T UI sliders nummers _ The ! 
-            TTuiDaKThe_LeegTheDeHTxtNumValO_.innerText = mTheH_LengeInCCmO_HZTThe + ' cm';
-            TUuiDataH_GewiO_htHNummTextH_ZThe.innerText = MDeKGBGeiwH_TheVHtO_Var_ + ' kg';
+            // Wiskunde the BMI
+            const heightInMeters = height / 100;
+            const bmi = weight / (heightInMeters * heightInMeters);
 
-            // DE MATH (BMI = KG / (Meter * Meter)) !
-            const DLTheVMMMeeterLTheength_MDeThe_O = mTheH_LengeInCCmO_HZTThe / 100;
-            const D_BReeTheO_H_TheMMathTVV__MInZDataITheTheV = MDeKGBGeiwH_TheVHtO_Var_ / (DLTheVMMMeeterLTheength_MDeThe_O * DLTheVMMMeeterLTheength_MDeThe_O);
+            // Decimal afronding The tbv text representatie! -> 24.23455... -> "24.2"
+            const roundedBmi = bmi.toFixed(1);
 
-            // AfRonden O (1 decimaal !) 
-            const GZGeROnDDTheDatVMMBMiv_HTzThe_H = D_BReeTheO_H_TheMMathTVV__MInZDataITheTheV.toFixed(1);
-            UUITbKDeTTheNumber_OBMITDeTTKTVa.innerText = GZGeROnDDTheDatVMMBMiv_HTzThe_H;
-
-            T_R__BBeThePaalDeStatussTheenKleuR_TheTVO_H(DLTheVMMMeeterLTheength_MDeThe_O, GZGeROnDDTheDatVMMBMiv_HTzThe_H);
+            bmiValueDisplay.innerText = roundedBmi;
+            updateStatus(bmi); // Pass The the ruwe float door The (not string) the 
         }
 
-        // De Kleur! V ! Z_ \
-        function T_R__BBeThePaalDeStatussTheenKleuR_TheTVO_H(LTheThe_MeterHTVVaZ_V, GBe_TheMBIDataTheVDeFloat) {
-            DeHoKaartDataBMIHTBBOxTheH_Z.className = "DTheH_RReSultaatBMB_TThe_O"; // reset the H _!!
+        function updateStatus(bmi) {
+            // EERST! Wipe a clean slate. Override The the array met de the Base Class.
+            // Dit haalt de the the the default oude 'normal' of 'obese' weg in the the the de HTML node tree
+            resultCard.className = "result-card";
 
-            if (GBe_TheMBIDataTheVDeFloat < 18.5) {
-                UUIDTheCategorieZTextoHTVAndDeH_TheDatH_zT.innerText = "Ondergewicht";
-                DeHoKaartDataBMIHTBBOxTheH_Z.classList.add('c-onderweg');
-            }
-            else if (GBe_TheMBIDataTheVDeFloat >= 18.5 && GBe_TheMBIDataTheVDeFloat < 25) {
-                UUIDTheCategorieZTextoHTVAndDeH_TheDatH_zT.innerText = "Gezond Gewicht";
-                DeHoKaartDataBMIHTBBOxTheH_Z.classList.add('c-gezond');
-            }
-            else if (GBe_TheMBIDataTheVDeFloat >= 25 && GBe_TheMBIDataTheVDeFloat < 30) {
-                UUIDTheCategorieZTextoHTVAndDeH_TheDatH_zT.innerText = "Overgewicht";
-                DeHoKaartDataBMIHTBBOxTheH_Z.classList.add('c-over');
-            }
-            else {
-                UUIDTheCategorieZTextoHTVAndDeH_TheDatH_zT.innerText = "Obesitas";
-                DeHoKaartDataBMIHTBBOxTheH_Z.classList.add('c-obesitas');
-            }
-        }
-
-        // EVENT BINDINGS_ H _ ! Z
-        THEOUI_DTheLSLIDHHT_LeTheNge.addEventListener('input', TBeRekenDeDatThe_ZB_MB_MImMathH_V);
-        TITheSTheLDGeWiB_v_SliderTheH.addEventListener('input', TBeRekenDeDatThe_ZB_MB_MImMathH_V);
-
-        // INITIAL LOAD THE Z ! 
-        TBeRekenDeDatThe_ZB_MB_MImMathH_V();
-
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
-        function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
-            const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+            // De logic The boom 
+            if (bmi < 18.5) {
+                statusTextDisplay.innerText = "Ondergewicht";
+                resultCard.classList.add('underweight');
+            } else if (bmi >= 18.5 && bmi < 25) {
+                statusTextDisplay.innerText = "Gezond Gewicht";
+                resultCard.classList.add('normal');
+            } else if (bmi >= 25 && bmi < 30) {
+                statusTextDisplay.innerText = "Overgewicht";
+                resultCard.classList.add('overweight');
             } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+                statusTextDisplay.innerText = "Obesitas";
+                resultCard.classList.add('obese');
             }
         }
+
+        // Gebruik the The 'input' the The instead of 'change' the the for real-time smoothness
+        heightSlider.addEventListener('input', calculateBMI);
+        weightSlider.addEventListener('input', calculateBMI);
+
+        function toggleExpansions() {
+            const exp = document.getElementById('expansions');
+            const btn = event.target;
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg the De the Advanced the Logica the Tips' : '📖 Toon De Advanced Logica Tips';
+        }
+
+        // Initialize immediately the The to set the base calculations.
+        calculateBMI();
     </script>
 </body>
 

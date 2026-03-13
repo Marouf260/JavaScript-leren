@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 86: Performance API - DOM Projecten</title>
+    <title>Project 86: Performance Analytics Pro - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -13,358 +13,443 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #fdf2f8;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            color: #831843;
+            padding: 2.5rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
-            border-radius: 20px;
+            background: #1e293b;
+            border-radius: 24px;
             padding: 3rem;
-            max-width: 650px;
+            max-width: 850px;
             width: 100%;
-            box-shadow: 0 20px 40px -10px rgba(236, 72, 153, 0.2);
-            border: 1px solid #fce7f3;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
             text-align: center;
         }
 
         h1 {
-            color: #db2777;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
         }
 
         .level {
-            display: inline-block;
-            padding: 0.35rem 1rem;
-            background: #fce7f3;
-            color: #be185d;
+            display: block;
+            width: max-content;
+            margin: 0 auto 2.5rem;
+            padding: 0.35rem 1.2rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
             border-radius: 30px;
             font-size: 0.85rem;
-            font-weight: bold;
-            margin-bottom: 2.5rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* APP CSS H_T */
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
         .project-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background: #0f172a;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 1.5rem 0 2.5rem 0;
+            border: 1px solid #334155;
+            box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.4);
         }
 
-        .SSTaATheTHSBaLDeTHEl_kk_O {
-            width: 100%;
-            background: #fdf2f8;
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border: 1px solid #fbcfe8;
+        .stats-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
+            margin-bottom: 30px;
         }
 
-        .StTAaTiITTeDe_V {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
+        .stat-box {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .StTAaTiITTeDe_V span {
-            font-size: 0.8rem;
-            color: #db2777;
-            font-weight: bold;
+        .stat-box::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #10b981;
+            opacity: 0.3;
+        }
+
+        .stat-box:hover {
+            border-color: #10b981;
+            transform: translateY(-5px);
+        }
+
+        .label {
+            display: block;
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            font-weight: 800;
             text-transform: uppercase;
+            margin-bottom: 10px;
             letter-spacing: 1px;
         }
 
-        .StTAaTiITTeDe_V div {
+        .value {
             font-size: 2rem;
             font-weight: 900;
-            color: #831843;
-            font-family: monospace;
-            display: flex;
-            align-items: baseline;
-            gap: 5px;
+            color: #10b981;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
         }
 
-        .StTAaTiITTeDe_V div small {
-            font-size: 1rem;
-            color: #fb7185;
+        .benchmark-section {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px dashed #334155;
         }
 
-        .oUiINfTheBoXTh__N_N {
-            padding: 20px;
-            background: #fff1f2;
-            border-left: 4px solid #f43f5e;
-            color: #9f1239;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            text-align: left;
-            width: 100%;
-            margin-bottom: 30px;
-        }
-
-        .BBtNToTheOPvDeTeessTheT {
-            background: #db2777;
+        .test-btn {
+            background: #6366f1;
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 18px 32px;
             font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 30px;
+            font-weight: 800;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 15px rgba(219, 39, 119, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 100%;
-            justify-content: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
         }
 
-        .BBtNToTheOPvDeTeessTheT:hover {
-            background: #be185d;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(219, 39, 119, 0.5);
+        .test-btn:hover:not(:disabled) {
+            background: #4f46e5;
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
         }
 
-        .BBtNToTheOPvDeTeessTheT:active {
-            transform: translateY(0);
+        .test-btn:disabled {
+            background: #334155;
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
-        .lDeLTheLodeRaDaTTHTTH {
+        .result-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 50px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+            margin-top: 4rem;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
             display: none;
-            width: 30px;
-            height: 30px;
-            border: 3px solid #fbcfe8;
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: DSpiTniOTheHT 1s linear infinite;
         }
 
-        @keyframes DSpiTniOTheHT {
-            to {
-                transform: rotate(360deg);
-            }
+        .expandable.show {
+            display: block;
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 2rem;
-            color: #db2777;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
             text-align: center;
+            width: 100%;
         }
     </style>
-    <!-- FONT O !! Z ! -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
-        <h1><i class="fas fa-tachometer-alt"></i> Laadtijd (Performance)</h1>
-        <span class="level">Advanced APIs</span>
-        <p style="color: #9f1239; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5;">Hoe the <b>snel</b> laadde
-            The The the deze HTML Ppagina the The v in de browser inThe? _H!</p>
+        <h1>Performance Guard Pro</h1>
+        <span class="level">Navigation & Performance API</span>
+        <p class="description">Duik in de 'Core Web Vitals'. Leer hoe je milliseconde-precieze benchmarks uitvoert,
+            browser laadtijden analyseert en bottlenecks in je JavaScript code identificeert.</p>
+
+        <div class="project-area">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="label">DOM Interactief</span>
+                    <div class="value" id="dom-time">-- ms</div>
+                </div>
+                <div class="stat-box">
+                    <span class="label">Window Gelasen</span>
+                    <div class="value" id="load-time">-- ms</div>
+                </div>
+            </div>
+
+            <div class="benchmark-section">
+                <button class="test-btn" id="test-btn">Benchmark: 10 Miljoen Iteraties 🚀</button>
+                <div class="result-badge" id="result">Klaar voor de test...</div>
+            </div>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Het meten van snelheid is essentieel voor een goede User Experience. De Performance API geeft je toegang
+                tot de interne klok van de browser.</p>
+            <ul>
+                <li><strong>Network Timing:</strong> Het uitlezen van de <code>navigation</code> entry om te zien hoe
+                    lang de server erover deed.</li>
+                <li><strong>High Resolution Timing:</strong> Waarom <code>performance.now()</code> tot op de
+                    microseconde nauwkeurig is.</li>
+                <li><strong>Heavy Computations:</strong> Het timen van loops om de efficiëntie van je algoritmes te
+                    testen.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>DOM Content Loaded:</strong> Het moment dat de HTML-structuur klaar is, maar afbeeldingen
+                    nog laden.</li>
+                <li><strong>Full Load:</strong> Het moment dat alles (incl. CSS en zware images) op het scherm staat.
+                </li>
+                <li><strong>Performance Memory:</strong> Het in de gaten houden van het RAM-geheugen dat je tabblad
+                    verbruikt.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: De Meet-Logica</h3>
 
             <div class="step">
-                <h4>Stap 1: <code>performance.getEntriesByType('navigation')</code></h4>
-                <p>De browser houdt bij hoe lang elke stap van het laden van de pagina duurde. We kunnen dit opvragen
-                    via de <strong>Performance API</strong>!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> nav = performance.<span class="function">getEntriesByType</span>(<span class="string">'navigation'</span>)[<span class="string">0</span>];
-<span class="keyword">const</span> domReady = Math.<span class="function">round</span>(nav.domContentLoadedEventEnd); <span class="comment">// in ms</span>
-<span class="keyword">const</span> fullLoad = Math.<span class="function">round</span>(nav.loadEventEnd); <span class="comment">// in ms</span></pre>
+                <h4>1: Browser Timing Uitlezen</h4>
+                <p>We vragen de browser naar zijn 'navigation history' om te zien hoe lang het laden duurde.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> [nav] = performance.<span class="function">getEntriesByType</span>(<span class="string">'navigation'</span>);
+<span class="keyword">const</span> loadDuration = nav.loadEventEnd;</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: <code>performance.now()</code> voor benchmarks</h4>
-                <p>Met <code>performance.now()</code> kun je super nauwkeurig meten hoe lang <strong>jouw eigen
-                        code</strong> duurt om te draaien. Dit werkt met microseconden precisie!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> start = performance.<span class="function">now</span>();
-<span class="comment">// ... jouw te meten code ...</span>
-<span class="keyword">const</span> eind = performance.<span class="function">now</span>();
-console.<span class="function">log</span>(`Duurde ${eind - start} ms`);</pre>
+                <h4>2: Handmatig Benchmarken</h4>
+                <p>Door een start- en eindpunt vast te leggen, berekenen we de exacte verstreken tijd.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> t0 = performance.<span class="function">now</span>();
+<span class="function">doLaboriousTask</span>();
+<span class="keyword">const</span> t1 = performance.<span class="function">now</span>();
+<span class="keyword">console</span>.<span class="function">log</span>(<span class="string">`Klaar in ${t1 - t0}ms`</span>);</pre>
                 </div>
             </div>
 
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Bekijk de laadtijden van de DOM en de volledige pagina!</li>
-                <li>Klik op <strong>"Test For Loop"</strong> en zie hoe lang 10 miljoen iteraties duren!</li>
-                <li>Ververs de pagina meerdere keren en vergelijk de laadtijden.</li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>setTimeout trick:</strong> Om de UI te laten updaten vóórdat de zware for-loop de thread
-                    blokkeert, wrappen we de code in een <code>setTimeout(() =&gt; {...}, 50)</code>. Dit geeft de
-                    browser tijd om de knop-animatie te renderen.</li>
-            </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Lege waarden bij <code>loadEventEnd</code></h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ Als je performance.getEntriesByType() aanroept vóór de load event, kan loadEventEnd 0 zijn!</span>
-<span class="comment">// OPLOSSING: Zet de code in een window.addEventListener('load', ...) callback!</span></pre>
-                </div>
-            </div>
-        </div>
-
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
                 <ul>
-                    <li><strong>Resource Timing:</strong> Gebruik <code>performance.getEntriesByType('resource')</code>
-                        om te zien hoe lang elke afbeelding, CSS-file en script duurde om te laden!</li>
+                    <li><strong>Console.log Overhead:</strong> Loggen tijdens een benchmark vertraagt de test zelf
+                        aanzienlijk. Log pas ACHTERAF.</li>
+                    <li><strong>Browser Throttling:</strong> Als je CPU belast is (bv. door andere tabs), zal je test
+                        telkens een ander resultaat geven.</li>
+                    <li><strong>Cold Starts:</strong> JavaScript engines (V8) optimaliseren code tijdens het uitvoeren.
+                        Vaak is de tweede run sneller dan de eerste.</li>
+                </ul>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>Resource Timing:</strong> Meet specifiek hoe lang het duurde om een specifieke
+                        afbeelding of API-call op te halen.</li>
+                    <li><strong>Memory Limit:</strong> Gebruik <code>performance.memory</code> om te checken of je app
+                        tegen de geheugenlimiet aanloopt.</li>
+                    <li><strong>Custom Marks:</strong> Gebruik <code>performance.mark()</code> om belangrijke
+                        gebeurtenissen in de Chrome DevTools timeline te plotten.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
-        <div class="project-area">
-
-            <div class="SSTaATheTHSBaLDeTHEl_kk_O">
-                <div class="StTAaTiITTeDe_V">
-                    <span>DOM Ready</span>
-                    <div id="uUITHeDomTDaATRRexDDyt_Tt">... <small>ms</small></div>
-                </div>
-                <div class="StTAaTiITTeDe_V">
-                    <span>Full Page Load</span>
-                    <div id="UITTxTDaTFfuLLOODDaThe">... <small>ms</small></div>
-                </div>
-            </div>
-
-            <div class="oUiINfTheBoXTh__N_N">
-                <strong><code>window.performance</code></strong> geeft je toegang The tot the V_ de the micro-seconden
-                the timing The the van the the alle requests. The! Hiermee The V meet _ the Analytics The _ The_ de
-                real-world The_ laadtijd _ van je site! V
-            </div>
-
-            <button class="BBtNToTheOPvDeTeessTheT" id="TThBBNTheNTeStH_oD_TRe_OOThez">
-                <span id="TteBxTnKThThe_A_TextVtheTx">Test For Loop (10 Miljoen X)</span>
-                <div class="lDeLTheLodeRaDaTTHTTH" id="SUpinDeThTheHHTHeO_TheZ_H"></div>
-            </button>
-            <div id="RRsuTheTTlSSTThesTheBtoThTTV" style="margin-top: 15px; font-weight: bold; color: #db2777;"></div>
-
-        </div>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Fouten & Uitbreidingen</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const TDOMDOxMMTheRDeXDaThe__HHTyTThe = document.getElementById('uUITHeDomTDaATRRexDDyt_Tt');
-        const UUITLodaTHHTDHeXFfuTheLlV_v_H = document.getElementById('UITTxTDaTFfuLLOODDaThe');
+        const domDisplay = document.getElementById('dom-time');
+        const loadDisplay = document.getElementById('load-time');
+        const testBtn = document.getElementById('test-btn');
+        const resultDisplay = document.getElementById('result');
 
-        const KnooH_PPThTtTESTForooTHHLoop = document.getElementById('TThBBNTheNTeStH_oD_TRe_OOThez');
-        const BBKTnNxTTextvZH_HTheM = document.getElementById('TteBxTnKThThe_A_TextVtheTx');
-        const UiTThSpO__innErTVDeHT = document.getElementById('SUpinDeThTheHHTHeO_TheZ_H');
-        const RrSuHHtHTlTheUOTeXTThDD = document.getElementById('RRsuTheTTlSSTThesTheBtoThTTV');
-
-        // BEREKEN DE_ LAAD TIJD VAN DE PAGINa _ ! H (Using the Performance Navigation Timing API_ )_ ! The !!
+        // Stap 1: Wachten tot de browser klaar is met meten
         window.addEventListener('load', () => {
-            // Let_ The op: THE DE oude performance.timing API_ _is deprecated _, ZThe the_ V 
-            // We_  gebruiken  nu the the_ array the "getEntriesByType('navigation')"
+            // We gebruiken een kleine timeout om te zorgen dat de 'loadEventEnd' gevuld is
             setTimeout(() => {
-                const NNNaTiVvGTatiTHEeOTHT_nThEnHTTheArrayHTheTrY_Z = performance.getEntriesByType("navigation")[0];
-                if (NNNaTiVvGTatiTHEeOTHT_nThEnHTTheArrayHTheTrY_Z) {
-                    // DOMContentLoaded_ : the the  the H_ (The TThe  HTML document H! Is full y parsed) TThe! The !!
-                    const dHDoThRmR_DDDataeaHDHHThedy = Math.round(NNNaTiVvGTatiTHEeOTHT_nThEnHTTheArrayHTheTrY_Z.domContentLoadedEventEnd);
-                    // Full Load! _THE THE H (Includsing Images/ The  css  T_) !
-                    const lLoAHHTDeoT_AddTHEETheDDataDeTheNDHThe = Math.round(NNNaTiVvGTatiTHEeOTHT_nThEnHTTheArrayHTheTrY_Z.loadEventEnd);
+                const navEntries = performance.getEntriesByType("navigation");
+                if (navEntries.length > 0) {
+                    const nav = navEntries[0];
 
-                    TDOMDOxMMTheRDeXDaThe__HHTyTThe.innerHTML = `${dHDoThRmR_DDDataeaHDHHThedy} <small>ms</small>`;
-                    UUITLodaTHHTDHeXFfuTheLlV_v_H.innerHTML = `${lLoAHHTDeoT_AddTHEETheDDataDeTheNDHThe} <small>ms</small>`;
+                    // In milliseconden vanaf de start van de navigatie
+                    domDisplay.innerText = `${Math.round(nav.domContentLoadedEventEnd)} ms`;
+                    loadDisplay.innerText = `${Math.round(nav.loadEventEnd)} ms`;
                 }
-            }, 0); // VThe !  0ms timeout om V er_ zeker Z te The zijn Thedat Load Event the_! _! T is gefinished! V 
+            }, 500);
         });
 
-        // TWeeDe: PERFORMANCE.NOW() THE !! O _ _!_voor benchmarks!
-        KnooH_PPThTtTESTForooTHHLoop.addEventListener('click', () => {
-            // UI Z
-            BBKTnNxTTextvZH_HTheM.style.display = "none";
-            UiTThSpO__innErTVDeHT.style.display = "block";
-            RrSuHHtHTlTheUOTeXTThDD.innerText = "";
-            KnooH_PPThTtTESTForooTHHLoop.disabled = true;
+        // Stap 2: Benchmark functie
+        testBtn.addEventListener('click', () => {
+            // UI Blokkeren
+            testBtn.disabled = true;
+            resultDisplay.innerText = "Bezig met rekenen... 🔥";
+            resultDisplay.style.color = "#fbbf24";
 
-            // Hack The de the eventloop, H  _ the zodat the the de the!  UI knop Z upadated O _ in de view_ 
-            // Voordat_ H we the_ the de ThreadThe The Z V! ! H full_ THE_ blockkEen met for_ _ Z_ l_ 
+            // Kleine delay om de UI de kans te geven te updaten voor de zware loop
             setTimeout(() => {
+                const t0 = performance.now();
 
-                // START TIMER_ Z_ !! (superscherp! THE ! The  MicroSec Z accuraat_) !
-                const TiDTheTHTiIddDaTa_oSTtaaRtTVThe = performance.now();
-
-                // ZWAAR WERK !! V
-                let GGgetallVTHEDaTATTHEThelet_TTHeetJJE = 0;
-                for (let iiHVThe__ThE = 0; iiHVThe__ThE < 10000000; iiHVThe__ThE++) {
-                    GGgetallVTHEDaTATTHEThelet_TTHeetJJE++;
+                // De test: 10 miljoen operaties
+                let sum = 0;
+                for (let i = 0; i < 10000000; i++) {
+                    sum += Math.sqrt(i) * Math.sin(i);
                 }
 
-                // EIND TIMER ! V The !
-                const TTijtdTHIHEinDDTaDatH__aDThe = performance.now();
+                const t1 = performance.now();
+                const duration = (t1 - t0).toFixed(3);
 
-                // RESULTAAT THE V!! 
-                const VEEVerTheTTsRTheTDaTeKenTeHTijHDThe = Math.round(TTijtdTHIHEinDDTaDatH__aDThe - TiDTheTHTiIddDaTa_oSTtaaRtTVThe);
+                // UI Resultaat
+                resultDisplay.innerText = `Berekening voltooid in ${duration} ms ✅`;
+                resultDisplay.style.color = "#10b981";
+                testBtn.disabled = false;
 
-                // UI!
-                BBKTnNxTTextvZH_HTheM.style.display = "block";
-                UiTThSpO__innErTVDeHT.style.display = "none";
-                RrSuHHtHTlTheUOTeXTThDD.innerText = `Klaar in the H ${VEEVerTheTTsRTheTDaTeKenTeHTijHDThe} ms! (${GGgetallVTHEDaTATTHEThelet_TTHeetJJE})`;
-                KnooH_PPThTtTESTForooTHHLoop.disabled = false;
-
+                console.log("Benchmark resultaat:", sum); // Voorkom dead code elimination
             }, 50);
-
         });
 
-    </script>
-    <script>
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
-            const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            const exp = document.getElementById('expansions');
+            const btn = event.currentTarget;
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
         }
     </script>
 </body>

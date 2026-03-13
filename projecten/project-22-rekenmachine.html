@@ -5,7 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 22: Rekenmachine - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #ec4899;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,104 +31,137 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-        }
-
-        .container {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .description {
-            color: #666;
-            margin-bottom: 2rem;
             line-height: 1.6;
         }
 
+        .container {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.025em;
+        }
+
+        .level {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* General UI Elements */
         .explanation,
         .concepts,
         .step-by-step,
         .instructions,
         .tips {
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
-        }
-
-        .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
-        }
-
-        .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
-        }
-
-        .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
-        }
-
-        .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 18px;
+            margin-bottom: 2rem;
         }
 
         h3 {
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-main);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
         }
 
         ul {
             margin-left: 1.5rem;
             line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .code-example {
-            background: #282c34;
-            color: #abb2bf;
+            background: #0f172a;
+            border: 1px solid var(--glass-border);
             padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
+            border-radius: 14px;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #e2e8f0;
             overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
         }
 
         .code-example .keyword {
@@ -125,24 +176,67 @@
             color: #61afef;
         }
 
-        .back-link {
-            display: inline-block;
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
             margin-top: 1rem;
-            color: #667eea;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .expandable {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .expandable.show {
+            max-height: 2000px;
+            transition: max-height 0.8s ease-in;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
         }
 
         /* Neumorphic Project Demo Area */
         .project-area {
             background: #e0e5ec;
-            border-radius: 12px;
+            border-radius: 20px;
             padding: 3rem 1rem;
             margin-bottom: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
         }
 
         .calculator {
@@ -160,7 +254,7 @@
             text-align: right;
             font-size: 2.5rem;
             font-family: 'Courier New', monospace;
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 25px;
             box-shadow: inset 6px 6px 10px 0 rgba(163, 177, 198, 0.7), inset -6px -6px 10px 0 rgba(255, 255, 255, 0.8);
             overflow: hidden;
@@ -209,26 +303,30 @@
 
 <body>
     <div class="container">
-        <h1>Project 22: Neumorphic Rekenmachine</h1>
-        <span class="level">Master</span>
-        <p class="description">Bouw een volledig functionele rekenmachine met een prachtig, 3D 'neumorphism' ontwerp.
-        </p>
+        <header>
+            <h1>Project 22: Neumorphic Rekenmachine</h1>
+            <span class="level">Master</span>
+            <p class="description">Bouw een volledig functionele rekenmachine met een prachtig, 3D 'neumorphism'
+                ontwerp.</p>
+        </header>
 
         <div class="explanation">
             <h3>📚 Wat ga je leren?</h3>
-            <p>We bouwen een elegante rekenmachine waar state (display waarde) correct geüpdatet moet worden.</p>
+            <p>We bouwen een elegante rekenmachine waarbij we de status (de weergegeven waarde) correct moeten
+                bijhouden.</p>
             <ul>
-                <li>Neumorphism CSS tricks met dubbele <code>box-shadow</code></li>
+                <li>Neumorphism CSS trucjes met een dubbele <code>box-shadow</code></li>
                 <li>Het afhandelen van ingewikkelde events (operators, clear, evalueren)</li>
-                <li>Fouten afvangen wanneer een berekening niet klopt (bijv. delen door nul)</li>
+                <li>Fouten afvangen wanneer een berekening niet klopt (zoals delen door nul)</li>
             </ul>
         </div>
 
         <div class="concepts">
             <h3>🎯 Belangrijke Concepten</h3>
             <ul>
-                <li><strong>eval() of vergelijkbaar</strong> - Functie om strings als JS logica te berekenen</li>
-                <li><strong>Event Delegation</strong> - In plaats van 16 listeners te binden, binden we er 1 op de
+                <li><strong>eval() of vergelijkbaar</strong> - Functie om strings als JavaScript-logica te berekenen.
+                </li>
+                <li><strong>Event Delegation</strong> - In plaats van 16 listeners te binden, binden we er één op de
                     container!</li>
             </ul>
         </div>
@@ -241,7 +339,7 @@
                 <h4>Stap 1: Variabelen instellen</h4>
                 <p>We hebben een verwijzing naar het display nodig en een "flag" (boolean) om te weten wanneer we het
                     display na een rekensom moeten opschonen.</p>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="keyword">const</span> display = document.<span class="function">getElementById</span>(<span class="string">'display'</span>);
 <span class="keyword">let</span> shouldResetDisplay = <span class="keyword">false</span>;</pre>
                 </div>
@@ -251,8 +349,8 @@
 
             <div class="step">
                 <h4>Stap 2: Getallen toevoegen aan de som</h4>
-                <p>Wanneer een gebruiker op een getal-knop klikt, wordt dit achter de huidge tekst geplakt.</p>
-                <div class="code-example" style="background: #fff;">
+                <p>Wanneer een gebruiker op een getal-knop klikt, wordt dit achter de huidige tekst geplakt.</p>
+                <div class="code-example" >
                     <pre><span class="keyword">function</span> <span class="function">appendNumber</span>(number) {
     <span class="keyword">if</span> (display.innerText === <span class="string">'0'</span> || shouldResetDisplay) {
         display.innerText = number;
@@ -262,15 +360,16 @@
     }
 }</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Als het display "0" is of net gereset, overschrijven we het. Anders plakken
-                    (<code>+=</code>) we het getal erachter. Zelfs decimalen werken zo!</p>
+                <p><strong>Uitleg:</strong> Als het display "0" toont of net is gereset, overschrijven we het met het
+                    nieuwe getal. Anders plakken (<code>+=</code>) we het getal erachter. Zelfs decimalen werken op deze
+                    manier!</p>
             </div>
 
             <div class="step">
                 <h4>Stap 3: Veilig "Evalueren" (Berekenen)</h4>
-                <p>Wanneer de gebruiker op `=` drukt, moeten we de tekstuele som berekenen (bijvoorbeeld "14*2+5"). Dat
-                    is magie in JS met de <code>new Function</code> of <code>eval()</code> methodes.</p>
-                <div class="code-example" style="background: #fff;">
+                <p>Wanneer de gebruiker op <code>=</code> drukt, moeten we de tekstuele som berekenen (bijvoorbeeld
+                    "14*2+5"). Dit kan eenvoudig in JavaScript via <code>new Function</code> of <code>eval()</code>.</p>
+                <div class="code-example" >
                     <pre><span class="keyword">try</span> {
     <span class="keyword">const</span> result = <span class="keyword">new</span> <span class="function">Function</span>(<span class="string">'return '</span> + display.innerText)();
     display.innerText = Math.<span class="function">round</span>(result * 1000000) / 1000000;
@@ -278,14 +377,15 @@
     display.innerText = <span class="string">'Error'</span>;
 }</pre>
                 </div>
-                <p><strong>Uitleg:</strong> We vangen vreemde invoer op in de <code>catch</code> blok zodat de browser
-                    niet crasht. Tevens ronden we JS-floating-point-bugs (0.1 + 0.2 = 0.3000004) vakkundig af.</p>
+                <p><strong>Uitleg:</strong> We vangen onverwachte invoer veilig op in een <code>catch</code>-blok, zodat
+                    de browser niet crasht. Ook ronden we JavaScript floating-point foutjes (0.1 + 0.2 = 0.3000004)
+                    netjes af.</p>
             </div>
         </div>
 
         <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Operatoren Voorkomen)</h3>
+        <div class="code-example" style="border: 2px solid #667eea;">
+            <h3 style="color: #f8fafc; margin-bottom: 1rem;">💻 Code Snippet (Operatoren Voorkomen)</h3>
             <pre><span class="keyword">function</span> <span class="function">appendOperator</span>(op) {
     <span class="comment">// Wat als de gebruiker twee keer op "+" klikt? (bijv. "5++")</span>
     <span class="keyword">const</span> lastChar = display.innerText.<span class="function">slice</span>(-1);
@@ -304,9 +404,10 @@
             <h3>✅ Jouw Opdracht:</h3>
             <ul>
                 <li>Klik op de knoppen in de demo en voer een complexe berekening uit.</li>
-                <li>Voel hoe de knoppen indrukken dankzij het "Inset Box Shadow" (Neumorphism) CSS effect.</li>
-                <li>Bekijk hoe de pijl <code>&larr;</code> direct het laatste karakter verwijdert dankzij de `slice(0,
-                    -1)` methode.</li>
+                <li>Bekijk hoe de knoppen indrukken dankzij het "Inset Box Shadow" (Neumorphism) CSS-effect.</li>
+                <li>Zie hoe de pijl <code>&larr;</code> direct het laatste karakter verwijdert dankzij de
+                    <code>slice(0, -1)</code> methode.
+                </li>
             </ul>
         </div>
 
@@ -315,22 +416,23 @@
             <h3>💡 Tips & Tricks</h3>
             <ul>
                 <li><strong>Waarom <code>new Function()</code> i.p.v. <code>eval()</code>?</strong> In een professionele
-                    web-omgeving is <code>eval()</code> dodelijk vanwege veiligheidsrisico's (XSS/Injections). De
-                    <code>new Function</code> methode creëert een anonieme functie in een sandbox die geen toegang heeft
-                    tot lokale scope en geldt als veiliger alternatief, maar blijf opletten bij directe verwerking van
-                    User-Input!</li>
-                <li><strong>Grote Cijfers (Text-overflow):</strong> Kijk in de CSS naar de `.display` class met
-                    <code>text-overflow: ellipsis;</code>, zodat een resultaat van "10423403248324.9" niet je
-                    neomorphism-buidel "breekt".</li>
+                    webomgeving is <code>eval()</code> gevaarlijk vanwege veiligheidsrisico's (zoals XSS-injecties). De
+                    <code>new Function</code> methode creëert een anonieme functie in een sandbox zonder toegang tot de
+                    lokale scope en is daarmee een veiliger alternatief, maar blijf altijd opletten bij het direct
+                    verwerken van gebruikerinvoer!
+                </li>
+                <li><strong>Grote getallen (Text-overflow):</strong> Kijk in de CSS naar de <code>.display</code> class
+                    met <code>text-overflow: ellipsis;</code>, zodat een resultaat van "10423403248324.9" het
+                    neumorphism-ontwerp niet visueel doorbreekt.</li>
             </ul>
         </div>
 
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
+        <div class="step-by-step" style="background: rgba(220, 53, 69, 0.1);">
             <h3>⚠️ Veelvoorkomende Fouten</h3>
             <div class="step">
                 <h4>Fout 1: "Floating Point" Javascript Bugs</h4>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - Probeer '0.1 + 0.2' maar in de rekenmachine zonder afronding</span>
 console.log(0.1 + 0.2); <span class="comment">// Resultaat: 0.30000000000000004</span>
 
@@ -344,15 +446,17 @@ display.innerText = Math.round(result * 1000000) / 1000000;</pre>
         <div class="expandable" id="expansions">
             <div class="tips">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor meer? Probeer dit toe te voegen:</p>
+                <p>Klaar voor meer? Probeer deze functies toe te voegen:</p>
                 <ul>
                     <li><strong>Toetsenbord bediening:</strong> Gebruik een
-                        <code>window.addEventListener('keydown')</code> zodat je ook op the Numpad van the toetsenbord
-                        The kan rekenen!</li>
-                    <li><strong>Machtsverheffing & Worteltrekken:</strong> Voeg speciale knoppen `x²` of `√` toe (hint:
-                        <code>Math.pow()</code> en <code>Math.sqrt()</code>).</li>
-                    <li><strong>Thema Switcher:</strong> Bouw een Darkmode versie van de Neumorphism! Tip: Vervang
-                        lichtblauw/wit door donkergrijs/zwart en tweak the shadows.</li>
+                        <code>window.addEventListener('keydown')</code> zodat je ook het numerieke toetsenbord kunt
+                        gebruiken om te rekenen!
+                    </li>
+                    <li><strong>Machtsverheffing & Worteltrekken:</strong> Voeg speciale knoppen zoals <code>%</code> of
+                        <code>√</code> toe (hint: gebruik <code>Math.pow()</code> en <code>Math.sqrt()</code>).
+                    </li>
+                    <li><strong>Thema Switcher:</strong> Bouw een "Dark Mode" versie van dit Neumorphism design! Tip:
+                        Vervang lichtblauw en wit door donkergrijs/zwart en pas the shadows aan.</li>
                 </ul>
             </div>
         </div>
@@ -392,7 +496,7 @@ display.innerText = Math.round(result * 1000000) / 1000000;</pre>
             </div>
         </div>
 
-        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+        <a href="../index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Terug naar Projecten</a>
     </div>
 
     <script>

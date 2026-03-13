@@ -4,8 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 91: Type Snelheid Test - DOM Projecten</title>
+    <title>Project 91: Typing Master Pro - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #38bdf8;
+            --success: #10b981;
+            --error: #ef4444;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --border: #334155;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,576 +33,570 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #e0e7ff;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            color: #1e1b4b;
+            padding: 2.5rem;
         }
 
         .container {
-            background: white;
-            border-radius: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
             padding: 3rem;
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
-            box-shadow: 0 20px 40px -10px rgba(67, 56, 202, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             text-align: center;
-            border: 4px solid #c7d2fe;
         }
 
         h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
             margin-bottom: 0.5rem;
-            color: #312e81;
-            font-size: 2.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            /* -webkit-background-clip: text; */
+            -webkit-text-fill-color: transparent;
         }
 
         .level {
-            display: block;
-            padding: 0.4rem 1.2rem;
-            background: #c7d2fe;
-            color: #3730A3;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 900;
-            margin-bottom: 2.5rem;
+            display: inline-block;
+            padding: 0.45rem 1.2rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            width: max-content;
-            margin-left: auto;
-            margin-right: auto;
+            letter-spacing: 1px;
+            margin-bottom: 2.5rem;
         }
 
-        /* APP CSS _T */
-        .project-area {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .SSTatsSTThehBDarH {
-            width: 100%;
+        /* Game UI */
+        .stats-bar {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 16px;
+            gap: 20px;
+            background: #0f172a;
+            padding: 30px;
+            border-radius: 20px;
             margin-bottom: 30px;
-            border: 2px solid #e2e8f0;
+            border: 1px solid var(--border);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .ITtemMSttatThe_H {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .ITtemMSttatThe_H span {
-            font-size: 0.8rem;
-            color: #64748b;
+        .stat-item span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
             font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            color: var(--secondary);
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .text-display {
+            font-size: 1.5rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            text-align: left;
+            padding: 35px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            min-height: 150px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .text-display span {
+            position: relative;
+            transition: color 0.1s;
+        }
+
+        .text-display span.correct {
+            color: var(--success);
+        }
+
+        .text-display span.incorrect {
+            color: var(--error);
+            background: rgba(239, 68, 68, 0.1);
+            border-bottom: 2px solid var(--error);
+        }
+
+        .text-display span.active {
+            color: var(--text-main);
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 4px;
+        }
+
+        .word-input {
+            width: 100%;
+            padding: 24px;
+            font-size: 1.6rem;
+            background: #0f172a;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            color: white;
+            outline: none;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 30px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .word-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .ITtemMSttatThe_H div {
-            font-size: 2rem;
-            color: #4338ca;
-            font-weight: 900;
-            font-family: monospace;
+        .reset-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
         }
 
-        .UUiiTTxyDeHToTOTheBeTyPeHT {
-            font-size: 1.5rem;
-            line-height: 1.6;
-            color: #64748b;
-            margin-bottom: 30px;
+        .reset-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .tips,
+        .expandable {
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 2.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
             text-align: left;
-            padding: 25px;
-            background: #fefce8;
+            color: #e2e8f0;
+        }
+
+        .explanation {
+            border-left: 5px solid #f59e0b;
+            margin-top: 5rem;
+        }
+
+        .concepts {
+            border-left: 5px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 5px solid #6366f1;
+        }
+
+        .tips {
+            border-left: 5px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            padding: 1.5rem;
             border-radius: 12px;
-            border-left: 6px solid #f59e0b;
-            user-select: none;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            color: #abb2bf;
         }
 
-        /* Span styling for correct/incorrect words/letters  The_ H! */
-        .UUiiTTxyDeHToTOTheBeTyPeHT span {
-            padding: 2px;
-            border-radius: 4px;
-            transition: 0.1s;
+        .code-keyword {
+            color: #c678dd;
         }
 
-        .UUiiTTxyDeHToTOTheBeTyPeHT span.CcOooReectTe_Z {
-            color: #16a34a;
-            background: #dcfce7;
+        .code-func {
+            color: #61afef;
         }
 
-        .UUiiTTxyDeHToTOTheBeTyPeHT span.FFoFuTTTheT_eZ {
-            color: #ef4444;
-            background: #fee2e2;
-            text-decoration: underline;
+        .code-string {
+            color: #98c379;
         }
 
-        .UUiiTTxyDeHToTOTheBeTyPeHT span.AaAccTiEVThTT {
-            background: #38bdf8;
-            color: white;
-            animation: ppPulseBLinkV 1s infinite alternate;
+        .code-comment {
+            color: #5c6370;
+            font-style: italic;
         }
 
-        @keyframes ppPulseBLinkV {
+        .expand-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
             from {
-                background: #38bdf8;
+                opacity: 0;
+                transform: translateY(-10px);
             }
 
             to {
-                background: #0ea5e9;
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-
-        .TtTyYYYPpIInPutFVIHThe {
-            width: 100%;
-            padding: 20px;
-            font-size: 1.4rem;
-            border: 3px solid #cbd5e1;
-            border-radius: 12px;
-            outline: none;
-            transition: 0.3s;
-            font-family: monospace;
-            text-align: center;
-            color: #1e293b;
-            background: white;
-            margin-bottom: 20px;
+        .back-link {
+            display: block;
+            margin-top: 3rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: color 0.2s;
         }
 
-        .TtTyYYYPpIInPutFVIHThe:focus {
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 5px rgba(79, 70, 229, 0.2);
+        .back-link:hover {
+            color: var(--secondary);
         }
 
-        .TtTyYYYPpIInPutFVIHThe:disabled {
-            background: #f1f5f9;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        .BbBTTTThenRReSSeTetHH_Te {
-            background: #4f46e5;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: max-content;
-        }
-
-        .BbBTTTThenRReSSeTetHH_Te:hover {
-            background: #4338ca;
-            transform: translateY(-3px);
-        }
-
-        .BbBTTTThenRReSSeTetHH_Te:active {
-            transform: translateY(0);
-        }
-
-        /* THE  modal the !  END THE */
-        .EEINndMDSHDtheRE_TheTTMo {
+        /* Modal Settings */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.9);
-            z-index: 100;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(5px);
+            z-index: 1000;
         }
 
-        .MmoDDAoDeCttThe_nT {
-            background: white;
-            padding: 40px;
-            border-radius: 24px;
+        .modal-content {
+            background: var(--card-bg);
+            padding: 4rem;
+            border-radius: 32px;
+            border: 1px solid var(--border);
             text-align: center;
             max-width: 500px;
             width: 90%;
-            animation: pPPopupAni 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
         }
 
-        @keyframes pPPopupAni {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .MmoDDAoDeCttThe_nT h2 {
+        .modal-content h2 {
             font-size: 2.5rem;
-            color: #4338ca;
-            margin-bottom: 10px;
-        }
-
-        .MmoDDAoDeCttThe_nT p {
-            font-size: 1.2rem;
-            color: #475569;
-            margin-bottom: 30px;
-        }
-
-        .WwwOoMThPMDTextDTh {
-            font-size: 4rem;
+            margin-bottom: 1rem;
             font-weight: 900;
-            color: #10b981;
-            margin-bottom: 30px;
-        }
-
-        .back-link {
-            display: block;
-            margin-top: 2rem;
-            color: #4f46e5;
-            text-decoration: none;
-            font-weight: 600;
-            text-align: center;
         }
     </style>
-    <!-- FONT O !! Z ! -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1><i class="fas fa-keyboard"></i> Type Snelheid Test</h1>
-        <span class="level">Grandmaster Project</span>
+    <div class="container" id="main-container">
+        <h1>Typing Master Pro</h1>
+        <span class="level">String Logic & Performance</span>
 
-        <!-- Stap voor Stap -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span>Resterende Tijd</span>
+                <div class="stat-value" id="timeLeft">60</div>
+            </div>
+            <div class="stat-item">
+                <span>Words Per Minute</span>
+                <div class="stat-value" id="wpm">0</div>
+            </div>
+            <div class="stat-item">
+                <span>Karakter Fouten</span>
+                <div class="stat-value" id="errors" style="color: var(--error);">0</div>
+            </div>
+        </div>
+
+        <div class="text-display" id="textDisplay"></div>
+        <input type="text" id="inputField" class="word-input" placeholder="Wacht op start..." autocomplete="off">
+
+        <button class="reset-btn" id="resetBtn">🚀 Start Nieuwe Test</button>
+
+        <!-- Tutorial Secties -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Bij dit project duiken we diep in real-time string manipulatie en asynchrone timers.</p>
+            <ul>
+                <li><strong>Array Analysis:</strong> Hoe je een string splitst in individuele spans voor pixel-perfecte
+                    feedback.</li>
+                <li><strong>WPM Algoritme:</strong> De industriestandaard berekening voor typ-snelheid.</li>
+                <li><strong>State Syncing:</strong> Het synchroniseren van user-input met een visuele template.</li>
+            </ul>
+        </div>
+
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Input Event:</strong> Waarom we <code>'input'</code> gebruiken in plaats van
+                    <code>'keydown'</code> voor tekstverwerking.</li>
+                <li><strong>Zero-Index Targeting:</strong> Het bijhouden van de <code>charIndex</code> om de actieve
+                    letter te markeren.</li>
+                <li><strong>Precision Counting:</strong> Het onderscheid tussen bruto aanslagen en netto correcte
+                    woorden.</li>
+            </ul>
+        </div>
+
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: De Kernlogica</h3>
 
             <div class="step">
-                <h4>Stap 1: Tekst in Spans Splitsen</h4>
-                <p>De tekst wordt in losse <strong>woord-spans</strong> opgesplitst zodat elk woord individueel kan
-                    worden gecheckt en opgemaakt met CSS classes.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> woorden = zin.<span class="function">split</span>(<span class="string">' '</span>);
-woorden.<span class="function">forEach</span>(woord =&gt; {
-    <span class="keyword">const</span> span = document.<span class="function">createElement</span>(<span class="string">'span'</span>);
-    span.innerText = woord + <span class="string">' '</span>;
-    container.<span class="function">appendChild</span>(span);
+                <h4>1: Tekst Tokenizeren</h4>
+                <p>We veranderen de zin in een reeks <code>&lt;span&gt;</code> elementen zodat we elke letter apart
+                    kunnen kleuren.</p>
+                <div class="code-example">
+                    <pre><span class="code-comment">// Voorbeeld van rendering</span>
+text.<span class="code-func">split</span>(<span class="code-string">""</span>).<span class="code-func">forEach</span>(char => {
+    <span class="code-keyword">let</span> span = <span class="code-string">`&lt;span&gt;${char}&lt;/span&gt;`</span>;
+    container.innerHTML += span;
 });</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: WPM Berekenen</h4>
-                <p><strong>WPM</strong> = Words Per Minute. Formule: correcte woorden gedeeld door verstreken minuten.
-                    We berekenen dit live elke seconde!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> minuten = verstrekenSeconden / <span class="string">60</span>;
-<span class="keyword">const</span> wpm = Math.<span class="function">round</span>(correcteWoorden / minuten);</pre>
+                <h4>2: De WPM Formule</h4>
+                <p>WPM wordt berekend door het aantal karakters te delen door 5 (het gemiddelde woord) en dit te schalen
+                    naar een minuut.</p>
+                <div class="code-example">
+                    <pre><span class="code-keyword">let</span> wpm = <span class="code-func">Math.round</span>(((charIndex - errors) / <span style="color: #d19a66">5</span>) / (timePassed / <span style="color: #d19a66">60</span>));</pre>
                 </div>
             </div>
-
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Klik in het tekstveld en begin met typen!</li>
-                <li>Typ elk woord gevolgd door een <kbd>Spatie</kbd> - het woord wordt dan verwerkt.</li>
-                <li>Probeer 60+ WPM te halen!</li>
-            </ul>
-        </div>
+        <button class="expand-btn" id="toggleExp">📖 Toon Fouten & Uitbreidingen</button>
 
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>CSS Feedback:</strong> Groene achtergrond = correct, Rood = fout. Dit werkt via het
-                    simpelweg toevoegen van CSS classes aan de spans!</li>
-                <li><strong>Gemiddeld:</strong> Een gemiddelde typist haalt 40 WPM. 60+ is goed, 80+ is uitstekend, 100+
-                    is expert-niveau!</li>
-            </ul>
-        </div>
-
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="tips" style="border-left-color: #ef4444; background: rgba(239,68,68,0.05);">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
                 <ul>
-                    <li><strong>Highscore Opslaan:</strong> Sla de hoogste WPM op via <code>localStorage</code> en toon
-                        deze als "Persoonlijk Record"!</li>
-                    <li><strong>Moeilijkheidsgraad:</strong> Voeg knoppen toe om de tijdslimiet te wijzigen (30s / 60s /
-                        120s)!</li>
+                    <li><strong>Space-bar skipping:</strong> Het vergeten van de spatie als een geldig karakter in je
+                        indexering.</li>
+                    <li><strong>Timer Drift:</strong> <code>setInterval</code> kan soms licht afwijken; voor absolute
+                        precisie gebruik je <code>Performance.now()</code>.</li>
+                    <li><strong>Focus Loss:</strong> Als de gebruiker buiten het invoerveld klikt, stopt de invoer maar
+                        de timer loopt vaak door.</li>
+                </ul>
+            </div>
+
+            <div class="tips" style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1);">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>Difficulty Modes:</strong> Voeg zinnen toe met speciale tekens of programmeercode voor
+                        professionals.</li>
+                    <li><strong>Geluidsfeedback:</strong> Voeg een subtiel tik-geluid toe bij elke aanslag en een 'fout'
+                        geluid bij missers.</li>
+                    <li><strong>Dashboard:</strong> Sla je highscores op in <code>localStorage</code> om je voortgang
+                        over tijd te zien.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
-        <div class="project-area">
-
-            <div class="SSTatsSTThehBDarH">
-                <div class="ITtemMSttatThe_H">
-                    <span>Tijd</span>
-                    <div id="uUITijD_SseTheCC">60</div>
-                </div>
-                <div class="ITtemMSttatThe_H">
-                    <span>WPM <small style="font-size:0.8rem;color:#94a3b8">(Woorden/Min)</small></span>
-                    <div id="uUITThHEeH_WpMMPvTtThe_v">0</div>
-                </div>
-                <div class="ITtemMSttatThe_H">
-                    <span>Fouten</span>
-                    <div id="UUuiFOuoTTeHNTheDTVa" style="color:#ef4444;">0</div>
-                </div>
-            </div>
-
-            <div class="UUiiTTxyDeHToTOTheBeTyPeHT" id="ZZIiinDBeBeTtThTextU_UI">
-                <!-- Zinnen the worden hier door JavaScript the  ingespooggThe THE_ 1V! dZ in Spans_ The!_! -->
-            </div>
-
-            <input type="text" id="IIiinpuUtZTTHeYypeT_VTeHH" class="TtTyYYYPpIInPutFVIHThe"
-                placeholder="Klik hier en begin met typen om the de_ test the te starten..." autocomplete="off">
-
-            <button class="BbBTTTThenRReSSeTetHH_Te" id="oBBtnRReHSeStHHTet_vTheThe">
-                <i class="fas fa-redo"></i> Herstart Test
-            </button>
-
-        </div>
-
-        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten Overzicht</a>
     </div>
 
-    <!-- MODAL THE _! EIND SCHeRm_ THE_  H  Z _-->
-    <div class="EEINndMDSHDtheRE_TheTTMo" id="MmoDdAA_LThevEIH_nDdHTDTheeV">
-        <div class="MmoDDAoDeCttThe_nT">
-            <h2>Klaar! 🎉</h2>
-            <p>Jouw type the H snelheid The_ wasH :_Z</p>
-            <div class="WwwOoMThPMDTextDTh" id="mMo_OdaAwPPMmMTTeLThxT">0 WPM</div>
-            <button class="BbBTTTThenRReSSeTetHH_Te" style="margin: 0 auto;" id="MmoDDaalLBTNThehRsTarDTe">
-                Nog Een Keer!
-            </button>
+    <!-- Resultaat Modal -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <i class="fas fa-trophy" style="font-size: 3rem; color: #fbbf24; margin-bottom: 1.5rem;"></i>
+            <h2>Test Voltooid!</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Je uiteindelijke prestatie:</p>
+            <div style="font-size: 5rem; font-weight: 900; color: var(--secondary); line-height: 1;" id="finalScore">0
+            </div>
+            <p style="margin-bottom: 3rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Words Per
+                Minute</p>
+            <button class="reset-btn" onclick="initTest()">Nog een keer</button>
         </div>
     </div>
 
     <script>
-        const DOMSZiInTeDTheTXTuiThe = document.getElementById('ZZIiinDBeBeTtThTextU_UI');
-        const INNpPtVuYTypEeHVLD = document.getElementById('IIiinpuUtZTTHeYypeT_VTeHH');
-        const UTheITtijHDeSThe = document.getElementById('uUITijD_SseTheCC');
-        const TheUW_PpMm_UITextThThe = document.getElementById('uUITThHEeH_WpMMPvTtThe_v');
-        const UiFffFOOuTheNTTxtTThe = document.getElementById('UUuiFOuoTTeHNTheDTVa');
+        const textDisplay = document.getElementById('textDisplay');
+        const inputField = document.getElementById('inputField');
+        const timeLeftEl = document.getElementById('timeLeft');
+        const wpmEl = document.getElementById('wpm');
+        const errorsEl = document.getElementById('errors');
+        const resetBtn = document.getElementById('resetBtn');
+        const modal = document.getElementById('resultModal');
+        const finalScore = document.getElementById('finalScore');
+        const expBtn = document.getElementById('toggleExp');
+        const expansions = document.getElementById('expansions');
 
-        const BtTNTHH_hHesTartt_The_H = document.getElementById('oBBtnRReHSeStHHTet_vTheThe');
-
-        const MODDaLa_HDeiThe = document.getElementById('MmoDdAA_LThevEIH_nDdHTDTheeV');
-        const MoODAloWpwMThtTheXTE = document.getElementById('mMo_OdaAwPPMmMTTeLThxT');
-        const MbTnMOODDAaLLRhtTheVvH = document.getElementById('MmoDDaalLBTNThehRsTarDTe');
-
-        // DAta de The_ zinnen H! The_ 
-        const aRAryrTheZTheTiInNnEN_TThe = [
-            "De snelle bruine vos springt over de luie hond. Dit is the een klassieke the the_ THE zin The_  om _ The je the the the ! _ The toetsenbord H the the ! Z _V  te the 1 The _the V the the  testen Z O The_!",
-            "Programmeren The V is The  N_TheThe niet The the the_ V The the ! _ alleen1  coderen The  the H_the, H _ _ Vhet THE isH The  V_ ook the het the ! oplossen V van T complexe O the_ problemen The V _The the  met elegante oplossingen The_ Z!",
-            "Tijden the The _ veranderen THE Z en the de The technologie _ V VThe evolueert the  the  H the _ the ! the _ the V the  sneller the! Z! The V dan __ THE_ we VThe! _ H The_ kunnenThe the_ The the  bijhouden_ Z!.",
-            "JavaScript is_ THE_ the de the The O the 1 taal the van _ theThe het the The V webthe ,_The THE THE ! The en The! dom_ H the!  projecten 1 maken The Is The de The THE beste the manier_ Z_ The! OM the _ het 1_ te the _ THE ! The leren! H _The_  Z_!",
-            "Oefening the _H THE_ _The Baart _ Kunst _The_ The H. THE_ Blijf The the ! H_ O VThe ! the_! H The typen the om_ je THE words The  per the _ the _minute The O te THE _  verhogenH V! THE_ The_! The Z_ !."
+        const texts = [
+            "De snelle bruine vos springt over de luie hond terwijl de zon langzaam ondergaat.",
+            "Programmeren is de kunst van het vertellen aan een domme machine wat hij precies moet doen.",
+            "Het bouwen van moderne interfaces vereist zowel creativiteit als technische discipline.",
+            "Succes is niet het einde, falen is niet fataal: het is de moed om door te gaan die telt.",
+            "In een wereld vol algoritmes is menselijke intuïtie nog steeds onze grootste kracht."
         ];
 
-        let MmAaXXTtijd_HDa = 60; // 60 The seconds! THE!
-        let tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe = MmAaXXTtijd_HDa;
-        let IIiiSBeGonNNhenTTTHDaTHT = false;
-        let tTtiiMmmerrRHDaID_H;
+        let timeLeft = 60;
+        let timer = null;
+        let isPlaying = false;
+        let charIndex = 0;
+        let errors = 0;
 
-        let aArrAryySPanWoOr_eDdEentThe__ = []; //_Slaat de DOM spans op the V! !_
-        let AaNNnTtalW_OWordendHHGoThe = 0; // HThe_!_  Tthe correcteThe words The ! V Z 1 
-        // LET OP; the The WPMM_ THE 1(words_ The_ _The per The_ 1The minute _Z!the! ) The _ the word  Vaak the the  door typers THE 1!_ the berekent The the_ H in "Characters  _ / THE_the_ 5" , The MAar wij _ the THEThe doen the _ "Echte" Z WOORDEN O  voor the _de makkelijkheid. O!!
-        let aANaaTaalfOuTeenTHEThe = 0;
+        function initTest() {
+            modal.style.display = 'none';
+            inputField.value = '';
+            inputField.disabled = false;
+            inputField.placeholder = "Begin met typen...";
+            charIndex = 0;
+            errors = 0;
+            timeLeft = 60;
+            isPlaying = false;
+            clearInterval(timer);
 
-        // INIT TESt_ ! The_  (Kies zin The_ THE ! en_  render Spans )
-        function inIiTTtieaLaiztISeeeeOThrHThe() {
-            // Random zin_ the_ The H 
-            const ZiiKNgTheko_zennnO = aRAryrTheZTheTiInNnEN_TThe[Math.floor(Math.random() * aRAryrTheZTheTiInNnEN_TThe.length)];
+            wpmEl.innerText = 0;
+            errorsEl.innerText = 0;
+            timeLeftEl.innerText = timeLeft;
 
-            // Splits de _the THE _THE Zin in _ the words O The ! 
-            const WwoRdeeOentArraryDaTThe_H = ZiiKNgTheko_zennnO.split(' ');
-
-            DOMSZiInTeDTheTXTuiThe.innerHTML = '';
-            aArrAryySPanWoOr_eDdEentThe__ = [];
-
-            WwoRdeeOentArraryDaTThe_H.forEach(WWwoOoTHRdTheH_ZTxt => {
-                const SspPAanMNDOM_HTHHe__The_v = document.createElement('span');
-                SspPAanMNDOM_HTHHe__The_v.innerText = WWwoOoTHRdTheH_ZTxt + " "; // space at end ! The H O
-                aArrAryySPanWoOr_eDdEentThe__.push(SspPAanMNDOM_HTHHe__The_v);
-                DOMSZiInTeDTheTXTuiThe.appendChild(SspPAanMNDOM_HTHHe__The_v);
+            const randomText = texts[Math.floor(Math.random() * texts.length)];
+            textDisplay.innerHTML = "";
+            randomText.split("").forEach(char => {
+                let span = `<span>${char}</span>`;
+                textDisplay.innerHTML += span;
             });
-
-            // ZEt inItiaTl H the AACTitEv! V (Eerste ! word)
-            aArrAryySPanWoOr_eDdEentThe__[0].classList.add('AaAccTiEVThTT');
-
-            // REset State _ !!
-            INNpPtVuYTypEeHVLD.value = "";
-            INNpPtVuYTypEeHVLD.disabled = false;
-            INNpPtVuYTypEeHVLD.focus();
-
-            clearInterval(tTtiiMmmerrRHDaID_H);
-            tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe = MmAaXXTtijd_HDa;
-            IIiiSBeGonNNhenTTTHDaTHT = false;
-
-            AaNNnTtalW_OWordendHHGoThe = 0;
-            aANaaTaalfOuTeenTHEThe = 0;
-
-            UTheITtijHDeSThe.innerText = tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe;
-            TheUW_PpMm_UITextThThe.innerText = 0;
-            UiFffFOOuTheNTTxtTThe.innerText = 0;
-            MODDaLa_HDeiThe.style.display = "none";
+            textDisplay.querySelectorAll("span")[0].classList.add("active");
+            inputField.focus();
         }
 
+        function startTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                timeLeftEl.innerText = timeLeft;
 
-        // TYPE _ LOGiCa The _ ! THE_
-        INNpPtVuYTypEeHVLD.addEventListener('input', (e) => {
-            // 1 Start H De TIMER the The _ the the als_ V hij OThe_the H The the _ nog! niet loopt_The The! THE!_ _ O _ The! _
-            if (!IIiiSBeGonNNhenTTTHDaTHT) {
-                sTtaTHrTtITimErrHOHHDtheHDe_();
-                IIiiSBeGonNNhenTTTHDaTHT = true;
-            }
-
-            const gGGeTheTypHTeTVaa_tTeWoorRTheOTheTdVn = INNpPtVuYTypEeHVLD.value;
-
-            // Check the H_ het the_huidige H active _ woOrdd O TheTHe_ !
-            // De aArrAryySPanWoOr_eDdEentThe__[AaNNnTtalW_OWordendHHGoThe] THE the_ _T Is_ de DOM reference. THE !
-
-            // ALs de Array ZThe ! OUT of Bouneds __ isThe the H _ Z the!_ THE The_  (De user heeft !T the de the_ the  hele  HThe text_ the_ afgerond Z)_ 
-            if (AaNNnTtalW_OWordendHHGoThe >= aArrAryySPanWoOr_eDdEentThe__.length) {
-                EeiNnDDTeEsTTHeTHEH_O();
-                return;
-            }
-
-            const HhhuiDgTHEWOrdHHDDOMN__ON_DEe = aArrAryySPanWoOr_eDdEentThe__[AaNNnTtalW_OWordendHHGoThe];
-            const DOelWWwOrdHTHTheEXTXhDTheHTe = HhhuiDgTHEWOrdHHDDOMN__ON_DEe.innerText; // TheH The _ Inclusief  the spaties! V _ The_
-
-            // ALS_ _ THE USER EEN SPATIE TYPT THE 
-            // EEN "Space" the _ Z aan the The the_ het H _the_ eind the_! the V TheH _ Z Betekent_ woord O_the afgerond!
-            if (e.data === ' ' || gGGeTheTypHTeTVaa_tTeWoorRTheOTheTdVn.endsWith(' ')) {
-
-                // ALs de THe_ _The _ het  WOOREd the THE_!!_ correct was the (de user _ TheThe!_tH is The EXACT het woord the ! the the the INCL The spatzie !)_ O! O!! 
-                if (gGGeTheTypHTeTVaa_tTeWoorRTheOTheTdVn === DOelWWwOrdHTHTheEXTXhDTheHTe) {
-                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.classList.add('CcOooReectTe_Z');
-                } else {
-                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.classList.add('FFoFuTTTheT_eZ');
-                    aANaaTaalfOuTeenTHEThe++;
-                    UiFffFOOuTheNTTxtTThe.innerText = aANaaTaalfOuTeenTHEThe;
-                }
-
-                // Clear The! VThe_ input / Volgende woord the!H_ O! 
-                HhhuiDgTHEWOrdHHDDOMN__ON_DEe.classList.remove('AaAccTiEVThTT');
-                INNpPtVuYTypEeHVLD.value = "";
-                AaNNnTtalW_OWordendHHGoThe++;
-
-                // Zet The nieuwe the word The Active !_Thethe ! (als hetthe H V niet Het_ the_ einde is The !!O !! The_ !) V
-                if (AaNNnTtalW_OWordendHHGoThe < aArrAryySPanWoOr_eDdEentThe__.length) {
-                    aArrAryySPanWoOr_eDdEentThe__[AaNNnTtalW_OWordendHHGoThe].classList.add('AaAccTiEVThTT');
-                } else {
-                    // Alles isKLAAR! the_ V Z 
-                    EeiNnDDTeEsTTHeTHEH_O();
-                }
-
+                // Berekening WPM
+                let timePassed = 60 - timeLeft;
+                let wpm = Math.round(((charIndex - errors) / 5) / (timePassed / 60));
+                wpmEl.innerText = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
             } else {
-                // _ Z! IN_ DE MIDDLETHE O_ VOF TYPING EEN WOORD: Z ! 
-                // the_ Maak the the H the we_theThe _een Live V "rood" V_ feedback V_ M!_ de the the the als user typt : H 
-                if (!DOelWWwOrdHTHTheEXTXhDTheHTe.startsWith(gGGeTheTypHTeTVaa_tTeWoorRTheOTheTdVn)) {
-                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.style.backgroundColor = "#fecaca"; // fOut_ O THE THE __ H LIVE _ ! 
-                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.style.color = "#ef4444";
-                } else {
-                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.style.backgroundColor = "#38bdf8"; // blue__ T LIVE! V The
-                    HhhuiDgTHEWOrdHHDDOMN__ON_DEe.style.color = "white";
-                }
+                clearInterval(timer);
+                endTest();
             }
+        }
 
+        function endTest() {
+            isPlaying = false;
+            inputField.disabled = true;
+            inputField.value = "";
+            inputField.placeholder = "Test afgelopen";
+            finalScore.innerText = wpmEl.innerText;
+            modal.style.display = 'flex';
+        }
+
+        inputField.addEventListener('input', () => {
+            const characters = textDisplay.querySelectorAll("span");
+            let typedChar = inputField.value.split("")[charIndex];
+
+            if (charIndex < characters.length && timeLeft > 0) {
+                if (!isPlaying && inputField.value.length > 0) {
+                    timer = setInterval(startTimer, 1000);
+                    isPlaying = true;
+                }
+
+                // Backspace logic
+                if (typedChar == null) {
+                    if (charIndex > 0) {
+                        charIndex--;
+                        if (characters[charIndex].classList.contains("incorrect")) errors--;
+                        characters[charIndex].classList.remove("correct", "incorrect");
+                    }
+                } else {
+                    if (characters[charIndex].innerText === typedChar) {
+                        characters[charIndex].classList.add("correct");
+                    } else {
+                        errors++;
+                        characters[charIndex].classList.add("incorrect");
+                    }
+                    charIndex++;
+                }
+
+                characters.forEach(span => span.classList.remove("active"));
+                if (charIndex < characters.length) {
+                    characters[charIndex].classList.add("active");
+                } else {
+                    clearInterval(timer);
+                    endTest();
+                }
+
+                errorsEl.innerText = errors;
+            }
         });
 
-        // THE TIMER THE ! 
-        function sTtaTHrTtITimErrHOHHDtheHDe_() {
-            tTtiiMmmerrRHDaID_H = setInterval(() => {
-                tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe--;
-                UTheITtijHDeSThe.innerText = tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe;
+        resetBtn.addEventListener('click', initTest);
 
-                // Bereken de _The WPM_ _live O ! H! 
-                const VVVerTT_strrRTeThkeNTTIJJTThDdTheMINV = (MmAaXXTtijd_HDa - tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe) / 60;
-                if (VVVerTT_strrRTeThkeNTTIJJTThDdTheMINV > 0) {
-                    // de The GOEDE O words ! (_ the AaNNnTtalW_OWordendHHGoThe minus _ de Fouten!) V !
-                    const ggGoOdeeThe_wooRDen = Math.max(0, AaNNnTtalW_OWordendHHGoThe - aANaaTaalfOuTeenTHEThe);
-                    // _The Formule THE !! 
-                    const uTUiIWePeeHTheTmMDeBeTReHkkeV = Math.round(ggGoOdeeThe_wooRDen / VVVerTT_strrRTeThkeNTTIJJTThDdTheMINV);
-                    TheUW_PpMm_UITextThThe.innerText = uTUiIWePeeHTheTmMDeBeTReHkkeV;
-                }
+        expBtn.onclick = () => {
+            expansions.classList.toggle('show');
+            expBtn.innerText = expansions.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
+        };
 
-
-                if (tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe <= 0) {
-                    EeiNnDDTeEsTTHeTHEH_O();
-                }
-            }, 1000);
-        }
-
-        // T_ EINDtheEST_ ! H_The
-        function EeiNnDDTeEsTTHeTHEH_O() {
-            clearInterval(tTtiiMmmerrRHDaID_H);
-            INNpPtVuYTypEeHVLD.disabled = true;
-
-            // Finale WPM Berekening The !_ Z THE(Voor the_ H The the veiligheid The !) ! 
-            const tTIdJJIdVDTHVerHsZ__SttrReEkHkeNMtNThI_ = (MmAaXXTtijd_HDa - tTtTEesRHeThTheHTIid_LTheLRoopOPeendThe) / 60;
-            const vvGoEdedeWooHRtDen = Math.max(0, AaNNnTtalW_OWordendHHGoThe - aANaaTaalfOuTeenTHEThe);
-            const FinalWWPPMH = tTIdJJIdVDTHVerHsZ__SttrReEkHkeNMtNThI_ > 0 ? Math.round(vvGoEdedeWooHRtDen / tTIdJJIdVDTHVerHsZ__SttrReEkHkeNMtNThI_) : 0;
-
-            MoODAloWpwMThtTheXTE.innerText = `${FinalWWPPMH} WPM`;
-            MODDaLa_HDeiThe.style.display = "flex";
-        }
-
-
-        // THE The _The Buttons The Z 
-        BtTNTHH_hHesTartt_The_H.addEventListener('click', inIiTTtieaLaiztISeeeeOThrHThe);
-        MbTnMOODDAaLLRhtTheVvH.addEventListener('click', inIiTTtieaLaiztISeeeeOThrHThe);
-
-
-        // START INIT APP_V!! Z ! V !!
-        inIiTTtieaLaiztISeeeeOThrHThe();
-
-    </script>
-    <script>
-        function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
-            const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
-        }
+        // Initialize on load
+        window.onload = () => {
+            // Wacht even voor een mooie entree
+            initTest();
+        };
     </script>
 </body>
 

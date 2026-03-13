@@ -5,231 +5,244 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 32: Custom Video Player - DOM Projecten</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
+    body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0f172a;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: #f8fafc;
+    }
 
-        .container {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
+    .container {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid #334155;
+    }
 
-        h1 {
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
+    h1 {
+    color: #f8fafc;
+    margin-bottom: 0.5rem;
+    }
 
-        .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
+    .level {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #cce5ff;
+    color: #004085;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    }
 
-        .description {
-            color: #666;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
+    .description {
+    color: #cbd5e1;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    }
 
-        .explanation,
-        .concepts,
-        .step-by-step,
-        .instructions,
-        .tips {
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
+    .explanation,
+    .concepts,
+    .step-by-step,
+    .instructions,
+    .tips {
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    }
 
-        .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
-        }
+    .explanation { border-left: 4px solid #f59e0b; }
+    .concepts { border-left: 4px solid #0ea5e9; }
+    .step-by-step { border-left: 4px solid #94a3b8; }
+    .instructions { border-left: 4px solid #3b82f6; }
+    .tips { border-left: 4px solid #10b981; }
 
-        .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
-        }
+    .explanation h3, .concepts h3, .step-by-step h3, .instructions h3, .tips h3,
+    .explanation h4, .concepts h4, .step-by-step h4, .instructions h4, .tips h4 {
+    color: #f8fafc;
+    margin-bottom: 1rem;
+    }
 
-        .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
-        }
+    h3 {
+    margin-bottom: 1rem;
+    }
 
-        .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
-        }
+    ul {
+    margin-left: 1.5rem;
+    line-height: 1.6;
+    }
 
-        .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
-        }
+    .code-example {
+    background: #0f172a;
+    color: #abb2bf;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    border: 1px solid #334155;
+    }
 
-        h3 {
-            margin-bottom: 1rem;
-        }
+    .code-example .keyword {
+    color: #c678dd;
+    }
 
-        ul {
-            margin-left: 1.5rem;
-            line-height: 1.6;
-        }
+    .code-example .string {
+    color: #98c379;
+    }
 
-        .code-example {
-            background: #282c34;
-            color: #abb2bf;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-        }
+    .code-example .function {
+    color: #61afef;
+    }
 
-        .code-example .keyword {
-            color: #c678dd;
-        }
+    .back-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #60a5fa;
+    text-decoration: none;
+    font-weight: 600;
+    }
 
-        .code-example .string {
-            color: #98c379;
-        }
+    /* Video Player */
+    .project-area {
+    background: #111;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
 
-        .code-example .function {
-            color: #61afef;
-        }
+    .video-player {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+    }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 1rem;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
+    .video-player video {
+    width: 100%;
+    display: block;
+    cursor: pointer;
+    }
 
-        /* Video Player */
-        .project-area {
-            background: #111;
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .controls-container {
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    }
 
-        .video-player {
-            width: 100%;
-            max-width: 600px;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            background: #000;
-        }
+    .video-player:hover .controls-container,
+    .video-player.paused .controls-container {
+    transform: translateY(0);
+    }
 
-        .video-player video {
-            width: 100%;
-            display: block;
-            cursor: pointer;
-        }
+    .progress-bar-container {
+    width: 100%;
+    height: 5px;
+    background: #444;
+    cursor: pointer;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    position: relative;
+    }
 
-        .controls-container {
-            background: rgba(0, 0, 0, 0.7);
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            transform: translateY(100%);
-            transition: transform 0.3s ease-in-out;
-        }
+    .progress-bar {
+    height: 100%;
+    background: #ff0055;
+    width: 0%;
+    border-radius: 2px;
+    }
 
-        .video-player:hover .controls-container,
-        .video-player.paused .controls-container {
-            transform: translateY(0);
-        }
+    .controls-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
 
-        .progress-bar-container {
-            width: 100%;
-            height: 5px;
-            background: #444;
-            cursor: pointer;
-            border-radius: 2px;
-            margin-bottom: 10px;
-            position: relative;
-        }
+    .btn-vid {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    outline: none;
+    transition: 0.2s;
+    }
 
-        .progress-bar {
-            height: 100%;
-            background: #ff0055;
-            width: 0%;
-            border-radius: 2px;
-        }
+    .btn-vid:hover {
+    color: #ff0055;
+    }
 
-        .controls-main {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .time-display {
+    color: white;
+    font-size: 0.85rem;
+    font-family: monospace;
+    }
 
-        .btn-vid {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 1.2rem;
-            outline: none;
-            transition: 0.2s;
-        }
+    .volume-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    }
 
-        .btn-vid:hover {
-            color: #ff0055;
-        }
+    .volume-slider {
+    width: 80px;
+    accent-color: #ff0055;
+    cursor: pointer;
+    }
 
-        .time-display {
-            color: white;
-            font-size: 0.85rem;
-            font-family: monospace;
-        }
+    .expandable {
+    display: none;
+    }
 
-        .volume-container {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+    .expandable.show {
+    display: block;
+    }
 
-        .volume-slider {
-            width: 80px;
-            accent-color: #ff0055;
-            cursor: pointer;
-        }
+    .expand-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: #cbd5e1;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    transition: all 0.2s;
+    }
+
+    .expand-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    }
     </style>
 </head>
 
@@ -237,84 +250,93 @@
     <div class="container">
         <h1>Project 32: Custom Video Player</h1>
         <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
-        <p class="description">Verberg de standaard browser videocontroles en bouw je eigen state-of-the-art UI.</p>
+        <p class="description">Bouw een professionele video player met een eigen interface en volledige controle over de
+            afspeellogica.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>De Native HTML5 Video API in JavaScript gebruiken voor volledige mediacontrole.</li>
+                <li>Eigen custom UI elementen zoals play/pauze knoppen programmeren ter vervanging van de browser
+                    defaults.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>video.play() en video.pause()</strong> - Methoden om het standaard HTML video-element aan te
+                    sturen.</li>
+                <li><strong>timeupdate</strong> - Een event dat continu afgaat tijdens het afspelen, essentieel voor het
+                    bijwerken van de progressie-balk.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: De Standaard Controls Verbergen</h4>
-                <p>Browsers (Safari, Chrome, Firefox) tonen normaal hun eigen video player interface. Die interface
-                    verschilt per browser. We voorkomen dit door eenvoudigweg de HTML <code>controls</code> property weg
-                    te laten uit de <code>&lt;video&gt;</code> tag!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">&lt;!-- Geen 'controls' attribuut = we bouwen zelf de UI! --&gt;</span>
-&lt;video id="vid" src="movie.mp4"&gt;&lt;/video&gt;</pre>
-                </div>
-                <p><strong>Uitleg:</strong> Vanaf nu doet de video he-le-maal niks meer als de gebruiker erop klikt,
-                    tenzij we JavaScript inzetten om de afspeel logica the kapen!</p>
-            </div>
-
-            <div class="step">
-                <h4>Stap 2: Play & Pauze Logica bouwen</h4>
-                <p>De HTML5 video API geeft JS directe properties zoals <code>video.paused</code>, en commandos zoals
-                    <code>video.play()</code> en <code>video.pause()</code>.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="function">togglePlay</span>() {
-    <span class="keyword">if</span> (video.paused) {
-        video.<span class="function">play</span>();
-        playBtn.innerHTML = <span class="string">'⏸'</span>;
-    } <span class="keyword">else</span> {
-        video.<span class="function">pause</span>();
-        playBtn.innerHTML = <span class="string">'▶️'</span>;
+                <h4>Stap 1: Play/Pause Toggle</h4>
+                <p>Een simpele klik-actie die de status van de video omschakelt.</p>
+                <div class="code-example">
+                    <pre>function togglePlay() {
+    if (video.paused) {
+        video.play();
+        playBtn.innerText = 'Pause';
+    } else {
+        video.pause();
+        playBtn.innerText = 'Play';
     }
 }</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Deze functie binden we aan onze eigen HTML PLAY-knop én aan een klik op de
-                    video zelf. We <i>toggelen</i> tegelijkertijd het icoontje (Play vs Pauze)!</p>
             </div>
-
             <div class="step">
-                <h4>Stap 3: Het <code>timeupdate</code> Event</h4>
-                <p>Hoe updatet de rode tijdbalk zich tijdens het afspelen van de video? De <code>&lt;video&gt;</code>
-                    HTML tag vuurt automatisch op de achtergrond het <code>timeupdate</code> event af. Tot wel meerdere
-                    keren per seconde!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre>video.addEventListener(<span class="string">'timeupdate'</span>, updateProgress);
-
-<span class="keyword">function</span> <span class="function">updateProgress</span>() {
-    <span class="comment">// (huidige tijd / Totale tijd) * 100 === Percentage!</span>
-    <span class="keyword">const</span> percentage = (video.currentTime / video.duration) * <span class="string">100</span>;
-    progressBar.style.width = <span class="string">`${percentage}%`</span>;
-}</pre>
+                <h4>Stap 2: De Progressie-balk Uitrekenen</h4>
+                <p>Het percentage wordt berekend door de huidige tijd (current time) te delen door de totale tijdsduur
+                    (duration).</p>
+                <div class="code-example">
+                    <pre>video.addEventListener('timeupdate', () =&gt; {
+    const percent = (video.currentTime / video.duration) * 100;
+    progressBar.style.width = `${percent}%`;
+});</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Door die wiskundige deling te maken in <code>updateProgress</code>, kunnen
-                    we exact de CSS <code>width</code> van de rode progressiebalk updaten.</p>
+            </div>
+            <div class="step">
+                <h4>Stap 3: Afspeelsnelheid (PlaybackRate)</h4>
+                <p>Je kunt de video sneller of langzamer laten afspelen door de <code>playbackRate</code> eigenschap te
+                    wijzigen.</p>
+                <div class="code-example">
+                    <pre>speedBtn.addEventListener('click', () =&gt; {
+    video.playbackRate = 1.5; // 1.5x de normale snelheid 
+});</pre>
+                </div>
             </div>
         </div>
 
         <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Tijd Formatteren)</h3>
-            <pre><span class="comment">// Computers denken in PURE secondes (bijv. 135 secondes). </span>
-<span class="comment">// Wij mensen willen zien: 02:15. Dan heb je wiskunde nodig!</span>
-<span class="keyword">function</span> <span class="function">formatTime</span>(seconds) {
-    <span class="keyword">const</span> min = Math.<span class="function">floor</span>(seconds / <span class="string">60</span>); <span class="comment">// 135 / 60 = 2 minuten</span>
-    <span class="keyword">const</span> sec = Math.<span class="function">floor</span>(seconds % <span class="string">60</span>); <span class="comment">// Restwaarde = 15s</span>
-    
-    <span class="comment">// Voeg voorloopnullen ('0') toe als het getal onder de 10 is!</span>
-    <span class="keyword">return</span> <span class="string">`${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`</span>;
-}</pre>
+        <div class="code-example">
+            <h3>💻 Verspring 10 Seconden (Vooruit/Achteruit)</h3>
+            <pre>skipButtons.forEach(button =&gt; {
+    button.addEventListener('click', function() {
+        // Lees hoeveel we willen skippen uit het data-skip attribuut in de HTML
+        const skipAmount = parseFloat(this.dataset.skip);
+        // Tel dit op bij de huidige tijd van de video
+        video.currentTime += skipAmount;
+    });
+});</pre>
         </div>
 
         <!-- Instructies -->
         <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
+            <h3>✅ Instructies:</h3>
             <ul>
-                <li>Beweeg je muis over de video (hover!) om de controls te onthullen.</li>
-                <li>Druk op de play/pauze knop of klik ergens op de video zelf.</li>
-                <li>Klik ergens op de RODE progressiebalk om door de video te spoelen (skippen)!</li>
+                <li>Speel de video af met de custom play knop of door direct op de video te klikken.</li>
+                <li>Gebruik de progress-bar om direct naar een specifiek moment in de video te springen.</li>
+                <li>Pas het volume aan met de slider en zie hoe de video-interface verbergt als je niet beweegt.</li>
             </ul>
         </div>
 
@@ -322,41 +344,48 @@
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong><code>timeupdate</code> vs <code>progress</code>:</strong> In de code gebruiken we het
-                    <code>timeupdate</code> event om de balk in real-time te updaten. Het <code>progress</code> event
-                    wordt gevuurd door de browser als er nieuwe video data geladen/gebufferd wordt!</li>
-                <li><strong>Scrubbing (Slepen op de Balk)</strong>: Door een variabele <code>mousedown</code> op TRUE of
-                    FALSE te zetten in de muisevents, weten we of de gebruiker op de rode balk klikt óf aan het slepen
-                    is!</li>
+                <li><strong>De <code>paused</code> property:</strong> In HTML5 Audio/Video is het altijd beter om de
+                    native boolean <code>.paused</code> te controleren voor de ware status, in plaats van zelf een
+                    variabele bij te houden.</li>
             </ul>
         </div>
 
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: <code>NaN</code> in de Time Display</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - Als je de <code>video.duration</code> direct uileest vóórdat de video properties geladen zijn in de DOM, dan geeft de browser 'NaN' (Not a Number) terug. Gebruik daarom ALTIJD het event listener: <code>loadedmetadata</code>!</span></pre>
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: De 'Duration' is NaN</h4>
+                <p style="color: #f87171;">Als je de <code>video.duration</code> direct probeert op te vragen bij het
+                    laden, is de kans groot dat de browser de metadata van het bestand nog niet heeft gelezen. Dit
+                    resulteert in een NaN (Not a Number) fout.</p>
+                <div class="code-example">
+                    <pre>console.log(video.duration); // NaN op regel 1
+
+video.addEventListener('loadedmetadata', () =&gt; {
+   console.log(video.duration); // Nu werkt het wel 
+});</pre>
                 </div>
             </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Voeg een Fullscreen knop toe:</strong> Voeg een HTML knop toe, en koppel dit aan de
-                        <code>video.requestFullscreen()</code> API van de browser!</li>
+                    <li><strong>Fullscreen API:</strong> Integreer de <code>element.requestFullscreen()</code> methode
+                        om bioscoopervaring te bieden!</li>
+                    <li><strong>Volume Slider:</strong> Bouw een input type=range om het <code>video.volume</code>
+                        dynamisch te manipuleren.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
+
         <div class="project-area">
             <div class="video-player paused" id="player">
                 <video id="vid" src="https://www.w3schools.com/html/mov_bbb.mp4"></video>

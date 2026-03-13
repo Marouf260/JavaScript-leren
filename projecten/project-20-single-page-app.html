@@ -12,7 +12,7 @@
         }
 
         .project-area {
-            background: #f8f9fa;
+            
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -24,7 +24,7 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -37,7 +37,7 @@
         }
         
         .container {
-            background: white;
+            background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px;
             border-radius: 12px;
             padding: 2rem;
             max-width: 600px;
@@ -50,15 +50,15 @@
         }
         
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
         }
         
         .level {
             display: inline-block;
             padding: 0.25rem 0.75rem;
-            background: #F8D7DA;
-            color: #721C24;
+            background: rgba(220, 53, 69, 0.1);
+            color: #f8f1f1;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -66,13 +66,13 @@
         }
         
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
         }
         
         .project-area {
-            background: #f8f9fa;
+            
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -102,7 +102,7 @@
         }
         
         .instructions {
-            background: #e3f2fd;
+            background: rgba(33, 150, 243, 0.1);
             border-left: 4px solid #2196F3;
             padding: 1rem;
             border-radius: 4px;
@@ -110,13 +110,13 @@
         }
         
         .instructions h3 {
-            color: #1976D2;
+            color: #90caf9;
             margin-bottom: 0.5rem;
         }
         
         .instructions ul {
             margin-left: 1.5rem;
-            color: #555;
+            color: #cbd5e1;
         }
         
         .instructions li {
@@ -136,7 +136,7 @@
         }
         
         .explanation {
-            background: #fff3cd;
+background: rgba(255, 193, 7, 0.1);
             border-left: 4px solid #ffc107;
             padding: 1.5rem;
             border-radius: 4px;
@@ -144,12 +144,12 @@
         }
         
         .explanation h3 {
-            color: #856404;
+            color: #fef3c7;
             margin-bottom: 1rem;
         }
         
         .explanation p {
-            color: #856404;
+            color: #fef3c7;
             line-height: 1.8;
             margin-bottom: 1rem;
         }
@@ -187,7 +187,7 @@
         }
         
         .concepts {
-            background: #d1ecf1;
+            background: rgba(23, 162, 184, 0.1);
             border-left: 4px solid #17a2b8;
             padding: 1.5rem;
             border-radius: 4px;
@@ -195,13 +195,13 @@
         }
         
         .concepts h3 {
-            color: #0c5460;
+            color: #80deea;
             margin-bottom: 1rem;
         }
         
         .concepts ul {
             margin-left: 1.5rem;
-            color: #0c5460;
+            color: #80deea;
         }
         
         .concepts li {
@@ -210,7 +210,7 @@
         }
         
         .tips {
-            background: #d4edda;
+            background: rgba(40, 167, 69, 0.1);
             border-left: 4px solid #28a745;
             padding: 1.5rem;
             border-radius: 4px;
@@ -218,13 +218,13 @@
         }
         
         .tips h3 {
-            color: #155724;
+            color: #a5d6a7;
             margin-bottom: 1rem;
         }
         
         .tips ul {
             margin-left: 1.5rem;
-            color: #155724;
+            color: #a5d6a7;
         }
         
         .tips li {
@@ -232,7 +232,7 @@
         }
         
         .step-by-step {
-            background: #f8d7da;
+            background: rgba(220, 53, 69, 0.1);
             border-left: 4px solid #dc3545;
             padding: 1.5rem;
             border-radius: 4px;
@@ -240,7 +240,7 @@
         }
         
         .step-by-step h3 {
-            color: #721c24;
+            color: #f8f1f1;
             margin-bottom: 1rem;
         }
         
@@ -255,12 +255,12 @@
         }
         
         .step h4 {
-            color: #721c24;
+            color: #f8f1f1;
             margin-bottom: 0.5rem;
         }
         
         .step p {
-            color: #721c24;
+            color: #f8f1f1;
             line-height: 1.6;
             margin-bottom: 0.5rem;
         }
@@ -300,7 +300,7 @@
         <div class="explanation">
             <h3>📚 Wat ga je leren?</h3>
             <p>In dit project leer je een complete Single Page Application bouwen. Je leert:</p>
-            <ul style="margin-left: 1.5rem; color: #856404;">
+            <ul style="margin-left: 1.5rem; color: #fef3c7;">
                 <li>Client-side routing implementeren</li>
                 <li>History API gebruiken voor URL updates</li>
                 <li>popstate event gebruiken voor browser navigatie</li>
@@ -401,8 +401,8 @@
         </div>
         
         <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Complete Code</h3>
+        <div class="code-example" style="border: 2px solid #667eea;">
+            <h3 style="color: #f8fafc; margin-bottom: 1rem;">💻 Complete Code</h3>
             <pre><span class="keyword">const</span> links = document.<span class="function">querySelectorAll</span>(<span class="string">'.spa-link'</span>);
 <span class="keyword">const</span> pages = document.<span class="function">querySelectorAll</span>(<span class="string">'.spa-page'</span>);
 
@@ -471,11 +471,11 @@ window.<span class="function">addEventListener</span>(<span class="string">'pops
         </div>
         
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
+        <div class="step-by-step" style="background: rgba(220, 53, 69, 0.1);">
             <h3>⚠️ Veelvoorkomende Fouten</h3>
             <div class="step">
                 <h4>Fout 1: Vergeten preventDefault</h4>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - Pagina reload bij klik</span>
 link.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
     <span class="function">showPage</span>(pageId); <span class="comment">// Vergeet preventDefault!</span>
@@ -490,7 +490,7 @@ link.<span class="function">addEventListener</span>(<span class="string">'click'
             </div>
             <div class="step">
                 <h4>Fout 2: Vergeten popstate handler</h4>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - Back knop werkt niet</span>
 window.history.pushState(...); <span class="comment">// Vergeet popstate listener!</span>
 
@@ -502,7 +502,7 @@ window.<span class="function">addEventListener</span>(<span class="string">'pops
             </div>
             <div class="step">
                 <h4>Fout 3: Verkeerde hash parsing</h4>
-                <div class="code-example" style="background: #fff;">
+                <div class="code-example" >
                     <pre><span class="comment">// ❌ FOUT - Hash bevat nog steeds #</span>
 <span class="keyword">const</span> pageId = window.location.hash; <span class="comment">// "#home"</span>
 document.<span class="function">getElementById</span>(pageId + <span class="string">'-page'</span>); <span class="comment">// "#home-page" bestaat niet!</span>
@@ -547,9 +547,9 @@ document.<span class="function">getElementById</span>(pageId + <span class="stri
         
         <div class="project-area">
             <nav id="spa-nav" style="display: flex; gap: 1rem; margin-bottom: 1rem; border-bottom: 2px solid #ddd; padding-bottom: 0.5rem;">
-                <a href="#home" class="spa-link" style="text-decoration: none; color: #333; padding: 0.5rem; cursor: pointer;">Home</a>
-                <a href="#about" class="spa-link" style="text-decoration: none; color: #333; padding: 0.5rem; cursor: pointer;">About</a>
-                <a href="#contact" class="spa-link" style="text-decoration: none; color: #333; padding: 0.5rem; cursor: pointer;">Contact</a>
+                <a href="#home" class="spa-link" style="text-decoration: none; color: #f8fafc; padding: 0.5rem; cursor: pointer;">Home</a>
+                <a href="#about" class="spa-link" style="text-decoration: none; color: #f8fafc; padding: 0.5rem; cursor: pointer;">About</a>
+                <a href="#contact" class="spa-link" style="text-decoration: none; color: #f8fafc; padding: 0.5rem; cursor: pointer;">Contact</a>
             </nav>
             <div id="spa-content">
                 <div id="home-page" class="spa-page" style="padding: 1rem;">

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 83: Speech Recognition API - DOM Projecten</title>
+    <title>Project 83: Voice-to-Text Studio - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -13,402 +13,542 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #faf5ff;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            color: #334155;
+            padding: 2.5rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
-            border-radius: 20px;
-            padding: 2.5rem;
-            max-width: 600px;
+            background: #1e293b;
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 850px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.15);
-            border: 2px solid #f3e8ff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
             text-align: center;
         }
 
         h1 {
-            color: #581c87;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
         }
 
         .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #e9d5ff;
-            color: #7e22ce;
-            border-radius: 20px;
+            display: block;
+            width: max-content;
+            margin: 0 auto 2.5rem;
+            padding: 0.35rem 1.2rem;
+            background: linear-gradient(135deg, #a855f7, #7e22ce);
+            color: white;
+            border-radius: 30px;
             font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* APP CSS H_T */
-        .project-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
 
-        .OMmMtTicroVBTNTheHHdDeZ_H {
+        .project-area {
+            background: #0f172a;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin: 1.5rem 0 2.5rem 0;
+            border: 1px solid #334155;
+            box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .mic-container {
+            position: relative;
             width: 100px;
             height: 100px;
+            margin: 0 auto 30px;
+        }
+
+        .mic-btn {
+            width: 100%;
+            height: 100%;
             background: #a855f7;
+            color: white;
+            border: none;
             border-radius: 50%;
+            font-size: 2.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            border: none;
-            outline: none;
-            transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.4);
-            margin-bottom: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.4);
             position: relative;
+            z-index: 2;
         }
 
-        .OMmMtTicroVBTNTheHHdDeZ_H i {
-            font-size: 2.5rem;
-            color: white;
-            transition: 0.3s;
-        }
-
-        /* THE HOVER  The Z! H */
-        .OMmMtTicroVBTNTheHHdDeZ_H:hover {
-            transform: scale(1.05);
-            background: #9333ea;
-        }
-
-        /* THE_ The_ Recording  ACTIVE STATE! The V The */
-        .OMmMtTicroVBTNTheHHdDeZ_H.rRRcCOOrdInGGHThe_TTh {
+        .mic-btn.active {
             background: #ef4444;
-            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.4);
-            animation: MmiIcCZOpPpulseH_Th 1.5s infinite;
+            box-shadow: 0 0 40px rgba(239, 68, 68, 0.6);
+            transform: scale(0.95);
         }
 
-        @keyframes MmiIcCZOpPpulseH_Th {
+        .pulse-ring {
+            position: absolute;
+            inset: -10px;
+            border: 2px solid #ef4444;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .mic-btn.active+.pulse-ring {
+            animation: ring-pulse 1.5s infinite;
+        }
+
+        @keyframes ring-pulse {
             0% {
-                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+                transform: scale(0.8);
+                opacity: 0;
             }
 
-            70% {
-                box-shadow: 0 0 0 20px rgba(239, 68, 68, 0);
+            50% {
+                opacity: 0.5;
             }
 
             100% {
-                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+                transform: scale(1.5);
+                opacity: 0;
             }
         }
 
-        .mS_V_TMsstATUt_SsLbeA_DeTheH {
-            font-size: 1rem;
-            color: #64748b;
-            font-weight: bold;
-            margin-bottom: 20px;
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 50px;
+            background: #1e293b;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
+            margin-bottom: 30px;
+            border: 1px solid #334155;
+            transition: all 0.3s;
         }
 
-        /* TEXT OUTPut H!The_ */
-        .UUITThhEeTrRranscRipitDoMB_BoxThe {
-            width: 100%;
-            min-height: 150px;
-            background: #f8fafc;
-            border: 2px dashed #cbd5e1;
-            border-radius: 12px;
-            padding: 20px;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #1e293b;
+        .status-badge.active {
+            color: #ef4444;
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .transcription-viewport {
+            background: #1e293b;
+            min-height: 250px;
+            max-height: 400px;
+            overflow-y: auto;
+            border-radius: 16px;
+            padding: 25px;
             text-align: left;
-            position: relative;
-            margin-bottom: 20px;
-            transition: 0.3s;
+            border: 1px solid #334155;
+            color: #f8fafc;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* WThe V ! the als IE the actiev IS inThe the _ Box The! */
-        .UUITThhEeTrRranscRipitDoMB_BoxThe.AaActiiVETheTheBoxZ {
-            border-color: #a855f7;
-            background: #fff;
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);
+        .transcription-viewport::-webkit-scrollbar {
+            width: 8px;
         }
 
-        /* De intermthe_ tekst_H _! The V The_(gray, live) */
-        .IIThIinteriImTTTextHTtheTT_V {
-            color: #94a3b8;
+        .transcription-viewport::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+
+        .interim {
+            color: #cbd5e1;
+            font-style: italic;
+            border-bottom: 2px solid #a855f7;
+        }
+
+        .control-panel {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-ui {
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            border: 1px solid #334155;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .btn-ui:hover:not(:disabled) {
+            color: #f8fafc;
+            background: #334155;
+            border-color: #94a3b8;
+        }
+
+        .btn-ui:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+            margin-top: 4rem;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
             font-style: italic;
         }
 
-        .bTBtnCWwWiiss_TheTheTxTTVH {
-            background: #cbd5e1;
-            color: #475569;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.9rem;
-            margin-left: auto;
+        .expand-btn {
             display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
         }
 
-        .bTBtnCWwWiiss_TheTheTxTTVH:hover {
-            background: #94a3b8;
-            color: white;
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 2rem;
-            color: #9333ea;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
             text-align: center;
+            width: 100%;
         }
     </style>
-    <!-- FONT O !! Z ! -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
-        <h1>🎙️ Spraak Herkenning</h1>
-        <span class="level">Advanced APIs</span>
-        <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5;">Klik the the The op de
-            microfoon O_ The the en the the H_ The <strong>praat</strong> inThe het_The the_ V_ _Nederlands.
-            <br>(Ondersteund _ in Chrome/Edge, the The_ vraagt the om microfoon the H permissie!).
-        </p>
+        <h1>Voice Studio Pro</h1>
+        <span class="level">Web Speech API (Recognition)</span>
+        <p class="description">Bouw een live transcriptie-tool die spraak real-time omzet in tekst. Leer hoe je
+            audiostreams beheert, talen configureert en interim-resultaten verwerkt voor een vloeiende UX.</p>
+
+        <div class="project-area">
+            <div class="mic-container">
+                <button class="mic-btn" id="mic-btn" title="Klik om te praten">🎙️</button>
+                <div class="pulse-ring"></div>
+            </div>
+
+            <div class="status-badge" id="status">Klaar voor opname</div>
+
+            <div class="transcription-viewport" id="viewport">
+                <span id="final-text"></span>
+                <span id="interim-text" class="interim"></span>
+            </div>
+
+            <div class="control-panel">
+                <button class="btn-ui" id="clear-btn">Wis Alles</button>
+                <button class="btn-ui" id="copy-btn">Kopieer Tekst</button>
+            </div>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>De Web Speech API stelt browsers in staat om menselijke spraak te begrijpen en te vertalen naar
+                machine-leesbare tekst.</p>
+            <ul>
+                <li><strong>Stream Processing:</strong> Hoe de browser geluidsgolven fragmenteert en analyseert.</li>
+                <li><strong>Confidence Scores:</strong> Begrijpen dat de API een 'waarschijnlijkheid' teruggeeft van wat
+                    er gezegd is.</li>
+                <li><strong>Continuous vs. Single:</strong> De logica achter het luisteren naar een hele presentatie
+                    versus een enkel commando.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>webkitSpeechRecognition:</strong> De engine achter de spraakherkenning (meestal verbonden
+                    met Google of Apple servers).</li>
+                <li><strong>Interim Results:</strong> Tekst die 'live' verandert terwijl de AI nog nadenkt over de
+                    context van je zin.</li>
+                <li><strong>Locale (nl-NL):</strong> Belang van de juiste taalinstelling voor nauwkeurige herkenning.
+                </li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: De Voice Engine</h3>
 
             <div class="step">
-                <h4>Stap 1: De SpeechRecognition API</h4>
-                <p>De the_ the <strong>Web Speech API</strong>_ the is ingebouwd in_ Chrome/Edge! Op_ Other Browsers_
-                    the the Werkt the_ dit_ the possibly the_ <strong>Niet!</strong>. We_ the maken the _ een the
-                    <code>SpeechRecognition</code> Object. </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
-<span class="keyword">const</span> SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-<span class="keyword">const</span> herkenner = <span class="keyword">new</span> <span class="function">SR</span>();
-herkenner.lang = <span class="string">'nl-NL'</span>;
-herkenner.interimResults = <span class="keyword">true</span>; <span class="comment">// Live preview!</span>
-<span class="function">herkenner</span>.<span class="function">start</span>();</pre>
+                <h4>1: Initialisatie</h4>
+                <p>We maken een nieuwe instance aan en vertellen de browser dat we interim (tussentijdse) resultaten
+                    willen zien.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> rec = <span class="keyword">new</span> <span class="function">webkitSpeechRecognition</span>();
+rec.continuous = <span class="keyword">true</span>;
+rec.interimResults = <span class="keyword">true</span>;
+rec.lang = <span class="string">'nl-NL'</span>;</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: isFinal vs Interim Results</h4>
-                <p>De API the_ Stuurt Continu The! Results. The is_ een Result <code>isFinal</code> dan is_ the the de
-                    Zin the_ <strong>Definitief!</strong> The the _(100% Zeker). The the Anders the_ is het_ een_ the
-                    <strong>Interim</strong> the_ result ("gok,_ the nog bezig_"). </p>
-            </div>
-
-        </div>
-
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Klik the_ OP de_ "Microfoon" the knop_The! the </li>
-                <li>Klik The! op the _ <strong>"Toestaan"</strong> the_ ! in the_ the DE the ! browser the _ popup!_
-                </li>
-                <li>Spreek The_ The the!_ Iets! the the Zin_ en_ Bekijk the the! hoe_ the Jouw the_! Woorden the
-                    Verschijnen_!_ </li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong><code>continuous = true</code> :</strong> the The IN The de JS The zie je the_ The ! The _
-                    dat we this <code>true</code> Zetten! Dit The_ Zorg dat_ de the recognition the <strong>Niet
-                        Stopt</strong> The the Na één_ Zin! Zonder dit_ the stopp the_ de API The! na the the! de the_!
-                    eerste_ the Zin! </li>
-            </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: <code>Firefox</code> Errors! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - Firefox the the the ondersteunt the the de Web Speech the  API the NIET the_! This de is een Chrome/Edge API!</span>
-<span class="comment">// OPLOSSING: Gebruik Chrome the of Edge voor the! deze the demo_!</span></pre>
+                <h4>2: Het Resultaat Filteren</h4>
+                <p>We loopen door de resultaten en scheiden de 'definitieve' tekst van de 'tijdelijke' gissingen.</p>
+                <div class="code-example">
+                    <pre>rec.<span class="function">onresult</span> = (e) => {
+    <span class="keyword">if</span> (e.results[i].isFinal) {
+        finalText += e.results[i][<span class="number">0</span>].transcript;
+    }
+};</pre>
                 </div>
             </div>
+
         </div>
 
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
                 <ul>
-                    <li><strong>Spraakcommando's! </strong> Luister the naar the specifieke the woorden! Als the de the
-                        gebruiker "Stop" the Zegt, the stop the dan the de the Herkenning the! Als the hij "Wis" the
-                        zegt, the wis dan de the tekst! </li>
+                    <li><strong>No Internet:</strong> De meeste herkennings-engines vereisen een verbinding met de cloud
+                        om de audio te verwerken.</li>
+                    <li><strong>Silent Stops:</strong> Als je te lang stopt met praten, zet de browser de mic soms
+                        automatisch uit. We vangen dit op met <code>onend</code> logica.</li>
+                    <li><strong>Background Noise:</strong> De API is erg gevoelig. In een drukke ruimte zal de
+                        'confidence score' drastisch dalen.</li>
+                </ul>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>Voice Commands:</strong> Detecteer specifieke woorden zoals "verwijder" om de tekstbox
+                        leeg te maken.</li>
+                    <li><strong>Auto-Download:</strong> Voeg een knop toe om de transcriptie direct als
+                        <code>.txt</code> bestand op te slaan.</li>
+                    <li><strong>Multi-Language:</strong> Maak een dropdown om te wisselen tussen Nederlands, Engels en
+                        Frans.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
-        <div class="project-area">
-
-            <button class="OMmMtTicroVBTNTheHHdDeZ_H" id="uIiBttMn_H_MMMicHTheZZV">
-                <i class="fas fa-microphone"></i>
-            </button>
-
-            <div class="mS_V_TMsstATUt_SsLbeA_DeTheH" id="UISStTuatHMsTehZLxTtDTheV_G">Klik om the the The te the
-                starten</div>
-
-            <div class="UUITThhEeTrRranscRipitDoMB_BoxThe" id="UTThUiDoOMThBBxTxHDOv__Data_TheV">
-                <span id="ZtheFiinnDaaLTheDataHTxO"></span>
-                <span id="UDeTHvIIitneTHehRimmmThTxO_v" class="IIThIinteriImTTTextHTtheTT_V"></span>
-            </div>
-
-            <button class="bTBtnCWwWiiss_TheTheTxTTVH" id="KKNoOOPHThe_VWissHTheTTTTheT">Wis Tekst</button>
-
-        </div>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Fouten & Uitbreidingen</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const BbBTnTheDMTheMOOHoMicVTheT = document.getElementById('uIiBttMn_H_MMMicHTheZZV');
-        const UTheISSSTaAutuTsHThe_O = document.getElementById('UISStTuatHMsTehZLxTtDTheV_G');
-        const BbTBoOXTRTaNScDOP_HOz = document.getElementById('UTThUiDoOMThBBxTxHDOv__Data_TheV');
+        const micBtn = document.getElementById('mic-btn');
+        const statusBadge = document.getElementById('status');
+        const finalTextSpan = document.getElementById('final-text');
+        const interimTextSpan = document.getElementById('interim-text');
+        const clearBtn = document.getElementById('clear-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const viewport = document.getElementById('viewport');
 
-        const UUITHeFinfEHHxTxtDOMThO_O = document.getElementById('ZtheFiinnDaaLTheDataHTxO');
-        const iItneRmOHTxTeHTheV_ZZ_T = document.getElementById('UDeTHvIIitneTHehRimmmThTxO_v');
-        const BbVThHKNooOp_OWWISTh_T = document.getElementById('KKNoOOPHThe_VWissHTheTTTTheT');
+        // Engine check (Chrome prefix vereist voor breedere support)
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-        // 1 INIT DE SPEECH_ THE _RECOGNITION THE  API !!
-        // WebSpeech API  is prefixed in the chrome: webkitSpeechRecognition THE !
-        const SSPTheeEc_CHReHCgniDtionO_v = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-        if (!SSPTheeEc_CHReHCgniDtionO_v) {
-            UTheISSSTaAutuTsHThe_O.innerText = "Browser ondersteunt The THE _ SpeechThe API the_The The_  NIET!";
-            UTheISSSTaAutuTsHThe_O.style.color = "#ef4444";
-            BbBTnTheDMTheMOOHoMicVTheT.style.display = "none";
+        if (!SpeechRecognition) {
+            statusBadge.innerText = "Niet ondersteund in deze browser";
+            statusBadge.style.color = "#ef4444";
+            micBtn.disabled = true;
+            micBtn.style.opacity = "0.5";
         } else {
-            const rREHCgg_ONiZzerThM__TheOThe = new SSPTheeEc_CHReHCgniDtionO_v();
+            const recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'nl-NL';
 
-            // CONFIG THE THE !
-            rREHCgg_ONiZzerThM__TheOThe.continuous = true; // the_The the Blijf listeren_ Thetot we stoppen!_ THE The V
-            rREHCgg_ONiZzerThM__TheOThe.interimResults = true; // THE  Geef O!_The_ ook _The_ "live/gok" resultaten O! the terug THE 
-            rREHCgg_ONiZzerThM__TheOThe.lang = 'nl-NL'; // Taal The V_!
+            let isRecording = false;
 
-            let iISTheAAn_THetLUIstSTterTenThVThe = false;
-
-            // STATE STRING (Bewaar The H ALLE The finished the sentences V!_)
-            let vVHHeTheLFInALeHTExstTT_SDtRriO = "";
-
-            // EVENT 1: START !H 
-            rREHCgg_ONiZzerThM__TheOThe.onstart = () => {
-                iISTheAAn_THetLUIstSTterTenThVThe = true;
-                BbBTnTheDMTheMOOHoMicVTheT.classList.add('rRRcCOOrdInGGHThe_TTh');
-                BbTBoOXTRTaNScDOP_HOz.classList.add('AaActiiVETheTheBoxZ');
-                UTheISSSTaAutuTsHThe_O.innerText = "Aan het the Luisteren... Spreek H The nu. The!";
-                UTheISSSTaAutuTsHThe_O.style.color = "#ef4444";
+            recognition.onstart = () => {
+                isRecording = true;
+                micBtn.classList.add('active');
+                statusBadge.innerText = "Live aan het luisteren...";
+                statusBadge.classList.add('active');
             };
 
-            // EVENT 2: RESULT THE ! (Wordt ELKE The miliseconde getriggert O The als jepraat ! Z_D) !
-            rREHCgg_ONiZzerThM__TheOThe.onresult = (eeevNNttTDAatO) => {
+            recognition.onresult = (event) => {
+                let interimStr = '';
+                let finalStr = '';
 
-                let nNuuiVInhTHEtHHeLTimTH_TTheG = "";
-
-                // Loop door ! alle the_ resultaten H ! MThe the The_
-                for (let iiHTDiHNum = eeevNNttTDAatO.resultIndex; iiHTDiHNum < eeevNNttTDAatO.results.length; iiHTDiHNum++) {
-
-                    const dTheDHHRTheSuHHO_ltTHObjjeK = eeevNNttTDAatO.results[iiHTDiHNum];
-                    const zTDeTHT_hTDeZinsStringOTextZ_v = dTheDHHRTheSuHHO_ltTHObjjeK[0].transcript;
-
-                    // ALS the de THE zin H THE_ DE THE IS H_(100% zeker):
-                    if (dTheDHHRTheSuHHO_ltTHObjjeK.isFinal) {
-                        vVHHeTheLFInALeHTExstTT_SDtRriO += zTDeTHT_hTDeZinsStringOTextZ_v + " ";
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const transcript = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        finalStr += transcript + ' ';
                     } else {
-                        // Aanders the_ the_ Z the V_ (interim, _The word nog the aangepast V_ )
-                        nNuuiVInhTHEtHHeLTimTH_TTheG += zTDeTHT_hTDeZinsStringOTextZ_v;
+                        interimStr += transcript;
                     }
                 }
 
-                // UPDATE UI !! M_ 
-                UUITHeFinfEHHxTxtDOMThO_O.innerText = vVHHeTheLFInALeHTExstTT_SDtRriO;
-                iItneRmOHTxTeHTheV_ZZ_T.innerText = nNuuiVInhTHEtHHeLTimTH_TTheG; // < Z the THE the _ (this The V one the is _ live) 
+                // Tekst injecteren
+                finalTextSpan.innerText += finalStr;
+                interimTextSpan.innerText = interimStr;
+
+                // Auto-scroll naar beneden
+                viewport.scrollTop = viewport.scrollHeight;
             };
 
-            // EVENT 3: ERROR V H !!
-            rREHCgg_ONiZzerThM__TheOThe.onerror = (e) => {
-                console.error("Speech The API V Fout! The:", e.error);
-                if (e.error === 'not-allowed') {
-                    UTheISSSTaAutuTsHThe_O.innerText = "Error: Microfoon _HThe toegang _ the geweigerd! O_!";
+            recognition.onerror = (event) => {
+                console.error("Spraakfout:", event.error);
+                statusBadge.innerText = `Fout: ${event.error}`;
+                stopRecognition();
+            };
+
+            recognition.onend = () => {
+                // Automatisch herstarten als de gebruiker niet zelf stopte
+                if (isRecording) {
+                    recognition.start();
                 } else {
-                    UTheISSSTaAutuTsHThe_O.innerText = `Fout: ${e.error}`;
+                    stopRecognition();
                 }
-                rREHCgg_ONiZzerThM__TheOThe.stop(); // default the STop! 
             };
 
-            // EVENT 4: END   ! M O   ! (API the STy_ _ opt the_ Zoms out _ if no sound etc!H! V. V )
-            rREHCgg_ONiZzerThM__TheOThe.onend = () => {
-                iISTheAAn_THetLUIstSTterTenThVThe = false;
-                BbBTnTheDMTheMOOHoMicVTheT.classList.remove('rRRcCOOrdInGGHThe_TTh');
-                BbTBoOXTRTaNScDOP_HOz.classList.remove('AaActiiVETheTheBoxZ');
-                UTheISSSTaAutuTsHThe_O.innerText = "Klik om the the The te the starten";
-                UTheISSSTaAutuTsHThe_O.style.color = "#64748b";
-            };
+            function stopRecognition() {
+                isRecording = false;
+                recognition.stop();
+                micBtn.classList.remove('active');
+                statusBadge.innerText = "Opname gestopt";
+                statusBadge.classList.remove('active');
+            }
 
-            // BTN KLIK ! THe H (Toggle de STart H/STOP)! The 
-            BbBTnTheDMTheMOOHoMicVTheT.addEventListener('click', () => {
-                if (iISTheAAn_THetLUIstSTterTenThVThe) {
-                    rREHCgg_ONiZzerThM__TheOThe.stop();
+            micBtn.addEventListener('click', () => {
+                if (isRecording) {
+                    isRecording = false; // Vlag zetten voor onend
+                    recognition.stop();
                 } else {
-                    try {
-                        rREHCgg_ONiZzerThM__TheOThe.start();
-                    } catch (e) { /* IGNORE ALREADY STARTED  */ }
+                    recognition.start();
                 }
             });
 
-            // BTN WIS TEKst ! Z_! THE!
-            BbVThHKNooOp_OWWISTh_T.addEventListener('click', () => {
-                vVHHeTheLFInALeHTExstTT_SDtRriO = ""; // reset var! H
-                UUITHeFinfEHHxTxtDOMThO_O.innerText = "";
-                iItneRmOHTxTeHTheV_ZZ_T.innerText = "";
+            clearBtn.addEventListener('click', () => {
+                finalTextSpan.innerText = '';
+                interimTextSpan.innerText = '';
+            });
+
+            copyBtn.addEventListener('click', () => {
+                const fullText = finalTextSpan.innerText;
+                if (!fullText) return;
+
+                navigator.clipboard.writeText(fullText).then(() => {
+                    const originalText = copyBtn.innerText;
+                    copyBtn.innerText = "Gekopieerd! ✅";
+                    setTimeout(() => copyBtn.innerText = originalText, 2000);
+                });
             });
         }
 
-    </script>
-    <script>
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
+            const exp = document.getElementById('expansions');
             const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
         }
     </script>
 </body>

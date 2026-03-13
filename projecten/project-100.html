@@ -4,8 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 100: Particle Physics - DOM Projecten</title>
+    <title>Project 100: Quantum Void - DOM Finale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        :root {
+            --bg: #020617;
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --accent: #3b82f6;
+            --text: #f8fafc;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,439 +28,268 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #000;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            color: #f8fafc;
         }
 
-        /* The Canvas should fill the screen */
+        /* Full Hero Background */
         canvas {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
             z-index: 1;
         }
 
-        /* Overlay UI */
-        .ui-layer {
+        .content-overlay {
             position: relative;
-            z-index: 10;
-            padding: 2rem;
+            z-index: 2;
+            padding: 4rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(2, 6, 23, 0.7) 0%, transparent 80%);
             pointer-events: none;
-            /* Let clicks pass through to canvas */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
-        h1 {
-            margin-bottom: 0.5rem;
-            color: #fff;
-            font-size: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-        }
-
-        .level {
-            display: block;
-            padding: 0.4rem 1.2rem;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            border-radius: 30px;
-            font-size: 1rem;
+        .hero-title {
+            font-size: 5rem;
             font-weight: 900;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #8b5cf6 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -3px;
+            animation: glow 5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+            }
+
+            to {
+                filter: drop-shadow(0 0 30px rgba(236, 72, 153, 0.8));
+            }
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 30px;
+            border-radius: 99px;
+            backdrop-filter: blur(10px);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.8rem;
             margin-bottom: 2rem;
+        }
+
+        .mission {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 4rem;
+        }
+
+        /* Final Tutorial UI */
+        .tutorial-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 50vh;
+            /* Zodat de animatie eerst te zien is */
+            pointer-events: auto;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 32px;
+            text-align: left;
+            backdrop-filter: blur(20px);
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            color: #cbd5e1;
+            line-height: 2;
+            font-size: 1.1rem;
+        }
+
+        .code-finale {
+            background: #000;
+            padding: 2rem;
+            border-radius: 16px;
+            font-family: 'JetBrains Mono';
+            margin: 2rem 0;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            font-size: 0.95rem;
+        }
+
+        .btn-finale {
+            display: inline-block;
+            margin-top: 4rem;
+            padding: 20px 50px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            font-weight: 900;
+            border-radius: 16px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
-        }
-
-        .controls {
-            pointer-events: auto;
-            /* Re-enable clicks for controls */
-            background: rgba(20, 20, 20, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 20px 40px;
-            border-radius: 15px;
-            border: 1px solid #333;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .control-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #a1a1aa;
-            font-weight: bold;
-        }
-
-        input[type="range"] {
-            cursor: pointer;
-            accent-color: #10b981;
-        }
-
-        .btn {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
             transition: 0.3s;
+            border: none;
         }
 
-        .btn:hover {
-            background: #059669;
-        }
-
-        .back-link {
-            pointer-events: auto;
-            display: block;
-            margin-top: 3rem;
-            color: #cbd5e1;
-            text-decoration: none;
-            font-weight: 600;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px 20px;
-            border-radius: 20px;
-        }
-
-        .back-link:hover {
-            color: #fff;
-            background: rgba(0, 0, 0, 0.8);
-        }
-
-        .instructions {
-            margin-top: 2rem;
-            color: #a1a1aa;
-            font-style: italic;
-            text-align: center;
+        .btn-finale:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
-
     <canvas id="canvas"></canvas>
 
-    <div class="ui-layer">
-        <h1><i class="fas fa-atom"></i> Particle Physics</h1>
-        <span class="level">Project 100: The Final Boss</span>
+    <div class="content-overlay">
+        <span class="status-badge">Project 100: Het Eindstation</span>
+        <h1 class="hero-title">Quantum Void</h1>
+        <p class="mission">Het ultieme bewijs van je kunnen. Een high-performance deeltjessimulatie die de grenzen van
+            de DOM en de Canvas API opzoekt.</p>
 
-        <!-- Tutorial Section -->
-        <div class="step-by-step" style="text-align: left; pointer-events: auto; max-width: 800px; width: 100%;">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
-            <div class="step">
-                <h4>Stap 1: Klasse-Gebaseerde Particles</h4>
-                <p>We gebruiken een <strong>JavaScript Class</strong> voor elke particle. Elk particle heeft zijn eigen
-                    positie, snelheid, kleur en gedrag. We maken een array van honderden instanties!</p>
-                <div class="code-example" style="background: #0a0a0a; color: #e0e0e0; border: 1px solid #333;">
-                    <pre><span style="color:#81c784">class</span> <span style="color:#64b5f6">Particle</span> {
-    <span style="color:#81c784">constructor</span>() {
-        this.x = Math.<span style="color:#dcdcaa">random</span>() * canvas.width;
-        this.vx = (Math.<span style="color:#dcdcaa">random</span>() * speed) - speed / 2;
-    }
-    <span style="color:#81c784">update</span>() {
-        this.x += this.vx;
-        <span style="color:#64b5f6">// Muisinteractie, muurbotsing, enz.
-    }</span>
-}</pre>
-                </div>
-            </div>
-            <div class="step">
-                <h4>Stap 2: Verbindingslijnen</h4>
-                <p>We vergelijken elke particle met elke andere (O(n²) complexiteit). Als de afstand kleiner is dan
-                    <code>linkDistance</code>, tekenen we een lijn met opaciteit gebaseerd op afstand.</p>
-            </div>
-        </div>
-
-        <div class="tips" style="max-width: 800px; width: 100%; pointer-events: auto; text-align: left;">
-            <h3>✅ Jouw Opdracht</h3>
-            <ul>
-                <li>Beweeg je muis over het canvas - particles wijken uit!</li>
-                <li>Klik op het canvas voor een plaatselijke explosie!</li>
-                <li>Gebruik de sliders om aantallen, snelheid en verbindingsafstand te regelen!</li>
-            </ul>
-        </div>
-
-        <div class="expandable" id="expansions" style="max-width: 800px; width: 100%; pointer-events: auto;">
-            <div class="tips" style="text-align: left;">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
+        <div class="tutorial-grid">
+            <div class="card" style="border-left: 8px solid var(--primary);">
+                <h3>📚 De Finale Mastery</h3>
+                <p style="color: #cbd5e1; margin-bottom: 1.5rem;">Je hebt de 100 bereikt. In dit laatste project
+                    combineren we alles wat we geleerd hebben over JavaScript, Math en de Browser API.</p>
                 <ul>
-                    <li><strong>Kleurverloop:</strong> Kleur de verbindingslijnen met een gradiënt gebaseerd op de
-                        particlekleuren!</li>
-                    <li><strong>Touch support:</strong> Voeg <code>touchmove</code> events toe zodat de interactie ook
-                        op mobiel werkt!</li>
+                    <li><strong>Vector Physics:</strong> Snelheid en versnelling berekenen met vectoren.</li>
+                    <li><strong>Particle Management:</strong> Honderden objecten onafhankelijk laten bewegen op 60 FPS.
+                    </li>
+                    <li><strong>Dynamic Colors:</strong> HSL kleurverschuivingen gebaseerd op positie of tijd.</li>
                 </ul>
             </div>
-        </div>
-        <button onclick="toggleExpansions()"
-            style="pointer-events: auto; display: block; margin: 1rem auto; background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">📖
-            Toon Uitbreidingsmogelijkheden</button>
 
-        <div class="controls">
-            <div class="control-group">
-                <label title="Aantal deeltjes"><i class="fas fa-circle-notch"></i> Count</label>
-                <input type="range" id="particleCount" min="50" max="500" value="150" step="10">
-                <span id="countVal">150</span>
+            <div class="card" style="border-left: 8px solid var(--secondary);">
+                <h3>🎯 De Architectuur</h3>
+                <div class="code-finale">
+                    <pre><span style="color: #61afef">class</span> <span style="color: #61afef">Particle</span> {
+  <span style="color: #61afef">update</span>() {
+    <span style="color: #c678dd">this</span>.x += <span style="color: #c678dd">this</span>.vx;
+    <span style="color: #c678dd">this</span>.y += <span style="color: #c678dd">this</span>.vy;
+    <span style="color: #c678dd">this</span>.alpha -= <span style="color: #d19a66">0.01</span>; <span style="color: #5c6370">// Fade out</span>
+  }
+}</pre>
+                </div>
+                <p style="color: #cbd5e1;">Elk deeltje is een uniek object in een array. Door
+                    <code>requestAnimationFrame</code> slim te gebruiken, bereiken we een vloeiende ervaring.
+                </p>
             </div>
-
-            <div class="control-group">
-                <label title="Snelheid"><i class="fas fa-tachometer-alt"></i> Speed</label>
-                <input type="range" id="particleSpeed" min="0.5" max="5" value="2" step="0.5">
-            </div>
-
-            <div class="control-group">
-                <label title="Verbindingsafstand"><i class="fas fa-project-diagram"></i> Link Distance</label>
-                <input type="range" id="linkDistance" min="50" max="250" value="120" step="10">
-            </div>
-
-            <button class="btn" id="explosionBtn"><i class="fas fa-bomb"></i> Explode</button>
         </div>
 
-        <p class="instructions">Beweeg je muis over het scherm. Klik om particles weg te duwen.</p>
-
-        <a href="../index.html" class="back-link">← Terug naar Home</a>
+        <a href="../index.html" class="btn-finale">Missie Voltooid</a>
+        <p
+            style="margin-top: 2rem; color: #475569; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">
+            © 2026 DOM Projecten Mastery</p>
     </div>
 
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-
-        // Controls
-        const countInput = document.getElementById('particleCount');
-        const countVal = document.getElementById('countVal');
-        const speedInput = document.getElementById('particleSpeed');
-        const distanceInput = document.getElementById('linkDistance');
-        const explosionBtn = document.getElementById('explosionBtn');
-
         let particles = [];
-        let animationId;
+        let hue = 0;
 
-        // Mouse interact
-        const mouse = {
-            x: null,
-            y: null,
-            radius: 150
-        };
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x || Math.random() * canvas.width;
+                this.y = y || Math.random() * canvas.height;
+                this.size = Math.random() * 5 + 1;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+                this.color = `hsl(${hue}, 100%, 50%)`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.size > 0.2) this.size -= 0.1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function handleParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                if (particles[i].size <= 0.3) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        function animate() {
+            // Semi-transparant zwart om trails te maken
+            ctx.fillStyle = 'rgba(2, 6, 23, 0.15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            handleParticles();
+            hue += 2;
+
+            // Spawn nieuwe deeltjes bij muisbeweging
+            if (mouse.x !== undefined) {
+                for (let i = 0; i < 2; i++) {
+                    particles.push(new Particle(mouse.x, mouse.y));
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        const mouse = { x: undefined, y: undefined };
 
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.x;
             mouse.y = e.y;
         });
 
-        window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            init();
-        });
-
-        // Add some random colors
-        const colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
-
-        class Particle {
-            constructor(x, y) {
-                this.x = x || Math.random() * canvas.width;
-                this.y = y || Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.baseX = this.x;
-                this.baseY = this.y;
-                this.density = (Math.random() * 30) + 1;
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-
-                let baseSpeed = parseFloat(speedInput.value);
-                this.vx = (Math.random() * baseSpeed) - (baseSpeed / 2);
-                this.vy = (Math.random() * baseSpeed) - (baseSpeed / 2);
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-                ctx.closePath();
-            }
-
-            updateVelocity() {
-                let currentSpeed = parseFloat(speedInput.value);
-                // Keep moving direction but alter speed
-                let currentMag = Math.sqrt(this.vx * this.vx + this.vy * this.vy) || 1;
-                this.vx = (this.vx / currentMag) * currentSpeed;
-                this.vy = (this.vy / currentMag) * currentSpeed;
-            }
-
-            update() {
-                // Wall collision
-                if (this.x + this.size > canvas.width || this.x - this.size < 0) {
-                    this.vx = -this.vx;
-                }
-                if (this.y + this.size > canvas.height || this.y - this.size < 0) {
-                    this.vy = -this.vy;
-                }
-
-                // Mouse interaction physics
-                if (mouse.x != null && mouse.y != null) {
-                    let dx = mouse.x - this.x;
-                    let dy = mouse.y - this.y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-                    let forceDirectionX = dx / distance;
-                    let forceDirectionY = dy / distance;
-                    let maxDistance = mouse.radius;
-                    let force = (maxDistance - distance) / maxDistance;
-                    let directionX = forceDirectionX * force * this.density;
-                    let directionY = forceDirectionY * force * this.density;
-
-                    if (distance < mouse.radius) {
-                        this.x -= directionX;
-                        this.y -= directionY;
-                    }
-                }
-
-                // Apply velocity
-                this.x += this.vx;
-                this.y += this.vy;
-
-                this.draw();
-            }
+        // Autofill initiale particles
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
         }
 
-        function init() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            particles = [];
-            let count = parseInt(countInput.value);
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animate() {
-            animationId = requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            let linkDist = parseInt(distanceInput.value);
-
-            // Update particles
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-            }
-
-            // Draw lines between particles
-            connectParticles(linkDist);
-        }
-
-        function connectParticles(maxDist) {
-            let opacityValue = 1;
-            for (let a = 0; a < particles.length; a++) {
-                for (let b = a; b < particles.length; b++) {
-                    let dx = particles[a].x - particles[b].x;
-                    let dy = particles[a].y - particles[b].y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < maxDist) {
-                        opacityValue = 1 - (distance / maxDist);
-                        ctx.strokeStyle = `rgba(161, 161, 170, ${opacityValue * 0.5})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
-                        ctx.stroke();
-                        ctx.closePath();
-                    }
-                }
-            }
-        }
-
-        // Event Listeners for controls
-        countInput.addEventListener('input', (e) => {
-            countVal.innerText = e.target.value;
-            // Add or remove particles
-            let dif = parseInt(e.target.value) - particles.length;
-            if (dif > 0) {
-                for (let i = 0; i < dif; i++) particles.push(new Particle());
-            } else {
-                particles.splice(0, -dif);
-            }
-        });
-
-        speedInput.addEventListener('change', () => {
-            particles.forEach(p => p.updateVelocity());
-        });
-
-        explosionBtn.addEventListener('click', () => {
-            // Give all particles a massive outward burst from center
-            let cx = canvas.width / 2;
-            let cy = canvas.height / 2;
-            particles.forEach(p => {
-                let dx = p.x - cx;
-                let dy = p.y - cy;
-                let dist = Math.sqrt(dx * dx + dy * dy) || 1;
-                p.vx = (dx / dist) * 20; // Explosion speed
-                p.vy = (dy / dist) * 20;
-            });
-
-            // gradually return to normal speed
-            setTimeout(() => {
-                particles.forEach(p => p.updateVelocity());
-            }, 500);
-        });
-
-        // Click on canvas = explosion at mouse
-        canvas.addEventListener('click', (e) => {
-            let cx = e.x;
-            let cy = e.y;
-            particles.forEach(p => {
-                let dx = p.x - cx;
-                let dy = p.y - cy;
-                let dist = Math.sqrt(dx * dx + dy * dy) || 1;
-                if (dist < 300) {
-                    p.vx = (dx / dist) * 15;
-                    p.vy = (dy / dist) * 15;
-                }
-            });
-            setTimeout(() => {
-                particles.forEach(p => p.updateVelocity());
-            }, 600);
-        });
-
-        // Start
-        init();
         animate();
-
-    </script>
-    <script>
-        function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
-            const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
-        }
     </script>
 </body>
 

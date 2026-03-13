@@ -14,43 +14,48 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
-            padding: 2rem;
+            padding: 2.5rem;
             max-width: 900px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
+            text-align: center;
         }
 
         .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            display: block;
+            width: fit-content;
+            margin: 0 auto 1.5rem;
+            padding: 0.25rem 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 1rem;
         }
 
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
+            text-align: center;
         }
 
         .explanation,
@@ -59,41 +64,35 @@
         .instructions,
         .tips {
             padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
         }
 
         .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            border-left: 4px solid #f59e0b;
         }
 
         .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
+            border-left: 4px solid #0ea5e9;
         }
 
         .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
+            border-left: 4px solid #94a3b8;
         }
 
         .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
+            border-left: 4px solid #3b82f6;
         }
 
         .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            border-left: 4px solid #10b981;
         }
 
         h3 {
+            color: #f8fafc;
             margin-bottom: 1rem;
         }
 
@@ -103,7 +102,7 @@
         }
 
         .code-example {
-            background: #282c34;
+            background: #0f172a;
             color: #abb2bf;
             padding: 1.5rem;
             border-radius: 8px;
@@ -111,6 +110,7 @@
             overflow-x: auto;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            border: 1px solid #334155;
         }
 
         .code-example .keyword {
@@ -128,405 +128,446 @@
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #667eea;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
         }
 
         /* Game Area */
         .project-area {
-            background: #f8fafc;
+            background: #0f172a;
             border-radius: 12px;
             padding: 2.5rem;
-            margin-bottom: 2rem;
-            border: 2px dashed #94a3b8;
+            margin: 2rem 0;
+            border: 1px solid #334155;
             display: flex;
             flex-direction: column;
             align-items: center;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .stats-hud {
             display: flex;
             gap: 40px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             width: 100%;
             justify-content: center;
+            background: #1e293b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #334155;
         }
 
         .stat-box {
             text-align: center;
-            color: #475569;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .stat-num {
             font-size: 2.5rem;
-            font-weight: bold;
-            color: #0f172a;
-            margin-top: 5px;
-            font-family: monospace;
+            font-weight: 800;
+            color: #f8fafc;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .text-overlay-view {
-            background: white;
-            border: 2px solid #e2e8f0;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid #334155;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 25px;
             text-align: justify;
-            line-height: 1.7;
-            font-size: 1.3rem;
-            color: #64748b;
+            line-height: 1.8;
+            font-size: 1.4rem;
+            color: #cbd5e1;
             width: 100%;
             position: relative;
             user-select: none;
         }
 
-        /* Char highlight classes during user input matches! */
         .char {
-            transition: 0.1s color, 0.1s background;
+            transition: all 0.1s;
         }
 
         .char.correct {
             color: #10b981;
-            font-weight: bold;
+            font-weight: 700;
         }
 
-        .char.fout {
+        .char.error {
             color: #ef4444;
-            background: #fee2e2;
-            border-bottom: 2px solid #ef4444;
+            background: rgba(239, 68, 68, 0.2);
+            border-radius: 2px;
         }
 
         .char.active-cursor {
             border-bottom: 3px solid #3b82f6;
-            color: #1e293b;
-            background: #e0f2fe;
+            background: rgba(59, 130, 246, 0.1);
+            color: #f8fafc;
         }
 
         .typ-input {
             width: 100%;
-            padding: 15px;
-            border-radius: 6px;
-            border: 2px solid #cbd5e1;
+            padding: 1.2rem;
+            border-radius: 10px;
+            background: #1e293b;
+            border: 2px solid #334155;
+            color: #f8fafc;
             font-size: 1.2rem;
             outline: none;
             text-align: center;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .typ-input:focus {
             border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
         }
 
         .btn-restart {
-            margin-top: 20px;
-            background: #334155;
+            margin-top: 25px;
+            background: #3b82f6;
             color: white;
-            padding: 10px 20px;
-            font-weight: bold;
-            border-radius: 6px;
+            padding: 14px 32px;
+            font-weight: 800;
+            border-radius: 8px;
             cursor: pointer;
             border: none;
-            transition: 0.2s;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 0 #2563eb;
         }
 
         .btn-restart:hover {
-            background: #0f172a;
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #1d4ed8;
+        }
+
+        .btn-restart:active {
+            transform: translateY(2px);
+            box-shadow: 0 0 0 #1d4ed8;
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .step h4 {
+            color: #f8fafc;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .step p {
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+            line-height: 1.6;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Project 54: Typing Speed Test App</h1>
-        <span class="level" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">Games</span>
-        <p class="description">Maak de een Typemachine test (Words Per Minute). Let goed op! De
-            <code>&lt;textarea&gt;</code> that holds the original words is out of split!
-        </p>
+        <h1>Project 54: Typing Speed Test</h1>
+        <span class="level">Intermediate</span>
+        <p class="description">Test je typesnelheid en nauwkeurigheid in real-time. Leer hoe je tekst verwerkt op
+            karakter-niveau en complexe statistieken zoals WPM berekent.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project duik je diep in tekstverwerking en real-time data visualisatie:</p>
+            <ul>
+                <li><strong>Dynamic Span Injection:</strong> Hoe je een string omzet in individuele DOM-elementen voor
+                    per-karakter styling.</li>
+                <li><strong>Input Monitoring:</strong> Het reageren op gebruikersinvoer en deze direct vergelijken met
+                    een 'bron van waarheid'.</li>
+                <li><strong>WPM Algoritme:</strong> Het berekenen van de 'Words Per Minute' standaard (5 karakters = 1
+                    woord).</li>
+                <li><strong>State Awareness:</strong> De applicatie laten weten wanneer de test gestart, bezig of
+                    voltooid
+                    is.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>String Splitting:</strong> Gebruik van <code>.split('')</code> om een zin te transformeren
+                    naar een array van karakters.</li>
+                <li><strong>DOM Comparison:</strong> Het loopen door een lijst van <code>&lt;span&gt;</code> elementen
+                    om hun inhoud te matchen met de <code>value</code> van een input-veld.</li>
+                <li><strong>Real-time Math:</strong> Tijdmetingen combineren met het aantal goed getypte karakters om
+                    een
+                    dynamische score te tonen.</li>
+                <li><strong>Event Filtering:</strong> Het negeren van input als de test al klaar is of nog niet gestart.
+                </li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: Tekst "Hacken" in Losse Letters</h4>
-                <p>Zo'n mooie App the waar THE the de lettertjes The 1 THE the voor 1 oplichten (the Monkeytype THE
-                    style!) werkt The the THE omdat elk the DOM The character THE the een losse
-                    <code>&lt;span&gt;</code> The the Node the The in the HTML The is. We the the The the gebruiken the
-                    de the array the method <code>split('')</code> the THE om the een String the THE (zinThe ) op the te
-                    the knippen the The in THE the losse The the letters The !</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// 1. The the zin THE the </span>
-<span class="keyword">const</span> zinThe = <span class="string">"Hallo The"</span>;
-
-<span class="comment">// 2. THE the the Array THE the met losse The the the letters The </span>
-<span class="keyword">const</span> letterArrayThe = zinThe.<span class="function">split</span>(<span class="string">''</span>); 
-<span class="comment">// Uitkomst: ['H', 'a', 'l', 'l', 'o', ' ', 'T', 'h', 'e']</span></pre>
+                <h4>Stap 1: Tekst Omzetten naar UI</h4>
+                <p>We kunnen niet zomaar een blok tekst tonen als we individuele letters willen inkleuren.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> charNodes = quote.<span class="function">split</span>(<span class="string">''</span>).<span class="function">map</span>(char => {
+    <span class="keyword">const</span> span = document.<span class="function">createElement</span>(<span class="string">'span'</span>);
+    span.innerText = char;
+    <span class="keyword">return</span> span;
+});</pre>
                 </div>
+                <p><strong>Uitleg:</strong> Door elk karakter in een eigen span te zetten, kunnen we later via JS heel
+                    makkelijk <code>.classList.add('correct')</code> aanroepen op één specifieke letter.</p>
             </div>
 
             <div class="step">
-                <h4>Stap 2: De Spans (HTML Nodes) The Genereren</h4>
-                <p>Nu we the de losse list met The the letters THE the hebben The , maken THE we the voor ELKE The the
-                    letter The een <code>span</code>-element the aan The the the THE The en The the we THE the zetten
-                    The de text er The THE The the in. The Vervolgens the THE pushen the THE we THE THE the deze The
-                    Spans the THE The in the de Grote Container the UI The THE div. The </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">function</span> <span class="function">maakTextBoard</span>() {
-    <span class="comment">// the split lettertjes array loop !</span>
-    GekozenZin.<span class="function">split</span>(<span class="string">''</span>).<span class="function">forEach</span>(letter => {
-        <span class="keyword">const</span> spanDOM = document.<span class="function">createElement</span>(<span class="string">'span'</span>);
-        spanDOM.classList.<span class="function">add</span>(<span class="string">'char'</span>); <span class="comment">// De CSS !</span>
-        spanDOM.innerText = letter; 
-        
-        DisplayOut.<span class="function">appendChild</span>(spanDOM);
-    });
-}</pre>
+                <h4>Stap 2: Input Vergelijken</h4>
+                <p>Bij elke <code>input</code> event loopen we door de spans en vergelijken we de indexen.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> inputArr = input.value.<span class="function">split</span>(<span class="string">''</span>);
+spans.<span class="function">forEach</span>((span, i) => {
+    <span class="keyword">const</span> typed = inputArr[i];
+    <span class="keyword">if</span> (typed == <span class="keyword">null</span>) span.className = <span class="string">'char'</span>;
+    <span class="keyword">else if</span> (typed === span.innerText) span.classList.<span class="function">add</span>(<span class="string">'correct'</span>);
+    <span class="keyword">else</span> span.classList.<span class="function">add</span>(<span class="string">'error'</span>);
+});</pre>
                 </div>
+                <p><strong>Uitleg:</strong> We vergelijken de letter op positie <code>i</code> van de gebruiker met de
+                    letter op positie <code>i</code> in de brontekst. Als de gebruiker nog niet bij die letter is (typed
+                    is null), halen we de kleurtjes weg.</p>
             </div>
 
             <div class="step">
-                <h4>Stap 3: Vergelijken THE op Index </h4>
-                <p>Elke The keer The dat de gebruiker the the typt IN de ECHTE The the <code>input</code> the THE box
-                    The (die is "onzichtbaar" the the), pakken The the The we The The the De The Typed the string THE
-                    the ! the EN we The The the the vergelijken the The The The deze the The the character The The the
-                    voor The the character The the the met The de THE the NodeList The Span The! The The Is index 4 The
-                    The the <code>o</code> the the in The de the user input the THE the the HETZELFDE TheThe the als The
-                    index 4 the in the the the de Spans The list? the Kleur de the the Span then GROEN! The the Anders
-                    Rood TheThe !</p>
+                <h4>Stap 3: WPM Berekenen</h4>
+                <p>De officiële WPM berekening gebruikt 5 karakters als één gemiddeld woord.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> minutes = (Date.<span class="function">now</span>() - startTime) / <span class="string">60000</span>;
+<span class="keyword">const</span> wpm = Math.<span class="function">round</span>((correctChars / <span class="string">5</span>) / minutes);</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We meten het aantal minuten (milliseconden / 60.000) en delen het aantal
+                    woorden door die tijd. Dit geeft een eerlijke score, ongeacht de lengte van de woorden.</p>
             </div>
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Start direct met Typen in het text input vak.</li>
-                <li>De Time starts direct after Key_1 !. (WPM wordt ge_calculated on 60 Sec interval data ).</li>
-                <li>Let op <code>spaties</code> in de zin! Foutjes kleuren Rood_! _! </li>
-            </ul>
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: 1px solid rgba(239, 68, 68, 0.2);">
+                <h4 style="color: #fca5a5;">Fout: Foutieve WPM bij start</h4>
+                <p style="color: #f87171;">Het proberen te berekenen van de WPM in de eerste milliseconde. Dit leidt tot
+                    een <code>Infinity</code> of <code>NaN</code> foutmelding. Voer de berekening pas uit na 1 seconde
+                    of voeg een check toe.</p>
+            </div>
+            <div class="step" style="border-bottom: none; padding-bottom: 0;">
+                <h4 style="color: #fca5a5;">Fout: Backspace beheer</h4>
+                <p style="color: #f87171;">Het vergeten de <code>error</code> klasse te verwijderen als een gebruiker
+                    een fout herstelt met backspace. Zorg dat je de status van élke span opnieuw evalueert bij elke
+                    wijziging.</p>
+            </div>
         </div>
 
         <!-- Tips -->
         <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
+            <h3>💡 Tips voor Studenten</h3>
             <ul>
-                <li><strong>WPM Formula The The the:</strong> the The In de The the code The The the THE Zie the je The
-                    The the the de berekening The. the THE The Std de the THE wpm the metric The The the The gaat the
-                    The the uit the the THE THE van "The 5 characters the _The THE is the The 1 the the The Word The_".
-                    the Dus: the <code>(totaalCharactersGetyped / 5 / TheAantalSecondenRun) * 60</code> the the = the
-                    THE the The the Jouw TheWPM the Score TheThe! the !</li>
+                <li><strong>Focus Management:</strong> Gebruik <code>input.focus()</code> automatisch bij het laden van
+                    de pagina en na een herstart voor een snellere workflow.</li>
+                <li><strong>Cursor Visueel:</strong> Voeg een <code>active-cursor</code> klasse toe aan het karakter
+                    waar
+                    de gebruiker nu is, om de focus te verbeteren.</li>
+                <li><strong>Responsive:</strong> Zorg dat de tekst netjes 'wrapt' in de container, anders wordt je test
+                    onbruikbaar op kleinere schermen.</li>
             </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: "Enter" en "Backspace" The The the THE Errors </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the speler The the de The THE the backspace_ toets the the drukt, THE the moet The the de the The RODE The THE the fout (The de .fout classThe The) the weer the The THE the VERWIJDERD the the THE The worden the The van the de THE DOM node THE !!! (The The the De THE the UserThe The  is nm The 1 the char the THE the THE the The The terug the the in de tild the THE the The THE ). </span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The Onze the oplossing in de The code is THE door the by The the default The the The the ALL THE the the The classes The eraf the te "slopenTheThe " The bij the the The currentThe index The loop The! The (The Zodat een backspaced the the letter The THE is gereset the THE the THE naar standardThe). THE The </span></pre>
-                </div>
-            </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Voeg The The the SoundFX The THE the The The The the The! </strong> the the thethe the
-                        THE the Bouw The THE the the een the Array THE the met The the the THE The The een
-                        <code>keydown</code> the event! Iedere! The the keer THE The dat The the key_ The ingedrukt !
-                        the the THE is: The the Speel THE een Typemachine THE The ".WAV" the The the "the click the" the
-                        the The the <code>Audio.play()</code> af The The. THE </li>
-                    <li><strong>API Fetch TheThe TheThe!</strong> The Haal The the theTheThe texten The thetheThe The
-                        The The NIET uit een vaste JS <code>DataBase_Array</code> the theThe The , Maar the fetch theThe
-                        theThe The The the these van The THE een THE the The The Random The theThe The the The The! API
-                        The THE THE the (the Bijv. The The A The Random Quote The ! API). the The ! </li>
+                    <li><strong>Quote API:</strong> Gebruik <code>fetch()</code> om elke ronde een nieuwe, willekeurige
+                        quote op te halen van een externe server.</li>
+                    <li><strong>Nauwkeurigheid:</strong> Toon een 'Accuracy' percentage. (Goede karakters / Totaal
+                        getypte karakters * 100).</li>
+                    <li><strong>Moeilijkheidsgraad:</strong> Voeg een timer toe; hoeveel woorden kun je typen in exact
+                        60 seconden?</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Extra Uitdagingen</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
-
             <div class="stats-hud">
                 <div class="stat-box">
-                    <div>WPM</div>
-                    <div class="stat-num" id="s-wpm" style="color: #3b82f6;">0</div>
+                    <span class="stat-label">WPM</span>
+                    <div class="stat-num" id="wpm-val">0</div>
                 </div>
                 <div class="stat-box">
-                    <div>Fouten</div>
-                    <div class="stat-num" id="s-ERR" style="color: #ef4444;">0</div>
+                    <span class="stat-label">Fouten</span>
+                    <div class="stat-num" id="err-val" style="color: #ef4444;">0</div>
                 </div>
             </div>
 
-            <div class="text-overlay-view" id="TQuoteDisplay">
-                <!-- Spans with chars inserted from JS the Z -->
+            <div class="text-overlay-view" id="quote-display">
+                <!-- Tekst wordt hier geladen via JS -->
             </div>
 
-            <input type="text" class="typ-input" id="u-inPutTypeTxtH_Z" placeholder="Begin hier te typen..."
-                autocomplete="off" spellcheck="false">
+            <input type="text" class="typ-input" id="typing-input"
+                placeholder="Begin hier te typen om de timer te starten..." autocomplete="off">
 
-            <button class="btn-restart" id="REbtnGameDeThe" style="display:none;">Volgende Test</button>
-
+            <button class="btn-restart" id="restart-btn" style="display:none;">Volgende Test</button>
         </div>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const TheDisplayUIH_Quot = document.getElementById('TQuoteDisplay');
-        const INTheDomaTypeG_H_El = document.getElementById('u-inPutTypeTxtH_Z');
-        const THEUiWpmH_ZTextV = document.getElementById('s-wpm');
-        const TheUIErrorsTheTxt_ZV = document.getElementById('s-ERR');
-        const RBtn_HIdZElThe_Z = document.getElementById('REbtnGameDeThe');
+        const quoteDisplay = document.getElementById('quote-display');
+        const typingInput = document.getElementById('typing-input');
+        const wpmVal = document.getElementById('wpm-val');
+        const errVal = document.getElementById('err-val');
+        const restartBtn = document.getElementById('restart-btn');
 
-        const DATABASE_QUOTESZ_Array = [
-            "De snelle bruine vos springt over de luie hond in the JS_1 code block . !",
-            "Javascript is een interpreter op Machtige compiler taal voor de web.",
-            "Het beste The man_ ier om The The Code te The leren, is door het stuk The the te The maken en het weer op te Lossen_",
-            "Pannenkoeken zijn heel erg Lekker._ Met stroop _The The en poedersuiker. En Appels ",
-            "We moeten een grotere boot hebben. Aldus Jaws film Z"
+        const QUOTES = [
+            "Programmeren is de kunst van het vertellen aan een computer wat hij moet doen.",
+            "De beste manier om de toekomst te voorspellen is om deze zelf te creëren.",
+            "Succes is niet definitief, falen is niet fataal: het is de moed om door te gaan die telt.",
+            "In JavaScript is bijna alles een object, en dat maakt het een zeer krachtige taal.",
+            "Typen is als praten met je vingers, oefen elke dag voor de beste resultaten."
         ];
 
-        let theStrCurQuoteSTheZStringMem_DataO = "";
-        let TheBool_StartThe_H_IsGameInRun_Mode = false;
-        let TheTijdsDeData_TimerStartIn_MSTheDataZ = 0;
-        let The_IntervalKlokHandleTheZZ_UitV = null;
-        let currentMistakesTellerDeTheO = 0;
+        let currentQuote = "";
+        let startTime = 0;
+        let isRunning = false;
+        let timerId = null;
 
-        // INIT O start Setup Data Z 
-        function Load_De_GameStartTheH_ReSetDataStateTheTheFunCt() {
-            TheDisplayUIH_Quot.innerHTML = "";
-            INTheDomaTypeG_H_El.value = "";
-            THEUiWpmH_ZTextV.innerText = '0';
-            TheUIErrorsTheTxt_ZV.innerText = '0';
-            RBtn_HIdZElThe_Z.style.display = "none";
-            INTheDomaTypeG_H_El.disabled = false;
+        function initTest() {
+            quoteDisplay.innerHTML = "";
+            typingInput.value = "";
+            typingInput.disabled = false;
+            typingInput.focus();
+            restartBtn.style.display = "none";
+            wpmVal.innerText = "0";
+            errVal.innerText = "0";
+            isRunning = false;
+            clearInterval(timerId);
 
-            clearInterval(The_IntervalKlokHandleTheZZ_UitV);
-            TheBool_StartThe_H_IsGameInRun_Mode = false;
-            currentMistakesTellerDeTheO = 0;
-
-            // Random Pick string From The Data Arrays O
-            theStrCurQuoteSTheZStringMem_DataO = DATABASE_QUOTESZ_Array[Math.floor(Math.random() * DATABASE_QUOTESZ_Array.length)];
-
-            // the The Setup The Spans per The The the letter _theZ_ ! 
-            theStrCurQuoteSTheZStringMem_DataO.split('').forEach((letter) => {
-                const nodeS_ZThe_The = document.createElement('span');
-                nodeS_ZThe_The.classList.add('char');
-                nodeS_ZThe_The.innerText = letter;
-                TheDisplayUIH_Quot.appendChild(nodeS_ZThe_The);
+            currentQuote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+            currentQuote.split('').forEach(char => {
+                const span = document.createElement('span');
+                span.classList.add('char');
+                span.innerText = char;
+                quoteDisplay.appendChild(span);
             });
-            // Focus Input for the user the 
-            INTheDomaTypeG_H_El.focus();
+
+            // Markeer eerste karakter
+            if (quoteDisplay.firstChild) quoteDisplay.firstChild.classList.add('active-cursor');
         }
 
-        // Logic check trigger
-        INTheDomaTypeG_H_El.addEventListener('input', () => {
-
-            // The First Key starts The logic Z 
-            if (!TheBool_StartThe_H_IsGameInRun_Mode) {
-                StartThe_TimerDataGame_Z_Fun();
+        typingInput.addEventListener('input', () => {
+            if (!isRunning) {
+                isRunning = true;
+                startTime = Date.now();
+                startTimer();
             }
 
-            // GET ALL De Char Spans the the array The DOM node object arrays The Z (every input triggers refresh Check_The) 
-            const UI_DOM_TheALLArray_CharsDeThe = TheDisplayUIH_Quot.querySelectorAll('span');
-            // get typed Str value array split also so we matched 1 to 1 char to span the !
-            const inputVal_Text_HTheArrayTheSplitted_De_ = INTheDomaTypeG_H_El.value.split('');
+            const chars = quoteDisplay.querySelectorAll('.char');
+            const inputChars = typingInput.value.split('');
+            let mistakes = 0;
+            let finished = true;
 
-            let foutAantalRondjesMismatcehcHThe = 0; // Temp var count_The
+            chars.forEach((span, i) => {
+                const typedChar = inputChars[i];
+                span.classList.remove('active-cursor');
 
-            let isTextDoneDeThe_H = true;
-
-            UI_DOM_TheALLArray_CharsDeThe.forEach((CharDOmnO_DeZTheNodeZ_The_, IndxArrayDeTheNumH_) => {
-                const isGetypteCharOfUndefinedH = inputVal_Text_HTheArrayTheSplitted_De_[IndxArrayDeTheNumH_];
-
-                // 1 User has not typed this far yet
-                if (isGetypteCharOfUndefinedH == null) {
-                    CharDOmnO_DeZTheNodeZ_The_.classList.remove('correct');
-                    CharDOmnO_DeZTheNodeZ_The_.classList.remove('fout');
-                    CharDOmnO_DeZTheNodeZ_The_.classList.remove('active-cursor');
-                    isTextDoneDeThe_H = false;
-
-                    // Add The the Cursor class if NEXT character on line The_H Z !!
-                    if (inputVal_Text_HTheArrayTheSplitted_De_.length === IndxArrayDeTheNumH_) {
-                        CharDOmnO_DeZTheNodeZ_The_.classList.add('active-cursor');
-                    }
-                }
-                // 2 User has typed letter, and it Matches The Correct String Char Z !
-                else if (isGetypteCharOfUndefinedH === CharDOmnO_DeZTheNodeZ_The_.innerText) {
-                    CharDOmnO_DeZTheNodeZ_The_.classList.add('correct');
-                    CharDOmnO_DeZTheNodeZ_The_.classList.remove('fout');
-                    CharDOmnO_DeZTheNodeZ_The_.classList.remove('active-cursor');
-                }
-                // 3 User has typed, ERROR The foute The typo !
-                else {
-                    CharDOmnO_DeZTheNodeZ_The_.classList.remove('correct');
-                    CharDOmnO_DeZTheNodeZ_The_.classList.remove('active-cursor');
-                    CharDOmnO_DeZTheNodeZ_The_.classList.add('fout');
-                    foutAantalRondjesMismatcehcHThe++;
-                    isTextDoneDeThe_H = false; // still err no WIN YET THE _!
+                if (typedChar == null) {
+                    span.classList.remove('correct', 'error');
+                    finished = false;
+                    if (inputChars.length === i) span.classList.add('active-cursor');
+                } else if (typedChar === span.innerText) {
+                    span.classList.add('correct');
+                    span.classList.remove('error');
+                } else {
+                    span.classList.add('error');
+                    span.classList.remove('correct');
+                    mistakes++;
+                    finished = false;
                 }
             });
 
-            currentMistakesTellerDeTheO = foutAantalRondjesMismatcehcHThe;
-            TheUIErrorsTheTxt_ZV.innerText = currentMistakesTellerDeTheO;
+            errVal.innerText = mistakes;
 
-            // the Done if True The ! 
-            if (isTextDoneDeThe_H) {
-                TheFinishLineOfOThisLevelGameZThe_ZLogic_CaleH(true);
+            if (finished && inputChars.length === currentQuote.length) {
+                endTest();
             }
         });
 
-        function StartThe_TimerDataGame_Z_Fun() {
-            TheBool_StartThe_H_IsGameInRun_Mode = true;
-            TheTijdsDeData_TimerStartIn_MSTheDataZ = Date.now();
-
-            The_IntervalKlokHandleTheZZ_UitV = setInterval(() => {
-                const SecZTheKlokTijdV_H = (Date.now() - TheTijdsDeData_TimerStartIn_MSTheDataZ) / 1000;
-                // De_WPM formula the Z_ The The Standard The 5 letters_Z is ONE WORD in Typeland.
-                const totaalCharactersGetyped = INTheDomaTypeG_H_El.value.length;
-                let GThe_BerekendZ10H_WPM = Math.round((totaalCharactersGetyped / 5 / SecZTheKlokTijdV_H) * 60);
-
-                if (GThe_BerekendZ10H_WPM < 0 || !GThe_BerekendZ10H_WPM || GThe_BerekendZ10H_WPM === Infinity) {
-                    GThe_BerekendZ10H_WPM = 0;
+        function startTimer() {
+            timerId = setInterval(() => {
+                const seconds = (Date.now() - startTime) / 1000;
+                if (seconds > 1) {
+                    const wpm = Math.round((typingInput.value.length / 5) / (seconds / 60));
+                    wpmVal.innerText = wpm > 0 ? wpm : 0;
                 }
-                THEUiWpmH_ZTextV.innerText = GThe_BerekendZ10H_WPM;
-
-            }, 500); // UI ref every half second the! (To avoid fast jump numbers that look stupid / hard to read UI Z)
+            }, 500);
         }
 
-        function TheFinishLineOfOThisLevelGameZThe_ZLogic_CaleH(SuccessFulFinishedZTheParam) {
-            clearInterval(The_IntervalKlokHandleTheZZ_UitV);
-            INTheDomaTypeG_H_El.disabled = true;
-            RBtn_HIdZElThe_Z.style.display = "block";
-            RBtn_HIdZElThe_Z.focus();
+        function endTest() {
+            clearInterval(timerId);
+            typingInput.disabled = true;
+            restartBtn.style.display = "block";
         }
 
-        RBtn_HIdZElThe_Z.addEventListener('click', Load_De_GameStartTheH_ReSetDataStateTheTheFunCt);
+        restartBtn.addEventListener('click', initTest);
+        initTest();
 
-        // Run The Z On the the OnitTThe O Load Z H_The 
-        Load_De_GameStartTheH_ReSetDataStateTheTheFunCt();
-
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
             const expansions = document.getElementById('expansions');
             const btn = event.target;
             if (expansions.classList.contains('show')) {
                 expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+                btn.textContent = '📖 Toon Extra Uitdagingen';
             } else {
                 expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+                btn.textContent = '📖 Verberg Extra Uitdagingen';
             }
         }
     </script>

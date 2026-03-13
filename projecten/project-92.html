@@ -4,8 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 92: Memory Game - DOM Projecten</title>
+    <title>Project 92: Emoji Memory Pro - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #38bdf8;
+            --success: #10b981;
+            --error: #ef4444;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --border: #334155;
+            --card-face: #1e293b;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,467 +34,475 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0f172a;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            color: #f8fafc;
+            padding: 2.5rem;
         }
 
         .container {
-            background: #1e293b;
-            border-radius: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 32px;
             padding: 3rem;
-            max-width: 800px;
+            max-width: 850px;
             width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-            border: 2px solid #334155;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
 
         h1 {
+            font-size: 2.6rem;
+            font-weight: 900;
             margin-bottom: 0.5rem;
-            color: #38bdf8;
-            font-size: 2.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
 
         .level {
-            display: block;
-            padding: 0.4rem 1.2rem;
-            background: rgba(56, 189, 248, 0.2);
-            color: #7dd3fc;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 900;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            width: max-content;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        /* THE_ APP CSS Z _V ! */
-        .SSTatsSTThehBDarH {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
             background: #0f172a;
-            padding: 15px 30px;
-            border-radius: 12px;
+            padding: 25px;
+            border-radius: 20px;
             margin-bottom: 30px;
-            border: 1px solid #334155;
+            border: 1px solid var(--border);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .ITtemMSttatThe_H {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .ITtemMSttatThe_H span {
-            font-size: 1rem;
-            color: #94a3b8;
-            font-weight: 600;
+        .stat-item span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: block;
+            margin-bottom: 5px;
         }
 
-        .ITtemMSttatThe_H div {
-            font-size: 1.8rem;
-            color: #f1f5f9;
+        .stat-value {
+            font-size: 2rem;
+            color: var(--secondary);
             font-weight: 900;
-            font-family: monospace;
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        /* DE GAME GRID THE V!!! */
-        .GgGAmDeGrid_BOx_Z___Th_e {
+        /* Game Grid */
+        .game-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 15px;
-            perspective: 1000px;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            perspective: 1200px;
         }
 
-        /* Responsive voor The ! the mobiel Z: 4x4 -> grid The the _ met kleine the the H cards Z ! */
-        @media (max-width: 500px) {
-            .GgGAmDeGrid_BOx_Z___Th_e {
-                gap: 8px;
-            }
-        }
-
-        .KKkKaATheRrtMHeMmoRyO {
-            background-color: transparent;
-            width: 100%;
-            aspect-ratio: 1/1;
+        .card {
+            aspect-ratio: 1;
             cursor: pointer;
-            perspective: 1000px;
-        }
-
-        .KkaT_arTIHnNeAr__hV {
             position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            /* Bouncy FLIP! H */
             transform-style: preserve-3d;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 16px;
         }
 
-        /* 3D THE THE_!The ! FLIP LOGIC THE!_ */
-        /* De Kaart ! ! _ 1.isTheGeflipHTThe V The  wordt _ The de in The_ _ de HTML_ the door _ The Js_ _ H _ Toegegevoegd Z_*/
-        .KKkKaATheRrtMHeMmoRyO.isTheGeflipHTThe .KkaT_arTIHnNeAr__hV {
+        .card.flipped {
             transform: rotateY(180deg);
         }
 
-        .FfromTheTKaHTThDaartt_,
-        .BbacTheKTHKa_arrTtH_DTttTv_ {
+        .card-face {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 12px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 3rem;
+            border: 2px solid var(--border);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* Achterkant van DE De _ the card_ the!  H(wat je _ als _ The   eerst_ the  T Z!- The _the_The V_ ! ziet Z )!_ The! */
-        .FfromTheTKaHTThDaartt_ {
-            background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%);
-            color: rgba(255, 255, 255, 0.2);
-            border: 2px solid #6366f1;
+        .card-back {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 900;
         }
 
-        .FfromTheTKaHTThDaartt_::after {
-            content: '?';
+        .card-back::after {
+            content: "??";
+            opacity: 0.15;
         }
 
-        /* Fallback The ! */
-
-        /* De the Voorkant! THE (Met het The THE the _ Emoji ! Icoon!) ! Z */
-        .BbacTheKTHKa_arrTtH_DTttTv_ {
-            background: #fff;
-            color: #0f172a;
+        .card-front {
+            background: #f8fafc;
             transform: rotateY(180deg);
-            border: 4px solid #38bdf8;
         }
 
-        /* KAART MATCHED the _the_! (groene glow!)!_ _! The V The */
-        .KKkKaATheRrtMHeMmoRyO.isMaAtTheTcHchHD_vT .BbacTheKTHKa_arrTtH_DTttTv_ {
-            border-color: #22c55e;
-            background: #f0fdf4;
-            animation: pPppUlseMGReTeN 1s infinite alternate;
-            pointer-events: none;
-            /* cnat  be _ THE clicked_ The Z_ anymore !*/
+        .card.matched .card-front {
+            border-color: var(--success);
+            background: #ecfdf5;
+            filter: grayscale(0.5) opacity(0.8);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
         }
 
-        @keyframes pPppUlseMGReTeN {
+        .reset-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .tips,
+        .expandable {
+            padding: 2.5rem;
+            border-radius: 24px;
+            margin-top: 3rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            text-align: left;
+            color: #e2e8f0;
+        }
+
+        .explanation {
+            border-left: 5px solid #f59e0b;
+            margin-top: 5rem;
+        }
+
+        .concepts {
+            border-left: 5px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 5px solid #6366f1;
+        }
+
+        .tips {
+            border-left: 5px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1.25rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            color: #abb2bf;
+        }
+
+        .expand-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 16px;
+            margin-top: 1.5rem;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
             from {
-                box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+                opacity: 0;
+                transform: translateY(10px);
             }
 
             to {
-                box-shadow: 0 0 20px rgba(34, 197, 94, 0.8);
+                opacity: 1;
+                transform: translateY(0);
             }
-        }
-
-
-        .bBNReHTheStart_GGaTMe_VThO {
-            background: #38bdf8;
-            color: #0f172a;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 0 auto;
-        }
-
-        .bBNReHTheStart_GGaTMe_VThO:hover {
-            background: #0ea5e9;
-            transform: translateY(-3px);
-        }
-
-        .bBNReHTheStart_GGaTMe_VThO:active {
-            transform: translateY(0);
         }
 
         .back-link {
             display: block;
-            margin-top: 2rem;
-            color: #38bdf8;
+            margin-top: 3rem;
+            color: var(--primary);
             text-decoration: none;
-            font-weight: 600;
-            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 600px) {
+            .game-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
         }
     </style>
-    <!-- FONT O !! Z ! -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
-        <h1><i class="fas fa-brain"></i> Emoji Memory</h1>
-        <span class="level">Grandmaster Project</span>
+        <h1>Emoji Memory Pro</h1>
+        <span class="level">State & Match Engine</span>
 
-        <!-- Stap voor Stap -->
+        <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1rem; line-height: 1.6;">Vind alle paren
+            emoji's. Een klassieke oefening in asynchrone status-handling en CSS 3D-animaties.</p>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span>Mistakes</span>
+                <div class="stat-value" id="misses">0</div>
+            </div>
+            <div class="stat-item">
+                <span>Voortgang</span>
+                <div class="stat-value" id="progress">0/8</div>
+            </div>
+        </div>
+
+        <div class="game-grid" id="gameGrid"></div>
+
+        <button class="reset-btn" id="resetBtn">🔄 Herstart Spel</button>
+
+        <!-- Tutorial Secties -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>Het bouwen van een memory spel lijkt simpel, maar dwingt je om na te denken over 'race conditions'.</p>
+            <ul>
+                <li><strong>State Locking:</strong> Hoe je voorkomt dat een gebruiker 10 kaarten tegelijk omdraait.</li>
+                <li><strong>3D Transforms:</strong> Het gebruik van <code>preserve-3d</code> om een realistische flip te
+                    maken.</li>
+                <li><strong>Array Shuffling:</strong> Het algoritme om kaarten elke keer willekeurig te verdelen.</li>
+            </ul>
+        </div>
+
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Dataset Attributes:</strong> Het opslaan van data (welke emoji) direct in de HTML-node.</li>
+                <li><strong>setTimeout() Management:</strong> Het beheren van de delay voordat kaarten weer terugdraaien
+                    bij een misser.</li>
+                <li><strong>Truthiness:</strong> Controleren of <code>firstCard</code> al bestaat om de logica te
+                    splitsen.</li>
+            </ul>
+        </div>
+
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: De Game Logic</h3>
 
             <div class="step">
-                <h4>Stap 1: CSS 3D Kaart Flip</h4>
-                <p>De vloeiende kaartomkeer werkt puur via CSS! We gebruiken <code>transform-style: preserve-3d</code>
-                    en <code>rotateY(180deg)</code>. JavaScript voegt alleen de class toe.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">/* CSS */</span>
-.kaart-inner { transform-style: preserve-3d; transition: 0.6s; }
-.kaart.geflippt .kaart-inner { transform: rotateY(180deg); }
-.voorkant { backface-visibility: hidden; transform: rotateY(180deg); }
-.achterkant { backface-visibility: hidden; }</pre>
+                <h4>1: Het Kaartenscreen Bouwen</h4>
+                <p>We verdubbelen de emoji-lijst en schudden deze willekeurig.</p>
+                <div class="code-example">
+                    <pre><span style="color: #c678dd">const</span> cards = [...emojis, ...emojis].<span style="color: #61afef">sort</span>(() => <span style="color: #d19a66">Math</span>.<span style="color: #61afef">random</span>() - <span style="color: #d19a66">0.5</span>);</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: Match Logica</h4>
-                <p>We slaan de eerste kaart op als referentie. Bij de 2e klik vergelijken we de <code>data-emoji</code>
-                    attributen. Een match = groene glow + <code>pointer-events: none</code>. Geen match = na 1 seconde
-                    terugdraaien.</p>
+                <h4>2: De Match Controle</h4>
+                <p>Zodra twee kaarten zijn geklikt, vergelijken we de dataset waarden.</p>
+                <div class="code-example">
+                    <pre><span style="color: #c678dd">if</span> (firstCard.dataset.emoji === secondCard.dataset.emoji) {
+    <span style="color: #5c6370">// Het is een match!</span>
+    lockAndMarkMatched();
+} <span style="color: #c678dd">else</span> {
+    <span style="color: #5c6370">// Geen match, draai terug na 1000ms</span>
+    <span style="color: #61afef">setTimeout</span>(unflip, <span style="color: #d19a66">1000</span>);
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <button class="expand-btn" id="toggleExp">📖 Toon Fouten & Uitbreidingen</button>
+
+        <div class="expandable" id="expansions">
+            <div class="tips" style="border-left-color: #ef4444; background: rgba(239,68,68,0.05);">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
+                <ul>
+                    <li><strong>Click Spamming:</strong> Gebruikers die heel snel klikken kunnen de logica breken.
+                        Gebruik een <code>lockBoard</code> boolean.</li>
+                    <li><strong>Self-match:</strong> Door op dezelfde kaart twee keer te klikken, zou het spel kunnen
+                        denken dat het een match is. Check op <code>this === firstCard</code>.</li>
+                    <li><strong>Memory Leaks:</strong> Het niet verwijderen van event listeners bij matched kaarten
+                        (optioneel, maar goed voor performance).</li>
+                </ul>
             </div>
 
-        </div>
-
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Klik op een kaart om hem om te draaien!</li>
-                <li>Vind alle 8 matching emoji-paren!</li>
-                <li>Probeer het te doen met zo min mogelijk missers!</li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong><code>dataset</code>:</strong> Via <code>element.dataset.emoji</code> lees je het
-                    <code>data-emoji="..."</code> HTML-attribuut uit. Dit is de standaard manier om data bij
-                    DOM-elementen op te slaan!</li>
-                <li><strong>Block Guard:</strong> De <code>isBlokkeerd</code> variabele voorkomt dat je een 3e kaart
-                    kunt klikken terwijl de animatie nog loopt!</li>
-            </ul>
-        </div>
-
-        <!-- Uitbreidingen -->
-        <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="tips" style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1);">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
                 <ul>
-                    <li><strong>Timer:</strong> Voeg een stopwatch toe! Sla de beste tijd op in localStorage als
-                        Highscore!</li>
-                    <li><strong>Meer Emojis:</strong> Maak een 6x6 grid met meer kaarten voor een grotere uitdaging!
-                    </li>
+                    <li><strong>Timer Mode:</strong> Voeg een countdown toe. Heb je alle paren binnen 30 seconden
+                        gevonden?</li>
+                    <li><strong>Grid Scaling:</strong> Laat de gebruiker kiezen tussen 4x4, 6x6 of zelfs 8x8 grids.</li>
+                    <li><strong>Thema's:</strong> Vervang emoji's door vlaggen, programmeer-logo's of foto's van
+                        huisdieren.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
-        <div class="project-area">
-
-            <div class="SSTatsSTThehBDarH">
-                <div class="ITtemMSttatThe_H">
-                    <span>Missers:</span>
-                    <div id="uUiZFFoOUtTTHn__AannZ">0</div>
-                </div>
-                <div class="ITtemMSttatThe_H">
-                    <span>Matches:</span>
-                    <div id="UuuUIMmAThtChthesDa_tThe" style="color: #22c55e;">0/8</div>
-                </div>
-            </div>
-
-            <!-- DOM THE THE H GRID Z ! -->
-            <!-- We will append the the 16_ the cards THE the _ H _ here_!_O  via JS !!-->
-            <div class="GgGAmDeGrid_BOx_Z___Th_e" id="DDDomGGi_H_RDDBoxTTheV">
-
-            </div>
-
-            <button class="bBNReHTheStart_GGaTMe_VThO" id="BBTHtNTThehe_RSttaTH_aRrtH">
-                <i class="fas fa-redo"></i> Speel Opnieuw
-            </button>
-
-        </div>
-
-        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten Overzicht</a>
     </div>
 
-    <!-- AUDIO EFFECTS H The!_ (optioneel H Voor the game feel!) ! -->
-    <audio id="aAuDdiooTFlHi_HThep_DO" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
-    <!-- card the_ flip ! _-->
-    <audio id="AAudd_DTMmaDathHT_ChtO__O"
-        src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"></audio> <!-- success V! The _ -->
-
     <script>
-        const uIDOOOoOGGGrRiiddT = document.getElementById('DDDomGGi_H_RDDBoxTTheV');
-        const UTheIDD_mMiTHisSERrZTeH_xtV = document.getElementById('uUiZFFoOUtTTHn__AannZ');
-        const UUuiMaHTTcHheSTTxDt_HThe_V = document.getElementById('UuuUIMmAThtChthesDa_tThe');
-        const bBTnHKNo_OpReseetttH_DeV_The = document.getElementById('BBTHtNTThehe_RSttaTH_aRrtH');
+        const grid = document.getElementById('gameGrid');
+        const missesEl = document.getElementById('misses');
+        const progressEl = document.getElementById('progress');
+        const resetBtn = document.getElementById('resetBtn');
+        const expBtn = document.getElementById('toggleExp');
+        const expansions = document.getElementById('expansions');
 
-        const AuuiiDfiFLILippThD = document.getElementById('aAuDdiooTFlHi_HThep_DO');
-        const aaUdio_D_SSSuccTHHTceshMthTTvThe_ = document.getElementById('AAudd_DTMmaDathHT_ChtO__O');
+        const emojis = ['🚀', '👽', '💀', '👻', '🍔', '🍕', '🎮', '🌈'];
+        let firstCard = null, secondCard = null, lockBoard = false, misses = 0, matches = 0;
 
-        // De The! EMOJIS! H _ 8 the uniuque! Zthe _ ! 
-        const BbaAZIsisZ_EeMoJis___ARRRAYYd = ['🚀', '👽', '💀', '👻', '💩', '🍔', '🍕', '🎮'];
-        let CCaArRrThDSHArarayOObjj = []; // full arraray the 16_! with DOM_ 
+        function createBoard() {
+            grid.innerHTML = "";
+            const cards = [...emojis, ...emojis].sort(() => Math.random() - 0.5);
 
-        // STATE_ V THE THE_ !
-        let EEeeNTheKKaartjGefliipThe_DOM_Reff = null; // Unhold_1 card THE !!
-        let iIiSsBLloOOCKktDDTedH_oOBoLo = false; // "Wait The" _ O_ staat THE Z The (VoOr O_ animatie the ! Z the The) 
-
-        let aA__AaNNttaLTFfFFuOuUTenZThe = 0;
-        let AaAnNtTaALLvMaThe_t_chtessHThe = 0;
-
-        // INIT GAME _ V _H ! 
-        function SSttartTHHG_aAmmeDMeOMMoryZThe() {
-            // THE RESET_ THE _STATE THE!!_H V! O!_
-            uIDOOOoOGGGrRiiddT.innerHTML = "";
-            EEeeNTheKKaartjGefliipThe_DOM_Reff = null;
-            iIiSsBLloOOCKktDDTedH_oOBoLo = false;
-            aA__AaNNttaLTFfFFuOuUTenZThe = 0;
-            AaAnNtTaALLvMaThe_t_chtessHThe = 0;
-            UTheIDD_mMiTHisSERrZTeH_xtV.innerText = aA__AaNNttaLTFfFFuOuUTenZThe;
-            UUuiMaHTTcHheSTTxDt_HThe_V.innerText = `${AaAnNtTaALLvMaThe_t_chtessHThe}/8`;
-
-            // The Maak de THE Array!_ THE (Verk_ THE de_ THE H the_ array door de emojis the 2x _ The! the erin O!_ _The _ the _ the teh The! V the doen ! )! _
-            let DDeVVolllediTheGgeLijsTeMOiTH_V = [...BbaAZIsisZ_EeMoJis___ARRRAYYd, ...BbaAZIsisZ_EeMoJis___ARRRAYYd];
-
-            // SHUFFLE H THEthe !! V! _O! (Fisher_ THE \yAthe _ THETTS algorithm) THE 
-            DDeVVolllediTheGgeLijsTeMOiTH_V.sort(() => Math.random() - 0.5);
-
-            // BouW H THE ! 16 kaarten the  inH  DE DOM ! THE_H Z!
-            DDeVVolllediTheGgeLijsTeMOiTH_V.forEach(eEmoTHTTTthHtejiV => {
-
-                const DDDomKkAaOarRtHTTTheThe = document.createElement('div');
-                DDDomKkAaOarRtHTTTheThe.classList.add('KKkKaATheRrtMHeMmoRyO');
-                DDDomKkAaOarRtHTTTheThe.dataset.emoji = eEmoTHTTTthHtejiV; // SAVE The THE _ The \_ EMoji O thethe V_!_ THE_ the in data-_ HTML_ attribuut THE H_ !! (voor de de matcher logic !! ) 
-
-                DDDomKkAaOarRtHTTTheThe.innerHTML = `
-                     <div class="KkaT_arTIHnNeAr__hV">
-                         <div class="FfromTheTKaHTThDaartt_"></div> <!-- Default / face_ THE_   down ! The ! -->
-                         <div class="BbacTheKTHKa_arrTtH_DTttTv_">${eEmoTHTTTthHtejiV}</div> <!-- EMOJI_ THE ! Face _The  Up !_ O ! -->
-                     </div>
-                 `;
-
-                // EVENT_ THE_ LItTstener_ Op THE _ _1 Kaart ! THE _H _ ! 
-                DDDomKkAaOarRtHTTTheThe.addEventListener('click', () => HhaaDndLeEeKaTartKiCliickHThTheZ(DDDomKkAaOarRtHTTTheThe));
-
-                uIDOOOoOGGGrRiiddT.appendChild(DDDomKkAaOarRtHTTTheThe);
+            cards.forEach(emoji => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.dataset.emoji = emoji;
+                card.innerHTML = `
+                    <div class="card-face card-back"></div>
+                    <div class="card-face card-front">${emoji}</div>
+                `;
+                card.addEventListener('click', flipCard);
+                grid.appendChild(card);
             });
+
+            misses = 0;
+            matches = 0;
+            missesEl.innerText = "0";
+            progressEl.innerText = "0/8";
+            lockBoard = false;
         }
 
+        function flipCard() {
+            if (lockBoard) return;
+            if (this === firstCard) return;
+            if (this.classList.contains('matched')) return;
 
-        // CLICK EVENT The THE !! 
-        function HhaaDndLeEeKaTartKiCliickHThTheZ(kKkaArartDOoMNNDodE_eH_Thev) {
-            // DE The GUArd! Z THE _(Als we wachten, of The H de_ The de THE The kaart the H _ de the the V zelde  _1 is The_ die t the the the  The we O the the _Net_ hebben aangeklikt: the ! O_ the  the The H _ of hij al is1 TheH THE V gematchED)! THE V O!!
-            if (iIiSsBLloOOCKktDDTedH_oOBoLo || kKkaArartDOoMNNDodE_eH_Thev === EEeeNTheKKaartjGefliipThe_DOM_Reff || kKkaArartDOoMNNDodE_eH_Thev.classList.contains('isMaAtTheTcHchHD_vT')) {
+            this.classList.add('flipped');
+
+            if (!firstCard) {
+                firstCard = this;
                 return;
             }
 
-            // FLIP DE_ THE_ DE The KAART T ! 
-            kKkaArartDOoMNNDodE_eH_Thev.classList.add('isTheGeflipHTThe');
-            try { AuuiiDfiFLILippThD.play(); } catch (e) { } // audio_ H 
-
-            // 1 DE V! DeEERSTE V THE  KAART V__H The! KLIK THE Z ! _ V 
-            if (!EEeeNTheKKaartjGefliipThe_DOM_Reff) {
-                EEeeNTheKKaartjGefliipThe_DOM_Reff = kKkaArartDOoMNNDodE_eH_Thev; // SAVE! THE The
-                return;
-            }
-
-            // 2 DE V _ De TWEEDE_ KAART V! The! KLIK_ ! THE_Z H! (Match ?_ H check)!_ THE! 
-            CchhChehhEcHhKKOfHeTetEEnTTM_V_TheaTcshVThe(EEeeNTheKKaartjGefliipThe_DOM_Reff, kKkaArartDOoMNNDodE_eH_Thev);
+            secondCard = this;
+            checkForMatch();
         }
 
-        // MATCH LOGItTheC _!! Z
-        function CchhChehhEcHhKKOfHeTetEEnTTM_V_TheaTcshVThe(kAARttEETnTThe_, KakkaRTTTWEEDoMHoheT_H) {
+        function checkForMatch() {
+            let isMatch = firstCard.dataset.emoji === secondCard.dataset.emoji;
 
-            // GebruIk de ! The the de Dataset The property Z_ 
-            if (kAARttEETnTThe_.dataset.emoji === KakkaRTTTWEEDoMHoheT_H.dataset.emoji) {
-                // MATCH !!! 
-                kAARttEETnTThe_.classList.add('isMaAtTheTcHchHD_vT');
-                KakkaRTTTWEEDoMHoheT_H.classList.add('isMaAtTheTcHchHD_vT');
-                try { aaUdio_D_SSSuccTHHTceshMthTTvThe_.play(); } catch (e) { }
-
-                EEeeNTheKKaartjGefliipThe_DOM_Reff = null; // de _The referentie the O_ T the O O leeGmakenThe 
-
-                // UuUpU_PDtATThe V !! The UII V!H _ !! 
-                AaAnNtTaALLvMaThe_t_chtessHThe++;
-                UUuiMaHTTcHheSTTxDt_HThe_V.innerText = `${AaAnNtTaALLvMaThe_t_chtessHThe}/8`;
-
-                // WIN? V! 
-                if (AaAnNtTaALLvMaThe_t_chtessHThe === 8) {
-                    setTimeout(() => {
-                        alert(`Gefeliciteerd!! The! Je hebt alle_ THE _ the emoji\'s _ O the gevonden the! met ${aA__AaNNttaLTFfFFuOuUTenZThe} The the_ ! the missers_! Z_!V THE!_ THE`);
-                    }, 500);
-                }
-
+            if (isMatch) {
+                disableCards();
             } else {
-                // GEEEN V_! MATCH !!! 
-                // We V_ BLOCKKEN M The_ the het the_ O the _1 the de hele Grid voor 1_ The__ the The  seconde, the Z_zodat_ the H the H we The H_de_the H the animatie (unflip) the kunnen doenThe !
-                iIiSsBLloOOCKktDDTedH_oOBoLo = true;
-                aA__AaNNttaLTFfFFuOuUTenZThe++;
-                UTheIDD_mMiTHisSERrZTeH_xtV.innerText = aA__AaNNttaLTFfFFuOuUTenZThe;
-
-                // Wacht_ O the THE 1 seconde en draai The ze THE Z ! The! weer The H The TeruG ! O !!
-                setTimeout(() => {
-                    kAARttEETnTThe_.classList.remove('isTheGeflipHTThe');
-                    KakkaRTTTWEEDoMHoheT_H.classList.remove('isTheGeflipHTThe');
-
-                    // RESET STATE THEH ! !
-                    EEeeNTheKKaartjGefliipThe_DOM_Reff = null;
-                    iIiSsBLloOOCKktDDTedH_oOBoLo = false;
-                }, 1000);
+                unflipCards();
             }
         }
 
-        // BTn Z! THE 
-        bBTnHKNo_OpReseetttH_DeV_The.addEventListener('click', SSttartTHHG_aAmmeDMeOMMoryZThe);
-
-        // INITIAL Load THE !!H_! 
-        SSttartTHHG_aAmmeDMeOMMoryZThe();
-
-    </script>
-    <script>
-        function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
-            const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+        function disableCards() {
+            firstCard.classList.add('matched');
+            secondCard.classList.add('matched');
+            matches++;
+            progressEl.innerText = `${matches}/8`;
+            resetTurn();
+            if (matches === 8) {
+                setTimeout(() => alert(`💥 LEKKER BEZIG! Je hebt gewonnen met ${misses} missers.`), 500);
             }
         }
+
+        function unflipCards() {
+            lockBoard = true;
+            misses++;
+            missesEl.innerText = misses;
+
+            setTimeout(() => {
+                firstCard.classList.remove('flipped');
+                secondCard.classList.remove('flipped');
+                resetTurn();
+            }, 1000);
+        }
+
+        function resetTurn() {
+            [firstCard, secondCard, lockBoard] = [null, null, false];
+        }
+
+        expBtn.onclick = () => {
+            expansions.classList.toggle('show');
+            expBtn.innerText = expansions.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
+        };
+
+        resetBtn.addEventListener('click', createBoard);
+
+        // Init
+        createBoard();
     </script>
 </body>
 

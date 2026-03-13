@@ -4,8 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 94: Virtuele Piano - DOM Projecten</title>
+    <title>Project 94: Piano Pro Studio - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #38bdf8;
+            --success: #10b981;
+            --error: #ef4444;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --border: #334155;
+            --key-white: #f8fafc;
+            --key-black: #0f172a;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,434 +35,499 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #18181b;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            color: #f4f4f5;
+            padding: 2.5rem;
         }
 
         .container {
-            background: #27272a;
-            border-radius: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 32px;
             padding: 3rem;
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 1);
-            border: 2px solid #3f3f46;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
 
         h1 {
+            font-size: 2.6rem;
+            font-weight: 900;
             margin-bottom: 0.5rem;
-            color: #e4e4e7;
-            font-size: 2.5rem;
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
 
         .level {
             display: inline-block;
-            padding: 0.4rem 1.2rem;
-            background: #3f3f46;
-            color: #a1a1aa;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 900;
-            margin-bottom: 2rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            margin-bottom: 2.5rem;
         }
 
-        .piano-wrapper {
-            background: #111;
-            padding: 20px 20px 10px 20px;
-            border-radius: 20px 20px 10px 10px;
-            border-bottom: 10px solid #000;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+        /* Synth Controls */
+        .synth-controls {
             display: flex;
-            position: relative;
-            user-select: none;
-            overflow: hidden;
+            gap: 20px;
+            background: #0f172a;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            justify-content: center;
+            align-items: center;
         }
 
-        .controls {
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Keyboard */
+        .piano-keyboard {
+            position: relative;
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            background: #18181b;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid #3f3f46;
-        }
-
-        .controls label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: bold;
-            color: #a1a1aa;
+            height: 280px;
+            margin-bottom: 35px;
+            padding: 20px;
+            background: #0f172a;
+            border-radius: 24px;
+            border: 2px solid var(--border);
+            box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         .key {
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            padding-bottom: 15px;
-            font-weight: bold;
-            color: #71717a;
             cursor: pointer;
-            transition: all 0.1s;
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
         }
 
-        .key-white {
+        .key.white {
             width: 60px;
-            height: 250px;
-            background: #fff;
-            border: 1px solid #d4d4d8;
-            border-radius: 0 0 5px 5px;
+            height: 220px;
+            background: var(--key-white);
+            border: 1px solid var(--border);
+            border-radius: 0 0 8px 8px;
             z-index: 1;
-            margin: 0 2px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .key-black {
-            width: 40px;
-            height: 160px;
-            background: linear-gradient(#333, #000);
-            border-radius: 0 0 5px 5px;
-            position: absolute;
-            top: 0;
-            left: 45px;
+        .key.black {
+            width: 35px;
+            height: 130px;
+            background: var(--key-black);
             z-index: 2;
-            color: rgba(255, 255, 255, 0.6);
-            border: 1px solid #000;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            margin-left: -17.5px;
+            margin-right: -17.5px;
+            border-radius: 0 0 6px 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .hide-text .key span {
+        .key::after {
+            content: attr(data-key);
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #cbd5e1;
+            opacity: 0.5;
+        }
+
+        .key.active {
+            transform: translateY(4px);
+            background: var(--primary) !important;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+            border-color: var(--primary);
+        }
+
+        .key.active::after {
+            color: white;
+            opacity: 1;
+        }
+
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .tips,
+        .expandable {
+            padding: 2.5rem;
+            border-radius: 24px;
+            margin-top: 3rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            text-align: left;
+            color: #e2e8f0;
+        }
+
+        .explanation {
+            border-left: 5px solid #f59e0b;
+            margin-top: 5rem;
+        }
+
+        .concepts {
+            border-left: 5px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 5px solid #6366f1;
+        }
+
+        .tips {
+            border-left: 5px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1.25rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            color: #abb2bf;
+        }
+
+        .expand-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 16px;
+            margin-top: 1.5rem;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .expandable {
             display: none;
         }
 
-        /* Active states */
-        .key-white.active {
-            background: #f4f4f5;
-            transform: translateY(2px);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+        .expandable.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
         }
 
-        .key-black.active {
-            background: linear-gradient(#111, #000);
-            transform: translateY(2px);
-            box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
-        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
 
-        .instructions {
-            margin-top: 20px;
-            color: #71717a;
-            font-size: 0.95rem;
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .back-link {
-            display: inline-block;
+            display: block;
             margin-top: 3rem;
-            color: #a1a1aa;
+            color: var(--primary);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 0.95rem;
         }
 
-        .back-link:hover {
-            color: #f4f4f5;
+        @media (max-width: 800px) {
+            .key.white {
+                width: 40px;
+            }
+
+            .key.black {
+                width: 25px;
+                margin-left: -12.5px;
+                margin-right: -12.5px;
+            }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
-        <h1><i class="fas fa-music"></i> Virtuele Piano</h1>
-        <span class="level">Grandmaster Project (Web Audio API)</span>
+        <h1>Piano Pro Studio</h1>
+        <span class="level">Web Audio API & Sound Synthesis</span>
 
-        <!-- Stap voor Stap -->
+        <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1rem; line-height: 1.6;">Verander je browser
+            in een synthesizer. Leer hoe je geluidsgolven genereert, oscillators aanstuurt en ADSR-envelopes gebruikt.
+        </p>
+
+        <div class="synth-controls">
+            <div class="control-group">
+                <label>Waveform</label>
+                <select id="oscType">
+                    <option value="sine">Sine (Zacht)</option>
+                    <option value="square">Square (Retro)</option>
+                    <option value="sawtooth">Sawtooth (Scherp)</option>
+                    <option value="triangle">Triangle (Fluit-achtig)</option>
+                </select>
+            </div>
+            <div class="control-group" style="text-align: center;">
+                <label>Volume</label>
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5"
+                    style="accent-color: var(--secondary);">
+            </div>
+        </div>
+
+        <div class="piano-keyboard" id="keyboard">
+            <!-- Witte toetsen -->
+            <div class="key white" data-note="261.63" data-key="A"></div>
+            <div class="key black" data-note="277.18" data-key="W"></div>
+            <div class="key white" data-note="293.66" data-key="S"></div>
+            <div class="key black" data-note="311.13" data-key="E"></div>
+            <div class="key white" data-note="329.63" data-key="D"></div>
+            <div class="key white" data-note="349.23" data-key="F"></div>
+            <div class="key black" data-note="369.99" data-key="T"></div>
+            <div class="key white" data-note="392.00" data-key="G"></div>
+            <div class="key black" data-note="415.30" data-key="Y"></div>
+            <div class="key white" data-note="440.00" data-key="H"></div>
+            <div class="key black" data-note="466.16" data-key="U"></div>
+            <div class="key white" data-note="493.88" data-key="J"></div>
+            <div class="key white" data-note="523.25" data-key="K"></div>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Gebruik je toetsenbord (A tot K) of
+            klik/tap om te spelen.</p>
+
+        <!-- Tutorial Secties -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>De Web Audio API is een modulair systeem waarmee we geluid kunnen 'patchen' als bij een echte modulaire
+                synthesizer.</p>
+            <ul>
+                <li><strong>Oscillators:</strong> De generator van de basis-golfvorm.</li>
+                <li><strong>Audio Context:</strong> De motor die alle audio-berekeningen in de browser aanstuurt.</li>
+                <li><strong>Gain Nodes:</strong> De volumeregeling die we dynamisch aanpassen via code.</li>
+            </ul>
+        </div>
+
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>User Gesture Requirement:</strong> Browsers blokkeren audio tot de gebruiker interactie
+                    heeft (klikken).</li>
+                <li><strong>Frequency Math:</strong> Elke noot (zoals A4 = 440Hz) heeft een specifieke
+                    trillingsfrequentie.</li>
+                <li><strong>Ramping:</strong> Het vloeiend laten eindigen van geluid om 'klikjes' te voorkomen (ADSR
+                    basic).</li>
+            </ul>
+        </div>
+
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: Sound Logic</h3>
 
             <div class="step">
-                <h4>Stap 1: AudioContext en OscillatorNode</h4>
-                <p>De <strong>Web Audio API</strong> werkt met een signaalnetwerk. Een <code>OscillatorNode</code>
-                    genereert de geluidsgolf op een bepaalde frequentie (Hz). We verbinden hem via een
-                    <code>GainNode</code> (volume) aan de speakers.</p>
-                <div class="code-example" style="background: #2d3748; color: #f8f8f8;">
-                    <pre><span style="color:#81c784">const</span> ctx = <span style="color:#81c784">new</span> AudioContext();
-<span style="color:#81c784">const</span> osc = ctx.<span style="color:#64b5f6">createOscillator</span>();
-<span style="color:#81c784">const</span> gain = ctx.<span style="color:#64b5f6">createGain</span>();
-
-osc.<span style="color:#64b5f6">connect</span>(gain);
-gain.<span style="color:#64b5f6">connect</span>(ctx.destination); <span style="color:#78909c">// speakers</span>
-osc.frequency.value = <span style="color:#f48fb1">440</span>; <span style="color:#78909c">// Hz = La (A4)</span>
-osc.type = <span style="color:#a5d6a7">'triangle'</span>; <span style="color:#78909c">// golfvorm</span>
-osc.<span style="color:#64b5f6">start</span>();</pre>
+                <h4>1: Oscilator Initialiseren</h4>
+                <p>We maken voor elke noot een tijdelijke oscillator aan.</p>
+                <div class="code-example">
+                    <pre><span style="color: #c678dd">const</span> osc = audioCtx.<span style="color: #61afef">createOscillator</span>();
+osc.type = <span style="color: #98c379">'sawtooth'</span>;
+osc.frequency.value = <span style="color: #d19a66">440</span>; <span style="color: #5c6370">// A4</span></pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: Envelope (Attack &amp; Release)</h4>
-                <p>Een echte piano klinkt niet abrupt. We gebruiken <code>exponentialRampToValueAtTime()</code> voor een
-                    natuurlijk klingende fade-out (de <strong>envelope</strong>).</p>
+                <h4>2: De Signal Chain</h4>
+                <p>We verbinden de oscillator met een gain node (volume) en daarna met de speakers.</p>
+                <div class="code-example">
+                    <pre>osc.<span style="color: #61afef">connect</span>(gainNode);
+gainNode.<span style="color: #61afef">connect</span>(audioCtx.destination);</pre>
+                </div>
+            </div>
+        </div>
+
+        <button class="expand-btn" id="toggleExp">📖 Toon Fouten & Uitbreidingen</button>
+
+        <div class="expandable" id="expansions">
+            <div class="tips" style="border-left-color: #ef4444; background: rgba(239,68,68,0.05);">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
+                <ul>
+                    <li><strong>InvalidStateError:</strong> Dit gebeurt als je probeert een gestopte oscillator opnieuw
+                        te starten. Oscillators zijn 'single-use'.</li>
+                    <li><strong>Audio Clipping:</strong> Als je het volume boven 1.0 zet, gaat het geluid vervormen
+                        (kraken).</li>
+                    <li><strong>Latency:</strong> Te veel actieve nodes tegelijkertijd kunnen voor vertraging of
+                        haperingen zorgen.</li>
+                </ul>
             </div>
 
-        </div>
-
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Gebruik je toetsenbord (A-L voor witte toetsen, W,E,T,Y,U,O,P voor zwarte)!</li>
-                <li>Probeer de verschillende golfvormen in het dropdownmenu!</li>
-                <li>Klik ook met je muis op de toetsen!</li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>AudioContext Suspend:</strong> Browsers blokkeren audio totdat de gebruiker iets klikt
-                    (autoplay policy). We initialiseren de <code>AudioContext</code> pas bij de eerste toetsaanslag!
-                </li>
-                <li><strong>Frequenties:</strong> Muzieknoten hebben vaste frequenties: La (A4) = 440 Hz. Elke octaaf
-                    hoger verdubbelt de frequentie!</li>
-            </ul>
-        </div>
-
-        <!-- Uitbreidingen -->
-        <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="tips" style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1);">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
                 <ul>
-                    <li><strong>Opnemen:</strong> Gebruik de <code>MediaRecorder API</code> om je spel op te nemen en te
-                        downloaden als audio!</li>
-                    <li><strong>Reverb Effect:</strong> Voeg een <code>ConvolverNode</code> toe voor een halleffect!
+                    <li><strong>Recording Mode:</strong> Neem je piano-sessie op en exporteer deze als .wav bestand.
                     </li>
+                    <li><strong>Effects Pedal:</strong> Voeg een <code>DelayNode</code> of <code>BiquadFilterNode</code>
+                        toe voor echo en reverb effecten.</li>
+                    <li><strong>Visualizer:</strong> Gebruik een <code>AnalyserNode</code> om de geluidsgolven visueel
+                        te maken op een canvas.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()"
-            style="background: #4f46e5; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 1rem 0;">📖
-            Toon Uitbreidingsmogelijkheden</button>
-
-        <div class="project-area">
-            <div class="controls">
-                <label>
-                    <i class="fas fa-volume-up"></i> Volume
-                    <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5">
-                </label>
-                <label>
-                    <input type="checkbox" id="showKeysCheck" checked> Toon Toetsen
-                </label>
-                <label>
-                    Golfvorm:
-                    <select id="waveformSelect"
-                        style="padding: 5px; border-radius: 5px; background: #27272a; color: white; border: 1px solid #3f3f46;">
-                        <option value="triangle">Piano-ish (Triangle)</option>
-                        <option value="sine">Zacht (Sine)</option>
-                        <option value="square">Retro 8-bit (Square)</option>
-                        <option value="sawtooth">Scherp (Sawtooth)</option>
-                    </select>
-                </label>
-            </div>
-
-            <div class="piano-wrapper" id="piano">
-                <!-- C4 -->
-                <div class="key key-white" data-key="a" data-note="261.63"><span>A</span>
-                    <div class="key key-black" data-key="w" data-note="277.18"><span>W</span></div>
-                </div>
-                <!-- D4 -->
-                <div class="key key-white" data-key="s" data-note="293.66"><span>S</span>
-                    <div class="key key-black" data-key="e" data-note="311.13"><span>E</span></div>
-                </div>
-                <!-- E4 -->
-                <div class="key key-white" data-key="d" data-note="329.63"><span>D</span></div>
-                <!-- F4 -->
-                <div class="key key-white" data-key="f" data-note="349.23"><span>F</span>
-                    <div class="key key-black" data-key="t" data-note="369.99"><span>T</span></div>
-                </div>
-                <!-- G4 -->
-                <div class="key key-white" data-key="g" data-note="392.00"><span>G</span>
-                    <div class="key key-black" data-key="y" data-note="415.30"><span>Y</span></div>
-                </div>
-                <!-- A4 -->
-                <div class="key key-white" data-key="h" data-note="440.00"><span>H</span>
-                    <div class="key key-black" data-key="u" data-note="466.16"><span>U</span></div>
-                </div>
-                <!-- B4 -->
-                <div class="key key-white" data-key="j" data-note="493.88"><span>J</span></div>
-                <!-- C5 -->
-                <div class="key key-white" data-key="k" data-note="523.25"><span>K</span>
-                    <div class="key key-black" data-key="o" data-note="554.37"><span>O</span></div>
-                </div>
-                <!-- D5 -->
-                <div class="key key-white" data-key="l" data-note="587.33"><span>L</span>
-                    <div class="key key-black" data-key="p" data-note="622.25"><span>P</span></div>
-                </div>
-                <!-- E5 -->
-                <div class="key key-white" data-key=";" data-note="659.25"><span>;</span></div>
-            </div>
-
-            <p class="instructions">Gebruik je toetsenbord (A-L voor witte toetsen, W-P voor zwarte) of klik met je
-                muis.</p>
-        </div>
-
-        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+        <a href="../index.html#projects" class="back-link">← Terug naar Projecten Overzicht</a>
     </div>
 
     <script>
-        // DOM Elements
-        const piano = document.getElementById('piano');
-        const keys = document.querySelectorAll('.key');
-        const volSlider = document.getElementById('volumeSlider');
-        const showKeysCheck = document.getElementById('showKeysCheck');
-        const waveformSelect = document.getElementById('waveformSelect');
+        let audioCtx = null;
+        const keyboard = document.getElementById('keyboard');
+        const oscType = document.getElementById('oscType');
+        const volSlider = document.getElementById('volume');
+        const expBtn = document.getElementById('toggleExp');
+        const expansions = document.getElementById('expansions');
 
-        // Web Audio API context
-        let audioCtx;
-        let masterGainNode;
+        const activeNotes = new Map();
 
         function initAudio() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                masterGainNode = audioCtx.createGain();
-                masterGainNode.connect(audioCtx.destination);
-                masterGainNode.gain.value = volSlider.value;
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
             }
         }
 
-        // Keep track of active oscillators
-        const activeNotes = {};
-
-        function playNote(freq, keyId) {
+        function playNote(frequency, keyElement) {
             initAudio();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
 
-            // Prevent re-triggering the same note
-            if (activeNotes[keyId]) return;
+            // Voorkom dubbele tonen per toets
+            if (activeNotes.has(frequency)) return;
 
             const osc = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
 
+            osc.type = oscType.value;
+            osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+
+            // ADSR Envelope (Attack)
+            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(volSlider.value, audioCtx.currentTime + 0.05);
+
             osc.connect(gainNode);
-            gainNode.connect(masterGainNode);
-
-            osc.type = waveformSelect.value;
-            osc.frequency.value = freq;
-
-            // Attack & Decay Envelope
-            gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2.5);
+            gainNode.connect(audioCtx.destination);
 
             osc.start();
+            keyElement.classList.add('active');
 
-            activeNotes[keyId] = { osc, gainNode };
+            activeNotes.set(frequency, { osc, gainNode });
         }
 
-        function stopNote(keyId) {
-            const note = activeNotes[keyId];
-            if (note) {
-                // Quick Release
-                note.gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
-                note.gainNode.gain.setValueAtTime(note.gainNode.gain.value, audioCtx.currentTime);
-                note.gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.1);
+        function stopNote(frequency, keyElement) {
+            if (activeNotes.has(frequency)) {
+                const { osc, gainNode } = activeNotes.get(frequency);
 
-                note.osc.stop(audioCtx.currentTime + 0.1);
-                delete activeNotes[keyId];
+                // ADSR Envelope (Release) - Voorkomt klikjes
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.3);
+
+                setTimeout(() => {
+                    osc.stop();
+                    osc.disconnect();
+                }, 300);
+
+                keyElement.classList.remove('active');
+                activeNotes.delete(frequency);
             }
         }
 
-        // Keydown & Keyup (Keyboard)
-        document.addEventListener('keydown', (e) => {
-            if (e.repeat) return;
-            const keyChar = e.key.toLowerCase();
-            const keyEl = document.querySelector(`[data-key="${keyChar}"]`);
-            if (keyEl) {
-                keyEl.classList.add('active');
-                playNote(parseFloat(keyEl.dataset.note), keyChar);
-            }
-        });
-
-        document.addEventListener('keyup', (e) => {
-            const keyChar = e.key.toLowerCase();
-            const keyEl = document.querySelector(`[data-key="${keyChar}"]`);
-            if (keyEl) {
-                keyEl.classList.remove('active');
-                stopNote(keyChar);
-            }
-        });
-
-        // Mouse Down & Mouse Up (UI)
+        // Muis & Touch Events
+        const keys = document.querySelectorAll('.key');
         keys.forEach(key => {
-            const getNoteData = (el) => {
-                return { freq: parseFloat(el.dataset.note), id: el.dataset.key };
-            };
+            const note = key.dataset.note;
+            key.addEventListener('mousedown', () => playNote(note, key));
+            key.addEventListener('mouseup', () => stopNote(note, key));
+            key.addEventListener('mouseleave', () => stopNote(note, key));
 
-            const triggerPlay = (e) => {
-                e.stopPropagation(); // Prevent black key from triggering white key
-                const { freq, id } = getNoteData(key);
-                key.classList.add('active');
-                playNote(freq, id);
-            };
-
-            const triggerStop = () => {
-                const { id } = getNoteData(key);
-                key.classList.remove('active');
-                stopNote(id);
-            };
-
-            key.addEventListener('mousedown', triggerPlay);
+            // Touch support
             key.addEventListener('touchstart', (e) => {
                 e.preventDefault();
-                triggerPlay(e);
+                playNote(note, key);
             });
-
-            key.addEventListener('mouseup', triggerStop);
-            key.addEventListener('mouseleave', triggerStop);
-            key.addEventListener('touchend', triggerStop);
+            key.addEventListener('touchend', () => stopNote(note, key));
         });
 
-        // UI Controls
-        volSlider.addEventListener('input', (e) => {
-            if (masterGainNode) {
-                masterGainNode.gain.value = parseFloat(e.target.value);
+        // Keyboard Support
+        const keyMap = {
+            'a': 261.63, 'w': 277.18, 's': 293.66, 'e': 311.13, 'd': 329.63,
+            'f': 349.23, 't': 369.99, 'g': 392.00, 'y': 415.30, 'h': 440.00,
+            'u': 466.16, 'j': 493.88, 'k': 523.25
+        };
+
+        window.addEventListener('keydown', (e) => {
+            const key = e.key.toLowerCase();
+            if (keyMap[key]) {
+                const keyElement = document.querySelector(`.key[data-key="${key.toUpperCase()}"]`);
+                playNote(keyMap[key], keyElement);
             }
         });
 
-        showKeysCheck.addEventListener('change', (e) => {
-            if (e.target.checked) {
-                piano.classList.remove('hide-text');
-            } else {
-                piano.classList.add('hide-text');
+        window.addEventListener('keyup', (e) => {
+            const key = e.key.toLowerCase();
+            if (keyMap[key]) {
+                const keyElement = document.querySelector(`.key[data-key="${key.toUpperCase()}"]`);
+                stopNote(keyMap[key], keyElement);
             }
         });
 
-    </script>
-    <script>
-        function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
-            const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
-        }
+        expBtn.onclick = () => {
+            expansions.classList.toggle('show');
+            expBtn.innerText = expansions.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
+        };
     </script>
 </body>
 

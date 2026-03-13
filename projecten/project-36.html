@@ -14,25 +14,27 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
             padding: 2rem;
             max-width: 800px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
         }
 
@@ -48,7 +50,7 @@
         }
 
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
         }
@@ -59,38 +61,45 @@
         .instructions,
         .tips {
             padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
         }
 
         .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            border-left: 4px solid #f59e0b;
         }
 
         .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
+            border-left: 4px solid #0ea5e9;
         }
 
         .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
+            border-left: 4px solid #94a3b8;
         }
 
         .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
+            border-left: 4px solid #3b82f6;
         }
 
         .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            border-left: 4px solid #10b981;
+        }
+
+        .explanation h3,
+        .concepts h3,
+        .step-by-step h3,
+        .instructions h3,
+        .tips h3,
+        .explanation h4,
+        .concepts h4,
+        .step-by-step h4,
+        .instructions h4,
+        .tips h4 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
         }
 
         h3 {
@@ -103,7 +112,7 @@
         }
 
         .code-example {
-            background: #282c34;
+            background: #0f172a;
             color: #abb2bf;
             padding: 1.5rem;
             border-radius: 8px;
@@ -111,6 +120,7 @@
             overflow-x: auto;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            border: 1px solid #334155;
         }
 
         .code-example .keyword {
@@ -128,33 +138,35 @@
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #667eea;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
         }
 
         /* Project Area */
         .project-area {
-            background: #202b38;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             padding: 3rem;
             margin-bottom: 2rem;
             display: flex;
             justify-content: center;
+            border: 1px solid #334155;
         }
 
         .auth-box {
-            background: white;
+            background: #1e293b;
             padding: 30px;
             border-radius: 8px;
             width: 100%;
             max-width: 400px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid #334155;
         }
 
         .auth-box h2 {
             margin-bottom: 20px;
-            color: #333;
+            color: #f8fafc;
             text-align: center;
         }
 
@@ -166,22 +178,24 @@
         .input-wrap input {
             width: 100%;
             padding: 12px;
-            border: 2px solid #ddd;
+            background: #0f172a;
+            border: 2px solid #334155;
             border-radius: 6px;
             font-size: 1rem;
+            color: white;
             transition: border-color 0.3s;
         }
 
         .input-wrap input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #60a5fa;
         }
 
         /* The Strength Bar */
         .strength-meter-bg {
             width: 100%;
             height: 8px;
-            background: #eee;
+            background: #0f172a;
             border-radius: 4px;
             overflow: hidden;
             margin-bottom: 10px;
@@ -199,7 +213,7 @@
             list-style: none;
             margin-left: 0;
             font-size: 0.85rem;
-            color: #888;
+            color: #cbd5e1;
         }
 
         .requirements li {
@@ -228,7 +242,33 @@
             font-size: 0.8rem;
             font-weight: bold;
             margin-bottom: 15px;
-            color: #888;
+            color: #cbd5e1;
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
@@ -237,88 +277,96 @@
     <div class="container">
         <h1>Project 36: Wachtwoord Sterkte Meter</h1>
         <span class="level" style="background: linear-gradient(135deg, #FF6B6B, #C0392B); color: white;">Advanced</span>
-        <p class="description">Maak een robuuste client-side validatietool die de veiligheid van een wachtwoord toetst.
-        </p>
+        <p class="description">Maak een slimme tool die de sterkte van een wachtwoord live controleert met behulp van
+            RegEx en visuele feedback.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>Het toepassen van Reguliere Expressies (RegEx) om patronen te herkennen in tekst.</li>
+                <li>Het bouwen van een real-time UI die direct reageert op <code>input</code> events.</li>
+                <li>Visuele feedback geven aan de gebruiker over de veiligheid van hun gegevens.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>RegEx Patterns</strong> – Gebruik maken van speciale syntax om te checken op cijfers
+                    (<code>\d</code>), hoofdletters (<code>[A-Z]</code>) en symbolen.</li>
+                <li><strong>Dynamic Styling</strong> – Het aanpassen van CSS classes en stijlen op basis van de
+                    berekende veiligheidsscore.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: Reguliere Expressies Leren Kennen</h4>
-                <p>Reguliere Expressies, vaak afgekort tot <strong>RegEx</strong>, vormen een mini-taaltje waarmee je
-                    patronen in tekst kunt zoeken. Het ziet er vaak uit als ingewikkelde computercode, maar is logisch
-                    opgebouwd.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Zoek naar in ieder geval 1 hoofdletter:</span>
-<span class="keyword">const</span> heeftHoofdletter = <span class="string">/[A-Z]/</span>.<span class="function">test</span>(<span class="string">"mijnWachtwoord"</span>); <span class="comment">// &rarr; true</span>
-
-<span class="comment">// Zoek naar een cijfer (0 t/m 9):</span>
-<span class="keyword">const</span> heeftCijfer = <span class="string">/[0-9]/</span>.<span class="function">test</span>(<span class="string">"geheim"</span>); <span class="comment">// &rarr; false</span></pre>
-                </div>
-                <p><strong>Uitleg:</strong> We gebruiken <code>/patroon/.test(string)</code> in JavaScript. Deze functie
-                    retouneert altijd vliegensvlug een simpele true of false. Dat is ideaal voor wachtwoord validatie!
+                <h4>Stap 1: Input Event Luisteren</h4>
+                <p>We luisteren naar elke toetsaanslag in het wachtwoordveld om de sterkte direct te kunnen berekenen.
                 </p>
-            </div>
-
-            <div class="step">
-                <h4>Stap 2: Het 'Input' Event Luisteren</h4>
-                <p>We moeten elke keer dat de gebruiker iets intypt, ons validatie-script opnieuw runnen. We gebruiken
-                    hiervoor niet <code>keyup</code> of <code>keydown</code>, maar het <code>input</code> event!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre>wachtwoordVeld.addEventListener(<span class="string">'input'</span>, (event) => {
-    <span class="comment">// Lees de actuele ingetypte waarde uit het veld</span>
-    <span class="keyword">const</span> text = event.target.value;
-    
-    <span class="comment">// Voer de RegEx checks op deze tekst uit!</span>
-    <span class="function">checkWachtwoord</span>(text);
+                <div class="code-example">
+                    <pre>pwInput.addEventListener('input', (e) =&gt; {
+    const pw = e.target.value;
+    updateStrength(pw);
 });</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Het <code>input</code> event is perfect. Waarom? Omdat dit event <i>ook</i>
-                    afgaat als de gebruiker met de rechtermuisknop een wachtwoord 'plakt', iets wat de
-                    toetsenbord-events (keyup/down) volledig missen!</p>
             </div>
-
             <div class="step">
-                <h4>Stap 3: Het CSS Score Systeem</h4>
-                <p>Elke keer als het wachtwoord aan een eis voldoet (bijv. lente > 8 of een cijfer), voegen we een punt
-                    toe aan de score (maximaal 4 punten). Die score vertalen we naar een CSS percentage.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">function</span> <span class="function">updateMeter</span>(score) {
-    <span class="comment">// Score gedeeld door max score * 100 = Percentage</span>
-    <span class="keyword">let</span> breedte = (score / <span class="string">4</span>) * <span class="string">100</span>;
-    meterBar.style.width = <span class="string">`\${breedte}%`</span>;
-    
-    <span class="keyword">if</span> (score === <span class="string">4</span>) {
-        meterBar.style.backgroundColor = <span class="string">'#10b981'</span>; <span class="comment">// Groen = veilig!</span>
-    }
-}</pre>
+                <h4>Stap 2: RegEx Checks</h4>
+                <p>We gebruiken verschillende RegEx patronen om te controleren op getallen, hoofdletters en speciale
+                    tekens.</p>
+                <div class="code-example">
+                    <pre>const hasNumber = /\d/.test(pw);
+const hasUpper = /[A-Z]/.test(pw);
+const hasSpecial = /[^A-Za-z0-9]/.test(pw);</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Hoe hoger de score, hoe langer het CSS gekleurde balkje wordt. We veranderen
-                    bij de topscore ook het kleurtje naar geruststellend groen.</p>
+            </div>
+            <div class="step">
+                <h4>Stap 3: Score Berekenen</h4>
+                <p>Voor elke voldane eis verhogen we de score. Deze score bepaalt de kleur en breedte van de
+                    sterkte-meter.</p>
+                <div class="code-example">
+                    <pre>let score = 0;
+if (hasNumber) score++;
+if (hasUpper) score++;
+if (hasSpecial) score++;
+if (pw.length >= 8) score++;</pre>
+                </div>
             </div>
         </div>
 
         <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Speciale Karakters Vinden)</h3>
-            <pre><span class="comment">// Een speciaal teken vinden is lastig. Is het een @, een $, een ! ?</span>
-<span class="comment">// We doen het omgekeerd! Het dakje (^) betekent in RegEx: "ALLES BEHALVE"</span>
-
-<span class="comment">// Dit patroon betekent dus: "Alles behalve hoofdletters, kleine letters of cijfers"</span>
-<span class="keyword">const</span> checkSpeciaal = <span class="string">/[^A-Za-z0-9]/</span>; 
-
-<span class="comment">// Als hij hier TRUE op zegt, dan ZIT er dus een vreemd, speciaal teken in de string!</span></pre>
+        <div class="code-example">
+            <h3>💻 UI Visueel Bijwerken</h3>
+            <pre>function updateMeter(score) {
+    const width = (score / 4) * 100;
+    meterBar.style.width = width + '%';
+    
+    if (score <= 1) {
+        meterBar.style.backgroundColor = '#ef4444';
+        strengthText.innerText = 'Zwak';
+    } else if (score < 4) {
+        meterBar.style.backgroundColor = '#f59e0b';
+        strengthText.innerText = 'Gemiddeld';
+    } else {
+        meterBar.style.backgroundColor = '#10b981';
+        strengthText.innerText = 'Sterk!';
+    }
+}</pre>
         </div>
 
         <!-- Instructies -->
         <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
+            <h3>✅ Instructies:</h3>
             <ul>
-                <li>Typ een simpel wachtwoord in de demo (zoals 'wachtwoord'). De score-balk reageert en blijft
-                    rood/zwak.</li>
-                <li>Voeg nu hoofdletters, cijfers en vreemde karakters (zoals #, $, @ of !) toe.</li>
-                <li>Merk op hoe de dynamische bulletpoints live afvinken en de balk naar 100% Groen springt!</li>
+                <li>Eexperimenteer met verschillende wachtwoorden en kijk hoe de meter reageert op cijfers, letters en
+                    symbolen.</li>
             </ul>
         </div>
 
@@ -326,39 +374,43 @@
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong>Gevoelige Data Feedback:</strong> Vertel een gebruiker altijd <i>waarom</i> een wachtwoord
-                    afgekeurd wordt. Dat is de reden achter de live afvinkende bulletpoints. Dat is véél betere UX (User
-                    Experience) dan een vage "Wachtwoord te zwak" popup achteraf!</li>
+                <li><strong>RegEx Test Methode:</strong> Gebruik <code>/pattern/.test(string)</code> om snel te
+                    controleren of een string aan een patroon voldoet. Het geeft een simpele <code>true</code> of
+                    <code>false</code> terug.
+                </li>
             </ul>
         </div>
 
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Lege Input Bugs</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - Als de gebruiker zijn tekst fout typt, en het wachtwoord weer volledig weghaalt met Backspace (zodat de input leeg is), kan het zijn dat de meter op 10% breedte blijft hangen. Zorg altijd voor een 'if(length === 0)' check die dan de balk resoluut op 0% width (en transparant) instelt!</span></pre>
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: Wachtwoorden Opslaan in Memory</h4>
+                <p style="color: #f87171;">Sla wachtwoorden nooit op in globale variabelen of logs. Dit is een groot
+                    beveiligingsrisico.</p>
+                <div class="code-example">
+                    <pre>/* ❌ NOOIT DOEN */
+window.lastTypedPassword = pw; </pre>
                 </div>
             </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Voeg een 'Wachtwoord Weergeven' Knop toe:</strong> Voeg een oog-icoontje toe naast het
-                        veld. Koppel hier een onClick actie aan die het <code>type="password"</code> veld verandert naar
-                        <code>type="text"</code> met JS, zodat de gebruiker zijn typo's kan controleren!</li>
+                    <li><strong>Gedetailleerde Feedback:</strong> Geef specifieke tips zoals "Voeg nog een symbool toe"
+                        in plaats van alleen een kleurverandering.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
+
         <div class="project-area">
             <div class="auth-box">
                 <h2>Nieuw Account</h2>

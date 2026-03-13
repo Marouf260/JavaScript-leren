@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 84: Web Share API - DOM Projecten</title>
+    <title>Project 84: Native Bridge Studio - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -13,273 +13,403 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #fff7ed;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            color: #431407;
+            padding: 2.5rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 24px;
             padding: 3rem;
-            max-width: 500px;
+            max-width: 700px;
             width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-            border: 1px solid #ffedd5;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
             text-align: center;
         }
 
         h1 {
-            color: #ea580c;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
         }
 
         .level {
-            display: inline-block;
-            padding: 0.35rem 1rem;
-            background: #ffedd5;
-            color: #c2410c;
+            display: block;
+            width: max-content;
+            margin: 0 auto 2.5rem;
+            padding: 0.35rem 1.2rem;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
             border-radius: 30px;
             font-size: 0.85rem;
-            font-weight: bold;
-            margin-bottom: 2.5rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* APP CSS H_T */
-        .project-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .ArRtikkeLVKaaRtHTHDee {
-            background: #fff;
-            border: 2px solid #ffedd5;
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 30px;
-            width: 100%;
-            text-align: left;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-        }
-
-        .HTietZellDAA_T_The {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #9a3412;
-            margin-bottom: 15px;
-            line-height: 1.3;
-        }
-
-        .HBBesCHR_rij_vi_gnTheText {
-            font-size: 1rem;
-            color: #78350f;
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
             line-height: 1.6;
-            margin-bottom: 20px;
+            font-size: 0.95rem;
         }
 
-        .DeelTheKTheNnooppV_ {
+        .project-area {
+            background: #0f172a;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin: 1.5rem 0 2.5rem 0;
+            border: 1px solid #334155;
+            box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .article-card {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid #334155;
+            margin-bottom: 25px;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+        }
+
+        .article-card h2 {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            color: #f8fafc;
+            font-weight: 800;
+        }
+
+        .article-card p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .share-btn {
             width: 100%;
-            background: #f97316;
+            background: #3b82f6;
             color: white;
             border: none;
             padding: 16px;
-            font-size: 1.1rem;
-            font-weight: bold;
             border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 6px rgba(249, 115, 22, 0.3);
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .DeelTheKTheNnooppV_:hover {
-            background: #ea580c;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(249, 115, 22, 0.4);
+        .share-btn:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
         }
 
-        .DeelTheKTheNnooppV_:active {
-            transform: translateY(0);
+        .share-btn:active {
+            transform: scale(0.98);
         }
 
-        .oErrEHDMesSaGeGShareDThe {
-            color: #b91c1c;
-            background: #fee2e2;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: bold;
+        .unsupported-banner {
             display: none;
+            color: #fca5a5;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.9rem;
             margin-top: 20px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            font-weight: 600;
+        }
+
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+            margin-top: 4rem;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            display: block;
             width: 100%;
-            border: 1px solid #fca5a5;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 2rem;
-            color: #ea580c;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
             text-align: center;
+            width: 100%;
         }
     </style>
-    <!-- FONT O !! Z ! -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
-        <h1><i class="fas fa-share-nodes"></i> Native Share Info</h1>
-        <span class="level">Advanced APIs</span>
-        <p style="color: #78350f; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5;">De <strong>Web Share
-                API</strong> triggert het _The <em>nativeThe _ share-menu</em> The the van het OS (iOS, Android,
-            Windows)! Werkt the voornamelijk _ Op mobiel.H!_</p>
+        <h1>Web Native Bridge</h1>
+        <span class="level">Web Share API</span>
+        <p class="description">Ontdek hoe je de kloof overbrugt tussen web-code en de native functies van je
+            besturingssysteem. Leer hoe je het deelmenu van je telefoon of PC direct aanspreekt zonder externe
+            libraries.</p>
+
+        <div class="project-area">
+            <div class="article-card">
+                <h2>Breek uit de Browser-Sandbox 🛠️</h2>
+                <p>Moderne websites kunnen direct communiceren met het deel-systeem van je apparaat. Dit zorgt voor een
+                    naadloze ervaring die precies aanvoelt als een native app.</p>
+
+                <button class="share-btn" id="share-btn">Deel Dit Project 📤</button>
+            </div>
+
+            <div class="unsupported-banner" id="unsupported">
+                ⚠️ Je browser ondersteunt de Web Share API niet. Gebruik een mobiele browser of Safari/Edge voor de
+                volledige ervaring.
+            </div>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>De Web Share API geeft je website de kracht om data (tekst, links, bestanden) door te geven aan andere
+                geïnstalleerde apps.</p>
+            <ul>
+                <li><strong>Feature Detection:</strong> Veilig controleren of een browser de API ondersteunt met de
+                    <code>navigator</code> object check.</li>
+                <li><strong>Async Handling:</strong> Werken met Promises om te wachten op de keuze van de gebruiker.
+                </li>
+                <li><strong>OS Interaction:</strong> Begrijpen dat de UI verzorgd wordt door het systeem
+                    (iOS/Android/Windows), niet door je eigen CSS.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>The Share Object:</strong> De structuur met <code>title</code>, <code>text</code> en
+                    <code>url</code> die je meegeeft aan de browser.</li>
+                <li><strong>User Gesture:</strong> Waarom deze API alleen werkt na een expliciete klik (beveiliging
+                    tegen spam).</li>
+                <li><strong>Abort Signals:</strong> Omgaan met situaties waarin een gebruiker het deelmenu opent maar
+                    vervolgens weer annuleert.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: De Deel Logica</h3>
 
             <div class="step">
-                <h4>Stap 1: <code>navigator.share()</code></h4>
-                <p>De the_ the <strong>Web Share API</strong>_ the is super simpel! Één the_ functie the call the is
-                    alles the what we nodig the have! We geven the een_ object mee the met_ <code>title</code>,
-                    <code>text</code>, en <code>url</code>. </p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">await</span> <span class="function">navigator</span>.<span class="function">share</span>({
-    title: <span class="string">'Artikel Titel'</span>,
-    text: <span class="string">'Beschrijving van het artikel...'</span>,
-    url: window.location.href
-});</pre>
+                <h4>1: De Support Check</h4>
+                <p>Niet elke browser heeft deze bridge. We checken dit eerst om foutmeldingen te voorkomen.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">if</span> (navigator.share) {
+    <span class="comment">// De browser kan delen</span>
+}</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: AbortError Negeren!</h4>
-                <p>Als the_ een gebruiker the op the <strong>"Annuleren"</strong>_ klikt the in the het the share menu,
-                    the gooit JavaScript_ een_ <code>AbortError</code>. Dit is totally <strong>normaal!</strong> the We
-                    negeren this the in the catch block. </p>
+                <h4>2: De Async Call</h4>
+                <p>We vuren het deelmenu af en wachten (<code>await</code>) op het resultaat.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">try</span> {
+    <span class="keyword">await</span> navigator.<span class="function">share</span>({
+        title: <span class="string">'Mijn Awesome Web App'</span>,
+        url: <span class="string">'https://mijnsite.nl'</span>
+    });
+} <span class="keyword">catch</span> (err) {
+    <span class="comment">// Gebruiker annuleerde of API failure</span>
+}</pre>
+                </div>
             </div>
 
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Open de_ Pagina the_ Op je_The! Mobiel! </li>
-                <li>Klik The! op <strong>"Deel Dit Artikel!"</strong> the </li>
-                <li>Zie The_ het_ Native share menu van je telefoon tevoorschijn komen! </li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>HTTPS Vereist:</strong> <code>navigator.share()</code> werkt de alleen the op HTTPS of
-                    localhost. Op een gewone http:// pagina is het the niet beschikbaar!</li>
-                <li><strong>Desktop Fallback:</strong> Op de Windows desktop ondersteunt Chrome de Web Share API
-                    tegenwoordig ook! Probeer het eens op de PC.</li>
-            </ul>
-        </div>
-
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
                 <ul>
-                    <li><strong>Bestanden Delen! </strong> De Web Share API kan ook Bestanden the delen! Voeg een
-                        <code>files: [...]</code> property toe aan het share object om the een afbeelding of PDF te
-                        delen!</li>
+                    <li><strong>Lack of User Interaction:</strong> Als je <code>navigator.share</code> probeert te calls
+                        in een <code>setTimeout</code> of <code>onload</code>, zal de browser dit blokkeren.</li>
+                    <li><strong>Insecure Context:</strong> Deze API werkt uitsluitend op domeinen met HTTPS (of via
+                        localhost voor ontwikkeling).</li>
+                    <li><strong>Invalid URL:</strong> Als de <code>url</code> die je meegeeft niet valide is, zal de API
+                        een <code>TypeError</code> gooien.</li>
+                </ul>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>File Sharing:</strong> Gebruik <code>navigator.canShare({files})</code> om te checken of
+                        je ook afbeeldingen of PDF's direct kunt delen.</li>
+                    <li><strong>Custom Fallback:</strong> Maak een eigen popup met social media icoontjes als
+                        <code>navigator.share</code> niet beschikbaar is.</li>
+                    <li><strong>Content Dynamic:</strong> Deel verschillende teksten op basis van wat de gebruiker op
+                        dat moment bekijkt op je pagina.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- App Area -->
-        <div class="project-area">
-
-            <div class="ArRtikkeLVKaaRtHTHDee">
-                <div class="HTietZellDAA_T_The">Gekke the Javascript Trucjes the die _The The je _ the The_ Moet The
-                    Weten_!!_</div>
-                <div class="HBBesCHR_rij_vi_gnTheText">Wist jeThe the dat The theThe_ navigator.share() direct H_ de
-                    _The the ingebouwde Share sheet V van je the telefoon _ The opent?! V The Geen H the! custom The
-                    share dialogs meer nodig! O_ !</div>
-
-                <button class="DeelTheKTheNnooppV_" id="BBtnTheDTheeelDaGTheG">
-                    <i class="fas fa-share"></i> Deel Dit Artikel!
-                </button>
-            </div>
-
-            <div class="oErrEHDMesSaGeGShareDThe" id="UImssGHTheEErrrrZTheVData">Web Share API is the _Niet The the the_
-                V beschikbaar O_ the op The _ dit theapparaat of the The in deze browser..H_ The (Probeert het V_ in _ V
-                Safari iOS of Chrome V_ Android)</div>
-
-        </div>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Fouten & Uitbreidingen</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const THEBTnTDeShHareOO_HThe = document.getElementById('BBtnTheDTheeelDaGTheG');
-        const errHHMsHg_TheOThe_Ktv = document.getElementById('UImssGHTheEErrrrZTheVData');
+        const shareBtn = document.getElementById('share-btn');
+        const unsupportedBanner = document.getElementById('unsupported');
 
-        // BIND EVENT
-        THEBTnTDeShHareOO_HThe.addEventListener('click', async () => {
-            // 1 CHECK the if supported_ Z ! 
+        shareBtn.addEventListener('click', async () => {
+            // Stap 1: Check support
             if (navigator.share) {
                 try {
-                    // 2 ROEP API AAN_H! the! 
-                    await navigator.share({
-                        title: 'Gekke the Javascript Trucjes_!', // Titel the_
-                        text: 'Dit the artikel the the The moet The je _ echt THE the_ The Z the _ V lezen The! Z O', // Berschrijving ! The 
-                        url: window.location.href // huidige _ THE_ URL_H The! V the  O _ 
-                    });
+                    // Stap 2: Bouw het share object
+                    const shareData = {
+                        title: 'Native Bridge Project 🚀',
+                        text: 'Wist je dat je native OS features kunt aanspreken via de browser? Check dit project!',
+                        url: window.location.href // Deelt de huidige pagina
+                    };
 
-                    // Z Als V succesvol _Gthe _gedeeltd :_ The_
-                    // THE console.log('Successfully The shared');
-                } catch (TheDeerrRHTheMSG) {
-                    // H! the The_ API the _gooit the een The  fout_ The als de  user O cancel The klikt in de share The sheet ! H (dus negeer M_ the AbortError  The _) ! 
-                    if (TheDeerrRHTheMSG.name !== 'AbortError') {
-                        console.error("The H_ Error: ", TheDeerrRHTheMSG);
+                    // Stap 3: Deel commando uitvoeren
+                    await navigator.share(shareData);
+                    console.log("Succesvol gedeeld!");
+
+                } catch (err) {
+                    // AbortError is normaal: de gebruiker sloot het menu zelf
+                    if (err.name !== 'AbortError') {
+                        console.error("Er ging iets mis bij het delen:", err);
+                        alert("Er is een onverwachte fout opgetreden bij het delen.");
                     }
                 }
             } else {
-                // The _ Fallback ! _ H als the API de _the_HThe niet the supported Z is (Bijv ! The Z _ Windows Desktop O  soms)! _ 
-                errHHMsHg_TheOThe_Ktv.style.display = "block";
-                // V _The ! the_ the  hier_ zou_ je the the een standard the custom modal VThe H_ The !! 
+                // Stap 4: Fallback tonen
+                unsupportedBanner.style.display = 'block';
+                setTimeout(() => {
+                    unsupportedBanner.style.display = 'none';
+                }, 10000);
             }
         });
-    </script>
-    <script>
+
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
+            const exp = document.getElementById('expansions');
             const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
         }
     </script>
 </body>

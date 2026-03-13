@@ -14,43 +14,48 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
-            padding: 2rem;
-            max-width: 800px;
+            padding: 2.5rem;
+            max-width: 850px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
+            text-align: center;
         }
 
         .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            display: block;
+            width: fit-content;
+            margin: 0 auto 1.5rem;
+            padding: 0.25rem 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 1rem;
         }
 
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
+            text-align: center;
         }
 
         .explanation,
@@ -59,41 +64,35 @@
         .instructions,
         .tips {
             padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
         }
 
         .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            border-left: 4px solid #f59e0b;
         }
 
         .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
+            border-left: 4px solid #0ea5e9;
         }
 
         .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
+            border-left: 4px solid #94a3b8;
         }
 
         .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
+            border-left: 4px solid #3b82f6;
         }
 
         .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            border-left: 4px solid #10b981;
         }
 
         h3 {
+            color: #f8fafc;
             margin-bottom: 1rem;
         }
 
@@ -103,7 +102,7 @@
         }
 
         .code-example {
-            background: #282c34;
+            background: #0f172a;
             color: #abb2bf;
             padding: 1.5rem;
             border-radius: 8px;
@@ -111,6 +110,7 @@
             overflow-x: auto;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            border: 1px solid #334155;
         }
 
         .code-example .keyword {
@@ -128,90 +128,152 @@
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #667eea;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #93c5fd;
         }
 
         /* Game Area */
         .project-area {
-            background: #1e293b;
+            background: #0f172a;
             border-radius: 12px;
             padding: 3rem;
-            margin-bottom: 2rem;
+            margin: 2rem 0;
+            border: 1px solid #334155;
             display: flex;
             flex-direction: column;
             align-items: center;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .status {
-            color: white;
+            color: #f8fafc;
             font-size: 1.5rem;
-            margin-bottom: 20px;
-            font-weight: bold;
+            margin-bottom: 25px;
+            font-weight: 800;
             text-align: center;
-            height: 35px;
+            height: 40px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .board {
             display: grid;
             grid-template-columns: repeat(3, 100px);
             grid-template-rows: repeat(3, 100px);
-            gap: 5px;
-            background: #475569;
-            padding: 5px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            gap: 10px;
+            padding: 10px;
+            background: #1e293b;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 2px solid #334155;
         }
 
         .cell {
             background: #0f172a;
-            border-radius: 4px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
-            font-weight: bold;
-            color: white;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #f8fafc;
             cursor: pointer;
-            transition: 0.2s;
-            font-family: sans-serif;
-            text-transform: uppercase;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .cell:hover {
+        .cell:hover:not(.x):not(.o) {
             background: #1e293b;
+            transform: scale(0.95);
         }
 
         .cell.x {
-            color: #ef4444;
+            color: #f87171;
+            text-shadow: 0 0 15px rgba(248, 113, 113, 0.5);
         }
 
-        /* Red X */
         .cell.o {
-            color: #3b82f6;
+            color: #60a5fa;
+            text-shadow: 0 0 15px rgba(96, 165, 250, 0.5);
         }
 
-        /* Blue O */
         .cell.win-highlight {
             background: #10b981;
             color: white;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+            transform: scale(1.05);
+            z-index: 10;
         }
 
         .btn-restart {
-            background: #667eea;
+            background: #3b82f6;
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 1.1rem;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 1rem;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 0 #2563eb;
         }
 
         .btn-restart:hover {
-            background: #5a6cd6;
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #1d4ed8;
+        }
+
+        .btn-restart:active {
+            transform: translateY(2px);
+            box-shadow: 0 0 0 #1d4ed8;
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #f8fafc;
+        }
+
+        .step h4 {
+            color: #f8fafc;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .step p {
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -219,128 +281,144 @@
 <body>
     <div class="container">
         <h1>Project 51: Boter, Kaas en Eieren</h1>
-        <span class="level" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">Games</span>
-        <p class="description">Bouw de klassieke Tic-Tac-Toe met The Winning Combinations Array!</p>
+        <span class="level">Intermediate</span>
+        <p class="description">Bouw een klassiek Boter, Kaas en Eieren spel en leer hoe je complexe spellogica beheert
+            met JavaScript arrays en conditionele checks.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project verdiep je jouw kennis van JavaScript logica door een systeem te bouwen dat beslissingen
+                neemt op basis van gebruikersinvoer:</p>
+            <ul>
+                <li><strong>Grid Management:</strong> Hoe je een visueel raster koppelt aan een data-structuur (array).
+                </li>
+                <li><strong>Win-Algoritme:</strong> Het controleren van meerdere mogelijke uitkomsten in een dataset.
+                </li>
+                <li><strong>Spel-State:</strong> Het bijhouden van beurten, winstcondities en actieve statussen.</li>
+                <li><strong>Visuele Interactie:</strong> Dynamische feedback geven aan de gebruiker bij elke zet.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Stateful Arrays:</strong> Gebruik van een array om de 'status' van elk vakje (X, O of leeg)
+                    vast te leggen.</li>
+                <li><strong>Multidimensionale Arrays (Logisch):</strong> Hoewel we een 1D array gebruiken, denken we in
+                    coördinaten (0-8) om rijen en kolommen te representeren.</li>
+                <li><strong>De Ternary Operator:</strong> Een compacte manier om tussen 'X' en 'O' te wisselen:
+                    <code>currentPlayer === 'X' ? 'O' : 'X'</code>.
+                </li>
+                <li><strong>Array Prototypes:</strong> Gebruik van <code>.includes()</code> om te checken op een
+                    gelijkspel.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: Het "Spelbord" in het Geheugen</h4>
-                <p>Jouw HTML bord is zichtbaar, maar JavaScript is "blind". The JS moet het spelbord the in the zijn the
-                    <strong>Geheugen</strong> the hebben the the <code>TheBordLijst</code> The! the Bij elke klik the
-                    the the The update je the BEIDE: de Array The en de the HTML the The the the the DOM_NODE_innerHTML
-                    The.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// 1. De the "Status" in het The the geheugen </span>
-<span class="keyword">let</span> hetBord = [<span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>];
-
-<span class="comment">// 2. the the The Beurt: The </span>
-<span class="keyword">let</span> theBeurtSpelerThe = <span class="string">"X"</span>;</pre>
+                <h4>Stap 1: De Data-structuur</h4>
+                <p>We hebben een 'board' nodig dat fungeert als de bron van waarheid voor de game.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">let</span> board = [<span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>];</pre>
                 </div>
+                <p><strong>Uitleg:</strong> Elk element in de array komt overeen met een <code>data-index</code> in onze
+                    HTML. Dit maakt de koppeling tussen code en scherm heel direct.</p>
             </div>
 
             <div class="step">
-                <h4>Stap 2: The Data-Attribute the Uitlezen</h4>
-                <p>Hoe weet JavaScript in WELK the the the van de 9 the vakjes The er is the the the the geklikt? The
-                    the the In HTML The is The The een <code>data-index="4"</code> the The the ingesteld The The. The
-                    The Via The the <code>the The event.target.getAttribute()</code> The The the the halen we the the
-                    the The dit the The op the The the The om the the de The array The the The the updaten!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Zoek IN the the de Aangeklikte The HTML The the the the de tag the het The! the the the index the The The the attribut!! </span>
-<span class="keyword">const</span> TheAangekliktHTMLVakje = theEvent.target;
-<span class="keyword">const</span> vakjeIndexThe = TheAangekliktHTMLVakje.<span class="function">getAttribute</span>(<span class="string">'data-index'</span>);
-
-<span class="comment">// The the Update het the the The Geheugen the met de The 'X' of the The de 'O' ! </span>
-hetBord[vakjeIndexThe] = theBeurtSpelerThe;</pre>
-                </div>
-            </div>
-
-            <div class="step">
-                <h4>Stap 3: Winst Controle (The Game Loop)</h4>
-                <p>Na the elke the klik the The The moet The the er the The worden the the gecontroleerd The the the The
-                    of the the Speler The "the the the gewonnen the the" the heeft The. the Dit the the the the The the
-                    gebeurt the The door the The the The met een the the <code>for</code>-loop The The The the over the
-                    alle The the the the winnende the combinaties (The the the bijv. The The the the The The
-                    <code>[0, 1, 2]</code> the the top The the row) the heen The te The The lopen The en the the te The
-                    checken The the the of these indexen The in array the hetzelfde the The the the zijn The the The
-                    The!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// The is hokje 0, the the The hokje 1 the en hokje The The 2 the allemaal the "The X the"? The Dan the the the WINST The The the ! </span>
-<span class="keyword">if</span> (hetBord[<span class="string">0</span>] === <span class="string">"X"</span> && hetBord[<span class="string">1</span>] === <span class="string">"X"</span> && hetBord[<span class="string">2</span>] === <span class="string">"X"</span>) {
-    <span class="comment">// the the Winst Code the The the the the </span>
+                <h4>Stap 2: Klik-logica Implementeren</h4>
+                <p>Wat gebeurt er als een student op een vakje klikt?</p>
+                <div class="code-example">
+                    <pre><span class="keyword">function</span> <span class="function">handleCellClick</span>(e) {
+    <span class="keyword">const</span> index = e.target.dataset.index;
+    <span class="keyword">if</span> (board[index] !== <span class="string">""</span> || !gameActive) <span class="keyword">return</span>;
+    
+    board[index] = currentPlayer;
+    e.target.innerText = currentPlayer;
+    checkResult();
 }</pre>
                 </div>
+                <p><strong>Uitleg:</strong> De <code>if</code>-check is cruciaal. Deze voorkomt dat een speler een bezet
+                    vakje overschrijft of doorspeelt nadat er al iemand gewonnen heeft.</p>
+            </div>
+
+            <div class="step">
+                <h4>Stap 3: Het Win-Algoritme</h4>
+                <p>We vergelijken ons huidige bord met een lijst van 8 mogelijke winnende lijnen.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> winLines = [[0,1,2], [3,4,5], ...];
+<span class="keyword">for</span> (<span class="keyword">let</span> line <span class="keyword">of</span> winLines) {
+    <span class="keyword">const</span> [a, b, c] = line;
+    <span class="keyword">if</span> (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        <span class="comment">// We hebben een winnaar!</span>
+    }
+}</pre>
+                </div>
+                <p><strong>Uitleg:</strong> We pakken drie indexen (a, b, c) en kijken of de inhoud van die posities in
+                    onze <code>board</code> array identiek is én niet leeg is.</p>
             </div>
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Speler X begint! Klik op een vakje.</li>
-                <li>Speel een potje tegen jezelf (of een the The the vriend naast The the the je the the).</li>
-                <li>Zie the hoe de cellen the groen oplichten bij The winst! the the!</li>
-            </ul>
+        <!-- Veelvoorkomende Fouten -->
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: 1px solid rgba(239, 68, 68, 0.2);">
+                <h4 style="color: #fca5a5;">Fout: Global scope vervuiling</h4>
+                <p style="color: #f87171;">Het vergeten te resetten van de <code>board</code> array bij een herstart. De
+                    visuele cellen worden vaak wel leeggemaakt, maar de JavaScript data blijft dan 'denken' dat het bord
+                    nog vol is.</p>
+            </div>
+            <div class="step" style="border-bottom: none; padding-bottom: 0;">
+                <h4 style="color: #fca5a5;">Fout: Race conditions</h4>
+                <p style="color: #f87171;">Het wisselen van de speler (X naar O) <em>voordat</em> de win-check is
+                    gedaan.
+                    Hierdoor kan de verkeerde speler als winnaar worden uitgeroepen in de interface.</p>
+            </div>
         </div>
 
         <!-- Tips -->
         <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
+            <h3>💡 Tips voor Studenten</h3>
             <ul>
-                <li><strong>Destructuring in Arrays!:</strong> the The In The the the the The
-                    <code>checkVoorWinst</code> the functie the zie The je the the
-                    <code>const [a, b, c] = winnendeLijnen[i]</code>. Dit is <strong>Destructuring</strong>. Het the The
-                    The The splitst The the The on the in the the the The fly the de The kleine winlijn-array the(The
-                    the bijv The The. the <code>[0, 1, 2]</code> the) the the uit the The over thethe The 3 the the the
-                    variables a, the The the b, the the en The c! This is super the The the modern the The JS The the
-                    The! The</li>
+                <li><strong>Console Log is je vriend:</strong> Gebruik <code>console.table(board)</code> om je 1D array
+                    in te zien bij elke zet.</li>
+                <li><strong>DRY (Don't Repeat Yourself):</strong> Gebruik een loop voor je win-checks in plaats van 8
+                    keer een handmatige <code>if</code> statement te schrijven.</li>
+                <li><strong>Styling:</strong> Gebruik CSS-klassen zoals <code>.win-highlight</code> om de winnaar echt
+                    te laten opvallen in de UI.</li>
             </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Lege Strings Checken the</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the het spel the the the BEGINT The the the, The then the the The dan the zijn The the alle The hokjes The the The leeg the the (`""`). The Als the the The je The checkt: `als A == B en B == C` the the The, The then dan the The the the ZULLEN de of The lege The the the the the vakjes the The (The the op The de the rij The ) the The hieraan the THE voldoen The The! The the !! (Want the The the The "" the equals The the the "" the en "" the ) the THE !!</span>
-
-<span class="comment">// THE OPLOSSING: the the Zorg the that you that the The The always the The first the the check the The The The of THE the the the vakje The Mthe The WEL The The TEKST the !! heet The ! THE the !!! The </span>
-<span class="keyword">if</span> (hokjeA === <span class="string">""</span>) { <span class="keyword">continue</span>; } <span class="comment">// Sla The the THE the de the the the the The Lege THE The the rows over The! The The The </span></pre>
-                </div>
-            </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+                <p>Klaar voor de volgende stap? Probeer deze uitdagingen:</p>
                 <ul>
-                    <li><strong>Speel de the The The TEGEN The the De ComputerThe The The! </strong> the the Bouw The
-                        The een the stukje logic waarin <code>Math.random()</code> the THE THE the the the the! the The
-                        the The een the the the The the *leeg* The the the the the ("") the the The THE The hokje the
-                        the The The the op The THE The The the the The het the the the the The bord the kiest en the
-                        Speler the "the O the" the automatically the the in de The DOM_NODE THE The the the plakt THE!
-                        theThe!</li>
-                    <li><strong>Score The The the Bordthe The TheThe!</strong> The Maak de the the the variabelen the
-                        The `scoreX` the The The the the the en the the The the `scoreO` the the The The the. Tel The
-                        bij winst er the The 1 the The The The the The THE the bij the the THE the The The op the THE.
-                        Update The een The THE of the HTML tag the!</li>
+                    <li><strong>Slimme AI:</strong> Maak een 'Computer' modus die willekeurige zetten doet, of gebruik
+                        het Minimax algoritme voor een onverslaanbare AI.</li>
+                    <li><strong>Score-beheer:</strong> Voeg een teller toe die de totale wins van X en O opslaat in
+                        <code>localStorage</code>.
+                    </li>
+                    <li><strong>Dynamisch Raster:</strong> Kun je het spel ombouwen naar een 4x4 of 5x5 veld? Hoe
+                        verandert je win-logica dan?</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Extra Uitdagingen</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
-
             <div class="status" id="status-text">Speler X is aan de beurt</div>
-
-            <div class="board" id="t-board">
+            <div class="board" id="game-board">
                 <div class="cell" data-index="0"></div>
                 <div class="cell" data-index="1"></div>
                 <div class="cell" data-index="2"></div>
@@ -351,116 +429,95 @@ hetBord[vakjeIndexThe] = theBeurtSpelerThe;</pre>
                 <div class="cell" data-index="7"></div>
                 <div class="cell" data-index="8"></div>
             </div>
-
-            <button class="btn-restart" onclick="restartSpel()">Opnieuw Beginnen</button>
-
+            <button class="btn-restart" id="restart-btn">Opnieuw Beginnen</button>
         </div>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const TheCells = document.querySelectorAll('.cell');
         const statusText = document.getElementById('status-text');
+        const cells = document.querySelectorAll('.cell');
+        const restartBtn = document.getElementById('restart-btn');
 
         const winLines = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], // cols
-            [0, 4, 8], [2, 4, 6]             // diagonals
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
         ];
 
-        let theBordLijst = ["", "", "", "", "", "", "", "", ""];  // 9 The leeg spaces The The
+        let board = ["", "", "", "", "", "", "", "", ""];
         let currentPlayer = "X";
-        let isGameRunning = true;
+        let gameActive = true;
 
-        // the Init the The 
-        TheCells.forEach(cell => cell.addEventListener('click', TheHokjeGekliktLogicThe));
+        function handleCellClick(e) {
+            const cell = e.target;
+            const index = cell.getAttribute('data-index');
 
-        function TheHokjeGekliktLogicThe(e) {
-            const THE_DOM_CEL_AANGEKLIKT = e.target;
-            const theIndex = THE_DOM_CEL_AANGEKLIKT.getAttribute('data-index');
+            if (board[index] !== "" || !gameActive) return;
 
-            // the The click invalid the check The 
-            if (theBordLijst[theIndex] !== "" || !isGameRunning) return;
+            board[index] = currentPlayer;
+            cell.innerText = currentPlayer;
+            cell.classList.add(currentPlayer.toLowerCase());
 
-            // Update in Array
-            theBordLijst[theIndex] = currentPlayer;
-
-            // Update in DOM CSS!
-            THE_DOM_CEL_AANGEKLIKT.innerText = currentPlayer;
-            THE_DOM_CEL_AANGEKLIKT.classList.add(currentPlayer.toLowerCase()); // The red or blue CSS var The!
-
-            checkVoorWinstOfGelijkMakenThe();
+            checkResult();
         }
 
-        function checkVoorWinstOfGelijkMakenThe() {
-            let winTheHeeftIemandthe = false;
-            let currentWinnerComboThe = [];
+        function checkResult() {
+            let won = false;
+            let winningCombo = null;
 
             for (let i = 0; i < winLines.length; i++) {
-                const TheCombo = winLines[i];
-                const theA = theBordLijst[TheCombo[0]];
-                const theB = theBordLijst[TheCombo[1]];
-                const theC = theBordLijst[TheCombo[2]];
-
-                // Lijn the Check logic
-                if (theA === "" || theB === "" || theC === "") continue;
-
-                if (theA === theB && theB === theC) {
-                    winTheHeeftIemandthe = true;
-                    currentWinnerComboThe = TheCombo;
+                const [a, b, c] = winLines[i];
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    won = true;
+                    winningCombo = [a, b, c];
                     break;
                 }
             }
 
-            if (winTheHeeftIemandthe) {
-                statusText.innerText = `Speler ${currentPlayer} heeft the Gewonnen! 🎉`;
-                statusText.style.color = '#10b981'; // The The text the win color! The The
-                isGameRunning = false;
-
-                // the the the win-highlight the CSS the !
-                TheCells[currentWinnerComboThe[0]].classList.add('win-highlight');
-                TheCells[currentWinnerComboThe[1]].classList.add('win-highlight');
-                TheCells[currentWinnerComboThe[2]].classList.add('win-highlight');
+            if (won) {
+                statusText.innerText = `Speler ${currentPlayer} wint! 🎉`;
+                statusText.style.color = "#10b981";
+                winningCombo.forEach(idx => cells[idx].classList.add('win-highlight'));
+                gameActive = false;
                 return;
             }
 
-            // Gelijkspel The The the the The !
-            if (!theBordLijst.includes("")) {
-                statusText.innerText = `Gelijkspel! The the Oeps the the!`;
-                isGameRunning = false;
+            if (!board.includes("")) {
+                statusText.innerText = "Gelijkspel! 🤝";
+                gameActive = false;
                 return;
             }
 
-            // the the The verander de The Speler beurt ! the 
-            currentPlayer = (currentPlayer === "X") ? "O" : "X";
-            statusText.innerText = `Speler ${currentPlayer} is the the aan the de beurt`;
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
+            statusText.innerText = `Speler ${currentPlayer} is aan de beurt`;
         }
 
-        function restartSpel() {
+        function restartGame() {
+            board = ["", "", "", "", "", "", "", "", ""];
             currentPlayer = "X";
-            theBordLijst = ["", "", "", "", "", "", "", "", ""];
-            statusText.innerText = `Speler ${currentPlayer} is aan de beurt`;
-            statusText.style.color = 'white';
-            isGameRunning = true;
-
-            TheCells.forEach(cell => {
+            gameActive = true;
+            statusText.innerText = "Speler X is aan de beurt";
+            statusText.style.color = "#f8fafc";
+            cells.forEach(cell => {
                 cell.innerText = "";
                 cell.classList.remove('x', 'o', 'win-highlight');
             });
         }
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
+
+        cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+        restartBtn.addEventListener('click', restartGame);
+
         function toggleExpansions() {
             const expansions = document.getElementById('expansions');
             const btn = event.target;
             if (expansions.classList.contains('show')) {
                 expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
+                btn.textContent = '📖 Toon Extra Uitdagingen';
             } else {
                 expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
+                btn.textContent = '📖 Verberg Extra Uitdagingen';
             }
         }
     </script>

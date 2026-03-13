@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 45: Text Analyzer - DOM Projecten</title>
+    <title>Project 45: Tekst Analyse Tool - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -14,33 +14,35 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 12px;
             padding: 2rem;
             max-width: 900px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
         }
 
         .level {
             display: inline-block;
             padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -48,7 +50,7 @@
         }
 
         .description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 2rem;
             line-height: 1.6;
         }
@@ -59,41 +61,35 @@
         .instructions,
         .tips {
             padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
         }
 
         .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            border-left: 4px solid #f59e0b;
         }
 
         .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
+            border-left: 4px solid #0ea5e9;
         }
 
         .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
+            border-left: 4px solid #94a3b8;
         }
 
         .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
+            border-left: 4px solid #3b82f6;
         }
 
         .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            border-left: 4px solid #10b981;
         }
 
         h3 {
+            color: #f8fafc;
             margin-bottom: 1rem;
         }
 
@@ -103,7 +99,7 @@
         }
 
         .code-example {
-            background: #282c34;
+            background: #0f172a;
             color: #abb2bf;
             padding: 1.5rem;
             border-radius: 8px;
@@ -111,6 +107,7 @@
             overflow-x: auto;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            border: 1px solid #334155;
         }
 
         .code-example .keyword {
@@ -128,115 +125,127 @@
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #667eea;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
         }
 
         /* Analyzer Area */
         .project-area {
-            background: #f8fafc;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #334155;
         }
 
-        .textarea-box {
+        textarea {
             width: 100%;
             height: 200px;
-            padding: 15px;
-            border: 2px solid #cbd5e1;
+            padding: 1.5rem;
             border-radius: 8px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #f8fafc;
             font-size: 1.1rem;
+            line-height: 1.6;
             resize: vertical;
-            margin-bottom: 20px;
-            transition: 0.3s;
+            outline: none;
+            margin-bottom: 1rem;
         }
 
-        .textarea-box:focus {
-            outline: none;
+        textarea:focus {
             border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
+            margin-top: 1rem;
         }
 
         .stat-card {
-            background: white;
-            padding: 20px;
+            background: #0f172a;
+            padding: 1.5rem;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #3b82f6;
-            display: flex;
-            flex-direction: column;
+            text-align: center;
+            border: 1px solid #334155;
+            border-bottom: 4px solid #3b82f6;
         }
 
         .stat-card.words {
-            border-color: #10b981;
+            border-bottom-color: #10b981;
         }
 
         .stat-card.chars {
-            border-color: #f59e0b;
+            border-bottom-color: #f59e0b;
         }
 
         .stat-card.sentences {
-            border-color: #8b5cf6;
+            border-bottom-color: #8b5cf6;
         }
 
         .stat-card.read-time {
-            border-color: #ef4444;
-        }
-
-        .stat-title {
-            font-size: 0.9rem;
-            color: #64748b;
-            font-weight: bold;
-            margin-bottom: 5px;
-            text-transform: uppercase;
+            border-bottom-color: #ef4444;
         }
 
         .stat-value {
+            display: block;
             font-size: 2rem;
             font-weight: bold;
-            color: #0f172a;
+            color: #f8fafc;
+            margin-bottom: 5px;
         }
 
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: border 0.3s;
-            color: white;
-        }
-
-        .btn-upper {
-            background: #334155;
-        }
-
-        .btn-lower {
-            background: #475569;
+        .stat-label {
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn-clear {
+            display: inline-block;
+            padding: 0.5rem 1rem;
             background: #ef4444;
-            margin-left: auto;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            margin-bottom: 1rem;
         }
 
-        .btn:hover {
-            opacity: 0.9;
+        .btn-clear:hover {
+            background: #dc2626;
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
@@ -244,73 +253,68 @@
 <body>
     <div class="container">
         <h1>Project 45: Tekst Analyse Tool</h1>
-        <span class="level" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">Data
-            Logic</span>
-        <p class="description">Bouw een live analyse-tool zoals in MS Word, die letters, woorden, zinnen en de leestijd
-            berekent!</p>
+        <span class="level">Data Logic</span>
+        <p class="description">Word een expert in tekstverwerking door realtime statistieken te berekenen van elke
+            invoer.</p>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>Het verwerken van string-data met JavaScript methodes.</li>
+                <li>Het gebruik van Regular Expressions om woorden en zinnen te tellen.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>String.split()</strong> – Tekst opknippen in een array op basis van spaties of leestekens.
+                </li>
+                <li><strong>Array.filter()</strong> – Lege resultaten verwijderen voor een nauwkeurige telling.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: String Trimming (Schoonmaken)</h4>
-                <p>Als een gebruiker per ongeluk start of eindigt met een paar spaties (bijv:
-                    <code>"  Hallo daar  "</code>), tellen we dat al snel als 4 woorden als we puur op spaties splitsen.
-                    <code>.trim()</code> is een ingebouwde JS methode die the onnodige whitespaces aan de the randen
-                    verwijdert.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> rauweInput = <span class="string">"   Ik hou van code   "</span>;
-                    
-<span class="comment">// Verwijdert spaties aan het begin en eind!</span>
-<span class="keyword">const</span> opgeschoond = rauweInput.<span class="function">trim</span>(); 
-<span class="comment">// Resultaat: "Ik hou van code"</span></pre>
+                <h4>Stap 1: Luisteren naar Input</h4>
+                <p>Elke keer als de gebruiker typt, voeren we de analyse opnieuw uit.</p>
+                <div class="code-example">
+                    <pre>textArea.addEventListener('input', () => {
+    const text = textArea.value;
+    analyzeText(text);
+});</pre>
                 </div>
             </div>
-
             <div class="step">
-                <h4>Stap 2: Gevanceerd Splitsen (Array Maken)</h4>
-                <p>Normaal leer je in tutorials the splitsen met <code>.split(' ')</code>. Maar wat als er the 2 spaties
-                    in the zin staat? Dan klopt je telling direct the niet meer. We gebruiken een Reguliere Expressie
-                    (RegEx) <code>/\s+/</code> The de "one-or-more-whitespace" methode.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">let</span> woordenCount = <span class="string">0</span>;
-
-<span class="keyword">if</span> (opgeschoond !== <span class="string">""</span>) {
-    <span class="comment">// \s staat voor spatie, tab of linebreak. </span>
-    <span class="comment">// + staat voor één of meerdere keren acter elkaar!</span>
-    <span class="keyword">const</span> woordenArray = opgeschoond.<span class="function">split</span>(<span class="keyword">/\s+/</span>);
-    
-    <span class="comment">// Prik the lengte uit the Array</span>
-    woordenCount = woordenArray.length;
-}</pre>
+                <h4>Stap 2: Woorden en Karakters Tellen</h4>
+                <p>Verwijder witruimte en gebruik de lengte van de resulterende array/string.</p>
+                <div class="code-example">
+                    <pre>const charCount = text.length;
+const words = text.trim().split(/\s+/).filter(w => w.length > 0);
+const wordCount = words.length;</pre>
                 </div>
             </div>
-
             <div class="step">
-                <h4>Stap 3: Leestijd Berekenen</h4>
-                <p>Een gemiddeld persoon leest tussen de 200 en 250 woorden per minuut. Door ons
-                    <code>woordenCount</code> The the delen the door 225, en the modulo (the the rest-waarde de the
-                    berekenen the voor the secondes), kunnen we een kloppende reading the time genereren!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Bereken het aantal volledige minuten</span>
-<span class="keyword">let</span> minuten = Math.<span class="function">floor</span>(woordenCount / <span class="string">225</span>);
-
-<span class="comment">// Bereken de overgebleven secondes!</span>
-<span class="comment">// We delen the woordensnelheid (225) the door 60 the the secondensnelheid the the bepalen.</span>
-<span class="keyword">let</span> seconden = Math.<span class="function">floor</span>((woordenCount % <span class="string">225</span>) / (<span class="string">225</span> / <span class="string">60</span>));</pre>
+                <h4>Stap 3: Zinnen Detecteren</h4>
+                <p>Split de tekst op leestekens zoals punten, vraagtekens en uitroeptekens.</p>
+                <div class="code-example">
+                    <pre>const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);</pre>
                 </div>
             </div>
         </div>
 
         <!-- Instructies -->
         <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
+            <h3>✅ Instructies:</h3>
             <ul>
-                <li>Typ of plak een grote The tekst The blok The hieronder The textarea in.</li>
-                <li>Bewonder de live aanpassing The stats eronder. (Vooral letters, woorden en zinnen the werken
-                    feilloos in real time the. )</li>
-                <li>Test the the handige snelle knoppen The Text Vormen The The wijzigen the boven the invoervak.</li>
+                <li>Typ of plak een tekst in het grote tekstvak.</li>
+                <li>Bekijk de realtime updates van de statistieken onderaan.</li>
             </ul>
         </div>
 
@@ -318,85 +322,63 @@
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong>Zinnen telling:</strong> In The the Javascript code the hier the onder the splitsen The we
-                    zinnen op de de "<code>.</code>", "<code>?</code>", en "<code>!</code>". Omdat een tekstbestand vaak
-                    eindigt zonder een the punt, the gebruiken the the een de <code>.filter()</code> de na the de the
-                    <code>.split()</code> de The the voorkomen data The Javascript het "the niets the achter de the
-                    laatste de the punt" als een extra zin telt!</li>
+                <li><strong>Leestijd:</strong> Ga uit van een gemiddelde snelheid van 200 woorden per minuut voor de
+                    berekening.</li>
             </ul>
         </div>
 
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Lege array fouten met the split("")</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - Als The veld the volledig The the leeg The is, the doet Javascript dit:</span>
-<span class="string">""</span>.<span class="function">split</span>(<span class="string">" "</span>) <span class="comment">// Resultaat is: [""] (een the array the the The lengte 1!)</span>
-<span class="comment">// the the woordenteller the the The begint the dus The op the "1". </span>
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: Verkeerd tellen van woorden door spaties</h4>
+                <p style="color: #f87171;">Simpelweg splitten op een spatie <code>' '</code> resulteert in extra
+                    'woorden' bij dubbele spaties of nieuwe regels.</p>
+                <div class="code-example">
+                    <pre>// FOUT
+text.split(' ').length;
 
-<span class="comment">// OPLOSSING:</span>
-<span class="keyword">let</span> wordsCount = <span class="string">0</span>;
-<span class="keyword">if</span> (tekst.<span class="function">trim</span>() !== <span class="string">""</span>) {
-    wordsCount = tekst.<span class="function">trim</span>().<span class="function">split</span>(<span class="keyword">/\s+/</span>).length;
-}</pre>
+// GOED
+text.trim().split(/\s+/).filter(w => w !== '').length;</pre>
                 </div>
             </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
                 <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
                 <ul>
-                    <li><strong>Moeilijkste WOORD the:</strong> Gebruik The the de the gegenereerde the
-                        <code>woordenArray</code> the the een for loop the the controleren wat "het longest word" is the
-                        in the de the the text the (print dit the naast the de The stats the). </li>
-                    <li><strong>Dichtheid The the frequentie:</strong> Maak The een the object the the the the keywords
-                        the en tel the common letters (A, E, O). The the print these The as the the extra The
-                        statistiek! (Handig The voor the SEO de The the tools the the).</li>
+                    <li><strong>Keyword Density:</strong> Toon welke woorden het vaakst voorkomen in de tekst.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
-
-            <div class="controls">
-                <button class="btn btn-upper" onclick="transform('upper')">HOOFDLETTERS</button>
-                <button class="btn btn-lower" onclick="transform('lower')">kleine letters</button>
-                <button class="btn btn-clear" onclick="transform('clear')">Wissen</button>
-            </div>
-
-            <textarea class="textarea-box" id="text-input"
-                placeholder="Typ of plak hier je tekst om te analyseren..."></textarea>
+            <button class="btn-clear" onclick="clearText()">Wis Tekst</button>
+            <textarea id="text-input" placeholder="Begin hier met typen..."></textarea>
 
             <div class="stats-grid">
-
-                <div class="stat-card chars">
-                    <span class="stat-title">Karakters</span>
-                    <span class="stat-value" id="count-chars">0</span>
-                </div>
-
                 <div class="stat-card words">
-                    <span class="stat-title">Woorden</span>
-                    <span class="stat-value" id="count-words">0</span>
+                    <span class="stat-value" id="word-count">0</span>
+                    <span class="stat-label">Woorden</span>
                 </div>
-
+                <div class="stat-card chars">
+                    <span class="stat-value" id="char-count">0</span>
+                    <span class="stat-label">Tekens</span>
+                </div>
                 <div class="stat-card sentences">
-                    <span class="stat-title">Zinnen</span>
-                    <span class="stat-value" id="count-sentences">0</span>
+                    <span class="stat-value" id="sentence-count">0</span>
+                    <span class="stat-label">Zinnen</span>
                 </div>
-
                 <div class="stat-card read-time">
-                    <span class="stat-title">Leestijd</span>
-                    <span class="stat-value" id="count-time">0m</span>
+                    <span class="stat-value" id="read-time">0m</span>
+                    <span class="stat-label">Leestijd</span>
                 </div>
-
             </div>
         </div>
 
@@ -404,70 +386,36 @@
     </div>
 
     <script>
-        const inputBox = document.getElementById('text-input');
+        const textInput = document.getElementById('text-input');
+        const wordCount = document.getElementById('word-count');
+        const charCount = document.getElementById('char-count');
+        const sentenceCount = document.getElementById('sentence-count');
+        const readTime = document.getElementById('read-time');
 
-        // Output velden
-        const pChars = document.getElementById('count-chars');
-        const pWords = document.getElementById('count-words');
-        const pSent = document.getElementById('count-sentences');
-        const pTime = document.getElementById('count-time');
+        textInput.addEventListener('input', () => {
+            const text = textInput.value;
 
-        // Elke keer als de the toets wordt the the
-        inputBox.addEventListener('input', updateAnalysis);
+            // Karakters
+            charCount.innerText = text.length;
 
-        function updateAnalysis() {
-            const text = inputBox.value;
+            // Woorden
+            const words = text.trim().split(/\s+/).filter(item => item !== "");
+            wordCount.innerText = words.length;
 
-            // 1. Karakters the tellen
-            pChars.innerText = text.length;
+            // Zinnen
+            const sentences = text.split(/[.!?]+/).filter(item => item.trim() !== "");
+            sentenceCount.innerText = sentences.length;
 
-            // 2. Woorden the tellen
-            let wordsCount = 0;
-            const theTrimmed = text.trim();
-            if (theTrimmed !== "") {
-                const wordsArray = theTrimmed.split(/\s+/);
-                wordsCount = wordsArray.length;
-            }
-            pWords.innerText = wordsCount;
+            // Leestijd (avg 200 words per minute)
+            const minutes = Math.ceil(words.length / 200);
+            readTime.innerText = words.length > 0 ? minutes + "m" : "0m";
+        });
 
-            // 3. Zinnen the tellen (Aandachtsgebied: ! ? .)
-            let sentCount = 0;
-            if (theTrimmed !== "") {
-                // regex splits by dot, question mark, or exclamation avoiding pure space breaks
-                // [^\.!\?]+ means check for sequences that are NOT punctuations.
-                // The match returns an array of matched portions (sentences!)
-                const sentencesArray = text.match(/[A-Z0-9][^\.!\?]*[\.!\?]/gi);
-                // However, this fails on last sentence without a dot. Better fallback: split!
-                const simpleSentences = theTrimmed.split(/[\.!?]+/).filter(sentence => sentence.trim().length > 0);
-                sentCount = simpleSentences.length;
-            }
-            pSent.innerText = sentCount;
-
-            // 4. the Leestijd the the berekenen
-            // average reading speed is 225 words / minute
-            let theMinutes = Math.floor(wordsCount / 225);
-            let theSeconds = Math.floor((wordsCount % 225) / (225 / 60));
-            // minimal value 1m for UI purposes if small string
-            if (wordsCount > 0 && theMinutes === 0) pTime.innerText = `< 1m`;
-            else if (wordsCount === 0) pTime.innerText = `0m`;
-            else pTime.innerText = `${theMinutes}m ${theSeconds}s`;
-
+        function clearText() {
+            textInput.value = '';
+            textInput.dispatchEvent(new Event('input'));
         }
 
-        function transform(action) {
-            if (action === 'upper') {
-                inputBox.value = inputBox.value.toUpperCase();
-            } else if (action === 'lower') {
-                inputBox.value = inputBox.value.toLowerCase();
-            } else if (action === 'clear') {
-                inputBox.value = "";
-            }
-
-            // Update UI Counters directly!
-            updateAnalysis();
-        }
-
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
             const expansions = document.getElementById('expansions');
             const btn = event.target;

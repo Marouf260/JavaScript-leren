@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 88: IndexedDB Notities - DOM Projecten</title>
+    <title>Project 88: Cloudless Vault - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -13,422 +13,529 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #fdf4ff;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            color: #4a044e;
+            padding: 2.5rem;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
-            border-radius: 20px;
-            padding: 2.5rem;
-            max-width: 650px;
+            background: #1e293b;
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 850px;
             width: 100%;
-            box-shadow: 0 15px 40px -5px rgba(192, 38, 211, 0.15);
-            border: 2px solid #fae8ff;
-            border-top: 8px solid #c026d3;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
+            text-align: center;
         }
 
         h1 {
+            color: #f8fafc;
             margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            color: #701a75;
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
         }
 
         .level {
             display: block;
-            padding: 0.35rem 1rem;
-            background: #fae8ff;
-            color: #a21caf;
+            width: max-content;
+            margin: 0 auto 2.5rem;
+            padding: 0.35rem 1.2rem;
+            background: linear-gradient(135deg, #c026d3, #a21caf);
+            color: white;
             border-radius: 30px;
             font-size: 0.85rem;
-            font-weight: bold;
-            margin-bottom: 2.5rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
-            width: max-content;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        /* APP CSS H_T */
+        .description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
         .project-area {
-            width: 100%;
+            background: #0f172a;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 1.5rem 0 2.5rem 0;
+            border: 1px solid #334155;
+            box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.4);
+            text-align: left;
         }
 
-        .oUiINfTheBoXTh__N_N {
-            padding: 15px;
-            background: #fefce8;
-            border-left: 4px solid #eab308;
-            color: #854d0e;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 25px;
-        }
-
-        .FFoRRMInThV_TNoTT {
+        .note-input-group {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 30px;
         }
 
-        .FFoRRMInThV_TNoTT input {
+        input {
             flex: 1;
-            padding: 15px;
-            border-radius: 8px;
-            border: 2px solid #f0abfc;
-            font-size: 1.1rem;
-            outline: none;
-            transition: 0.2s;
-        }
-
-        .FFoRRMInThV_TNoTT input:focus {
-            border-color: #c026d3;
-            box-shadow: 0 0 0 4px rgba(192, 38, 211, 0.1);
-        }
-
-        .btn_THVT_HVoegTHThe {
-            background: #c026d3;
-            color: white;
-            border: none;
-            padding: 0 25px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 1.1rem;
-        }
-
-        .btn_THVT_HVoegTHThe:hover {
-            background: #a21caf;
-        }
-
-        /* THE  LIjst ! */
-        .LllIJ_sTNnOOTiTHesDOMThe {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .KkaH_TheUaRTTieNotM__ {
-            background: #fdf4ff;
-            border: 1px solid #f5d0fe;
-            padding: 15px 20px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            padding: 16px 20px;
             border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: 0.2s;
-        }
-
-        .KkaH_TheUaRTTieNotM__:hover {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transform: translateX(5px);
-        }
-
-        .ThHTExtGDeTDenNotV {
-            font-size: 1.1rem;
-            color: #4a044e;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
             font-weight: 500;
         }
 
-        .TTTheiDDeTaTtTNot {
-            font-size: 0.8rem;
-            color: #a21caf;
-            margin-top: 5px;
+        input:focus {
+            border-color: #c026d3;
+            background: #1e293b;
+            box-shadow: 0 0 15px rgba(192, 38, 211, 0.2);
         }
 
-        .bBToNTnTheDEElLeOthe_V {
-            background: #fee2e2;
-            color: #ef4444;
+        .add-btn {
+            background: #c026d3;
+            color: white;
             border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
+            padding: 0 30px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 20px rgba(192, 38, 211, 0.3);
+        }
+
+        .add-btn:hover {
+            background: #a21caf;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(192, 38, 211, 0.4);
+        }
+
+        .note-list {
+            list-style: none;
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .note-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .note-list::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+
+        .note-item {
+            background: #1e293b;
+            padding: 20px 25px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #334155;
+            animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: border-color 0.3s ease;
+        }
+
+        .note-item:hover {
+            border-color: #c026d3;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .note-content {
+            flex: 1;
+        }
+
+        .note-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f8fafc;
+        }
+
+        .note-date {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            display: block;
+            margin-top: 6px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: 0.2s;
+            font-size: 1.2rem;
         }
 
-        .bBToNTnTheDEElLeOthe_V:hover {
+        .delete-btn:hover {
             background: #ef4444;
             color: white;
-            transform: rotate(15deg) scale(1.1);
+            transform: scale(1.1);
         }
 
-        /* Lege state Z  ! _ THE V  O !  H */
-        .LlLegeSTTheeSTh_DeTa_MTheHMsg {
+        .empty-state {
             text-align: center;
-            color: #c026d3;
+            padding: 40px;
+            color: #94a3b8;
             font-style: italic;
-            padding: 20px;
-            font-size: 1.1rem;
+        }
+
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
+        }
+
+        .explanation {
+            border-left: 4px solid #f59e0b;
+            margin-top: 4rem;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
             display: none;
         }
 
+        .expandable.show {
+            display: block;
+        }
 
         .back-link {
-            display: block;
-            margin-top: 2rem;
-            color: #c026d3;
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
             text-align: center;
+            width: 100%;
         }
     </style>
-    <!-- FONT O !! Z ! -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
-        <h1><i class="fas fa-database"></i> IndexedDB Notities</h1>
-        <span class="level">Advanced APIs</span>
+        <h1>Cloudless Vault</h1>
+        <span class="level">IndexedDB Storage Engine</span>
+        <p class="description">Bouw een robuuste offline-first applicatie. Leer hoe je complexe data opslaat in een
+            transactionele database in de browser, zonder afhankelijk te zijn van cloud-servers.</p>
 
-        <div class="oUiINfTheBoXTh__N_N">
-            <b>IndexedDB</b> is een_ echte _V The the the <em>Database</em> HThe! the inside The je browser. H!_ Het THE
-            is 100x v_ The the _! beter O the_ The the en groter THE H the dan `localStorage` want de het slaat the _
-            Objects the ! asynchronously _ O_Z The OTheThe !! the H the OP ! _
+        <div class="project-area">
+            <div class="note-input-group">
+                <input type="text" id="note-input" placeholder="Schrijf je geheime notitie..." autocomplete="off">
+                <button class="add-btn" id="add-btn">Opslaan</button>
+            </div>
+
+            <ul class="note-list" id="note-list">
+                <!-- Wordt gevuld door IndexedDB -->
+                <div class="empty-state">Geen notities gevonden in de database...</div>
+            </ul>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>IndexedDB is een krachtige NoSQL-achtige database die lokaal in de browser draait. Het is veel krachtiger
+                dan LocalStorage.</p>
+            <ul>
+                <li><strong>Database Schema's:</strong> Hoe je 'Object Stores' aanmaakt en beheert via
+                    <code>onupgradeneeded</code>.</li>
+                <li><strong>Asynchronous CRUD:</strong> De vier basis-operaties (Create, Read, Update, Delete) uitvoeren
+                    via asynchrone requests.</li>
+                <li><strong>Transaction Logic:</strong> Waarom databases werken met transacties om data-integriteit te
+                    garanderen.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Object Store:</strong> Denk aan een tabel of een 'folder' waar je JavaScript objecten direct
+                    in kunt gooien.</li>
+                <li><strong>KeyPath & AutoIncrement:</strong> Hoe de database automatisch unieke ID's genereert voor je
+                    records.</li>
+                <li><strong>Request Pattern:</strong> Begrijpen dat database-operaties 'requests' zijn die pas succesvol
+                    zijn in de <code>onsuccess</code> callback.</li>
+            </ul>
         </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: De Storage Engine</h3>
 
             <div class="step">
-                <h4>Stap 1: De Database Openen</h4>
-                <p><strong>IndexedDB</strong> is een echte database in de browser. Het openen werkt callback-gebaseerd.
-                    De <code>onupgradeneeded</code> event is de plek om je "tabellen" (objectStores) aan te maken.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> req = window.indexedDB.<span class="function">open</span>(<span class="string">'MijnDb'</span>, <span class="string">1</span>);
-req.onupgradeneeded = (e) =&gt; {
-    e.target.result.<span class="function">createObjectStore</span>(<span class="string">'notities'</span>,
-        { keyPath: <span class="string">'id'</span>, autoIncrement: <span class="keyword">true</span> });
-};
-req.onsuccess = (e) =&gt; db = e.target.result;</pre>
+                <h4>1: De Database Openen</h4>
+                <p>We vragen de browser om toegang. Als het schema verandert (versie 1 -> 2), vuren we een upgrade-event
+                    af.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> request = indexedDB.<span class="function">open</span>(<span class="string">'MyVault'</span>, 1);
+request.onupgradeneeded = (e) => {
+    <span class="keyword">const</span> db = e.target.result;
+    db.<span class="function">createObjectStore</span>(<span class="string">'notes'</span>, { keyPath: <span class="string">'id'</span>, autoIncrement: <span class="keyword">true</span> });
+};</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: Data Lezen & Schrijven via Transacties</h4>
-                <p>Elke operatie (lezen/schrijven) gaat via een <strong>Transactie</strong>. Schrijven =
-                    <code>'readwrite'</code>, Lezen = <code>'readonly'</code>.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// Schrijven</span>
-<span class="keyword">const</span> tx = db.<span class="function">transaction</span>([<span class="string">'notities'</span>], <span class="string">'readwrite'</span>);
-tx.objectStore(<span class="string">'notities'</span>).<span class="function">add</span>({ tekst: <span class="string">'Hallo!'</span> });
-
-<span class="comment">// Lezen</span>
-tx.objectStore(<span class="string">'notities'</span>).<span class="function">getAll</span>().onsuccess = (e) =&gt; 
-    console.<span class="function">log</span>(e.target.result);</pre>
+                <h4>2: Een Transactie Starten</h4>
+                <p>Data wegschrijven gebeurt altijd in een beveiligde transactie.</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> tx = db.<span class="function">transaction</span>([<span class="string">'notes'</span>], <span class="string">'readwrite'</span>);
+<span class="keyword">const</span> store = tx.<span class="function">objectStore</span>(<span class="string">'notes'</span>);
+store.<span class="function">add</span>({ text: <span class="string">'Hallo Wereld'</span> });</pre>
                 </div>
             </div>
 
         </div>
 
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Typ een notitie en klik op <strong>+</strong> om te bewaren!</li>
-                <li>Herlaad de pagina - de notities blijven dankzij IndexedDB!</li>
-                <li>Verwijder een notitie met de rode afvalemmers.</li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>vs localStorage:</strong> <code>localStorage</code> slaat alleen strings op. IndexedDB slaat
-                    volledige JavaScript Objecten op, is asynchroon en heeft vrijwel geen opslaglimiet!</li>
-            </ul>
-        </div>
-
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
                 <ul>
-                    <li><strong>Bewerk Notitie:</strong> Voeg een ✏️ knop toe per notitie. Gebruik
-                        <code>objectStore.put()</code> om een bestaand object bij te werken in plaats van
-                        <code>.add()</code>!</li>
+                    <li><strong>Version Mismatch:</strong> Als je het schema verandert maar de versie-nummmer niet
+                        ophoogt, zal <code>onupgradeneeded</code> niet vuren.</li>
+                    <li><strong>Quota Exceeded:</strong> Browsers hebben een limiet (vaak % van de schijfruimte). Bij
+                        extreem grote data-sets kan een <code>QuotaExceededError</code> optreden.</li>
+                    <li><strong>Closed Transactions:</strong> Een transactie sluit zich automatisch zodra er geen werk
+                        meer is. Je kunt hem niet 'heropenen'; je moet een nieuwe maken.</li>
+                </ul>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>Full Text Search:</strong> Gebruik <code>IDBKeyRange</code> om te kunnen zoeken in je
+                        notities op basis van tekst.</li>
+                    <li><strong>Categories/Tags:</strong> Voeg een extra veld toe aan je objecten zodat je notities kunt
+                        filteren op kleur of type.</li>
+                    <li><strong>Export to JSON:</strong> Maak een functie die je hele database uitleest en downloadt als
+                        een backup-bestand.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- Info box & App Area -->
-        <div class="project-area">
-
-            <form class="FFoRRMInThV_TNoTT" id="FfFormHVo_oHGenNOOOtiTheTV_H_ZTheO">
-                <input type="text" id="UU_iinTTHxtptutDHaTaTHNNot"
-                    placeholder="Typ een notitie... (slaat op in the IDB!)" required autocomplete="off">
-                <button type="submit" class="btn_THVT_HVoegTHThe"><i class="fas fa-plus"></i></button>
-            </form>
-
-            <div class="LlLegeSTTheeSTh_DeTa_MTheHMsg" id="MmsGErrLlgeTHeiHlij_ZTVST">Geen notities. Z The voeg_ H der1
-                eentje toe! THE!</div>
-
-            <ul class="LllIJ_sTNnOOTiTHesDOMThe" id="uUiiTheLLTijstTDOMHDataThV">
-                <!-- Javascript fills dit THE !! ! H -->
-            </ul>
-
-        </div>
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Bekijk Database Details</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
     <script>
-        const DOMHUIoFrrmmN__TTtieVTTh = document.getElementById('FfFormHVo_oHGenNOOOtiTheTV_H_ZTheO');
-        const UiHThInTptVDeTEXTHNThetO_TheH = document.getElementById('UU_iinTTHxtptutDHaTaTHNNot');
-        const UUuiLlLListDOMTheNotTHEi_ThTV = document.getElementById('uUiiTheLLTijstTDOMHDataThV');
-        const mmmsGLEGEElLIHjJStDe = document.getElementById('MmsGErrLlgeTHeiHlij_ZTVST');
+        const input = document.getElementById('note-input');
+        const addBtn = document.getElementById('add-btn');
+        const list = document.getElementById('note-list');
 
-        // 1 INIT THE DATABASE THE !! (De IndexedDB_ H API is the oud the V! en V THE callbacks gebasseerd, niet O H_ THE the the _ Promises ! default! THE )
-        let dbHOTheObjectD_BDataTh_v;
-        const DDbTHTeNnAAmO_TDBH_V = 'MijnNotitieDatabase_P88';
-        const DDhTheVveRrSrieTDthe__DHH = 1;
+        let db = null;
+        const DB_NAME = 'VaultDB';
+        const STORE_NAME = 'notes';
 
-        const ReQuUeTheHstTheAANDDBBVHDTReThe_ = window.indexedDB.open(DDbTHTeNnAAmO_TDBH_V, DDhTheVveRrSrieTDthe__DHH);
+        // Stap 1: Connectie opzetten
+        const request = indexedDB.open(DB_NAME, 1);
 
-        // A_ Als the database the H _ V the  voor The O the de_ The EERSTE x THE V_ The_ 1 O ! The ! the the  wordt the aangemaakt OF_ Vthe V the_ O !The update heeft the! _ H THE ! the 
-        ReQuUeTheHstTheAANDDBBVHDTReThe_.onupgradeneeded = (vEE_eTveTTThe_vTnHtTTH_) => {
-            dbHOTheObjectD_BDataTh_v = vEE_eTveTTThe_vTnHtTTH_.target.result;
-            // Maak een "Tabel" (ObjectStore)_ THE H the the  met H een auto-increment_ THE_!1  the _ ID sleutel (keyPath OH_ !!T) !! 
-            if (!dbHOTheObjectD_BDataTh_v.objectStoreNames.contains('notities')) {
-                dbHOTheObjectD_BDataTh_v.createObjectStore('notities', { keyPath: 'id', autoIncrement: true });
+        request.onupgradeneeded = (e) => {
+            db = e.target.result;
+            // Tabel/Store aanmaken met een auto-incrementing ID
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+                db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
             }
         };
 
-        // B_ Succesvolle_ The H _ The THE 1 !! connectie
-        ReQuUeTheHstTheAANDDBBVHDTReThe_.onsuccess = (vEE_eTveTTThe_vTnHtTTH_) => {
-            dbHOTheObjectD_BDataTh_v = vEE_eTveTTThe_vTnHtTTH_.target.result;
-            // THE LAAD DE DATA THE INIT !!
-            AAlTlTLeVNOoHtieTTiess_TheHTheVVeeHTTeLADenOThe_TV();
+        request.onsuccess = (e) => {
+            db = e.target.result;
+            renderNotes();
         };
 
-        // C FOut ! THE_
-        ReQuUeTheHstTheAANDDBBVHDTReThe_.onerror = (e) => {
-            console.error("The__ IndexedD_B DB The FfOut_ !!:", e);
+        request.onerror = (e) => {
+            console.error("Database fout:", e.target.error);
         };
 
+        // Stap 2: Data toevoegen
+        function addNote() {
+            const text = input.value.trim();
+            if (!text) return;
 
-        // 2 VOEG The EEN THE NOTITIE_ O H! TOE AAN THE DATABASE !!
-        function VVOEegtheNoteHiTHTIe_EToeInVDDbH(tTeXxtD_TheVNotiiZTTheTHH) {
-            // A: Maak_ de _ Transactie in "readwrite" The the the modus _ The op de Tabel H "!notities"  _! THE !
-            const DeTh_vTrV_aNnSscaTIEHHDTBaT = dbHOTheObjectD_BDataTh_v.transaction(['notities'], 'readwrite');
+            // Transactie starten (readwrite nodig voor opslaan)
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
 
-            // B: HAla_ THE de the The the the the Store Tabel _1O !! HThe 
-            const ThOoOobHbjStoreH__DTVTTeDataTabelThe = DeTh_vTrV_aNnSscaTIEHHDTBaT.objectStore('notities');
-
-            // C : VOEg de THE JSON the Object the THE! VThe V_ the The erin !!
-            const HHhETThNIEUweE__NN_OOoDttThOBjjthe_ = {
-                tekst: tTeXxtD_TheVNotiiZTTheTHH,
-                aanmaakDatum: new Date().toLocaleString('nl-NL')
+            const note = {
+                text: text,
+                timestamp: new Date().toLocaleString('nl-NL', { hour12: false })
             };
 
-            const addReqVThHOoeeG_ToTHeTheReqKTheV = ThOoOobHbjStoreH__DTVTTeDataTabelThe.add(HHhETThNIEUweE__NN_OOoDttThOBjjthe_);
+            const addRequest = store.add(note);
 
-            addReqVThHOoeeG_ToTHeTheReqKTheV.onsuccess = () => {
-                // The THE _The the Is GELUKT! update ui !! THE V
-                UiHThInTptVDeTEXTHNThetO_TheH.value = "";
-                AAlTlTLeVNOoHtieTTiess_TheHTheVVeeHTTeLADenOThe_TV();
-            }
+            addRequest.onsuccess = () => {
+                input.value = '';
+                renderNotes();
+            };
         }
 
+        // Stap 3: Data ophalen en tonen
+        function renderNotes() {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const getAll = store.getAll();
 
-        // 3 LEES ALLE__! The NOTITIES_ O H ! UI T De DATABaBSe! H!_
-        function AAlTlTLeVNOoHtieTTiess_TheHTheVVeeHTTeLADenOThe_TV() {
-            const DeTh_vTrV_aNnSscaTIEHHDTBaT = dbHOTheObjectD_BDataTh_v.transaction(['notities'], 'readonly');
-            const ThOoOobHbjStoreH__DTVTTeDataTabelThe = DeTh_vTrV_aNnSscaTIEHHDTBaT.objectStore('notities');
+            getAll.onsuccess = () => {
+                const notes = getAll.result;
 
-            // GEEF_ The ALLES _ THE "_ O !! V !! H H
-            const HGetHHaLTheLLAAelesDeRReQuees_tttThe_ = ThOoOobHbjStoreH__DTVTTeDataTabelThe.getAll();
-
-            HGetHHaLTheLLAAelesDeRReQuees_tttThe_.onsuccess = () => {
-                const aArRrRyV_HTheNotieSTheHDta_TheAThe = HGetHHaLTheLLAAelesDeRReQuees_tttThe_.result;
-
-                UUuiLlLListDOMTheNotTHEi_ThTV.innerHTML = ""; // leeg _The ui 
-
-                if (aArRrRyV_HTheNotieSTheHDta_TheAThe.length === 0) {
-                    mmmsGLEGEElLIHjJStDe.style.display = "block";
-                } else {
-                    mmmsGLEGEElLIHjJStDe.style.display = "none";
-
-                    // Render_The they !!_H the The
-                    aArRrRyV_HTheNotieSTheHDta_TheAThe.forEach(OEEEnNDTOthHBN_OoTiHTTHEhe_ => {
-                        const DOMlIIHTiTeMvTheT_N_DTh = document.createElement('li');
-                        DOMlIIHTiTeMvTheT_N_DTh.classList.add('KkaH_TheUaRTTieNotM__');
-
-                        DOMlIIHTiTeMvTheT_N_DTh.innerHTML = `
-                               <div>
-                                    <div class="ThHTExtGDeTDenNotV">${OEEEnNDTOthHBN_OoTiHTTHEhe_.tekst}</div>
-                                    <div class="TTTheiDDeTaTtTNot">${OEEEnNDTOthHBN_OoTiHTTHEhe_.aanmaakDatum}</div>
-                               </div>
-                               <button class="bBToNTnTheDEElLeOthe_V" onclick="DeLTTTeHTeNoOtHTiVTeHDatTi(${OEEEnNDTOthHBN_OoTiHTTHEhe_.id})">
-                                   <i class="fas fa-trash-alt"></i>
-                               </button>
-                           `;
-                        // ZTThe V Voeg The TOP ! The the T the aan _ the! the_ list the toe the THE! the reverse The the (niewste bovne)__ H_ The !
-                        UUuiLlLListDOMTheNotTHEi_ThTV.prepend(DOMlIIHTiTeMvTheT_N_DTh);
-                    });
+                if (notes.length === 0) {
+                    list.innerHTML = '<div class="empty-state">Geen notities gevonden in de database...</div>';
+                    return;
                 }
-            }
+
+                // Sorteren op nieuwste bovenaan
+                list.innerHTML = notes.reverse().map(note => `
+                    <li class="note-item">
+                        <div class="note-content">
+                            <div class="note-text">${escapeHTML(note.text)}</div>
+                            <span class="note-date">ID: #${note.id} — Opgeslagen op ${note.timestamp}</span>
+                        </div>
+                        <button class="delete-btn" onclick="deleteNote(${note.id})" title="Verwijder">🗑️</button>
+                    </li>
+                `).join('');
+            };
         }
 
+        // Stap 4: Verwijderen
+        window.deleteNote = (id) => {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
 
-        // 4 THE THE  DELETE EEN  __The H NOTITIE UIT DE _the ! DB !! THE 
-        // global function so H V_ DOM onclick The _ kan the vinden_ !_ H
-        window.DeLTTTeHTeNoOtHTiVTeHDatTi = (iDNDTheoUmBBDtheOer_ZTheHT) => {
-            const DeTh_vTrV_aNnSscaTIEHHDTBaT = dbHOTheObjectD_BDataTh_v.transaction(['notities'], 'readwrite');
-            const ThOoOobHbjStoreH__DTVTTeDataTabelThe = DeTh_vTrV_aNnSscaTIEHHDTBaT.objectStore('notities');
+            store.delete(id).onsuccess = () => {
+                renderNotes();
+            };
+        };
 
-            // DELETE O!!!
-            const oDeELH_eTEHOoPRquuTheTVHst_T = ThOoOobHbjStoreH__DTVTTeDataTabelThe.delete(iDNDTheoUmBBDtheOer_ZTheHT);
-
-            oDeELH_eTEHOoPRquuTheTVHst_T.onsuccess = () => {
-                AAlTlTLeVNOoHtieTTiess_TheHTheVVeeHTTeLADenOThe_TV(); // re THE render _ ! z
-            }
-        }
-
-
-        // 5 THE EVENT THE V !! LIsTENRER V!!_ (sUBMIT The _ THE FORM! _ )!
-        DOMHUIoFrrmmN__TTtieVTTh.addEventListener('submit', (TthEvvHTeNHTtV_Z_) => {
-            TthEvvHTeNHTtV_Z_.preventDefault();
-            const uiTheThe_VTT_TextT_IThe = UiHThInTptVDeTEXTHNThetO_TheH.value.trim();
-
-            if (uiTheThe_VTT_TextT_IThe) {
-                VVOEegtheNoteHiTHTIe_EToeInVDDbH(uiTheThe_VTT_TextT_IThe);
-            }
+        // Helpers & Events
+        addBtn.addEventListener('click', addNote);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addNote();
         });
 
-    </script>
-    <script>
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
-            const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            const exp = document.getElementById('expansions');
+            const btn = event.currentTarget;
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Database Details' : '📖 Bekijk Database Details';
         }
     </script>
 </body>

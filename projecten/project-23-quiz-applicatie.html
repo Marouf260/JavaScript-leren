@@ -1,11 +1,33 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="nl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 23: Quiz Applicatie - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #38bdf8;
+            --success: #10b981;
+            --error: #ef4444;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --quiz-border: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,228 +35,184 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 2.5rem;
+            overflow-x: hidden;
         }
 
         .container {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 800px;
+            max-width: 1000px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
         }
 
         h1 {
-            color: #333;
+            font-size: 3rem;
+            font-weight: 900;
             margin-bottom: 0.5rem;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            /* -webkit-background-clip: text; */
+            -webkit-text-fill-color: transparent;
         }
 
         .level {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
-            border-radius: 20px;
+            padding: 0.5rem 1.5rem;
+            background: rgba(167, 139, 250, 0.1);
+            color: #a78bfa;
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: 99px;
             font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 2rem;
         }
 
         .description {
-            color: #666;
-            margin-bottom: 2rem;
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 0 auto;
             line-height: 1.6;
         }
 
-        .explanation,
-        .concepts,
-        .step-by-step,
-        .instructions,
-        .tips {
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
-        }
-
-        .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
-        }
-
-        .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
-        }
-
-        .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
-        }
-
-        .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
-        }
-
-        h3 {
-            margin-bottom: 1rem;
-        }
-
-        ul {
-            margin-left: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .code-example {
-            background: #282c34;
-            color: #abb2bf;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-        }
-
-        .code-example .keyword {
-            color: #c678dd;
-        }
-
-        .code-example .string {
-            color: #98c379;
-        }
-
-        .code-example .function {
-            color: #61afef;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 1rem;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        /* Quiz Project Area */
+        /* Project UI */
         .project-area {
-            background: #f0f2f5;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
             display: flex;
-            align-items: center;
             justify-content: center;
-            border: 2px dashed #ccc;
+            margin: 4rem 0;
         }
 
         .quiz-container {
-            background: #fff;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--quiz-border);
             width: 100%;
             max-width: 500px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
         }
 
         .quiz-header {
-            border-bottom: 2px solid #eee;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .quiz-header h2 {
-            color: #333;
-            font-size: 1.2rem;
+            color: var(--text-main);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
         }
 
         .progress-text {
-            font-weight: bold;
-            color: #8e44ad;
+            font-weight: 600;
+            color: #a78bfa;
+            font-size: 0.9rem;
+            background: rgba(167, 139, 250, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            border: 1px solid rgba(167, 139, 250, 0.2);
         }
 
         .question-text {
             font-size: 1.4rem;
-            color: #2c3e50;
-            margin-bottom: 25px;
+            color: var(--text-main);
+            margin-bottom: 2rem;
             font-weight: 600;
+            line-height: 1.4;
         }
 
         .options-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 0.75rem;
         }
 
         .option {
-            padding: 15px 20px;
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.2s;
-            font-size: 1.1rem;
-            color: #444;
+            transition: all 0.2s;
+            font-size: 1rem;
+            color: #cbd5e1;
             display: flex;
             align-items: center;
+            font-weight: 500;
         }
 
         .option:hover {
-            background: #f0e6fa;
-            border-color: #8e44ad;
-            color: #8e44ad;
+            background: rgba(167, 139, 250, 0.15);
+            border-color: #a78bfa;
+            color: white;
             transform: translateX(5px);
         }
 
         .option.correct {
-            background: #d4edda;
-            border-color: #28a745;
-            color: #155724;
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #4ade80;
+            color: #bbf7d0;
         }
 
         .option.incorrect {
-            background: #f8d7da;
-            border-color: #dc3545;
-            color: #721c24;
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #f87171;
+            color: #fecaca;
         }
 
         .next-btn {
-            margin-top: 25px;
+            margin-top: 1.5rem;
             width: 100%;
-            padding: 15px;
-            background: #8e44ad;
+            padding: 1rem;
+            background: var(--primary);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 1.1rem;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s;
             display: none;
         }
 
         .next-btn:hover {
-            background: #732d91;
+            background: var(--primary-hover);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
         }
 
         /* Results Screen */
@@ -244,132 +222,255 @@
         }
 
         .results-container h2 {
-            color: #333;
+            color: var(--text-main);
             font-size: 2rem;
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
         }
 
         .score-circle {
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            background: conic-gradient(#8e44ad 0%, #eee 0%);
-            margin: 0 auto 20px;
+            background: conic-gradient(#a78bfa 0%, rgba(255, 255, 255, 0.1) 0%);
+            margin: 0 auto 2rem;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
         .score-circle::after {
             content: '';
             position: absolute;
-            width: 120px;
-            height: 120px;
-            background: #fff;
+            width: 130px;
+            height: 130px;
+            background: #1e293b;
             border-radius: 50%;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
         }
 
         .score-value {
             position: relative;
             z-index: 10;
             font-size: 2.5rem;
-            font-weight: bold;
-            color: #8e44ad;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .results-text {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 30px;
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips,
+        .expandable {
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-top: 2.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            text-align: left;
+            color: #e2e8f0;
+        }
+
+        .explanation {
+            border-left: 5px solid #f59e0b;
+            margin-top: 5rem;
+        }
+
+        .concepts {
+            border-left: 5px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 5px solid #6366f1;
+        }
+
+        .instructions {
+            border-left: 5px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 5px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border: 1px solid var(--glass-border);
+            color: #abb2bf;
+        }
+
+        .expand-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 3rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            text-align: center;
+        }
+
+        .back-link:hover {
+            color: var(--secondary);
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Project 23: Quiz Applicatie</h1>
-        <span class="level">Master</span>
-        <p class="description">Bouw een interactieve quiz met statemanagement, voortgansgrafieken en directe feedback.
-        </p>
+        <header>
+            <h1>Project 23: Quiz Applicatie</h1>
+            <span class="level">Master</span>
+            <p class="description">Bouw een interactieve quiz met statemanagement, voortgangsgrafieken en directe
+                feedback.</p>
+        </header>
+
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>Interactieve quiz-states beheren (huidige vraag, score).</li>
+                <li>Dynamisch DOM-elementen genereren (antwoordenlijst).</li>
+                <li>CSS-animaties aansturen via JavaScript-timers (ronde voortgangscirkel).</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>Array van Objecten</strong> - Datastructuur voor de vragen.</li>
+                <li><strong>State Management</strong> - Bijhouden van variabelen zoals <code>score</code> en
+                    <code>currentQuestion</code>.
+                </li>
+                <li><strong>setInterval()</strong> - Gebruikt voor het animeren van het taartdiagram (de scorecirkel)
+                    aan het einde van de quiz.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: De Vragen Data Opslaan</h4>
-                <p>We creëren een betrouwbare structuur voor onze vragen door gebruik te maken van een Array met
-                    Objecten erin. Elk object bevat de vraag, antwoorden, en de index van het juiste antwoord.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> questions = [
-    { q: <span class="string">"Wat is JS?"</span>, options: [<span class="string">"Auto"</span>, <span class="string">"Taal"</span>], answer: <span class="string">1</span> }
-];</pre>
+                <h4>Stap 1: Variabelen en Vragen instellen</h4>
+                <p>We gebruiken state-variabelen om te onthouden waar we zijn in de quiz.</p>
+                <div class="code-example">
+                    <pre>let currentQuestion = 0;
+let score = 0;
+let canAnswer = true;</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Omdat arrays 0-geïndexeerd zijn, verwijst <code>answer: 1</code> naar
-                    <code>"Taal"</code>.</p>
             </div>
-
             <div class="step">
-                <h4>Stap 2: State Management</h4>
-                <p>Een quiz is een "stateful" app; hij moet onthouden waar we zijn en wat de score is.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">let</span> currentQuestion = <span class="string">0</span>;
-<span class="keyword">let</span> score = <span class="string">0</span>;
-<span class="keyword">let</span> canAnswer = <span class="keyword">true</span>;</pre>
+                <h4>Stap 2: Vraag inladen</h4>
+                <p>Maak de container leeg en vul deze met de nieuwe vraag en de antwoordknoppen.</p>
+                <div class="code-example">
+                    <pre>optionsContainer.innerHTML = '';
+q.options.forEach((opt, index) =&gt; {
+    const div = document.createElement('div');
+    div.innerHTML = opt;
+    optionsContainer.appendChild(div);
+});</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Telkens als de gebruiker een vraag voltooid, verhogen we
-                    <code>currentQuestion</code> en hergebruiken we in <code>loadQuestion()</code> hetzelfde DOM
-                    element, in plaats van 10 nieuwe pagina's te maken!</p>
             </div>
-
             <div class="step">
-                <h4>Stap 3: CSS Score Animatie</h4>
-                <p>Op het eindscherm gebruiken we <code>setInterval()</code> gecombineerd met
-                    <code>conic-gradient</code> in CSS om een animerende ring te tonen.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">let</span> currentPerc = <span class="string">0</span>;
-<span class="keyword">let</span> interval = <span class="function">setInterval</span>(() => {
-    <span class="keyword">if</span> (currentPerc >= percentage) <span class="function">clearInterval</span>(interval);
-    circle.style.background = <span class="string">`conic-gradient(#8e44ad ${currentPerc}%, #eee ${currentPerc}%)`</span>;
-    currentPerc++;
-}, <span class="string">15</span>);</pre>
+                <h4>Stap 3: Antwoord controleren</h4>
+                <p>Controleer de gekozen index met het juiste antwoord en update de CSS-klassen (rood/groen).</p>
+                <div class="code-example">
+                    <pre>const isCorrect = (index === questions[currentQuestion].answer);
+if (isCorrect) score++;</pre>
                 </div>
-                <p><strong>Uitleg:</strong> Door elke 15 milliseconden het percentage met +1 te verhogen en de
-                    background te updaten, wordt een "vollopend" taartdiagram gecreëerd.</p>
             </div>
         </div>
 
         <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Controleer Antwoord)</h3>
-            <pre><span class="keyword">function</span> <span class="function">checkAnswer</span>(optDiv, index) {
-    <span class="comment">// Voorkom 2x klikken (Anti-Spam beveiliging)</span>
-    <span class="keyword">if</span> (!canAnswer) <span class="keyword">return</span>;
-    canAnswer = <span class="keyword">false</span>;
-
-    <span class="keyword">const</span> isCorrect = (index === questions[currentQuestion].answer);
-    <span class="keyword">if</span> (isCorrect) score++;
-
-    <span class="keyword">const</span> allOptions = optionsContainer.children;
-    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="string">0</span>; i < allOptions.length; i++) {
-        <span class="keyword">if</span> (i === questions[currentQuestion].answer) {
-            allOptions[i].classList.<span class="function">add</span>(<span class="string">"correct"</span>);
-        } <span class="keyword">else if</span> (i === index && !isCorrect) {
-            allOptions[i].classList.<span class="function">add</span>(<span class="string">"incorrect"</span>);
-        }
-    }
+        <div class="code-example" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="color: #f8fafc; margin-bottom: 1rem;">🛡️ Antwoord controleren (Anti-Spam)</h3>
+            <pre>function checkAnswer(optDiv, index) {
+    if (!canAnswer) return; // Voorkomt 2x klikken op dezelfde vraag
+    canAnswer = false;
+    // Logica om knoppen rood/groen te kleuren
+    nextBtn.style.display = 'block';
 }</pre>
         </div>
 
         <!-- Instructies -->
         <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
+            <h3>🚀 Jouw Opdracht:</h3>
             <ul>
-                <li>Speel de Quiz in de demo container.</li>
-                <li>Bekijk hoe de foute antwoorden rood worden, maar Javascript tegelijk ook onthuld waar de echte
-                    waarheid was door die specifiek groen te maken!</li>
-                <li>Let op de dynamische `Vraag X van Y` progressie.</li>
+                <li>Speel de quiz en bekijk hoe de DOM de vragen live bijwerkt.</li>
+                <li>Observeer hoe de <code>canAnswer</code> variabele voorkomt dat je dubbel kunt klikken op een
+                    antwoord.</li>
             </ul>
         </div>
 
@@ -377,54 +478,45 @@
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong>Waarom <code>canAnswer</code> toevoegen?</strong> Als je geen block neerzet, kan een
-                    gebruiker direct 4 keer op het de juiste antwoord klikken om 4 punten te genereren per vraag. Een
-                    boolean flag sluit de actie "op slot".</li>
-                <li><strong>Dynamische Layouts:</strong> In plaats van voor 20 vragen, 20 verschillende HTML-pagina's of
-                    pop-ups op te bouwen, genereren wij 1 template en vervang je op de vlucht uitsluitend de text
-                    elementen. Veel sneller!</li>
+                <li><strong>Data vs. Weergave:</strong> Door alle data in één JavaScript-array te scheiden van de HTML,
+                    kun je de quiz later eenvoudig vanaf een externe bron (API) inladen.</li>
             </ul>
         </div>
 
         <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: Hardcoded DOM Elementen (Injevuld in HTML, niet in JS)</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ FOUT - Alle opties in de HTML schrijven maakt het aanpassen van de quiz moeilijk.</span>
-&lt;button id="opt1"&gt;Antwoord 1&lt;/button&gt;
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: Hardcoded vragen in HTML</h4>
+                <p style="color: #f87171;">Bouw nooit 20 losse HTML-pagina's voor een quiz. Gebruik JavaScript om de
+                    tekst binnen dezelfde pagina telkens te vervangen, waardoor je applicatie schaalbaar blijft.</p>
+                <div class="code-example">
+                    <pre>&lt;!-- ❌ FOUT --&gt;
+&lt;div class='vraag1'&gt;Vraag 1...&lt;/div&gt;
+&lt;div class='vraag2'&gt;Vraag 2...&lt;/div&gt;
 
-<span class="comment">// ✅ GOED - Genereer knoppen dynamisch o.b.v. de array in JS.</span>
-q.options.forEach((opt, index) =&gt; {
-    const optDiv = document.createElement("div");
-    optDiv.className = "option";
-    optDiv.innerHTML = `&lt;span&gt;${opt}&lt;/span&gt;`;
-    optionsContainer.appendChild(optDiv);
-});</pre>
+// ✅ GOED
+questionText.innerText = q.q;</pre>
                 </div>
             </div>
         </div>
 
         <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor meer? Probeer dit toe te voegen:</p>
+            <div class="tips" style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1);">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingsmogelijkheden</h3>
                 <ul>
-                    <li><strong>Aftel Timer:</strong> Voeg een timer (in bijv. een balk bovenin) toe van 15 seconden!
-                        (gebruik <code>setTimeout</code>).</li>
-                    <li><strong>Vragen Randomizer:</strong> Zorg via the Fisher-Yates shuffle dat de vragen in
-                        willekeurige volgorde komen!</li>
-                    <li><strong>Meerdere Quiz Themas:</strong> Haal the data uit de API van de Open Trivia DB via een
-                        Fetch request!</li>
+                    <li><strong>Timer toevoegen:</strong> Voeg een automatische countdown-timer van 10 seconden toe per
+                        vraag.</li>
+                    <li><strong>Vragen husselen:</strong> Shuffle de antwoordopties willekeurig.</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
+        <button class="expand-btn" id="toggleExp" onclick="toggleExpansions()">📖 Toon
+            Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
             <div class="quiz-container" id="quiz-block">
                 <div class="quiz-header">
@@ -451,7 +543,7 @@ q.options.forEach((opt, index) =&gt; {
             </div>
         </div>
 
-        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+        <a href="../index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Terug naar Projecten</a>
     </div>
 
     <script>
@@ -534,7 +626,7 @@ q.options.forEach((opt, index) =&gt; {
 
             let interval = setInterval(() => {
                 if (currentPerc >= percentage) clearInterval(interval);
-                circle.style.background = `conic-gradient(#8e44ad ${currentPerc}%, #eee ${currentPerc}%)`;
+                circle.style.background = `conic-gradient(#a78bfa ${currentPerc}%, rgba(255,255,255,0.1) ${currentPerc}%)`;
                 currentPerc++;
             }, 15);
         }
@@ -553,7 +645,7 @@ q.options.forEach((opt, index) =&gt; {
         // Functie voor uitbreidingen toggle
         function toggleExpansions() {
             const expansions = document.getElementById('expansions');
-            const btn = event.target;
+            const btn = document.getElementById('toggleExp');
             if (expansions.classList.contains('show')) {
                 expansions.classList.remove('show');
                 btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';

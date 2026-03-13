@@ -5,7 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 25: Uitgaven Tracker - DOM Projecten</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #ec4899;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --tracker-bg: rgba(255, 255, 255, 0.05);
+            --tracker-border: rgba(255, 255, 255, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,104 +33,138 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-        }
-
-        .container {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .level {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #cce5ff;
-            color: #004085;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .description {
-            color: #666;
-            margin-bottom: 2rem;
             line-height: 1.6;
         }
 
+        .container {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.025em;
+        }
+
+        .level {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        /* General UI Elements */
         .explanation,
         .concepts,
         .step-by-step,
         .instructions,
         .tips {
-            padding: 1.5rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .explanation {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
-        }
-
-        .concepts {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            color: #0c5460;
-        }
-
-        .step-by-step {
-            background: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            color: #383d41;
-        }
-
-        .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            color: #555;
-        }
-
-        .tips {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 18px;
+            margin-bottom: 2rem;
         }
 
         h3 {
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-main);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
         }
 
         ul {
             margin-left: 1.5rem;
             line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .code-example {
-            background: #282c34;
-            color: #abb2bf;
+            background: #0f172a;
+            border: 1px solid var(--glass-border);
             padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
+            border-radius: 14px;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #e2e8f0;
             overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
         }
 
         .code-example .keyword {
@@ -125,231 +179,358 @@
             color: #61afef;
         }
 
-        .back-link {
-            display: inline-block;
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
             margin-top: 1rem;
-            color: #667eea;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .expandable {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .expandable.show {
+            max-height: 2000px;
+            transition: max-height 0.8s ease-in;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
         }
 
         /* Tracker Demo Area */
         .project-area {
-            background: #f0f2f5;
-            border-radius: 12px;
-            padding: 2rem;
+            background: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80') center/cover;
+            border-radius: 20px;
+            padding: 3rem 1.5rem;
             margin-bottom: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px dashed #007bff;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+            min-height: 500px;
         }
 
         .tracker-container {
-            background: #fff;
+            background: var(--tracker-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--tracker-border);
             width: 100%;
             max-width: 400px;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
 
         .tracker-header {
-            background: #007bff;
-            color: #fff;
-            padding: 25px;
+            background: rgba(15, 23, 42, 0.4);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 2rem 1.5rem;
             text-align: center;
+            position: relative;
+        }
+
+        .tracker-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
         }
 
         .tracker-header h2 {
             font-size: 1rem;
-            opacity: 0.9;
-            margin-bottom: 5px;
+            color: #a5b4fc;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
         }
 
         .tracker-header .total-amount {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .tracker-body {
-            padding: 20px;
+            padding: 1.5rem;
         }
 
         .tracker-body h3 {
-            font-size: 1rem;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-            color: #555;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            font-weight: 600;
         }
 
         .list {
             list-style-type: none;
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
             max-height: 200px;
             overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* Custom Scrollbar */
+        .list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .list::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         .list li {
-            background: #fff;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-            border-radius: 8px;
-            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
             display: flex;
             justify-content: space-between;
             position: relative;
-            margin-bottom: 8px;
-            border-right: 5px solid #2ecc71;
-            transition: 0.2s;
-            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            border-right: 5px solid #4ade80;
+            /* Plus border */
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+
+        .list li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(2px);
         }
 
         .list li.minus {
-            border-right-color: #e74c3c;
+            border-right-color: #f87171;
         }
 
         .delete-btn {
             opacity: 0;
-            background: #e74c3c;
+            background: rgba(239, 68, 68, 0.8);
             color: white;
             border: none;
-            padding: 5px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: absolute;
-            left: -30px;
+            left: -32px;
             top: 50%;
             transform: translateY(-50%);
-            border-radius: 4px;
+            border-radius: 50%;
             cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.8rem;
+            transition: all 0.2s;
+            font-size: 0.7rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .list li:hover .delete-btn {
             opacity: 1;
-            left: -40px;
+            left: -20px;
+        }
+
+        .delete-btn:hover {
+            background: #ef4444;
+            transform: translateY(-50%) scale(1.1);
         }
 
         .form-control {
-            margin-bottom: 12px;
+            margin-bottom: 1rem;
         }
 
         .form-control label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 0.5rem;
             font-weight: 500;
-            color: #444;
+            color: #cbd5e1;
             font-size: 0.9rem;
         }
 
         .form-control input {
             width: 100%;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.3);
+            color: white;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
             outline: none;
+            transition: all 0.3s;
+        }
+
+        .form-control input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        .form-control input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
         }
 
         .btn-tracker {
             cursor: pointer;
-            background: #007bff;
+            background: var(--primary);
             color: #fff;
-            border: 0;
+            border: none;
             display: block;
             font-size: 1rem;
-            margin: 10px 0 10px;
-            padding: 12px;
+            margin: 1.5rem 0 0.5rem;
+            padding: 1rem;
             width: 100%;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: 0.2s;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all 0.3s;
         }
 
         .btn-tracker:hover {
-            background: #0056b3;
+            background: var(--primary-hover);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Project 25: Uitgaven Tracker</h1>
-        <span class="level">Master</span>
-        <p class="description">Bouw een uitgebreide tracker die budget en uitgaven lokaal opslaat.</p>
+        <header>
+            <h1>Project 25: Uitgaven Tracker</h1>
+            <span class="level">Master</span>
+            <p class="description">Bouw een uitgebreide tracker die budget en uitgaven lokaal opslaat.</p>
+        </header>
+
+
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <ul>
+                <li>Gegevens beheren en berekeningen uitvoeren met JavaScript-arrays.</li>
+                <li>Financiële getallen formatteren voor een herkenbare weergave in valuta.</li>
+                <li>Totalen in real-time herberekenen en direct updaten in de weergave.</li>
+            </ul>
+        </div>
+
+        <div class="concepts">
+            <h3>🎯 Belangrijke Concepten</h3>
+            <ul>
+                <li><strong>map() / reduce() / filter()</strong> - Onmisbare array-methoden om berekeningen te doen
+                    zoals totalen bepalen en inkomsten van uitgaven scheiden.</li>
+                <li><strong>DOM Events koppelen</strong> - Genereer en verwijder dynamisch items uit de lijst bij
+                    interactie met knoppen.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
             <h3>📝 Stap-voor-Stap Uitleg</h3>
 
             <div class="step">
-                <h4>Stap 1: Local Storage Begrijpen</h4>
-                <p>Browsers hebben een mini-database genaamd <code>localStorage</code>. Data overleeft hiermee een
-                    overlaad (F5) van de pagina. Omdat localStorage alleen tekst opslaat, gebruiken we
-                    <code>JSON.stringify()</code> en <code>JSON.parse()</code> om arrays te vertalen.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> localStorageKey = <span class="string">'tracker_project25_data'</span>;
-<span class="keyword">const</span> savedData = JSON.<span class="function">parse</span>(localStorage.<span class="function">getItem</span>(localStorageKey));
-
-<span class="keyword">let</span> transactions = savedData !== <span class="keyword">null</span> ? savedData : [];</pre>
+                <h4>Stap 1: Totaal berekenen met Reduce</h4>
+                <p>De totale balans (of globale uitgaven) rekenen we beknopt uit door alle afzonderlijke bedragen op te
+                    tellen via <code>reduce()</code>.</p>
+                <div class="code-example">
+                    <pre>const total = transactions
+    .map(t =&gt; t.amount)
+    .reduce((acc, current) =&gt; acc + current, 0);</pre>
                 </div>
-                <p><strong>Uitleg:</strong> We kijken of we al data hebben opgeslagen. Zo ja, dan laden we dat (als
-                    echte array d.m.v. <i>parse</i>), anders starten we met een lege array (<code>[]</code>).</p>
             </div>
-
             <div class="step">
-                <h4>Stap 2: Wiskunde met Arrays `.reduce()`</h4>
-                <p>In theorie kunnen we met een <code>for</code> loop door alle transacties gaan om het totaal te
-                    berekenen. Echter, <code>.reduce()</code> leent zich hier perfect voor: het "reduceert" een array
-                    naar één waarde.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">const</span> amounts = transactions.<span class="function">map</span>(t => t.amount);
-<span class="keyword">const</span> total = amounts.<span class="function">reduce</span>((acc, item) => (acc += item), <span class="string">0</span>);</pre>
+                <h4>Stap 2: Kosten splitsen met Filter</h4>
+                <p>Je kunt `filter()` gebruiken om enkel de inkomsten (positieve getallen) of uitsluitend de uitgaven
+                    (negatieve getallen) over te houden in een nieuwe array.</p>
+                <div class="code-example">
+                    <pre>const income = amounts
+    .filter(item =&gt; item &gt; 0)
+    .reduce((acc, item) =&gt; (acc += item), 0);</pre>
                 </div>
-                <p><strong>Uitleg:</strong> <code>acc</code> (accumulator) is de "spaarvarken" variabele die start bij 0
-                    (tweede argument) en bij elke ronde het <code>item</code> (bedrag) erbij optelt.</p>
             </div>
-
             <div class="step">
-                <h4>Stap 3: Het Formulier Afvangen</h4>
-                <p>Wanneer een gebruiker het formulier verstuurt, vangen we de gebeurtenis op (zodat de pagina niet
-                    herlaadt!) en voegen we de data toe aan de state.</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="keyword">function</span> <span class="function">addTransaction</span>(e) {
-    e.<span class="function">preventDefault</span>(); <span class="comment">// Voorkom form Reload!</span>
-    
-    <span class="keyword">if</span> (text.value.<span class="function">trim</span>() === <span class="string">''</span>) <span class="keyword">return</span>; <span class="comment">// Valideer!</span>
-    <span class="keyword">const</span> transaction = { id: Math.<span class="function">random</span>(), text: text.value, amount: +amount.value };
-    
-    transactions.<span class="function">push</span>(transaction);
-    <span class="function">updateLocalStorage</span>();
-}</pre>
+                <h4>Stap 3: Lijst weergeven in de browser</h4>
+                <p>Genereer voor elke geregistreerde transactie een lijst-item. Let op het toevoegen van een dynamische
+                    CSS-class ('plus' of 'minus').</p>
+                <div class="code-example">
+                    <pre>const item = document.createElement('li');
+item.classList.add(transaction.amount &lt; 0 ? 'minus' : 'plus');</pre>
                 </div>
-                <p><strong>Uitleg:</strong> We maken een nieuw object via destructuring, we slaan die op in de array, en
-                    we updaten de localStorage.</p>
             </div>
         </div>
 
-        <!-- Code Voorbeeld -->
-        <div class="code-example" style="background: #f8f9fa; border: 2px solid #667eea;">
-            <h3 style="color: #333; margin-bottom: 1rem;">💻 Code Snippet (Verwijderen o.b.v. ID)</h3>
-            <pre><span class="keyword">function</span> <span class="function">removeTransaction</span>(id) {
-    <span class="comment">// We filteren simpelweg de array zodat alles behalve het ID-target overblijft</span>
-    transactions = transactions.<span class="function">filter</span>(transaction => transaction.id !== id);
+        <div class="code-example" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="color: #f8fafc; margin-bottom: 1rem;">💻 Transactie Verwijderen</h3>
+            <pre>function removeTransaction(id) {
+    // Verwijder het specifieke object uit onze datastructuur
+    transactions = transactions.filter(t =&gt; t.id !== id);
     
-    <span class="function">updateLocalStorage</span>();
-    <span class="function">init</span>(); <span class="comment">// Teken de DOM (het scherm) weer up-to-date!</span>
+    // Bewaar de geupdate data en status opnieuw via LocalStorage
+    updateLocalStorage();
+    
+    // Voer een frisse re-render uit in the view-laag met actuele stand
+    init();
 }</pre>
         </div>
 
-        <!-- Instructies -->
         <div class="instructions">
             <h3>✅ Jouw Opdracht:</h3>
             <ul>
-                <li>Vul een item ("Boodschappen") en een negatief bedrag in ("-30").</li>
-                <li>Ververs (F5) de pagina. Jouw items zijn er nog steeds! (Dankzij de browser opslag
-                    <code>localStorage</code>).</li>
-                <li>Hover (met je muis) over de lijstitems heen en druk op de rode "X" om ze weer te verwijderen.</li>
+                <li>Voeg inkomsten en de bijbehorende uitschrijvingen uit op het webformulier.</li>
+                <li>Hanteer het kruisje of verwijderknop om een reeds aangemaakte inkomst ongedaan the maken. Zie hoe de
+                    visuele balans zichzelf aanpast.</li>
             </ul>
         </div>
 
@@ -357,50 +538,42 @@
         <div class="tips">
             <h3>💡 Tips & Tricks</h3>
             <ul>
-                <li><strong>De plus prefix <code>+amount.value</code>:</strong> HTML textinput fields retourneren altijd
-                    <code>strings</code> (zelfs als je type="number" gebruikt). De optionele plus <code>+</code> voor de
-                    variabele in javascript dwingt de data om zich te gedragen als een <code>Number</code> in plaats van
-                    tekst.</li>
-                <li><strong>Waarom een ID in de structuur?</strong> Zonder uniek ID kun je in
-                    <code>removeTransaction</code> niet heel betrouwbaar de object index opzoeken en opschonen. Stel de
-                    gebruiker heeft 2x een transactie staan van "Pizza" met "15,50", welke moet dan weg?</li>
+                <li><strong>Unieke IDs genereren:</strong> Gebruik `Math.floor(Math.random() * 100000000)` of
+                    `Date.now()` voor een volstrekt uniek ID voor elke opgeslagen regel.</li>
             </ul>
         </div>
 
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: <code>JSON.parse()</code> vergeten</h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ FOUT - LocalStorage returnt de data ALTIJD als tekst (een string), pushen hierop zal crashen!</span>
-let data = localStorage.getItem('mijn_key');
-data.push({ ... }); 
+        <div class="step-by-step" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444;">
+            <h3 style="color: #fecaca;">⚠️ Veelvoorkomende Fouten</h3>
+            <div class="step" style="border-bottom: none;">
+                <h4 style="color: #fca5a5;">Fout: Types door elkaar husselen</h4>
+                <p style="color: #f87171;">Zelfs een numeriek formulierveld levert vaak het type tekst terug in pure
+                    JavaScript-logica. Hierdoor creëert men weleens ongebruikelijke string concatenatie ("10" + 20) in
+                    de plaats van een mathematische rekensom (30).</p>
+                <div class="code-example">
+                    <pre>let bedrag = input.value; // '10'
+let totaal = totaal + bedrag; // Resultaat: '10010' in plaats van 110
 
-<span class="comment">// ✅ GOED - Vertel Javascript dat de "string" data uit LocalStorage in realiteit een Array en Object is!</span>
-let data = JSON.parse(localStorage.getItem('mijn_key'));</pre>
+let bedrag = parseFloat(input.value); // of +input.value</pre>
                 </div>
             </div>
         </div>
 
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor meer? Probeer dit toe te voegen:</p>
+            <div class="tips" style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1);">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingsmogelijkheden</h3>
                 <ul>
-                    <li><strong>Inkomsten vs Uitgaven (Gesplitste Balans):</strong> Breid het "Mijn Saldo" scherm
-                        bovenaan de pagina uit en voeg 2 afgescheiden groene en rode paneeltjes (of boxes) toe die
-                        "Inkomsten" en "Uitgaven" apart berekenen via <code>.filter()</code>.</li>
-                    <li><strong>Wissen Knop:</strong> Voeg een knop "Maak Historie leeg" toe onder de transacties (Hint:
-                        gebruik <code>localStorage.removeItem()</code>).</li>
+                    <li><strong>LocalStorage Integreren:</strong> Bouw een diepere implementatie in zodat het de
+                        gecreëerde data opvangt en terug ophaalt wanneer jij the venster zou refreshen.</li>
+                    <li><strong>Grafisch Cirkeldiagram:</strong> Visualiseer de verhouding tussen inkomsten en uitgaven
+                        in een taart weergave.</li>
                 </ul>
             </div>
         </div>
 
         <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
 
-        <!-- Demo Area -->
+
         <div class="project-area">
             <div class="tracker-container">
                 <div class="tracker-header">
@@ -429,7 +602,7 @@ let data = JSON.parse(localStorage.getItem('mijn_key'));</pre>
             </div>
         </div>
 
-        <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
+        <a href="../index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Terug naar Projecten</a>
     </div>
 
     <script>
@@ -473,7 +646,7 @@ let data = JSON.parse(localStorage.getItem('mijn_key'));</pre>
 
             item.innerHTML = `
                 ${transaction.text} <span>${sign}€${Math.abs(transaction.amount).toFixed(2)}</span>
-                <button class="delete-btn" onclick="removeTransaction(${transaction.id})">X</button>
+                <button class="delete-btn" onclick="removeTransaction(${transaction.id})"><i class="fas fa-times"></i></button>
             `;
             list.appendChild(item);
         }

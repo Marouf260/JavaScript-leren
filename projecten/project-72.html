@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 72: Random Quote Generator - DOM Projecten</title>
+    <title>Project 72: Quote Generator - DOM Projecten</title>
     <style>
         * {
             margin: 0;
@@ -14,378 +14,431 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+            background: #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            transition: background 0.5s;
+            color: #f8fafc;
         }
 
         .container {
-            background: white;
-            border-radius: 12px;
-            padding: 2.5rem;
-            max-width: 650px;
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 700px;
             width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             text-align: center;
+            border: 1px solid #334155;
         }
 
         h1 {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 0.5rem;
+            font-size: 2.2rem;
         }
 
         .level {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #e0e7ff;
-            color: #4338ca;
+            margin-bottom: 2rem;
+            padding: 0.25rem 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 2rem;
+            text-transform: uppercase;
         }
 
-        /* API App CSS */
-        .project-area {
-            background: #fff;
-            border-radius: 12px;
-            padding: 2.5rem;
+        .description {
+            color: #cbd5e1;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .project-area {
+            background: #0f172a;
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            margin: 1.5rem 0 2.5rem 0;
+            border: 1px solid #334155;
+            min-height: 250px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 250px;
             justify-content: center;
             position: relative;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .QQtTHteHeTextZ {
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: #1e293b;
-            line-height: 1.5;
+        .quote-icon {
+            font-size: 3rem;
+            color: #334155;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            opacity: 0.5;
+        }
+
+        .quote-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f8fafc;
+            line-height: 1.4;
             margin-bottom: 20px;
-            font-family: Georgia, serif;
+            font-family: 'Georgia', serif;
+            letter-spacing: -0.5px;
         }
 
-        .AAAAtuteur_TextKthe {
-            font-size: 1.1rem;
-            color: #64748b;
+        .author-text {
+            font-size: 1.2rem;
+            color: #60a5fa;
             font-style: italic;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            font-weight: 500;
+        }
+
+        .btn-group {
             display: flex;
-            align-items: center;
+            gap: 20px;
             justify-content: center;
-            gap: 10px;
         }
 
-        .AAAAtuteur_TextKthe::before {
-            content: '';
-            width: 30px;
-            height: 2px;
-            background: #64748b;
-        }
-
-        .AAAAtuteur_TextKthe::after {
-            content: '';
-            width: 30px;
-            height: 2px;
-            background: #64748b;
-        }
-
-        .oKnopoGRoopMThe_H {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .btnTThekNOpHaaloP {
-            background: #f59e0b;
+        .btn-new {
+            background: #3b82f6;
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 16px 32px;
             font-size: 1rem;
-            font-weight: bold;
-            border-radius: 30px;
+            font-weight: 800;
+            border-radius: 50px;
             cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 6px rgba(245, 158, 11, 0.3);
+            transition: all 0.2s;
+            box-shadow: 0 10px 15px rgba(59, 130, 246, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btnTThekNOpHaaloP:hover {
-            background: #d97706;
+        .btn-new:hover {
+            background: #2563eb;
             transform: translateY(-2px);
+            box-shadow: 0 15px 20px rgba(59, 130, 246, 0.4);
         }
 
-        .btnTThekNOpHaaloP:active {
+        .btn-new:active {
             transform: translateY(0);
         }
 
-        .btnTThekNOpHaaloP:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .btnTTwweetTheKnoP {
-            background: #1da1f2;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 30px;
+        .btn-twitter {
+            background: rgba(255, 255, 255, 0.05);
+            color: #f8fafc;
+            border: 2px solid #334155;
+            padding: 16px 28px;
+            font-size: 1.2rem;
+            border-radius: 50px;
             cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 6px rgba(29, 161, 242, 0.3);
+            text-decoration: none;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 5px;
-            text-decoration: none;
+            justify-content: center;
         }
 
-        .btnTTwweetTheKnoP:hover {
-            background: #1a91da;
+        .btn-twitter:hover {
+            background: #1da1f2;
+            border-color: #1da1f2;
+            transform: scale(1.1);
         }
 
-        /* Loader ! */
-        .LdLOaderROundSpinnerTH {
+        .loader {
             display: none;
             width: 50px;
             height: 50px;
-            border: 5px solid #f3f4f6;
-            border-top-color: #f59e0b;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #3b82f6;
             border-radius: 50%;
-            animation: VTheSpinOThe 1s linear infinite;
-            position: absolute;
+            animation: spin 0.8s linear infinite;
         }
 
-        @keyframes VTheSpinOThe {
+        @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 1rem;
-            color: #d97706;
-            text-decoration: none;
-            font-weight: 600;
+        /* Tutorial Style Modules */
+        .explanation,
+        .concepts,
+        .step-by-step,
+        .instructions,
+        .tips {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-align: left;
         }
 
-        .back-link:hover {
-            color: #b45309;
+        .explanation {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .concepts {
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .step-by-step {
+            border-left: 4px solid #94a3b8;
+        }
+
+        .instructions {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tips {
+            border-left: 4px solid #10b981;
+        }
+
+        h3 {
+            color: #f8fafc;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expandable {
+            display: none;
+        }
+
+        .expandable.show {
+            display: block;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Project 72: Quote Generator</h1>
-        <span class="level">API & Fetch</span>
+        <h1>Wisdom Quote Factory</h1>
+        <span class="level">API & Social Share</span>
+        <p class="description">Bouw een applicatie die inspirerende quotes ophaalt van een externe API en deze direct
+            deelbaar maakt via Twitter met encoded URI strings.</p>
+
+        <div class="project-area">
+            <div class="quote-icon">“</div>
+            <div class="loader" id="loader"></div>
+            <div id="quote-container">
+                <div class="quote-text" id="quote-text">Wijsheid wordt geladen vanuit de cloud...</div>
+                <div class="author-text" id="author-text"></div>
+            </div>
+
+            <div class="btn-group">
+                <a class="btn-twitter" id="twitter-btn" target="_blank" rel="noopener noreferrer"
+                    title="Deel op Twitter">𝕏</a>
+                <button class="btn-new" id="new-quote-btn">Nieuwe Quote</button>
+            </div>
+        </div>
+
+        <!-- Uitleg Sectie -->
+        <div class="explanation">
+            <h3>📚 Wat ga je leren?</h3>
+            <p>In dit project verdiepen we ons in de <strong>asynchrone natuur</strong> van het web. Je leert hoe je
+                data ophaalt zónder de browser te blokkeren.</p>
+            <ul>
+                <li><strong>Dynamic REST APIs:</strong> Hoe je communiceert met een JSON-endpoint (DummyJSON).</li>
+                <li><strong>URI Encoding:</strong> Waarom je spaties en speciale tekens moet "vertalen" voor sociale
+                    media links.</li>
+                <li><strong>Conditional UI:</strong> Het tonen en verbergen van elementen (zoals loaders) op basis van
+                    de netwerkstatus.</li>
+            </ul>
+        </div>
+
+        <!-- Concepten -->
+        <div class="concepts">
+            <h3>🎯 Kernconcepten</h3>
+            <ul>
+                <li><strong>Async/Await:</strong> De modernste manier om met tijdrovende processen om te gaan. Het laat
+                    code er "lineair" uitzien, terwijl het op de achtergrond wacht op de server.</li>
+                <li><strong>JSON Parsing:</strong> Servers sturen tekst. <code>.json()</code> vertaalt die tekst naar
+                    een echt JavaScript Object waar we <code>.quote</code> en <code>.author</code> op kunnen aanroepen.
+                </li>
+                <li><strong>Tweet Intents:</strong> Gebruikmaken van Twitter's Query Parameters om een tweet voor de
+                    gebruiker klaar te zetten.</li>
+            </ul>
+        </div>
 
         <!-- Stap voor Stap -->
         <div class="step-by-step">
-            <h3>📝 Stap-voor-Stap Uitleg</h3>
+            <h3>📝 Stap-voor-stap: De Twitter Koppeling</h3>
 
             <div class="step">
-                <h4>Stap 1: De <code>fetch()</code> Aanroep</h4>
-                <p>We the maken the _een netwerkverzoek_ Naar outside The (Een echte the_externe API). Omdat the_! dit
-                    The! the Tijd_ kost Z , _The Returnt Dit__ Een`Promise` (Belofte) The_! _!</p>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// IN_ DE_ JS ! The_ </span>
-<span class="keyword">const</span> HetZRepsonSNettheDataTHTerkV = <span class="keyword">await</span> <span class="function">fetch</span>(APPIDDummMyUrlDat_TTheHQuoteH);
-<span class="keyword">const</span> theTJSONHTheDO_OObjv_The = <span class="keyword">await</span> HetZRepsonSNettheDataTHTerkV.<span class="function">json</span>();</pre>
+                <h4>1: Het ophalen van de data</h4>
+                <div class="code-example">
+                    <pre><span class="keyword">async function</span> <span class="function">getQuote</span>() {
+    <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'https://dummyjson.com/quotes/random'</span>);
+    <span class="keyword">const</span> data = <span class="keyword">await</span> response.<span class="function">json</span>();
+    <span class="comment">// Nu bevat 'data' de quote van de server</span>
+}</pre>
                 </div>
             </div>
 
             <div class="step">
-                <h4>Stap 2: Wachten the (<code>async / await</code>)</h4>
-                <p>The! We_ the the The gebruiken <code>await</code> THE_ om JS the_ the Tethe Maken_ wachten_ The !
-                    Daarna the Checken we of_the de response _the_ <code>.ok</code> The is_ THE! the (! Error
-                    handling_).</p>
-            </div>
-
-            <div class="step">
-                <h4>Stap 3: Tweet the URL_The </h4>
-                <p>Om_ The een the exact the! _Tweet The!_ Voor te Bereiden _the the_ MakenThe we the_Een the_ String
-                    aan met The_ de `text=` the_ queryThe! param! O_ `encodeURIComponent()`_ the _Zorgt ERVoor _ The _
-                    dat de Tekst _the ! The 100% URL_ safe THE is !</p>
-            </div>
-        </div>
-
-        <!-- Instructies -->
-        <div class="instructions">
-            <h3>✅ Jouw Opdracht:</h3>
-            <ul>
-                <li>Klik the_ OP the_ "Nieuwe Quote" _The! _the_ </li>
-                <li>Bekijk The_ The de the the Spinning The_ Loader de the ! _TerwiJl the_ the Data the wordt the!
-                    Opgehaald! </li>
-            </ul>
-        </div>
-
-        <!-- Tips -->
-        <div class="tips">
-            <h3>💡 Tips & Tricks</h3>
-            <ul>
-                <li><strong>The Try Catch Block the:</strong> the The In The de JS The zie je the_ The ! The _ dat de
-                    de_ the Fetch The_ IN the The _een ! the the <code>try { } catch (e) { }</code> block the Staat!
-                    Dit_ THE ! The Is_ Super_ the Belangrijk the_ Omdat_ Je The Niet the de The the Controle the Hebt
-                    over een_ server! _ </li>
-                <li><strong>UI Bonus:</strong> We veranderen the de body background the met the Een the random H the
-                    gradient color the the! O _ bij the elke The_ nieuwe the JSON response !</li>
-            </ul>
-        </div>
-
-        <!-- Veelvoorkomende Fouten -->
-        <div class="step-by-step" style="background: #f8d7da;">
-            <h3>⚠️ Veelvoorkomende Fouten</h3>
-            <div class="step">
-                <h4>Fout 1: de_ <code>await</code>_ Vergeten_! </h4>
-                <div class="code-example" style="background: #fff;">
-                    <pre><span class="comment">// ❌ LET OP - the The the Als the the The the The the the the Z_ the the The_ the the the  Als theThe je de await vergeet_ dan The_! The is `const data = response.json()` een   _ pending_! Promise the_The _ Object!! en Geen The JSON _The ! The </span>
-
-<span class="comment">// OPLOSSING THE THE : the the The The thethe Doe ALTIJD_! await_ voor de .json_!_!  _ </span></pre>
+                <h4>2: De URI Encoding (Social Deelbaar)</h4>
+                <p>Sociale media links accepteren geen spaties. We gebruiken <code>encodeURIComponent()</code> om tekst
+                    veilig te maken voor een URL (bijv. een spatie wordt <code>%20</code>).</p>
+                <div class="code-example">
+                    <pre><span class="keyword">const</span> tweetText = <span class="function">encodeURIComponent</span>(<span class="string">`"${data.quote}" - ${data.author}`</span>);
+twitterBtn.href = <span class="string">`https://twitter.com/intent/tweet?text=${tweetText}`</span>;</pre>
                 </div>
             </div>
+
         </div>
 
-        <!-- Uitbreidingen -->
         <div class="expandable" id="expansions">
-            <div class="tips">
-                <h3>🚀 Uitbreidingsmogelijkheden</h3>
-                <p>Klaar voor MEER!? Probeer dit toe te voegen:</p>
+            <div class="step-by-step"
+                style="border-left-color: #ef4444; background: rgba(239,68,68,0.05); border-left-width: 4px;">
+                <h3 style="color: #fca5a5;">⚠️ Veelvoorkomende Fouten</h3>
                 <ul>
-                    <li><strong>Lijst THE_! !! The The The The! </strong> the the thethe the THE the Bouw The DE V The_
-                        the the the The_ Logica OM The_The Niet! _ 1 _ The! Quote_ maar The the Bv_ The 5 Quotes _The
-                        gelijk op the_ Te Halen _ the EN_! the de DOM the_ Te ! Vullen ! </li>
+                    <li><strong>DOM vergeten te verbergen:</strong> De oude quote laten staan terwijl de nieuwe laadt.
+                        Gebruik altijd <code>container.style.display = 'none'</code> tijdens het laden.</li>
+                    <li><strong>Geen Error Handling:</strong> Als de server offline is, crasht je hele script. Gebruik
+                        altijd een <code>try...catch</code> blok om de gebruiker te informeren.</li>
+                </ul>
+            </div>
+            <div class="tips"
+                style="border-left-color: #a78bfa; background: rgba(167,139,250,0.1); border-left-width: 4px;">
+                <h3 style="color: #c4b5fd;">🚀 Uitbreidingen</h3>
+                <ul>
+                    <li><strong>Copy to Clipboard:</strong> Voeg een knop toe die de quote kopieert met de Clipboard
+                        API.</li>
+                    <li><strong>Color Switcher:</strong> Verander de achtergrondkleur van de pagina op basis van de
+                        sfeer van de quote (bijv. vrolijke quotes = geel).</li>
                 </ul>
             </div>
         </div>
 
-        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Uitbreidingsmogelijkheden</button>
-
-        <!-- Demo Area -->
-        <div class="project-area">
-
-            <div class="LdLOaderROundSpinnerTH" id="SSPinUITheHHLoad_V"></div>
-
-            <div id="uIDataKCOntentZTVQuoteDeThe_R">
-                <div class="QQtTHteHeTextZ" id="THTxtQuoDTeSSttDringZZ_V">
-                    <i class="fas fa-quote-left"></i> Loading quote... <i class="fas fa-quote-right"></i>
-                </div>
-                <div class="AAAAtuteur_TextKthe" id="HDUUIATEurNNaaMTheTThe_VTheK">
-                    Loading
-                </div>
-            </div>
-
-            <div class="oKnopoGRoopMThe_H">
-                <!-- X (Twitter) Z Share Intent URL the !!  -->
-                <a class="btnTTwweetTheKnoP" id="BBtn_STXwiterSTheetVThe" target="_blank">
-                    𝕏 Tweet
-                </a>
-                <button class="btnTThekNOpHaaloP" id="kKNopQquoteDaDTheFetchTTH_V">
-                    Nieuwe Quote 🔮
-                </button>
-            </div>
-
-        </div>
-
-
+        <button class="expand-btn" onclick="toggleExpansions()">📖 Toon Fouten & Uitbreidingen</button>
 
         <a href="../index.html#projects" class="back-link">← Terug naar Projecten</a>
     </div>
 
-    <!-- FontAwesome the quotes!  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <script>
-        const DOMHUIQTheteTTExTT = document.getElementById('THTxtQuoDTeSSttDringZZ_V');
-        const DOATHEHAAuutTEeTherNNH = document.getElementById('HDUUIATEurNNaaMTheTThe_VTheK');
-        const knNOpFetcZTheBTNTVeD = document.getElementById('kKNopQquoteDaDTheFetchTTH_V');
-        const UiTtweetBBtnDHTML_TheO = document.getElementById('BBtn_STXwiterSTheetVThe');
+        const quoteText = document.getElementById('quote-text');
+        const authorText = document.getElementById('author-text');
+        const newQuoteBtn = document.getElementById('new-quote-btn');
+        const twitterBtn = document.getElementById('twitter-btn');
+        const loader = document.getElementById('loader');
+        const quoteContainer = document.getElementById('quote-container');
 
-        const CONtttThe_MDeQuotDTheVDivDe = document.getElementById('uIDataKCOntentZTVQuoteDeThe_R');
-        const LLoaderUSHTSpiNnOHTt_The = document.getElementById('SSPinUITheHHLoad_V');
-
-        // Free Ninja API_ or dummy data API The the! (Quotable API is deprecated, we will use a reliable free dummyjson API_ Z the_ !)
-        // https://dummyjson.com/quotes/random returns good The _ random json data !
-        const APPIDDummMyUrlDat_TTheHQuoteH = 'https://dummyjson.com/quotes/random';
-
-        // Kleuren the Array Z !! Voor the the body the dynamic The !!
-        const VKKTheureeO_ZTheGrtheOHT_DeGThe_TheZ = [
-            'linear-gradient(135deg, #fceabb 0%, #f8b500 100%)', // Orange/Yellow
-            'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)', // Purple/Pink
-            'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)', // Green/Blue
-            'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)', // Pink/Blue
-            'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)', // Pink/Peach
-            'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'  // Cyan/Pink
-        ];
-
-        async function GetEenRaAndOmmQuotAPIHDe__TThe() {
-            // UI Loding state_ H! 
-            CONtttThe_MDeQuotDTheVDivDe.style.opacity = '0'; // fade Out The! 
-            knNOpFetcZTheBTNTVeD.disabled = true;
-            setTimeout(() => { LLoaderUSHTSpiNnOHTt_The.style.display = "block"; }, 200);
+        async function getQuote() {
+            // UI in laad-modus zetten
+            quoteContainer.style.display = 'none';
+            loader.style.display = 'block';
+            newQuoteBtn.disabled = true;
 
             try {
-                const HetZRepsonSNettheDataTHTerkV = await fetch(APPIDDummMyUrlDat_TTheHQuoteH);
-                if (!HetZRepsonSNettheDataTHTerkV.ok) throw new Error("API Fetch H Error V !");
+                // De API aanroep
+                const response = await fetch('https://dummyjson.com/quotes/random');
 
-                const theTJSONHTheDO_OObjv_The = await HetZRepsonSNettheDataTHTerkV.json();
+                if (!response.ok) throw new Error('Netwerk reageert niet');
 
-                // Fill Data THE Z (The dummy json api the_ has a .quote and .author property ! The)
-                DOMHUIQTheteTTExTT.innerHTML = `<i class="fas fa-quote-left"></i> ${theTJSONHTheDO_OObjv_The.quote} <i class="fas fa-quote-right"></i>`;
-                DOATHEHAAuutTEeTherNNH.innerText = theTJSONHTheDO_OObjv_The.author;
+                const data = await response.json();
 
-                // Share To THE X (TWitter intent URL Z builder Z !! H )
-                // We encodeURIComponent H! Om de the the  tekst te escapen V_ the ! 
-                const tweetUrlGGen = `https://twitter.com/intent/tweet?text=${encodeURIComponent('"' + theTJSONHTheDO_OObjv_The.quote + '" - ' + theTJSONHTheDO_OObjv_The.author)}`;
-                UiTtweetBBtnDHTML_TheO.setAttribute('href', tweetUrlGGen);
+                // UI bijwerken
+                quoteText.innerText = data.quote;
+                authorText.innerText = `— ${data.author || 'Anoniem'}`;
 
-                // Change Background Random! Z
-                const rnKleTuK_H = Math.floor(Math.random() * VKKTheureeO_ZTheGrtheOHT_DeGThe_TheZ.length);
-                document.body.style.background = VKKTheureeO_ZTheGrtheOHT_DeGThe_TheZ[rnKleTuK_H];
+                // Twitter link voorbereiden
+                const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent('"' + data.quote + '" ' + authorText.innerText)}`;
+                twitterBtn.href = tweetUrl;
 
-            } catch (err) {
-                DOMHUIQTheteTTExTT.innerText = "Error: Kon the the O_ ! the the de server the _ niet bereiken.";
-                DOATHEHAAuutTEeTherNNH.innerText = "Systeem Fout";
-                console.error(err);
+            } catch (error) {
+                quoteText.innerText = 'Oeps! De wijsheid-server is momenteel overbelast. Probeer het later nog eens.';
+                authorText.innerText = '';
+                console.error('Fetch error:', error);
             } finally {
-                // Reveal The Z 
-                LLoaderUSHTSpiNnOHTt_The.style.display = "none";
-                CONtttThe_MDeQuotDTheVDivDe.style.opacity = '1';
-                knNOpFetcZTheBTNTVeD.disabled = false;
+                // UI herstellen
+                loader.style.display = 'none';
+                quoteContainer.style.display = 'block';
+                newQuoteBtn.disabled = false;
             }
         }
 
-        // BTN click! The_ 
-        knNOpFetcZTheBTNTVeD.addEventListener('click', GetEenRaAndOmmQuotAPIHDe__TThe);
+        // Event Listeners
+        newQuoteBtn.addEventListener('click', getQuote);
 
-        // start default 1 the  the! Z
-        GetEenRaAndOmmQuotAPIHDe__TThe();
+        // Initialiseer bij laden
+        getQuote();
 
-    </script>
-    <script>
-        // Functie voor uitbreidingen toggle
         function toggleExpansions() {
-            const expansions = document.getElementById('expansions');
+            const exp = document.getElementById('expansions');
             const btn = event.target;
-            if (expansions.classList.contains('show')) {
-                expansions.classList.remove('show');
-                btn.textContent = '📖 Toon Uitbreidingsmogelijkheden';
-            } else {
-                expansions.classList.add('show');
-                btn.textContent = '📖 Verberg Uitbreidingsmogelijkheden';
-            }
+            exp.classList.toggle('show');
+            btn.innerText = exp.classList.contains('show') ? '📖 Verberg Fouten & Uitbreidingen' : '📖 Toon Fouten & Uitbreidingen';
         }
     </script>
 </body>
